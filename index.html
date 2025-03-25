@@ -1,712 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Luxury Limousine Service offering executive transportation for events, airport transfers, and more. Experience luxury and comfort.">
-  <!-- Open Graph / Facebook -->
-  <meta property="og:title" content="Luxury Limousine Service">
-  <meta property="og:description" content="Experience premium executive transportation with attention to detail, safety, and style.">
-  <meta property="og:image" content="luxury-limo.webp">
-  <meta property="og:url" content="https://www.yourdomain.com">
-  <!-- Twitter -->
-  <meta name="twitter:title" content="Luxury Limousine Service">
-  <meta name="twitter:description" content="Experience premium executive transportation with attention to detail, safety, and style.">
-  <meta name="twitter:image" content="luxury-limo.webp">
-  <meta name="twitter:card" content="summary_large_image">
-  <title>Luxury Limousine Service</title>
-  
-  <!-- JSON-LD Structured Data for SEO -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Superb Executive Transportation",
-    "telephone": "340-642-8686",
-    "url": "https://www.yourdomain.com",
-    "description": "Luxury Limousine Service offering executive transportation for events, airport transfers, and more."
-  }
-  </script>
-  
-  <style>
-    /* General Styles */
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(180deg, #000, #222);
-      color: #fff;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-    /* Navigation Bar */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      padding: 15px 0;
-      box-shadow: 0px 4px 10px rgba(212, 175, 55, 0.3);
-      z-index: 1000;
-    }
-    .nav-container {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    #nav-links a {
-      color: #e0b000;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.2em;
-      margin: 0 20px;
-      transition: all 0.3s ease-in-out;
-      position: relative;
-    }
-    #nav-links a::after {
-      content: "";
-      display: block;
-      width: 0;
-      height: 3px;
-      background: #e0b000;
-      transition: width 0.3s ease-in-out;
-      position: absolute;
-      bottom: -5px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    #nav-links a:hover::after {
-      width: 100%;
-    }
-    /* Mobile Menu */
-    #mobile-menu-toggle {
-      display: none;
-      font-size: 1.5em;
-      background: none;
-      border: none;
-      color: #e0b000;
-      cursor: pointer;
-    }
-    /* Smooth Scroll */
-    html {
-      scroll-behavior: smooth;
-    }
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-in {
-      animation: fadeIn 1s ease-in-out;
-    }
-    /* Hero Section */
-    header {
-      position: relative;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
-    }
-    header img.hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-    .hero-content {
-      position: relative;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 50px;
-      border-radius: 12px;
-      box-shadow: 0px 6px 20px rgba(212, 175, 55, 0.5);
-      display: inline-block;
-      margin-top: 20vh;
-    }
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      color: #e0b000;
-      font-size: 4em;
-      font-weight: bold;
-      text-shadow: 0px 0px 20px rgba(224, 176, 0, 0.8);
-    }
-    header p {
-      font-size: 1.6em;
-      color: #fff;
-      max-width: 800px;
-      margin: auto;
-    }
-    .hero-content .btn {
-      display: inline-block;
-      padding: 15px 40px;
-      background: linear-gradient(145deg, #e0b000, #b9972e);
-      color: #000;
-      font-weight: bold;
-      font-size: 1.2em;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      box-shadow: 0px 6px 20px rgba(212, 175, 55, 0.7);
-      margin-top: 20px;
-    }
-    .hero-content .btn:hover {
-      background: linear-gradient(145deg, #b9972e, #e0b000);
-      transform: scale(1.05);
-    }
-    /* Main Content */
-    main {
-      margin-top: 80px;
-    }
-    /* Booking Section */
-    .booking {
-      text-align: center;
-    }
-    .booking form {
-      max-width: 600px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0px 6px 20px rgba(212, 175, 55, 0.5);
-      position: relative;
-    }
-    .booking label {
-      display: block;
-      text-align: left;
-      margin-bottom: 5px;
-      font-size: 1.1em;
-    }
-    .booking input, .booking select, .booking textarea {
-      width: 100%;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      border: 2px solid #e0b000;
-      background: #222;
-      color: #fff;
-      font-size: 1.1em;
-      box-sizing: border-box;
-    }
-    .booking input::placeholder,
-    .booking textarea::placeholder {
-      color: #ccc;
-    }
-    .error-message {
-      color: red;
-      font-size: 0.9em;
-      margin-top: -15px;
-      margin-bottom: 15px;
-      display: block;
-    }
-    /* Price Breakdown */
-    #price-breakdown {
-      text-align: left;
-      margin: 20px 0;
-    }
-    /* Footer */
-    footer {
-      background: rgba(0, 0, 0, 0.95);
-      padding: 25px;
-      text-align: center;
-      color: #e0b000;
-      font-size: 1.3em;
-      border-top: 2px solid #e0b000;
-    }
-  </style>
-</head>
-<body>
-
-<!-- Navigation -->
-<nav aria-label="Main Navigation">
-  <div class="nav-container">
-    <button id="mobile-menu-toggle" aria-label="Toggle navigation">☰</button>
-    <div id="nav-links">
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-      <a href="#why-choose-us">Why Choose Us</a>
-      <a href="#book">Book Now</a>
-      <a href="#footer-terms">Terms</a>
-      <a href="#about">About Us</a>
-      <a href="#testimonials">Testimonials</a>
-    </div>
-  </div>
-</nav>
-
-<!-- Hero Section -->
-<header id="home" class="fade-in" role="banner" aria-label="Luxury Limousine Service">
-  <img src="luxury-limo.webp" alt="Luxury Limousine Service" loading="lazy" class="hero-bg">
-  <div class="hero-content">
-    <h1>Superb Executive Transportation</h1>
-    <p>Luxury that Goes the Distance</p>
-    <a href="#book" class="btn">Book Now</a>
-  </div>
-</header>
-
-<main>
-  <!-- Booking Section -->
-  <section id="book" class="booking fade-in">
-    <h2>Book Your Ride</h2>
-    <form aria-label="Booking Form" id="booking-form" novalidate>
-      <!-- Date and Time -->
-      <label for="booking-date">Select a Date</label>
-      <input type="date" id="booking-date" name="booking-date" placeholder="Select booking date" required aria-required="true">
-      
-      <label for="booking-time">Select a Time</label>
-      <input type="time" id="booking-time" name="booking-time" placeholder="Select booking time" required aria-required="true">
-      
-      <!-- Service Type -->
-      <label for="service-type">Select Type of Service</label>
-      <select id="service-type" name="service-type" required aria-required="true">
-        <option value="" disabled selected>Select service type</option>
-        <option value="transfer">Transfer</option>
-        <option value="event">Event</option>
-        <option value="hourly-rental">Hourly Rental</option>
-        <option value="daily-rental">Daily Rental</option>
-      </select>
-      
-      <!-- Duration Fields -->
-      <div id="duration-field">
-        <label for="hours-requested">Hours Requested</label>
-        <input type="number" id="hours-requested" name="hours-requested" placeholder="Enter hours requested" min="2" required aria-required="true">
-      </div>
-      <div id="days-field" style="display: none;">
-        <label for="days-requested">Number of Days</label>
-        <input type="number" id="days-requested" name="days-requested" placeholder="Enter number of days" min="1" value="1">
-      </div>
-      
-      <!-- Pick-up Location -->
-      <label for="pickup">Pick-up Location</label>
-      <select id="pickup" name="pickup" required aria-required="true">
-        <option value="" disabled selected>Select pickup location</option>
-        <option value="cyril e. king airport">Cyril E. King Airport</option>
-        <option value="havensight-cruise-port">Havensight Cruise Port</option>
-        <option value="crown-bay-cruise-port">Crown Bay Cruise Port</option>
-        <option value="red hook">Red Hook</option>
-        <option value="st-john">St. John, VI</option>
-        <option value="other">Other (Specify)</option>
-      </select>
-      
-      <!-- Specify Other Pick-up Location -->
-      <div id="pickup-other" style="display: none;">
-        <label for="pickup-other-text">Specify Pick-up Location</label>
-        <input type="text" id="pickup-other-text" name="pickup-other-text" placeholder="Enter pickup location">
-      </div>
-      
-      <!-- Flight Information -->
-      <div id="flight-info" style="display: none;">
-        <label for="flight-number">Flight Number</label>
-        <input type="text" id="flight-number" name="flight-number" placeholder="Enter flight number">
-      </div>
-      
-      <!-- Luggage Information -->
-      <div id="luggage-info" style="display: none;">
-        <label for="luggage-pieces">Number of Luggage Pieces</label>
-        <input type="number" id="luggage-pieces" name="luggage-pieces" placeholder="Enter number of luggage pieces" min="0" value="0">
-      </div>
-      
-      <!-- Drop-off Location -->
-      <label for="dropoff">Drop-off Location</label>
-      <select id="dropoff" name="dropoff" required aria-required="true">
-        <option value="" disabled selected>Select dropoff location</option>
-        <option value="cyril e. king airport">Cyril E. King Airport</option>
-        <option value="havensight-cruise-port">Havensight Cruise Port</option>
-        <option value="crown-bay-cruise-port">Crown Bay Cruise Port</option>
-        <option value="red hook">Red Hook</option>
-        <option value="st-john">St. John, VI</option>
-        <option value="other">Other (Specify)</option>
-      </select>
-      
-      <!-- Specify Other Drop-off Location -->
-      <div id="dropoff-other" style="display: none;">
-        <label for="dropoff-other-text">Specify Drop-off Location</label>
-        <input type="text" id="dropoff-other-text" name="dropoff-other-text" placeholder="Enter dropoff location">
-      </div>
-      
-      <!-- Round Trip -->
-      <label for="round-trip">Round Trip</label>
-      <input type="checkbox" id="round-trip" name="round-trip">
-      
-      <div id="return-trip-section" style="display: none;">
-        <label for="return-date">Return Trip Date</label>
-        <input type="date" id="return-date" name="return-date" placeholder="Select return date">
-        
-        <label for="return-time">Return Trip Time</label>
-        <input type="time" id="return-time" name="return-time" placeholder="Select return time">
-      </div>
-      
-      <!-- Number of Passengers -->
-      <label for="number-of-passengers">Number of Passengers</label>
-      <input type="number" id="number-of-passengers" name="number-of-passengers" placeholder="Enter number of passengers" min="1" required aria-required="true">
-      
-      <!-- Contact Information -->
-      <label for="full-name">Full Name</label>
-      <input type="text" id="full-name" name="full-name" placeholder="Enter your full name" required aria-required="true">
-      
-      <label for="phone">Phone Number</label>
-      <input type="tel" id="phone" name="phone" placeholder="Enter 10-digit phone number" pattern="[0-9]{10}" required aria-required="true">
-      
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Enter your email address" required aria-required="true">
-      
-      <!-- Child Seat Option -->
-      <label for="child-seat">Require Child Seat</label>
-      <input type="checkbox" id="child-seat" name="child-seat">
-      
-      <!-- Special Requests -->
-      <label for="special-requests">Special Requests</label>
-      <textarea id="special-requests" name="special-requests" placeholder="Enter any special requests" rows="3"></textarea>
-      
-      <!-- Price Breakdown Section -->
-      <div id="price-breakdown">
-        <p><strong>Price Breakdown:</strong></p>
-        <ul>
-          <li>Base Rate: $<span id="breakdown-base">180</span></li>
-          <li>St. John Surcharge: $<span id="breakdown-stjohn">0</span></li>
-          <li>Extra Passengers: $<span id="breakdown-extra-passengers">0</span></li>
-          <li>Child Seat: $<span id="breakdown-child-seat">0</span></li>
-          <li>Service Multiplier: x<span id="breakdown-service-multiplier">1</span></li>
-          <li>Round Trip Multiplier: x<span id="breakdown-round-trip-multiplier">1</span></li>
-          <li><strong>Total Price: $<span id="total-price">180</span></strong></li>
-        </ul>
-      </div>
-      
-      <!-- Submit Button -->
-      <button type="submit" id="submit-button" disabled>Submit Booking</button>
-      
-      <!-- PayPal Button Placeholder -->
-      <div id="paypal-button-container" style="display: none; margin-top: 20px;">
-        <button type="button" id="paypal-button">Pay with PayPal</button>
-      </div>
-    </form>
-  </section>
-  
-  <!-- Additional sections (About, Testimonials, etc.) -->
-  <section id="about" class="about fade-in">
-    <h2>About Us</h2>
-    <p>Luxury Limousine Service is dedicated to providing premium transportation experiences with attention to detail, punctuality, and safety. Our fleet of vehicles and experienced drivers ensure every ride is comfortable and elegant. Trust us to deliver a first-class experience every time.</p>
-  </section>
-  
-  <section id="testimonials" class="testimonials fade-in">
-    <h2>Testimonials</h2>
-    <div class="testimonial-item">
-      <p>"An exceptional experience from start to finish. The service was prompt and the limousine exuded luxury."</p>
-      <p>- Alex R.</p>
-    </div>
-    <div class="testimonial-item">
-      <p>"The attention to detail and professionalism truly set this service apart. Highly recommended."</p>
-      <p>- Maria L.</p>
-    </div>
-  </section>
-</main>
-
-<!-- Footer (Terms link navigates to the Terms section in the footer) -->
-<footer>
-  <div class="footer-logo">
-    <h2>Superb Executive Transportation</h2>
-  </div>
-  <p>Contact us: 340-642-8686 | Email: setlimovi@gmail.com</p>
   <div id="footer-terms">
-  <details>
-    <summary>Terms and Conditions</summary>
-    <p>Last Updated: [Insert Date]</p>
-    <p>Welcome to Superb Executive Transportation. By booking our limousine services, you agree to the following terms and conditions.</p>
-    <ol>
-      <li><strong>Booking & Payment:</strong>
-        <ul>
-          <li><strong>Vehicle Availability:</strong> Vehicle selection is subject to availability, and a specific vehicle is not guaranteed. However, we ensure all vehicles meet our luxury standards.</li>
-          <li><strong>Prepaid Booking:</strong> All reservations must be pre-booked and prepaid at the time of booking using an approved payment method. A minimum of 2 hours rental is required.</li>
-          <li><strong>Pricing:</strong> Pricing is subject to change. Please refer to our website or contact us for current rates.</li>
-          <li><strong>Additional Charges:</strong> Any additional charges (overtime, damages, etc.) will be billed accordingly.</li>
-          <li><strong>Payment Method:</strong> Only payments made through our official booking system are accepted; cash payments are not permitted.</li>
-        </ul>
-      </li>
-      <li><strong>Cancellation & Refund Policy:</strong>
-        <ul>
-          <li><strong>Notice Period:</strong> Cancellations must be made at least 24 hours in advance for a full refund; otherwise, payments are non-refundable.</li>
-          <li><strong>No-Show Policy:</strong> If a passenger does not arrive within 30 minutes of the scheduled pickup time without prior notice, the booking will be considered a no-show and non-refundable.</li>
-        </ul>
-      </li>
-      <li><strong>Service Guidelines:</strong>
-        <ul>
-          <li><strong>No Pets or Smoking:</strong> Pets, animals, smoking, vaping, and drug use are strictly prohibited inside the vehicle.</li>
-          <li><strong>Behavior & Conduct:</strong> Passengers must behave in a respectful and safe manner. The driver reserves the right to refuse or terminate service if a passenger engages in illegal, unruly, or unsafe behavior.</li>
-          <li><strong>Compliance with Laws:</strong> All passengers must adhere to local laws and regulations during the ride.</li>
-          <li><strong>Passenger Capacity:</strong> The number of passengers must not exceed the legal seating capacity of the vehicle. Overloading is strictly prohibited.</li>
-          <li><strong>Alcohol Consumption:</strong> Alcohol consumption is permitted only for passengers of legal drinking age. Excessive intoxication or disorderly behavior may result in service termination without refund.</li>
-        </ul>
-      </li>
-      <li><strong>Liability & Damages:</strong>
-        <ul>
-          <li><strong>Delays:</strong> The company is not responsible for delays due to traffic, weather, or unforeseen circumstances.</li>
-          <li><strong>Damage to Vehicle:</strong> Any damages caused to the vehicle by passengers will be assessed, and the customer will be charged accordingly. Repair costs will be determined based on professional estimates and charged to the customer's payment method on file.</li>
-          <li><strong>Mechanical Failure:</strong> In the event of a mechanical failure or service interruption beyond our control, we will make reasonable efforts to provide a replacement vehicle. If no replacement is available, a partial or full refund may be issued at our discretion.</li>
-          <li><strong>Cleaning Fees:</strong> If excessive mess, spills, or biohazards (e.g., vomiting) require professional cleaning, a cleaning fee will be charged to the customer's payment method on file.</li>
-        </ul>
-      </li>
-      <li><strong>Waiting Time, Overtime & Extra Stops Charges:</strong>
-        <ul>
-          <li><strong>Waiting Time:</strong> A 15-minute grace period is allowed for pickup delays. Additional waiting time will be charged at the hourly rate.</li>
-          <li><strong>Overtime:</strong> If the trip extends beyond the booked duration, overtime will be charged in 30-minute increments based on the applicable hourly rate.</li>
-          <li><strong>Extra Stops:</strong> Additional stops must be requested in advance and may result in extra charges.</li>
-          <li><strong>Quick stops (5 minutes or less):</strong> $10 per stop.</li>
-          <li><strong>Extended stops (over 5 minutes):</strong> Charged in 30-minute increments at the hourly rate.</li>
-          <li><strong>Unscheduled stops:</strong> Subject to driver approval and may impact total trip duration and cost.</li>
-          <li><strong>Holiday & Late-Night Surcharges:</strong> Additional fees may apply for bookings on holidays or during late-night hours. Contact us for details.</li>
-        </ul>
-      </li>
-      <li><strong>Personal Belongings:</strong>
-        <ul>
-          <li>The company is not responsible for lost, stolen, or left-behind items.</li>
-        </ul>
-      </li>
-      <li><strong>Force Majeure:</strong>
-        <ul>
-          <li>We reserve the right to cancel or reschedule services due to emergencies, extreme weather, or circumstances beyond our control.</li>
-        </ul>
-      </li>
-      <li><strong>Privacy Policy:</strong>
-        <ul>
-          <li>Personal information collected during the booking process is used solely for service fulfillment and will not be shared with third parties except as required by law.</li>
-        </ul>
-      </li>
-      <li><strong>Dispute Resolution:</strong>
-        <ul>
-          <li>Any disputes arising from these terms will first be attempted to be resolved amicably. If unresolved, the matter shall be handled in accordance with the laws of the Virgin Islands of the United States. Disputes will be resolved through binding arbitration if necessary.</li>
-        </ul>
-      </li>
-      <li><strong>Governing Law:</strong>
-        <ul>
-          <li>These terms and conditions shall be governed by and construed in accordance with the laws of the Virgin Islands of the United States. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the courts of the Virgin Islands of the United States.</li>
-        </ul>
-      </li>
-      <li><strong>Right to Refuse Service:</strong>
-        <ul>
-          <li>We reserve the right to refuse or terminate service at any time for any passenger who violates these terms, poses a safety risk, or engages in disrespectful, illegal, or unruly behavior. No refunds will be issued in such cases.</li>
-        </ul>
-      </li>
-    </ol>
-  </details>
-  <div>
-    <a href="/privacy.html">Privacy Policy</a>
-    <a href="/faq.html">FAQ</a>
-    <a href="/contact.html">Contact</a>
-  </div>
-</div>
-
-</footer>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  // Auto-fill booking date and time
-  const bookingDate = document.getElementById("booking-date");
-  const today = new Date().toISOString().split('T')[0];
-  bookingDate.setAttribute("min", today);
-  bookingDate.value = today;
-  const bookingTime = document.getElementById("booking-time");
-  let now = new Date();
-  now.setMinutes(0,0,0);
-  bookingTime.value = now.toTimeString().slice(0,5);
-  
-  // Mobile menu toggle
-  const mobileToggle = document.getElementById("mobile-menu-toggle");
-  const navLinks = document.getElementById("nav-links");
-  mobileToggle.addEventListener("click", function() {
-    navLinks.style.display = navLinks.style.display === "block" ? "none" : "block";
-  });
-
-  // Elements for dynamic behavior in booking form
-  const pickup = document.getElementById("pickup");
-  const pickupOtherDiv = document.getElementById("pickup-other");
-  const pickupOtherInput = document.getElementById("pickup-other-text");
-
-  const dropoff = document.getElementById("dropoff");
-  const dropoffOtherDiv = document.getElementById("dropoff-other");
-  const dropoffOtherInput = document.getElementById("dropoff-other-text");
-
-  const flightInfo = document.getElementById("flight-info");
-  const luggageInfo = document.getElementById("luggage-info");
-
-  const roundTrip = document.getElementById("round-trip");
-  const returnTripSection = document.getElementById("return-trip-section");
-
-  // Price breakdown elements and rates
-  const numPassengers = document.getElementById("number-of-passengers");
-  const serviceType = document.getElementById("service-type"); 
-  const hoursRequested = document.getElementById("hours-requested"); 
-
-  const breakdownBase = document.getElementById("breakdown-base");
-  const breakdownStJohn = document.getElementById("breakdown-stjohn");
-  const breakdownExtraPassengers = document.getElementById("breakdown-extra-passengers");
-  const breakdownChildSeat = document.getElementById("breakdown-child-seat");
-  const breakdownServiceMultiplier = document.getElementById("breakdown-service-multiplier");
-  const breakdownRoundTripMultiplier = document.getElementById("breakdown-round-trip-multiplier");
-  const totalPrice = document.getElementById("total-price");
-
-  const baseRate = 180;
-  const extraPassengerRate = 30;
-  const childSeatRate = 30;
-  
-  // Function to update the hours requested field based on service type and location
-  function updateHoursRequested() {
-    let isStJohnTrip = (pickup.value === "st-john" || dropoff.value === "st-john");
-    if (serviceType.value === "transfer") {
-      // For transfers: enforce 3 hours for St. John trips, 2 hours for standard transfers.
-      hoursRequested.value = isStJohnTrip ? 3 : 2;
-      hoursRequested.disabled = true;
-    } else {
-      hoursRequested.disabled = false;
-    }
-  }
-  
-  // Calculate price dynamically with separate branches for standard and St. John trips
-  function calculatePrice() {
-    updateHoursRequested(); // Ensure hours field is updated
-    let isStJohnTrip = (pickup.value === "st-john" || dropoff.value === "st-john");
-    
-    if (isStJohnTrip) {
-      // St. John pricing model: base $500, extra passengers beyond 4 at $125 each, child seat at $30.
-      const stJohnBase = 500;
-      const stJohnExtraRate = 125;
-      let passengers = parseInt(numPassengers.value) || 1;
-      let extraCost = (passengers > 4) ? (passengers - 4) * stJohnExtraRate : 0;
-      let childSeatCost = document.getElementById("child-seat").checked ? childSeatRate : 0;
-      
-      // For St. John trips, multipliers are not applied (except round trip multiplier).
-      let serviceMultiplier = 1;
-      let roundTripMultiplier = roundTrip.checked ? 2 : 1;
-      let totalCost = stJohnBase + extraCost + childSeatCost;
-      
-      // Update the price breakdown UI for St. John trip
-      breakdownBase.textContent = stJohnBase;
-      breakdownStJohn.textContent = ""; // Not used in this branch
-      breakdownExtraPassengers.textContent = extraCost;
-      breakdownChildSeat.textContent = childSeatCost;
-      breakdownServiceMultiplier.textContent = serviceMultiplier;
-      breakdownRoundTripMultiplier.textContent = roundTripMultiplier;
-      totalPrice.textContent = totalCost;
-    } else {
-      // Standard pricing model: base $180, extra passengers at $30 each, child seat at $30.
-      let numPersons = parseInt(numPassengers.value) || 1;
-      let extraCost = (numPersons > 4) ? (numPersons - 4) * extraPassengerRate : 0;
-      let childSeatCost = document.getElementById("child-seat").checked ? childSeatRate : 0;
-      
-      // Determine multiplier based on service type
-      let serviceMultiplier = 1;
-      if (serviceType.value === "hourly-rental") {
-        serviceMultiplier = 2;
-      } else if (serviceType.value === "daily-rental") {
-        serviceMultiplier = 4;
-      } else if (serviceType.value === "event") {
-        serviceMultiplier = 1.5;
-      }
-      let roundTripMultiplier = roundTrip.checked ? 2 : 1;
-      let totalCost = (baseRate + extraCost + childSeatCost) * serviceMultiplier * roundTripMultiplier;
-      
-      // Update the price breakdown UI for standard trip
-      breakdownBase.textContent = baseRate;
-      breakdownStJohn.textContent = "0";
-      breakdownExtraPassengers.textContent = extraCost;
-      breakdownChildSeat.textContent = childSeatCost;
-      breakdownServiceMultiplier.textContent = serviceMultiplier;
-      breakdownRoundTripMultiplier.textContent = roundTripMultiplier;
-      totalPrice.textContent = totalCost;
-    }
-  }
-  
-  // Initial price calculation
-  calculatePrice();
-
-  // Event listeners for price update
-  numPassengers.addEventListener("input", calculatePrice);
-  serviceType.addEventListener("change", calculatePrice);
-  roundTrip.addEventListener("change", calculatePrice);
-  document.getElementById("child-seat").addEventListener("change", calculatePrice);
-  hoursRequested.addEventListener("input", calculatePrice);
-
-  // Pickup location change events
-  pickup.addEventListener("change", function () {
-    // Show flight and luggage info if pickup is Cyril E. King Airport
-    const isAirport = pickup.value === "cyril e. king airport";
-    flightInfo.style.display = isAirport ? "block" : "none";
-    luggageInfo.style.display = isAirport ? "block" : "none";
-
-    if (pickup.value === "other") {
-      pickupOtherDiv.style.display = "block";
-      pickupOtherInput.setAttribute("required", "true");
-    } else {
-      pickupOtherDiv.style.display = "none";
-      pickupOtherInput.removeAttribute("required");
-      pickupOtherInput.value = "";
-    }
-    calculatePrice();
-  });
-
-  // Dropoff location change events
-  dropoff.addEventListener("change", function () {
-    if (dropoff.value === "other") {
-      dropoffOtherDiv.style.display = "block";
-      dropoffOtherInput.setAttribute("required", "true");
-    } else {
-      dropoffOtherDiv.style.display = "none";
-      dropoffOtherInput.removeAttribute("required");
-      dropoffOtherInput.value = "";
-    }
-    calculatePrice();
-  });
-
-  // Inline error message handling for booking form
-  const bookingForm = document.getElementById("booking-form");
-  const inputs = bookingForm.querySelectorAll("input, select, textarea");
-  inputs.forEach(input => {
-    input.addEventListener("blur", function() {
-      if (!input.checkValidity()) {
-        let errorSpan = input.nextElementSibling;
-        if (!errorSpan || !errorSpan.classList.contains("error-message")) {
-          errorSpan = document.createElement("span");
-          errorSpan.className = "error-message";
-          input.parentNode.insertBefore(errorSpan, input.nextSibling);
-        }
-        errorSpan.textContent = input.validationMessage;
-      } else {
-        let errorSpan = input.nextElementSibling;
-        if (errorSpan && errorSpan.classList.contains("error-message")) {
-          errorSpan.textContent = "";
-        }
-      }
-    });
-  });
-
-  // Form validation and enabling submit button
-  const submitButton = document.getElementById("submit-button");
-  const paypalButtonContainer = document.getElementById("paypal-button-container");
-
-  function checkFormValidity() {
-    if (bookingForm.checkValidity()) {
-      submitButton.disabled = false;
-      paypalButtonContainer.style.display = "block";
-    } else {
-      submitButton.disabled = true;
-      paypalButtonContainer.style.display = "none";
-    }
-  }
-  bookingForm.addEventListener("input", checkFormValidity);
-
-  // Form submission handling
-  bookingForm.addEventListener("submit", function (e) {
-    if (!bookingForm.checkValidity()) {
-      e.preventDefault();
-    } else {
-      e.preventDefault(); // Remove this line when integrating with backend/payment
-      alert("Form submitted! Proceeding to payment...");
-    }
-  });
-});
-</script>
-
-</body>
-</html>
-
+    <details>
+      <summary>Terms and Conditions</summary>
+      <p>Last Updated: March 2025</p>
+      <p>Welcome to Superb Executive Transportation. By booking our limousine services, you agree to the following terms and conditions.</p>
+      <ol>
+        <li><strong>Booking & Payment:</strong>
+          <ul>
+            <li><strong>Vehicle Availability:</strong> Vehicle selection is subject to availability, and a specific vehicle is not guaranteed. However, we ensure all vehicles meet our luxury standards.</li>
+            <li><strong>Prepaid Booking:</strong> All reservations must be pre-booked and prepaid at the time of booking using an approved payment method. A minimum of 2 hours rental is required.</li>
+            <li><strong>Pricing:</strong> Pricing is subject to change. Please refer to our website or contact us for current rates.</li>
+            <li><strong>Additional Charges:</strong> Any additional charges (overtime, damages, etc.) will be billed accordingly.</li>
+            <li><strong>Payment Method:</strong> Only payments made through our official booking system are accepted; cash payments are not permitted.</li>
+          </ul>
+        </li>
+        <li><strong>Cancellation & Refund Policy:</strong>
+          <ul>
+            <li><strong>Notice Period:</strong> Cancellations must be made at least 24 hours in advance for a full refund; otherwise, payments are non-refundable.</li>
+            <li><strong>No-Show Policy:</strong> If a passenger does not arrive within 30 minutes of the scheduled pickup time without prior notice, the booking will be considered a no-show and non-refundable.</li>
+          </ul>
+        </li>
+        <li><strong>Service Guidelines:</strong>
+          <ul>
+            <li><strong>No Pets or Smoking:</strong> Pets, animals, smoking, vaping, and drug use are strictly prohibited inside the vehicle.</li>
+            <li><strong>Behavior & Conduct:</strong> Passengers must behave in a respectful and safe manner. The driver reserves the right to refuse or terminate service if a passenger engages in illegal, unruly, or unsafe behavior.</li>
+            <li><strong>Compliance with Laws:</strong> All passengers must adhere to local laws and regulations during the ride.</li>
+            <li><strong>Passenger Capacity:</strong> The number of passengers must not exceed the legal seating capacity of the vehicle. Overloading is strictly prohibited.</li>
+            <li><strong>Alcohol Consumption:</strong> Alcohol consumption for passengers under the legal drinking age is not permitted. Excessive intoxication or disorderly behavior may result in service termination without refund.</li>
+          </ul>
+        </li>
+        <li><strong>Liability & Damages:</strong>
+          <ul>
+            <li><strong>Delays:</strong> The company is not responsible for delays due to traffic, weather, or unforeseen circumstances.</li>
+            <li><strong>Damage to Vehicle:</strong> Any damages caused to the vehicle by passengers will be assessed, and the customer will be charged accordingly. Repair costs will be determined based on professional estimates and charged to the customer's payment method on file.</li>
+            <li><strong>Mechanical Failure:</strong> In the event of a mechanical failure or service interruption beyond our control, we will make reasonable efforts to provide a replacement vehicle. If no replacement is available, a partial or full refund may be issued at our discretion.</li>
+            <li><strong>Cleaning Fees:</strong> If excessive mess, spills, or biohazards (e.g., vomiting) require professional cleaning, a cleaning fee will be charged to the customer's payment method on file.</li>
+          </ul>
+        </li>
+        <li><strong>Waiting Time, Overtime & Extra Stops Charges:</strong>
+          <ul>
+            <li><strong>Waiting Time:</strong> A 15-minute grace period is allowed for pickup delays. Additional waiting time will be charged at the hourly rate.</li>
+            <li><strong>Overtime:</strong> If the trip extends beyond the booked duration, overtime will be charged in 30-minute increments based on the applicable hourly rate.</li>
+            <li><strong>Extra Stops:</strong> Additional stops must be requested in advance and may result in extra charges.</li>
+            <li><strong>Quick stops (5 minutes or less):</strong> $10 per stop.</li>
+            <li><strong>Extended stops (over 5 minutes):</strong> Charged in 30-minute increments at the hourly rate.</li>
+            <li><strong>Unscheduled stops:</strong> Subject to driver approval and may impact total trip duration and cost.</li>
+            <li><strong>Holiday & Late-Night Surcharges:</strong> Additional fees may apply for bookings on holidays or during late-night hours. Contact us for details.</li>
+          </ul>
+        </li>
+        <li><strong>Personal Belongings:</strong>
+          <ul>
+            <li>The company is not responsible for lost, stolen, or left-behind items.</li>
+          </ul>
+        </li>
+        <li><strong>Force Majeure:</strong>
+          <ul>
+            <li>We reserve the right to cancel or reschedule services due to emergencies, extreme weather, or circumstances beyond our control.</li>
+          </ul>
+        </li>
+        <li><strong>Privacy Policy:</strong>
+          <ul>
+            <li>Personal information collected during the booking process is used solely for service fulfillment and will not be shared with third parties except as required by law.</li>
+          </ul>
+        </li>
+        <li><strong>Dispute Resolution:</strong>
+          <ul>
+            <li>Any disputes arising from these terms will first be attempted to be resolved amicably. If unresolved, the matter shall be handled in accordance with the laws of the Virgin Islands of the United States. Disputes will be resolved through binding arbitration if necessary.</li>
+          </ul>
+        </li>
+        <li><strong>Governing Law:</strong>
+          <ul>
+            <li>These terms and conditions shall be governed by and construed in accordance with the laws of the Virgin Islands of the United States. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the courts of the Virgin Islands of the United States.</li>
+          </ul>
+        </li>
+        <li><strong>Right to Refuse Service:</strong>
+          <ul>
+            <li>We reserve the right to refuse or terminate service at any time for any passenger who violates these terms, poses a safety risk, or engages in disrespectful, illegal, or unruly behavior. No refunds will be issued in such cases.</li>
+          </ul>
+        </li>
+      </ol>
+    </details>
+    <div>
