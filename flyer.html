@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Superb Executive Transportation Flyer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       background: #000;
       color: #fff;
-      font-family: Arial, sans-serif;
+      font-family: 'Source Sans Pro', sans-serif;
       margin: 0;
       padding: 40px;
       display: flex;
@@ -19,14 +20,14 @@
       background: #111;
       padding: 0;
       border-radius: 15px;
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+      box-shadow: 0 0 20px rgba(197, 160, 60, 0.5);
       max-width: 600px;
       width: 100%;
       text-align: center;
       overflow: hidden;
     }
     .hero {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('png/van1.png') center bottom / cover no-repeat;
+      
       padding: 160px 20px;
       display: flex;
       justify-content: center;
@@ -34,51 +35,59 @@
       flex-direction: column;
     }
     .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2em;
       color: #fff;
-      text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;
+      text-shadow: 0 0 2px #c5a03c;
     }
     .hero .subtext {
       margin-bottom: 20px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      font-size: 1.2em;
+      font-weight: 600;
     }
     .features {
       text-align: left;
-      margin: 20px auto 0;
+      margin: 40px auto 0;
       padding: 0 60px;
+    }
+    .features-intro {
+      font-size: 1.2em;
+      color: #c5a03c;
+      font-weight: 600;
+      margin-bottom: 16px;
     }
     .features li {
       list-style: none;
-      margin: 6px 0;
+      margin: 10px 0;
       position: relative;
-      padding-left: 1.2em;
+      padding-left: 1.5em;
+      font-size: 1.05em;
     }
     .features li::before {
-      content: '✔';
+      content: '\2022';
       position: absolute;
       left: 0;
-      color: #d4af37;
+      color: #c5a03c;
+      font-size: 1.2em;
     }
     .divider {
       width: 60%;
       height: 2px;
-      background: rgba(212,175,55,0.9);
-      margin: 30px auto;
+      background: rgba(197,160,60,0.9);
+      margin: 50px auto;
     }
     .qr {
-      margin: 30px 0;
+      margin: 30px 0 10px;
     }
     .qr-caption {
-      color: #d4af37;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-      margin-bottom: 20px;
+      color: #c5a03c;
+      font-weight: 600;
+      font-size: 1.1em;
+      margin-bottom: 16px;
     }
     .qr img {
-      border: 2px solid #d4af37;
+      border: 2px solid #c5a03c;
       border-radius: 8px;
-      transition: transform 0.3s ease;
-    }
-    .qr img:hover {
-      transform: scale(1.05);
     }
     .contact {
       margin-top: 20px;
@@ -86,8 +95,14 @@
       text-align: center;
     }
     .contact a {
-      color: #d4af37;
+      color: #c5a03c;
       text-decoration: none;
+    }
+    .cta {
+      margin-top: 25px;
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #c5a03c;
     }
     @media print {
       body, .flyer {
@@ -97,38 +112,44 @@
         color-adjust: exact;
       }
       .flyer { box-shadow: none; }
-      .divider { background: #d4af37 !important; }
+      .divider { background: #c5a03c !important; }
     }
     @media (max-width: 480px) {
-      .flyer { max-width: 360px; margin: 0 auto; }
+  .flyer { max-width: 360px; margin: 0 auto; }
+  
+  .features { padding: 0 30px; }
+}
       .qr img { width: 160px; }
     }
   </style>
 </head>
 <body>
   <div class="flyer">
-    <div class="hero">
-      <div class="hero-content">
-        <h1>Superb Executive Transportation</h1>
-        <div class="subtext">More than a ride—it's a statement.</div>
+    <div class="hero" style="padding: 0;">
+  <img src="png/van1.png" alt="Luxury Van" style="width: 100%; display: block;">
+  <div class="hero-content" style="padding: 20px 20px 10px;">
+    <h1>Superb Executive Transportation</h1>
+    <div class="subtext">More than a ride—it's a statement.</div>
+  </div>
+</div>
       </div>
     </div>
 
-    <div class="features" style="font-size: 1.1em; color: #d4af37; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); margin-top: 20px; margin-bottom: 0;">
-  Serving Cyril E. King Airport, ferry terminals, private jets, premier resorts, and the island of St. John.
-</div>
-
-<ul class="features">
-      <li>On-Time Pickup & Drop-off</li>
-      <li>Professional Chauffeurs</li>
-      <li>Comfort for up to 6 — larger groups welcome with extra vehicle</li>
-    </ul>
+    <div class="features">
+      <div class="features-intro">
+        Serving Cyril E. King Airport, ferry terminals, private jets, premier resorts, and the island of St. John.
+      </div>
+      <ul>
+        <li>On-time, private transfers</li>
+        <li>Impeccably dressed chauffeurs</li>
+        <li>Spacious comfort for 6 — coordination available for larger groups</li>
+      </ul>
+    </div>
 
     <div class="divider"></div>
 
     <div class="qr">
-      <div class="qr-caption">Book with Confidence</div>
-      <a href="https://set-vi.github.io/set-limo-vi/booking.html" target="_blank">
+            <a href="https://set-vi.github.io/set-limo-vi/booking.html" target="_blank">
         <img src="png/qr-booking.png" alt="Scan to Book" width="200">
       </a>
     </div>
@@ -136,7 +157,8 @@
     <div class="contact">
       <p><a href="tel:3406428686">📞 340-642-8686</a></p>
       <p><a href="mailto:setlimovi@gmail.com">📧 setlimovi@gmail.com</a></p>
-      <p><a href="https://set-vi.github.io/set-limo-vi/" style="color: #d4af37;">🌐 set-limo-vi.github.io</a></p>
+      <p><a href="https://set-vi.github.io/set-limo-vi/">🌐 https://set-vi.github.io/set-limo-vi/</a></p>
+      <div class="cta">By reservation only. Discreet. Reliable. On your terms.</div>
     </div>
   </div>
 </body>
