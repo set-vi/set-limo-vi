@@ -5,110 +5,317 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Elevate Your Journey | Superb Executive Transportation</title>
   <style>
-    body { margin: 0; font-family: 'Arial', sans-serif; background: #000; color: #fff; padding: 40px; display: flex; justify-content: center; }
-    .container { background: #111; padding: 30px; border-radius: 12px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); width: 100%; max-width: 500px; }
-    h1 { color: #d4af37; text-align: center; margin-bottom: 20px; }
-    label { display: block; margin-top: 15px; margin-bottom: 5px; }
-    input, textarea, select { box-sizing: border-box; width: 100%; padding: 10px; font-size: 1em; border-radius: 5px; border: 1px solid #ccc; background: #222; color: #fff; }
-    input:focus, select:focus, textarea:focus { border-color: #d4af37; outline: none; }
-    button { margin-top: 20px; width: 100%; padding: 12px; background-color: #d4af37; color: #000; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background-color: #b9972e; }
-    .contact-info { margin-top: 30px; text-align: center; font-size: 0.95em; color: #ccc; }
-    .contact-info a { color: #d4af37; text-decoration: none; }
-    .airport-fields { display: none; margin-top: 15px; background: #181818; padding: 12px; border: 1px solid #333; border-radius: 6px; }
-    .airport-fields label { margin-top: 0; }
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #000;
+      color: #fff;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      background: #111;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      width: 100%;
+      max-width: 500px;
+    }
+    h1 {
+      color: #d4af37;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+    input, textarea, select {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background: #222;
+      color: #fff;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #d4af37;
+      outline: none;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #d4af37;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #b9972e;
+    }
+    .contact-info {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.95em;
+      color: #ccc;
+    }
+    .contact-info a {
+      color: #d4af37;
+      text-decoration: none;
+    }
+    .hero-image {
+      position: relative;
+      width: 100%;
+      max-height: 280px;
+      overflow: hidden;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-heading {
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #d4af37;
+      margin-top: -10px;
+      margin-bottom: 25px;
+      text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;
+    }
+    @media (max-width: 480px) {
+      body {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div style="position: relative; width: 100%; max-height: 280px; overflow: hidden; border-radius: 10px; margin-bottom: 20px;">
-      <img src="./png/luxury-int.png" alt="Luxury Interior" style="width: 100%; height: auto; object-fit: cover; display: block;" />
-      <div style="position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; background: rgba(0, 0, 0, 0.4); color: #fff; font-size: 1.5em; padding: 10px 0; font-weight: bold; text-shadow: 0 0 2px #d4af37, 0 0 5px #d4af37;">Elevate Your Journey</div>
-    </div>
-    <form id="booking-form">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required autocomplete="name" />
-
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required autocomplete="email" />
-
-      <label for="confirm-email">Confirm Email</label>
-      <input type="email" id="confirm-email" name="confirm-email" required autocomplete="email" />
-
-      <label for="date">Date</label>
-      <input type="date" id="date" name="date" required min="" onfocus="this.min=new Date().toISOString().split('T')[0]" />
-
-      <label for="time">Time of Service</label>
-      <select id="time" name="time" required>
-        <!-- time options -->
-      </select>
-
-      <label for="pickup">Pick-up Location</label>
-      <input list="locations" id="pickup" name="pickup" required />
-
-      <label for="dropoff">Drop-off Location</label>
-      <input list="locations" id="dropoff" name="dropoff" required />
-
-      <div class="airport-fields" id="airport-fields">
-        <label for="flight-number">Flight Number</label>
-        <input type="text" id="flight-number" name="flight-number" placeholder="e.g. AA1234" />
-
-        <label for="baggage">Number of Bags</label>
-        <input type="number" id="baggage" name="baggage" min="0" placeholder="0" />
-      </div>
-
-      <label for="passengers"># of Passengers</label>
-      <input type="number" id="passengers" name="passengers" min="1" inputmode="numeric" required placeholder="Enter number of passengers" />
-
-      <label for="roundtrip">Round Trip?</label>
-      <select id="roundtrip" name="roundtrip">
-        <!-- round trip options -->
-      </select>
-
-      <div id="return-fields" style="display: none;">
-        <!-- return fields -->
-      </div>
-
-      <div style="margin-top: 16px; padding: 12px; background-color: #181818; border: 1px solid #333; border-radius: 6px; font-size: 0.85em; color: #ccc; line-height: 1.6;">
-        <!-- rate info block -->
-      </div>
-
-      <label for="notes">Additional Details or Special Instructions</label>
-      <textarea id="notes" name="notes" rows="3"></textarea>
-
-      <button type="submit">Submit Booking</button>
-    </form>
-
-    <datalist id="locations">
-      <option value="Cyril E. King Airport">
-      <option value="Red Hook Ferry Terminal">
-      <option value="Charlotte Amalie Ferry Terminal">
-      <option value="Lindbergh Bay Ferry Terminal">
-      <option value="Ritz-Carlton St. Thomas">
-      <option value="Secret Harbour Beach Resort">
-      <option value="Magens Bay Beach">
-      <option value="Private Jet Terminal">
-      <option value="the island of St. John">
-    </datalist>
-
-    <div class="contact-info">
-      <!-- contact info -->
-    </div>
+<div class="container">
+  <div class="hero-image">
+    <img src="./png/luxury-int.png" alt="Luxury Interior">
   </div>
+  <h1 class="hero-heading">Elevate Your Journey</h1>
 
-  <script>
-    const airportFields = document.getElementById('airport-fields');
-    const locInputs = [document.getElementById('pickup'), document.getElementById('dropoff')];
-    locInputs.forEach(input => {
-      input.addEventListener('change', () => {
-        if (input.value.toLowerCase().includes('airport')) {
-          airportFields.style.display = 'block';
-        } else if (!locInputs.some(i => i.value.toLowerCase().includes('airport'))) {
-          airportFields.style.display = 'none';
-        }
+  <form id="booking-form">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required autocomplete="name" />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required autocomplete="email" />
+
+    <label for="confirm-email">Confirm Email</label>
+    <input type="email" id="confirm-email" name="confirm-email" required autocomplete="email" />
+
+    <label for="date">Date</label>
+    <input type="date" id="date" name="date" required min="" onfocus="this.min=new Date().toISOString().split('T')[0]" />
+
+    <label for="time">Time of Service</label>
+    <select id="time" name="time" required>
+      <option value="">-- Select Time --</option>
+      <option value="05:00">5:00 AM</option>
+      <option value="06:00">6:00 AM</option>
+      <option value="07:00">7:00 AM</option>
+      <option value="08:00">8:00 AM</option>
+      <option value="09:00">9:00 AM</option>
+      <option value="10:00">10:00 AM</option>
+      <option value="11:00">11:00 AM</option>
+      <option value="12:00">12:00 PM</option>
+      <option value="13:00">1:00 PM</option>
+      <option value="14:00">2:00 PM</option>
+      <option value="15:00">3:00 PM</option>
+      <option value="16:00">4:00 PM</option>
+      <option value="17:00">5:00 PM</option>
+      <option value="18:00">6:00 PM</option>
+      <option value="19:00">7:00 PM</option>
+      <option value="20:00">8:00 PM</option>
+      <option value="21:00">9:00 PM</option>
+      <option value="22:00">10:00 PM</option>
+      <option value="23:00">11:00 PM</option>
+      <option value="00:00">12:00 AM (Midnight)</option>
+    </select>
+
+    <label for="pickup">Pick-up Location</label>
+    <input list="locations" id="pickup" name="pickup" required />
+
+    <label for="dropoff">Drop-off Location</label>
+    <input list="locations" id="dropoff" name="dropoff" required />
+
+    <label for="passengers"># of Passengers</label>
+    <input type="number" id="passengers" name="passengers" min="1" inputmode="numeric" required placeholder="Enter number of passengers" />
+
+    <label for="roundtrip">Round Trip?</label>
+    <select id="roundtrip" name="roundtrip">
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+
+    <div id="return-fields" style="display: none;">
+      <label for="return-date">Return Date</label>
+      <input type="date" id="return-date" name="return-date" />
+
+      <label for="return-time">Return Time</label>
+      <select id="return-time" name="return-time">
+        <option value="">-- Select Time --</option>
+        <option value="13:00">1:00 PM</option>
+        <option value="14:00">2:00 PM</option>
+        <option value="15:00">3:00 PM</option>
+        <option value="16:00">4:00 PM</option>
+        <option value="17:00">5:00 PM</option>
+        <option value="18:00">6:00 PM</option>
+        <option value="19:00">7:00 PM</option>
+        <option value="20:00">8:00 PM</option>
+        <option value="21:00">9:00 PM</option>
+        <option value="22:00">10:00 PM</option>
+        <option value="23:00">11:00 PM</option>
+        <option value="00:00">12:00 AM (Midnight)</option>
+      </select>
+    </div>
+
+    <div style="margin-top: 16px; padding: 12px; background-color: #181818; border: 1px solid #333; border-radius: 6px; font-size: 0.85em; color: #ccc; line-height: 1.6;">
+      <p><span style="color: #d4af37; font-weight: 600;">$150</span> base rate for 1–4 guests. Each additional: <span style="color: #d4af37; font-weight: 600;">$25</span>.</p>
+      <p><span style="color: #d4af37; font-weight: 600;">St. John</span> transfers start at <span style="color: #d4af37; font-weight: 600;">$500</span> for 1–4 guests. Each additional: <span style="color: #d4af37; font-weight: 600;">$100</span>.</p>
+    </div>
+
+    <label for="notes">Additional Details or Special Instructions</label>
+    <textarea id="notes" name="notes" rows="3"></textarea>
+
+    <button type="submit">Submit Booking</button>
+  </form>
+
+  <datalist id="locations">
+    <option value="St. John">
+    <option value="Charlotte Amalie">
+    <option value="Yacht Haven Grande">
+    <option value="Havensight">
+    <option value="Tutu Park Mall">
+    <option value="Cyril E. King Airport">
+    <option value="Red Hook Ferry Terminal">
+    <option value="Magens Bay">
+    <option value="The Ritz-Carlton, St. Thomas">
+    <option value="Secret Harbour Beach Resort">
+    <option value="Margaritaville Vacation Club">
+    <option value="Emerald Beach Resort">
+    <option value="Bluebeard's Castle">
+    <option value="Marriott Frenchman's Reef">
+    <option value="Bolongo Bay Beach Resort">
+    <option value="Point Pleasant Resort">
+  </datalist>
+
+  <div class="contact-info">
+    <p>📞 <a href="tel:3406428686">340-642-8686</a></p>
+    <p>📧 <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
+    <p>🌐 <a href="https://set-vi.github.io/set-limo-vi/booking.html" target="_blank">set-vi.github.io/set-limo-vi/booking.html</a></p>
+  </div>
+</div>
+<script>
+  document.getElementById('booking-form').addEventListener('submit', async function(e) {
+    const form = e.target;
+    e.preventDefault();
+
+    const email = form.email.value;
+    const confirmEmail = form['confirm-email'].value;
+    if (email !== confirmEmail) {
+      alert("Emails do not match.");
+      return;
+    }
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const button = form.querySelector('button');
+    button.disabled = true;
+    button.textContent = 'Submitting...';
+
+    const data = new FormData(form);
+
+    try {
+      await fetch('https://hooks.zapier.com/hooks/catch/22771776/2pv86os', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
       });
+
+      window.location.href = 'https://set-vi.github.io/set-limo-vi/thank-you.html';
+    } catch (error) {
+      alert("Something went wrong. Please try again or call us directly.");
+      button.disabled = false;
+      button.textContent = 'Submit Booking';
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const roundTripSelect = document.getElementById('roundtrip');
+    const returnFields = document.getElementById('return-fields');
+    const returnTime = document.getElementById('return-time');
+    const serviceTime = document.getElementById('time');
+
+    roundTripSelect.addEventListener('change', function () {
+      if (this.value === 'yes') {
+        returnFields.style.display = 'block';
+      } else {
+        returnFields.style.display = 'none';
+        returnFields.querySelectorAll('input, select').forEach(el => el.value = '');
+      }
     });
-    // existing event listeners...
-  </script>
+
+    function disablePastTimes(select, bufferMinutes = 180) {
+      const now = new Date();
+      const reference = (now.getHours() * 60 + now.getMinutes()) + bufferMinutes;
+
+      Array.from(select.options).forEach(option => {
+        const val = option.value;
+        if (!val || !val.includes(':')) return;
+
+        let [h, m] = val.split(':').map(Number);
+        if (h === 0 && m === 0) h = 24;
+
+        const optionTime = h * 60 + m;
+        option.disabled = optionTime <= reference;
+      });
+    }
+
+    disablePastTimes(serviceTime);
+
+    serviceTime.addEventListener('change', function () {
+      const selectedVal = this.value;
+      if (!selectedVal || !selectedVal.includes(':')) return;
+
+      let [h, m] = selectedVal.split(':').map(Number);
+      if (h === 0 && m === 0) h = 24;
+
+      const selectedMinutes = h * 60 + m;
+      disablePastTimes(returnTime, selectedMinutes);
+    });
+  });
+
+  const passengerInput = document.getElementById('passengers');
+  const passengerNote = document.createElement('div');
+  passengerNote.id = 'passenger-warning';
+  passengerNote.style.cssText = 'font-size: 0.8em; color: #d4af37; margin-top: 6px; display: none;';
+  passengerNote.textContent = 'Requests for more than 6 passengers will be reviewed. We’ll follow up to confirm vehicle accommodations.';
+  passengerInput.parentNode.insertBefore(passengerNote, passengerInput.nextSibling);
+
+  passengerInput.addEventListener('input', function () {
+    const warning = document.getElementById('passenger-warning');
+    if (this.value > 6) {
+      warning.style.display = 'block';
+    } else {
+      warning.style.display = 'none';
+    }
+  });
+</script>
 </body>
 </html>
