@@ -109,16 +109,7 @@
   <h1 class="hero-heading">Elevate Your Journey</h1>
 
   <form id="booking-form">
-    <label for="pickup">Pick-up Location</label>
-    <input list="locations" id="pickup" name="pickup" required />
-
-    <div id="airport-extra" style="display: none;">
-      <label for="airline">Airline</label>
-      <input type="text" id="airline" name="airline" placeholder="e.g. American Airlines" />
-
-      <label for="baggage">Baggage Info</label>
-      <textarea id="baggage" name="baggage" rows="2" placeholder="e.g. 2 checked bags, 1 carry-on"></textarea>
-    </div>
+    
   <label for="name">Name</label>
     <input type="text" id="name" name="name" required autocomplete="name" />
 
@@ -155,6 +146,17 @@
       <option value="23:00">11:00 PM</option>
       <option value="00:00">12:00 AM (Midnight)</option>
     </select>
+
+    <label for="pickup">Pick-up Location</label>
+    <input list="locations" id="pickup" name="pickup" required />
+
+    <div id="airport-extra" style="display: none;">
+      <label for="airline">Airline</label>
+      <input type="text" id="airline" name="airline" placeholder="e.g. American Airlines" />
+
+      <label for="baggage">Baggage Info</label>
+      <textarea id="baggage" name="baggage" rows="2" placeholder="e.g. 2 checked bags, 1 carry-on"></textarea>
+    </div>
 
     <label for="dropoff">Drop-off Location</label>
     <input list="locations" id="dropoff" name="dropoff" required />
