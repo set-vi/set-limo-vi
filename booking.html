@@ -129,7 +129,7 @@
     <input type="email" id="confirm-email" name="confirm-email" required autocomplete="email" />
 
     <label for="date">Date</label>
-    <input type="date" id="date" name="date" required />
+    <input type="date" id="date" name="date" required min="" onfocus="this.min = new Date().toISOString().split('T')[0]" />
 
     <label for="time">Time of Service</label>
     <select id="time" name="time" required>
@@ -309,14 +309,20 @@
         if (h === 0 && m === 0) h = 24;
 
         const optionTime = h * 60 + m;
-        option.disabled = selectedDate === today && optionTime <= reference;
+        if (selectedDate === today) {
+        option.disabled = optionTime <= reference;
+      } else {
+        option.disabled = false;
+      }
       });
     }
 
     const dateField = document.getElementById('date');
     if (dateField) {
       dateField.addEventListener('change', function () {
-        disablePastTimes(serviceTime);
+        if (dateField && dateField.value) {
+        
+      }
       });
     }
 
