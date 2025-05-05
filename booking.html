@@ -50,15 +50,16 @@
       margin-top: 20px;
       width: 100%;
       padding: 12px;
-      background-color: #d4af37;
-      color: #000;
+      background-color: #000;
+      color: #fff;
       font-weight: bold;
-      border: none;
+      border: 2px solid #d4af37;
       border-radius: 5px;
       cursor: pointer;
     }
     button:hover {
-      background-color: #b9972e;
+      background-color: #d4af37;
+      color: #000;
     }
     .contact-info {
       margin-top: 30px;
@@ -86,7 +87,7 @@
     }
     .hero-heading {
       text-align: center;
-      font-size: 1.8em;
+      font-size: 1.6em;
       font-weight: bold;
       color: #d4af37;
       margin-top: -10px;
@@ -105,22 +106,25 @@
   <div class="hero-image">
     <img src="./png/luxury-int.png" alt="Luxury Interior">
   </div>
-  <h1 class="hero-heading">Elevate Your Journey</h1>
+  <h1 class="hero-heading" style="color: #fff; text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;">Elevate Your Journey</h1>
 
   <form id="booking-form">
-    <label for="name">Name</label>
+    <label for="name"><span style="color:#d4af37">*</span> Name</label>
     <input type="text" id="name" name="name" required autocomplete="name" />
 
-    <label for="email">Email</label>
+    <label for="email"><span style="color:#d4af37">*</span> Email</label>
     <input type="email" id="email" name="email" required autocomplete="email" />
 
-    <label for="confirm-email">Confirm Email</label>
+    <label for="phone"><span style="color:#d4af37">*</span> Phone Number</label>
+    <input type="tel" id="phone" name="phone" required autocomplete="tel" pattern="\d{10}" title="Please enter a 10-digit phone number" />
+
+    <label for="confirm-email"><span style="color:#d4af37">*</span> Confirm Email</label>
     <input type="email" id="confirm-email" name="confirm-email" required autocomplete="email" />
 
-    <label for="date">Date</label>
+    <label for="date"><span style="color:#d4af37">*</span> Date</label>
     <input type="date" id="date" name="date" required min="" onfocus="this.min=new Date().toISOString().split('T')[0]" />
 
-    <label for="time">Time of Service</label>
+    <label for="time"><span style="color:#d4af37">*</span> Time of Service (AST)</label>
     <select id="time" name="time" required>
       <option value="">-- Select Time --</option>
       <option value="05:00">5:00 AM</option>
@@ -145,26 +149,39 @@
       <option value="00:00">12:00 AM (Midnight)</option>
     </select>
 
-    <label for="pickup">Pick-up Location</label>
+    <label for="pickup"><span style="color:#d4af37">*</span> Pick-up Location</label>
     <input list="locations" id="pickup" name="pickup" required />
+<small style="color:#aaa; font-size:0.85em;">If not listed, enter a full address or detailed landmark.</small>
 
-    <label for="dropoff">Drop-off Location</label>
-    <input list="locations" id="dropoff" name="dropoff" required />
+    <div id="airport-extra" style="display: none;">
+  <label for="airline">Airline</label>
+  <input type="text" id="airline" name="airline" placeholder="e.g., American Airlines" />
 
-    <label for="passengers"># of Passengers</label>
+  <label for="flight">Flight Number</label>
+  <input type="text" id="flight" name="flight" placeholder="e.g., AA1234" />
+
+  <label for="baggage">Baggage Notes</label>
+  <textarea id="baggage" name="baggage" rows="2" placeholder="e.g., 2 checked bags, oversized item"></textarea>
+</div>
+
+    <label for="dropoff"><span style="color:#d4af37">*</span> Drop-off Location</label>
+<input list="locations" id="dropoff" name="dropoff" required />
+<small style="color:#aaa; font-size:0.85em;">If not listed, enter a full address or detailed landmark.</small>
+
+<label for="passengers"><span style="color:#d4af37">*</span> # of Passengers</label>
     <input type="number" id="passengers" name="passengers" min="1" inputmode="numeric" required placeholder="Enter number of passengers" />
 
-    <label for="roundtrip">Round Trip?</label>
+    <label for="roundtrip"><span style="color:#d4af37">*</span> Round Trip?</label>
     <select id="roundtrip" name="roundtrip">
       <option value="no">No</option>
       <option value="yes">Yes</option>
     </select>
 
     <div id="return-fields" style="display: none;">
-      <label for="return-date">Return Date</label>
+      <label for="return-date"><span style="color:#d4af37">*</span> Return Date</label>
       <input type="date" id="return-date" name="return-date" />
 
-      <label for="return-time">Return Time</label>
+      <label for="return-time"><span style="color:#d4af37">*</span> Return Time</label>
       <select id="return-time" name="return-time">
         <option value="">-- Select Time --</option>
         <option value="13:00">1:00 PM</option>
@@ -257,6 +274,17 @@
   });
 
   document.addEventListener('DOMContentLoaded', function () {
+    const pickup = document.getElementById('pickup');
+    const airportExtra = document.getElementById('airport-extra');
+
+    pickup.addEventListener('input', function () {
+      if (pickup.value === 'Cyril E. King Airport') {
+        airportExtra.style.display = 'block';
+      } else {
+        airportExtra.style.display = 'none';
+        airportExtra.querySelectorAll('input, textarea').forEach(el => el.value = '');
+      }
+    });
     const roundTripSelect = document.getElementById('roundtrip');
     const returnFields = document.getElementById('return-fields');
     const returnTime = document.getElementById('return-time');
@@ -305,7 +333,7 @@
   const passengerNote = document.createElement('div');
   passengerNote.id = 'passenger-warning';
   passengerNote.style.cssText = 'font-size: 0.8em; color: #d4af37; margin-top: 6px; display: none;';
-  passengerNote.textContent = 'Requests for more than 6 passengers will be reviewed. We’ll follow up to confirm vehicle accommodations.';
+  passengerNote.textContent = 'Groups over 6 passengers may require a second vehicle. We’ll follow up to confirm arrangements.';
   passengerInput.parentNode.insertBefore(passengerNote, passengerInput.nextSibling);
 
   passengerInput.addEventListener('input', function () {
