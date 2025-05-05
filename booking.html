@@ -89,7 +89,7 @@
       text-align: center;
       font-size: 1.6em;
       font-weight: bold;
-      color: #d4af37;
+      color: #fff;
       margin-top: -10px;
       margin-bottom: 25px;
       text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;
@@ -106,25 +106,32 @@
   <div class="hero-image">
     <img src="./png/luxury-int.png" alt="Luxury Interior">
   </div>
-  <h1 class="hero-heading" style="color: #fff; text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;">Elevate Your Journey</h1>
+  <h1 class="hero-heading">Elevate Your Journey</h1>
 
   <form id="booking-form">
-    <label for="name"><span style="color:#d4af37">*</span> Name</label>
+    <label for="pickup">Pick-up Location</label>
+    <input list="locations" id="pickup" name="pickup" required />
+
+    <div id="airport-extra" style="display: none;">
+      <label for="airline">Airline</label>
+      <input type="text" id="airline" name="airline" placeholder="e.g. American Airlines" />
+
+      <label for="baggage">Baggage Info</label>
+      <textarea id="baggage" name="baggage" rows="2" placeholder="e.g. 2 checked bags, 1 carry-on"></textarea>
+    </div>
+  <label for="name">Name</label>
     <input type="text" id="name" name="name" required autocomplete="name" />
 
-    <label for="email"><span style="color:#d4af37">*</span> Email</label>
+    <label for="email">Email</label>
     <input type="email" id="email" name="email" required autocomplete="email" />
 
-    <label for="phone"><span style="color:#d4af37">*</span> Phone Number</label>
-    <input type="tel" id="phone" name="phone" required autocomplete="tel" pattern="\d{10}" title="Please enter a 10-digit phone number" />
-
-    <label for="confirm-email"><span style="color:#d4af37">*</span> Confirm Email</label>
+    <label for="confirm-email">Confirm Email</label>
     <input type="email" id="confirm-email" name="confirm-email" required autocomplete="email" />
 
-    <label for="date"><span style="color:#d4af37">*</span> Date</label>
-    <input type="date" id="date" name="date" required min="" onfocus="this.min=new Date().toISOString().split('T')[0]" />
+    <label for="date">Date</label>
+    <input type="date" id="date" name="date" required />
 
-    <label for="time"><span style="color:#d4af37">*</span> Time of Service (AST)</label>
+    <label for="time">Time of Service</label>
     <select id="time" name="time" required>
       <option value="">-- Select Time --</option>
       <option value="05:00">5:00 AM</option>
@@ -149,39 +156,23 @@
       <option value="00:00">12:00 AM (Midnight)</option>
     </select>
 
-    <label for="pickup"><span style="color:#d4af37">*</span> Pick-up Location</label>
-    <input list="locations" id="pickup" name="pickup" required />
-<small style="color:#aaa; font-size:0.85em;">If not listed, enter a full address or detailed landmark.</small>
+    <label for="dropoff">Drop-off Location</label>
+    <input list="locations" id="dropoff" name="dropoff" required />
 
-    <div id="airport-extra" style="display: none;">
-  <label for="airline">Airline</label>
-  <input type="text" id="airline" name="airline" placeholder="e.g., American Airlines" />
-
-  <label for="flight">Flight Number</label>
-  <input type="text" id="flight" name="flight" placeholder="e.g., AA1234" />
-
-  <label for="baggage">Baggage Notes</label>
-  <textarea id="baggage" name="baggage" rows="2" placeholder="e.g., 2 checked bags, oversized item"></textarea>
-</div>
-
-    <label for="dropoff"><span style="color:#d4af37">*</span> Drop-off Location</label>
-<input list="locations" id="dropoff" name="dropoff" required />
-<small style="color:#aaa; font-size:0.85em;">If not listed, enter a full address or detailed landmark.</small>
-
-<label for="passengers"><span style="color:#d4af37">*</span> # of Passengers</label>
+    <label for="passengers"># of Passengers</label>
     <input type="number" id="passengers" name="passengers" min="1" inputmode="numeric" required placeholder="Enter number of passengers" />
 
-    <label for="roundtrip"><span style="color:#d4af37">*</span> Round Trip?</label>
+    <label for="roundtrip">Round Trip?</label>
     <select id="roundtrip" name="roundtrip">
       <option value="no">No</option>
       <option value="yes">Yes</option>
     </select>
 
     <div id="return-fields" style="display: none;">
-      <label for="return-date"><span style="color:#d4af37">*</span> Return Date</label>
+      <label for="return-date">Return Date</label>
       <input type="date" id="return-date" name="return-date" />
 
-      <label for="return-time"><span style="color:#d4af37">*</span> Return Time</label>
+      <label for="return-time">Return Time</label>
       <select id="return-time" name="return-time">
         <option value="">-- Select Time --</option>
         <option value="13:00">1:00 PM</option>
@@ -199,115 +190,116 @@
       </select>
     </div>
 
-    <div style="margin-top: 16px; padding: 12px; background-color: #181818; border: 1px solid #333; border-radius: 6px; font-size: 0.85em; color: #ccc; line-height: 1.6;">
-      <p><span style="color: #d4af37; font-weight: 600;">$150</span> base rate for 1–4 guests. Each additional: <span style="color: #d4af37; font-weight: 600;">$25</span>.</p>
-      <p><span style="color: #d4af37; font-weight: 600;">St. John</span> transfers start at <span style="color: #d4af37; font-weight: 600;">$500</span> for 1–4 guests. Each additional: <span style="color: #d4af37; font-weight: 600;">$100</span>.</p>
-    </div>
-
     <label for="notes">Additional Details or Special Instructions</label>
     <textarea id="notes" name="notes" rows="3"></textarea>
 
     <button type="submit">Submit Booking</button>
-  </form>
 
-  <datalist id="locations">
-    <option value="St. John">
-    <option value="Charlotte Amalie">
-    <option value="Yacht Haven Grande">
-    <option value="Havensight">
-    <option value="Tutu Park Mall">
-    <option value="Cyril E. King Airport">
-    <option value="Red Hook Ferry Terminal">
-    <option value="Magens Bay">
-    <option value="The Ritz-Carlton, St. Thomas">
-    <option value="Secret Harbour Beach Resort">
-    <option value="Margaritaville Vacation Club">
-    <option value="Emerald Beach Resort">
-    <option value="Bluebeard's Castle">
-    <option value="Marriott Frenchman's Reef">
-    <option value="Bolongo Bay Beach Resort">
-    <option value="Point Pleasant Resort">
-  </datalist>
+    <datalist id="locations">
+      <option value="St. John">
+      <option value="Charlotte Amalie">
+      <option value="Yacht Haven Grande">
+      <option value="Havensight">
+      <option value="Tutu Park Mall">
+      <option value="Cyril E. King Airport">
+      <option value="Red Hook Ferry Terminal">
+      <option value="Magens Bay">
+      <option value="The Ritz-Carlton, St. Thomas">
+      <option value="Secret Harbour Beach Resort">
+      <option value="Margaritaville Vacation Club">
+      <option value="Emerald Beach Resort">
+      <option value="Bluebeard's Castle">
+      <option value="Marriott Frenchman's Reef">
+      <option value="Bolongo Bay Beach Resort">
+      <option value="Point Pleasant Resort">
+    </datalist>
+  </form>
 
   <div class="contact-info">
     <p>📞 <a href="tel:3406428686">340-642-8686</a></p>
     <p>📧 <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
     <p>🌐 <a href="https://set-vi.github.io/set-limo-vi/booking.html" target="_blank">set-vi.github.io/set-limo-vi/booking.html</a></p>
   </div>
+
 </div>
 <script>
-  document.getElementById('booking-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const form = e.target;
-    e.preventDefault();
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    const email = form.email.value;
-    const confirmEmail = form['confirm-email'].value;
-    if (email !== confirmEmail) {
-      alert("Emails do not match.");
-      return;
-    }
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    const button = form.querySelector('button');
-    button.disabled = true;
-    button.textContent = 'Submitting...';
-
-    const data = new FormData(form);
-
-    try {
-      await fetch('https://hooks.zapier.com/hooks/catch/22771776/2pv86os', {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      window.location.href = 'https://set-vi.github.io/set-limo-vi/thank-you.html';
-    } catch (error) {
-      alert("Something went wrong. Please try again or call us directly.");
-      button.disabled = false;
-      button.textContent = 'Submit Booking';
-    }
-  });
-
   document.addEventListener('DOMContentLoaded', function () {
-    const pickup = document.getElementById('pickup');
-    const airportExtra = document.getElementById('airport-extra');
+    const form = document.getElementById('booking-form');
+    if (!form) return;
 
-    pickup.addEventListener('input', function () {
-      if (pickup.value === 'Cyril E. King Airport') {
-        airportExtra.style.display = 'block';
-      } else {
-        airportExtra.style.display = 'none';
-        airportExtra.querySelectorAll('input, textarea').forEach(el => el.value = '');
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const email = form.email.value;
+      const confirmEmail = form['confirm-email'].value;
+      if (email !== confirmEmail) {
+        alert("Emails do not match.");
+        return;
+      }
+
+      const button = form.querySelector('button');
+      button.disabled = true;
+      button.textContent = 'Submitting...';
+
+      const data = new FormData(form);
+
+      try {
+        await fetch('https://hooks.zapier.com/hooks/catch/22771776/2pv86os', {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        window.location.href = 'https://set-vi.github.io/set-limo-vi/thank-you.html';
+      } catch (error) {
+        console.error("Submission error:", error);
+        alert("Something went wrong. Please try again or call us directly.");
+        button.disabled = false;
+        button.textContent = 'Submit Booking';
       }
     });
+
+    const pickup = document.getElementById('pickup');
+    const airportExtra = document.getElementById('airport-extra');
     const roundTripSelect = document.getElementById('roundtrip');
     const returnFields = document.getElementById('return-fields');
     const returnTime = document.getElementById('return-time');
     const serviceTime = document.getElementById('time');
 
-    roundTripSelect.addEventListener('change', function () {
-      if (this.value === 'yes') {
-        returnFields.style.display = 'block';
-      } else {
-        returnFields.style.display = 'none';
-        returnFields.querySelectorAll('input, select').forEach(el => el.value = '');
-      }
-    });
+    if (pickup) {
+      pickup.addEventListener('input', function () {
+        if (pickup.value === 'Cyril E. King Airport') {
+          airportExtra.style.display = 'block';
+        } else {
+          airportExtra.style.display = 'none';
+          airportExtra.querySelectorAll('input, textarea').forEach(el => el.value = '');
+        }
+      });
+    }
+
+    if (roundTripSelect) {
+      roundTripSelect.addEventListener('change', function () {
+        if (this.value === 'yes') {
+          returnFields.style.display = 'block';
+        } else {
+          returnFields.style.display = 'none';
+          returnFields.querySelectorAll('input, select').forEach(el => el.value = '');
+        }
+      });
+    }
 
     function disablePastTimes(select, bufferMinutes = 180) {
+      const dateInput = document.getElementById('date');
+      if (!dateInput) return;
+      const selectedDate = dateInput.value;
+      const today = new Date().toISOString().split('T')[0];
       const now = new Date();
-      const reference = (now.getHours() * 60 + now.getMinutes()) + bufferMinutes;
+      const reference = now.getHours() * 60 + now.getMinutes() + bufferMinutes;
 
       Array.from(select.options).forEach(option => {
         const val = option.value;
@@ -317,37 +309,48 @@
         if (h === 0 && m === 0) h = 24;
 
         const optionTime = h * 60 + m;
-        option.disabled = optionTime <= reference;
+        option.disabled = selectedDate === today && optionTime <= reference;
       });
     }
 
-    disablePastTimes(serviceTime);
+    const dateField = document.getElementById('date');
+    if (dateField) {
+      dateField.addEventListener('change', function () {
+        disablePastTimes(serviceTime);
+      });
+    }
 
-    serviceTime.addEventListener('change', function () {
-      const selectedVal = this.value;
-      if (!selectedVal || !selectedVal.includes(':')) return;
+    if (serviceTime) {
+      serviceTime.addEventListener('change', function () {
+        const selectedVal = this.value;
+        if (!selectedVal || !selectedVal.includes(':')) return;
 
-      let [h, m] = selectedVal.split(':').map(Number);
-      if (h === 0 && m === 0) h = 24;
+        let [h, m] = selectedVal.split(':').map(Number);
+        if (h === 0 && m === 0) h = 24;
 
-      const selectedMinutes = h * 60 + m;
-      disablePastTimes(returnTime, selectedMinutes);
-    });
-  });
+        const selectedMinutes = h * 60 + m;
+        disablePastTimes(returnTime, selectedMinutes);
+      });
 
-  const passengerInput = document.getElementById('passengers');
-  const passengerNote = document.createElement('div');
-  passengerNote.id = 'passenger-warning';
-  passengerNote.style.cssText = 'font-size: 0.8em; color: #d4af37; margin-top: 6px; display: none;';
-  passengerNote.textContent = 'Groups over 6 passengers may require a second vehicle. We’ll follow up to confirm arrangements.';
-  passengerInput.parentNode.insertBefore(passengerNote, passengerInput.nextSibling);
+      disablePastTimes(serviceTime);
+    }
 
-  passengerInput.addEventListener('input', function () {
-    const warning = document.getElementById('passenger-warning');
-    if (this.value > 6) {
-      warning.style.display = 'block';
-    } else {
-      warning.style.display = 'none';
+    const passengerInput = document.getElementById('passengers');
+    if (passengerInput) {
+      const passengerNote = document.createElement('div');
+      passengerNote.id = 'passenger-warning';
+      passengerNote.style.cssText = 'font-size: 0.8em; color: #d4af37; margin-top: 6px; display: none;';
+      passengerNote.textContent = 'Groups over 6 passengers may require a second vehicle. We’ll follow up to confirm arrangements.';
+      passengerInput.parentNode.insertBefore(passengerNote, passengerInput.nextSibling);
+
+      passengerInput.addEventListener('input', function () {
+        const warning = document.getElementById('passenger-warning');
+        if (this.value > 6) {
+          warning.style.display = 'block';
+        } else {
+          warning.style.display = 'none';
+        }
+      });
     }
   });
 </script>
