@@ -237,8 +237,14 @@
 </div>
 <script>
   document.getElementById('booking-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
     const form = e.target;
     e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
     const email = form.email.value;
     const confirmEmail = form['confirm-email'].value;
