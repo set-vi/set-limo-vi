@@ -6,7 +6,12 @@
   <title>Superb Executive Transportation</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    html {
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-size: 1.1em;
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(180deg, #000, #222);
@@ -52,25 +57,21 @@
       color: #e0b000;
       text-align: center;
     }
+    
     .hero {
-      background: url('luxury-limo.webp') center/cover no-repeat;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background-blend-mode: overlay;
-    }
-    .hero h1 {
-      font-size: 3.5em;
-      margin-bottom: 20px;
-      text-shadow: 0 0 15px rgba(224, 176, 0, 0.7);
-    }
-    .hero p {
-      font-size: 1.4em;
-      color: #fff;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.hero p {
+  margin-top: 10px;
+  font-size: 1.4em;
+  color: #fff;
+}
     .btn {
       background: linear-gradient(145deg, #e0b000, #b9972e);
       padding: 12px 30px;
@@ -105,14 +106,7 @@
       transform: scale(1.05);
       box-shadow: 0 0 25px rgba(224, 176, 0, 0.6);
     }
-    footer {
-      background: #000;
-      color: #e0b000;
-      padding: 30px;
-      text-align: center;
-      font-size: 1.1em;
-      border-top: 2px solid #e0b000;
-    }
+    
       .booking-form-container {
       background: rgba(255,255,255,0.05);
       padding: 40px;
@@ -192,6 +186,12 @@
     to { opacity: 1; transform: translateY(0); }
   }
   @media (max-width: 768px) {
+  .hero h1 {
+  margin-bottom: 10px;
+}
+  .hero p {
+    font-size: 1em;
+  }
     footer {
       padding: 30px 15px;
     }
@@ -215,32 +215,32 @@
     <a href="#terms">Terms</a>
   </nav>
 
-  <section id="home" class="hero">
+  <section id="home" class="hero" style="padding-top: 40px; padding-bottom: 40px;">
     <h1>Superb Executive Transportation</h1>
     <p>Luxury That Goes the Distance</p>
     <a href="#book" class="btn">Book Now</a>
   </section>
 
-  <section id="services">
+  <section id="services" style="padding-top: 30px;">
     <h2>Our Services</h2>
     <div class="card"><h3>Luxury Transfers</h3><p>Private pickups and drop-offs for any destination.</p></div>
     <div class="card"><h3>Special Events</h3><p>Arrive in style for weddings, galas, and more.</p></div>
     <div class="card"><h3>Hourly & Daily Rentals</h3><p>Flexible service tailored to your schedule.</p></div>
   </section>
 
-  <section id="why-us">
+  <section id="why-us" style="padding-top: 40px; padding-bottom: 40px;">
     <h2>Why Choose Us</h2>
     <div class="card"><h3>Always On Time</h3><p>Punctual and reliable every step of the way.</p></div>
     <div class="card"><h3>Exceptional Comfort</h3><p>Spacious, elegant interiors with a quiet ride.</p></div>
     <div class="card"><h3>Professional Service</h3><p>Experienced drivers, respectful and discreet.</p></div>
   </section>
 
-  <section id="about">
+  <section id="about" style="padding-top: 40px; padding-bottom: 40px;">
     <h2>About Us</h2>
-    <p style="max-width: 800px; margin: auto; text-align: center;">Superb Executive Transportation is committed to delivering refined, executive-level experiences to clients seeking more than just a ride. From corporate events to personal milestones, we deliver excellence in motion with unmatched reliability and personalized attention.</p>
+    <p style="max-width: 800px; margin: auto; text-align: left;">Superb Executive Transportation is committed to delivering refined, executive-level experiences to clients seeking more than just a ride. From corporate events to personal milestones, we deliver excellence in motion with unmatched reliability and personalized attention.</p>
   </section>
 
-  <section id="gallery">
+  <section id="gallery" style="padding-top: 40px; padding-bottom: 40px;">
     <h2>Gallery</h2>
     <div class="gallery">
       <img src="luxury-int.png" alt="Interior of Superb Executive Transportation">
@@ -250,7 +250,7 @@
     </div>
   </section>
 
-<section id="book">
+<section id="book" style="padding-top: 40px; padding-bottom: 40px;">
   <h2>Book Your Ride</h2>
   <div class="booking-form-container">
   <form id="booking-form">
@@ -479,7 +479,7 @@
   </script>
 </section>
 
-<section id="terms">
+<section id="terms" style="padding-top: 40px; padding-bottom: 40px;">
   <h2>Terms & Conditions</h2>
   <div style="max-width: 800px; margin: auto;">
     <ol style="padding-left: 20px;">
