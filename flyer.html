@@ -27,12 +27,14 @@
       overflow: hidden;
     }
     .hero {
-      
-      padding: 160px 20px;
+      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+    }
+    .hero-content {
+      padding: 20px 20px 10px;
     }
     .hero h1 {
       font-family: 'Playfair Display', serif;
@@ -51,9 +53,9 @@
       padding: 0 60px;
     }
     .features-intro {
-      font-size: 1.2em;
-      color: #c5a03c;
-      font-weight: 600;
+      font-size: 1.05em;
+      color: #fff;
+      font-weight: normal;
       margin-bottom: 16px;
     }
     .features li {
@@ -90,7 +92,7 @@
       border-radius: 8px;
     }
     .contact {
-      margin-top: 20px;
+      margin-top: 10px;
       font-size: 1em;
       text-align: center;
     }
@@ -115,10 +117,8 @@
       .divider { background: #c5a03c !important; }
     }
     @media (max-width: 480px) {
-  .flyer { max-width: 360px; margin: 0 auto; }
-  
-  .features { padding: 0 30px; }
-}
+      .flyer { max-width: 360px; margin: 0 auto; }
+      .features { padding: 0 30px; }
       .qr img { width: 160px; }
     }
   </style>
@@ -128,36 +128,33 @@
     <div class="hero" style="padding: 0;">
   <img src="png/van1.png" alt="Luxury Van" style="width: 100%; display: block;">
   <div class="hero-content" style="padding: 20px 20px 10px;">
-    <h1>Superb Executive Transportation</h1>
+    <h1 style="color: #c5a03c; font-size: 1.9em; margin: 10px 0 10px;">Superb Executive Transportation</h1>
     <div class="subtext">More than a ride—it's a statement.</div>
 </div>
       </div>
     </div>
 
     <div class="features">
-      <div class="features-intro">
-        Serving Cyril E. King Airport, ferry terminals, private jets, premier resorts, and the island of St. John.
-      </div>
+      <div class="features-intro"><span style="color: #c5a03c;">Serving STT Airport, ferry docks, private flights, resorts & the island of St. John.</span></div>
       <ul>
         <li>On-time, private transfers</li>
-        <li>Impeccably dressed chauffeurs</li>
-        <li>Comfortable seating for 6 — coordination available for larger groups</li>
+        <li>Professional, uniformed chauffeurs</li>
+        <li>Seats 6 comfortably – group options available</li>
       </ul>
     </div>
 
     <div class="divider"></div>
 
-    <div class="qr">
-            <a href="https://set-vi.github.io/set-limo-vi/booking.html" target="_blank">
-        <img src="png/qr-booking.png" alt="Scan to Book" width="200">
-      </a>
-    </div>
-
     <div class="contact">
+  <div class="qr" style="margin: 0 0 10px;">
+    <a href="https://set-vi.github.io/set-limo-vibooking.html" target="_blank">
+      <img src="png/qr-booking.png" alt="Scan to Book" width="200">
+    </a>
+  </div>
       <p><a href="tel:3406428686">📞 340-642-8686</a></p>
       <p><a href="mailto:setlimovi@gmail.com">📧 setlimovi@gmail.com</a></p>
-      <p><a href="https://set-vi.github.io/set-limo-vi/">🌐 https://set-vi.github.io/set-limo-vi/</a></p>
-      <div class="cta">By reservation only. Discreet. Reliable. On your terms.</div>
+      <p><a href="https://set-vi.github.io/set-limo-vi">🌐 https://set-vi.github.io/set-limo-vi</a></p>
+      
     </div>
   </div>
 </body>
