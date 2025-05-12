@@ -256,10 +256,9 @@
 
       try {
         await fetch('https://formspree.io/f/xwkgbwlo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+  method: 'POST',
+  body: formData
+});
 
         window.location.href = 'https://set-vi.github.io/set-limo-vi/thank-you.html';
       } catch (error) {
