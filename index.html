@@ -1,166 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Superb Executive Transportation Flyer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Superb Executive Transportation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    html {
+      scroll-padding-top: 80px;
+    }
     body {
-      background: #000;
-      color: #fff;
-      font-family: 'Source Sans Pro', sans-serif;
+      font-size: 1.1em;
       margin: 0;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #000, #222);
+      color: #fff;
+      box-sizing: border-box;
     }
-    .flyer {
-      background: #111;
-      padding: 0;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(197, 160, 60, 0.5);
-      max-width: 600px;
-      width: 100%;
-      text-align: center;
-      overflow: hidden;
-    }
-    .hero {
-      padding: 0;
+    nav {
+      background: rgba(0, 0, 0, 0.95);
+      padding: 20px;
       display: flex;
       justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-    .hero-content {
-      padding: 20px 20px 10px;
-    }
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2em;
-      color: #fff;
-      text-shadow: 0 0 2px #c5a03c;
-    }
-    .hero .subtext {
-      margin-bottom: 20px;
-      font-size: 1.2em;
-      font-weight: 600;
-    }
-    .features {
-      text-align: left;
-      margin: 40px auto 0;
-      padding: 0 60px;
-    }
-    .features-intro {
-      font-size: 1.05em;
-      color: #fff;
-      font-weight: normal;
-      margin-bottom: 16px;
-    }
-    .features li {
-      list-style: none;
-      margin: 10px 0;
+    nav a {
+      color: #e0b000;
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: bold;
       position: relative;
-      padding-left: 1.5em;
-      font-size: 1.05em;
     }
-    .features li::before {
-      content: '\2022';
+    nav a::after {
+      content: "";
       position: absolute;
-      left: 0;
-      color: #c5a03c;
-      font-size: 1.2em;
-    }
-    .divider {
-      width: 60%;
+      width: 0%;
       height: 2px;
-      background: rgba(197,160,60,0.9);
-      margin: 50px auto;
+      bottom: -4px;
+      left: 0;
+      background-color: #e0b000;
+      transition: width 0.3s;
     }
-    .qr {
-      margin: 30px 0 10px;
+    nav a:hover::after {
+      width: 100%;
     }
-    .qr-caption {
-      color: #fff;
-      font-weight: 500;
-      font-size: 0.95em;
-      margin-top: 8px;
-      margin-bottom: 12px;
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
     }
-    .qr img {
-      border: 2px solid #c5a03c;
-      border-radius: 8px;
-    }
-    .contact {
-      margin-top: 10px;
-      font-size: 1em;
+    h1, h2 {
+      color: #e0b000;
       text-align: center;
     }
-    .contact a {
-      color: #c5a03c;
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .hero p {
+      margin-top: 10px;
+      font-size: 1.4em;
+      color: #fff;
+    }
+    .btn {
+      background: linear-gradient(145deg, #e0b000, #b9972e);
+      padding: 12px 30px;
+      color: #000;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      display: inline-block;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .gallery img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(224, 176, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(224, 176, 0, 0.6);
+    }
+    footer {
+      background: rgba(0, 0, 0, 0.95);
+      padding: 40px 20px;
+      text-align: center;
+      color: #ccc;
+      border-top: 2px solid #e0b000;
+      }
+    footer h2 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      color: #e0b000;
+    }
+    .brand-superb {
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+    footer p {
+      font-size: 1.1em;
+      margin: 5px 0;
+    }
+    footer a {
+      color: #e0b000;
       text-decoration: none;
     }
-    .cta {
-      margin-top: 25px;
-      font-size: 1.1em;
+
+    .form-row {
+      margin-bottom: 20px;
+    }
+
+    .form-row label {
+      display: block;
+      margin-bottom: 5px;
       font-weight: 600;
-      color: #c5a03c;
     }
-    @media print {
-      body, .flyer {
-        background: #000 !important;
-        color: #fff !important;
-        -webkit-print-color-adjust: exact;
-        color-adjust: exact;
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid #e0b000;
+      background: #222;
+      color: #fff;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+     
+    @media (max-width: 768px) {
+  .form-row {
+    margin-bottom: 16px;
+  }
+
+  .booking-form-container {
+    padding: 20px;
+  }
+
+  #submit-button {
+    width: 100%;
+    font-size: 1.1em;
+  }
+      .hero h1 {
+        margin-bottom: 10px;
       }
-      .flyer { box-shadow: none; }
-      .divider { background: #c5a03c !important; }
-    }
-    @media (max-width: 480px) {
-      .flyer { max-width: 360px; margin: 0 auto; }
-      .features { padding: 0 30px; }
-      .qr img { width: 160px; }
+      .hero p {
+        font-size: 1em;
+      }
+      footer {
+        padding: 30px 15px;
+      }
+      footer h2 {
+        font-size: 1.5em;
+      }
+      footer p {
+        font-size: 1em;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="flyer">
-    <div class="hero" style="padding: 0;">
-  <img src="png/van1.png" alt="Luxury Van" style="width: 100%; display: block;">
-  <div class="hero-content" style="padding: 20px 20px 10px;">
-    <h1 style="color: #c5a03c; font-size: 1.9em; margin: 10px 0 10px;">Superb Executive Transportation</h1>
-    <div class="subtext">More than a ride—it's a statement.</div>
-</div>
-      </div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#why-us">Why Choose Us</a>
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#book">Book</a>
+  </nav>
+
+  <section id="home" class="hero" style="padding-top: 60px; padding-bottom: 60px;">
+    <h1 style="margin: 0; font-size: 3em; color: #e0b000;">Superb Executive Transportation</h1>
+    <p>Luxury That Goes the Distance</p>
+    <a href="#book" class="btn" style="margin-top: 10px;">Book Now</a>
+  </section>
+
+  <!-- INSERTED SECTION START -->
+
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="card">
+      <h3>Luxury Transfers</h3>
+      <p>Private airport pickups, hotel drop-offs, and transportation to any destination — proudly serving the islands of St. Thomas and St. John.</p>
     </div>
-
-    <div class="features">
-      <div class="features-intro" style="font-size: 1.15em; font-weight: 500; color: #c5a03c; line-height: 1.4;">
-        Premium black car & limousine service. Serving STT Airport, ferry docks, private flights, resorts & the island of St. John.
-      </div>
-      <ul>
-        <li>On-time, private transfers</li>
-        <li>Uniformed, professional chauffeurs</li>
-        <li>Seats 6 comfortably – group options available</li>
-      </ul>
+    <div class="card">
+      <h3>Special Events</h3>
+      <p>Arrive in style for weddings, corporate events, and personal celebrations — all handled with professional care and attention to detail.</p>
     </div>
+    <div class="card">
+      <h3>Hourly & Daily Rentals</h3>
+      <p>Flexible service tailored to your schedule.</p>
+    </div>
+  </section>
 
-    <div class="divider"></div>
+  <section id="why-us">
+    <h2>Why Choose Us</h2>
+    <div class="card">
+      <h3>Always On Time</h3>
+      <p>Punctual and reliable every step of the way.</p>
+    </div>
+    <div class="card">
+      <h3>Exceptional Comfort</h3>
+      <p>Spacious, elegant interiors with a quiet ride.</p>
+    </div>
+    <div class="card">
+      <h3>Professional Service</h3>
+      <p>Experienced drivers, respectful and discreet.</p>
+    </div>
+  </section>
 
-    <div class="contact">
-  <div class="qr" style="margin: 0 0 10px;">
-    <a href="https://set-vi.github.io/set-limo-vi/booking.html" target="_blank">
-      <img src="png/qr-booking.png" alt="Scan to Book" width="200">
-    </a>
-    <div class="qr-caption">Click or scan to book now</div>
+  <section id="about">
+    <h2>About Us</h2>
+    <div class="card" style="margin: auto; text-align: left;">
+      <p>Superb Executive Transportation is committed to delivering refined, executive-level experiences to clients seeking more than just a ride. From corporate events to personal milestones, we deliver excellence in motion with unmatched reliability and personalized attention.</p>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery">
+      <img src="png/luxury-int.png" alt="Interior of luxury van">
+      <img src="png/luxury-int2.png" alt="Van interior lighting">
+      <img src="png/van1.png" alt="Exterior view of van">
+    </div>
+  </section>
+
+  <section id="book" style="padding-top: 40px; padding-bottom: 40px;">
+  <h2>Book Your Ride</h2>
+  <div class="booking-form-container">
+    <form id="booking-form">
+        <div class="form-row">
+          <label for="booking-date">Select a Date</label>
+          <input type="date" id="booking-date" name="booking-date" required>
+        </div>
+        <div class="form-row">
+          <label for="booking-time">Select a Time</label>
+          <input type="time" id="booking-time" name="booking-time" required step="1800">
+        </div>
+        <div class="form-row">
+          <label for="service-type">Select Type of Service</label>
+          <select id="service-type" name="service-type" required>
+            <option value="" disabled selected>Select service type</option>
+            <option value="transfer">Transfer</option>
+            <option value="event">Event</option>
+            <option value="hourly-rental">Hourly Rental</option>
+            <option value="daily-rental">Daily Rental</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="hours-requested">Hours Requested</label>
+          <input type="number" id="hours-requested" name="hours-requested" min="2" required>
+        </div>
+        <div class="form-row">
+          <label for="pickup">Pick-up Location</label>
+          <select id="pickup" name="pickup" required>
+            <option value="" disabled selected>Select pickup location</option>
+            <option value="cyril e. king airport">Cyril E. King Airport</option>
+            <option value="havensight-cruise-port">Havensight Cruise Port</option>
+            <option value="crown-bay-cruise-port">Crown Bay Cruise Port</option>
+            <option value="red hook">Red Hook</option>
+            <option value="st-john">St. John, VI</option>
+            <option value="other">Other (Specify)</option>
+          </select>
+        </div>
+        <div id="flight-info" class="form-row" style="display: none;">
+          <label for="flight-number">Flight Number</label>
+          <input type="text" id="flight-number" name="flight-number">
+          <label for="luggage-pieces">Number of Luggage Pieces</label>
+          <input type="number" id="luggage-pieces" name="luggage-pieces" min="0" value="0">
+        </div>
+        <div class="form-row">
+          <label for="dropoff">Drop-off Location</label>
+          <select id="dropoff" name="dropoff" required>
+            <option value="" disabled selected>Select drop-off location</option>
+            <option value="cyril e. king airport">Cyril E. King Airport</option>
+            <option value="havensight-cruise-port">Havensight Cruise Port</option>
+            <option value="crown-bay-cruise-port">Crown Bay Cruise Port</option>
+            <option value="red hook">Red Hook</option>
+            <option value="st-john">St. John, VI</option>
+            <option value="other">Other (Specify)</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="round-trip">Round Trip</label>
+          <input type="checkbox" id="round-trip" name="round-trip">
+        </div>
+        <div id="return-trip-section" class="form-row" style="display: none;">
+          <label for="return-date">Return Trip Date</label>
+          <input type="date" id="return-date" name="return-date">
+          <label for="return-time">Return Trip Time</label>
+          <input type="time" id="return-time" name="return-time" step="1800">
+        </div>
+        <div class="form-row">
+          <label for="number-of-passengers">Number of Passengers</label>
+          <input type="number" id="number-of-passengers" name="number-of-passengers" min="1" required>
+          <span id="passenger-warning" style="color: red; display: none;"></span>
+        </div>
+        <div class="form-row">
+          <label for="full-name">Full Name</label>
+          <input type="text" id="full-name" name="full-name" required>
+        </div>
+        <div class="form-row">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-row">
+          <label for="special-requests">Additional Instructions</label>
+          <textarea id="special-requests" name="special-requests" rows="3"></textarea>
+        </div>
+        <div id="price-breakdown" class="form-row">
+          <p><strong>Price Breakdown:</strong></p>
+          <ul>
+            <li>Base Rate: $<span id="breakdown-base">180</span></li>
+            <li>St. John Rate Applied: $<span id="breakdown-stjohn">0</span></li>
+            <li>Extra Passengers: $<span id="breakdown-extra-passengers">0</span></li>
+            <li>Service Multiplier: x<span id="breakdown-service-multiplier">1</span></li>
+            <li>Round Trip Multiplier: x<span id="breakdown-round-trip-multiplier">1</span></li>
+            <li><strong>Total Price: $<span id="total-price">180</span></strong></li>
+          </ul>
+        </div>
+        <div class="form-row">
+          <button type="submit" id="submit-button">Submit Booking</button>
+        </div>
+      </form>
   </div>
 
-  <p><a href="tel:3406428686">📞 340-642-8686</a></p>
-      <p><a href="mailto:setlimovi@gmail.com">📧 setlimovi@gmail.com</a></p>
-      <p><a href="https://set-vi.github.io/set-limo-vi">🌐 https://set-vi.github.io/set-limo-vi</a></p>
-      
-    </div>
-  </div>
+
+  <footer>
+    <h2><span class="brand-superb" style="color: #e0b000;">Superb Executive Transportation</span></h2>
+    <img src="png/wht-van-logo.png" alt="Van Logo" style="height: 50px; margin-top: 10px;">
+    <p>📞 <a href="tel:3406428686">340-642-8686</a> &nbsp; | &nbsp; ✉️ <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
+    <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms & Conditions</a></p>
+  
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const serviceType = document.getElementById("service-type");
+    const hoursRequested = document.getElementById("hours-requested");
+    const pickup = document.getElementById("pickup");
+    const dropoff = document.getElementById("dropoff");
+    const bookingDate = document.getElementById("booking-date");
+    const returnDate = document.getElementById("return-date");
+    const bookingTime = document.getElementById("booking-time");
+    const returnTime = document.getElementById("return-time");
+    const form = document.getElementById("booking-form");
+    const numPassengers = document.getElementById("number-of-passengers");
+    const passengerWarning = document.getElementById("passenger-warning");
+    const breakdownExtra = document.getElementById("breakdown-extra-passengers");
+    const serviceMultiplierEl = document.getElementById("breakdown-service-multiplier");
+    const roundTripMultiplierEl = document.getElementById("breakdown-round-trip-multiplier");
+    const totalPriceEl = document.getElementById("total-price");
+    const roundTrip = document.getElementById("round-trip");
+    const breakdownBase = document.getElementById("breakdown-base");
+    const breakdownStJohn = document.getElementById("breakdown-stjohn");
+    const flightInfo = document.getElementById("flight-info");
+
+    function toggleFlightInfo() {
+      flightInfo.style.display = pickup.value === "cyril e. king airport" ? "block" : "none";
+    }
+
+    function enforceStJohnRule() {
+      if (pickup.value === "st-john" || dropoff.value === "st-john") {
+        hoursRequested.value = 3;
+        hoursRequested.disabled = true;
+      } else if (serviceType.value === "transfer") {
+        hoursRequested.value = 2;
+        hoursRequested.disabled = true;
+      } else if (["hourly-rental", "event"].includes(serviceType.value)) {
+        hoursRequested.value = 3;
+        hoursRequested.min = 3;
+        hoursRequested.max = 4;
+        hoursRequested.disabled = false;
+      } else if (serviceType.value === "daily-rental") {
+        hoursRequested.value = 5;
+        hoursRequested.min = 5;
+        hoursRequested.max = 8;
+        hoursRequested.disabled = false;
+      }
+      calculatePrice();
+    }
+
+    function calculatePrice() {
+      const isStJohnTrip = pickup.value === "st-john" || dropoff.value === "st-john";
+      const baseRate = isStJohnTrip ? 500 : 180;
+      const includedPassengerLimit = 4;
+      const extraPassengerRate = isStJohnTrip ? 100 : 25;
+      const passengerCount = parseInt(numPassengers.value) || 1;
+      let extraCharge = 0;
+
+      if (passengerCount > includedPassengerLimit) {
+        extraCharge = (passengerCount - includedPassengerLimit) * extraPassengerRate;
+      }
+
+      if (passengerWarning) {
+        if (passengerCount > 12) {
+          passengerWarning.textContent = "More than 12 passengers requires a third vehicle.";
+          passengerWarning.style.display = "block";
+        } else if (passengerCount > 6) {
+          passengerWarning.textContent = "More than 6 passengers requires a second vehicle.";
+          passengerWarning.style.display = "block";
+        } else {
+          passengerWarning.textContent = "";
+          passengerWarning.style.display = "none";
+        }
+      }
+
+      let serviceMultiplier = 1;
+      if (serviceType.value === "hourly-rental") serviceMultiplier = 2;
+      else if (serviceType.value === "event") serviceMultiplier = 1.5;
+      else if (serviceType.value === "daily-rental") serviceMultiplier = 4;
+
+      const roundMultiplier = roundTrip.checked ? 2 : 1;
+
+      breakdownBase.textContent = baseRate;
+      breakdownStJohn.textContent = isStJohnTrip ? baseRate : 0;
+      breakdownExtra.textContent = extraCharge;
+      serviceMultiplierEl.textContent = serviceMultiplier;
+      roundTripMultiplierEl.textContent = roundMultiplier;
+
+      const total = (baseRate + extraCharge) * serviceMultiplier * roundMultiplier;
+      totalPriceEl.textContent = total;
+    }
+
+    serviceType.addEventListener("change", enforceStJohnRule);
+    pickup.addEventListener("change", () => {
+      enforceStJohnRule();
+      toggleFlightInfo();
+    });
+    dropoff.addEventListener("change", enforceStJohnRule);
+    numPassengers.addEventListener("input", calculatePrice);
+    roundTrip.addEventListener("change", () => {
+      document.getElementById("return-trip-section").style.display = roundTrip.checked ? "block" : "none";
+      calculatePrice();
+    });
+
+    bookingDate.min = new Date().toISOString().split("T")[0];
+    if (returnDate) returnDate.min = bookingDate.min;
+
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 30 - (now.getMinutes() % 30), 0, 0);
+    bookingTime.value = now.toTimeString().slice(0, 5);
+
+    toggleFlightInfo();
+    enforceStJohnRule();
+
+    form.addEventListener("submit", function(e) {
+      const selectedDate = new Date(bookingDate.value);
+      const selectedTime = bookingTime.value;
+      const nowCheck = new Date();
+      const [hours, minutes] = selectedTime.split(":" ).map(Number);
+      selectedDate.setHours(hours);
+      selectedDate.setMinutes(minutes);
+      if (selectedDate < nowCheck) {
+        e.preventDefault();
+        alert("Please select a future time.");
+      } else {
+        e.preventDefault();
+        alert("Booking submitted successfully.");
+        form.reset();
+        calculatePrice();
+      }
+    });
+  });
+</script>
+
+  
 </body>
 </html>
