@@ -122,7 +122,21 @@
 <label for="phone">Phone</label>
 <input type="tel" id="phone" name="phone" required placeholder="000-000-0000" autocomplete="tel" inputmode="numeric" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Enter phone number as 000-000-0000"
 />
+<script>
+  const phoneInput = document.getElementById("phone");
 
+  phoneInput.addEventListener("input", function () {
+    let numbers = this.value.replace(/\D/g, "").slice(0, 10);
+
+    if (numbers.length > 6) {
+      this.value = numbers.replace(/(\d{3})(\d{3})(\d{0,4})/, "$1-$2-$3");
+    } else if (numbers.length > 3) {
+      this.value = numbers.replace(/(\d{3})(\d{0,3})/, "$1-$2");
+    } else {
+      this.value = numbers;
+    }
+  });
+</script>
     <label for="date">Date</label>
     <input type="date" id="date" name="date" required min="" onfocus="this.min = new Date().toISOString().split('T')[0]" />
 
