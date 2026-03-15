@@ -119,8 +119,16 @@
     <label for="confirm-email">Confirm Email</label>
     <input type="email" id="confirm-email" name="confirm-email" required autocomplete="email" />
 
-    <label for="phone">Phone</label>
-    <input type="tel" id="phone" name="phone" required placeholder="autocomplete="tel" />
+   <label for="phone">Phone</label>
+<input
+  type="tel"
+  id="phone"
+  name="phone"
+  required
+  placeholder="340-555-1212"
+  autocomplete="tel"
+  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+/>
 
     <label for="date">Date</label>
     <input type="date" id="date" name="date" required min="" onfocus="this.min = new Date().toISOString().split('T')[0]" />
