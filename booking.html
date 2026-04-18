@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -177,12 +177,12 @@
         id="phone"
         name="phone"
         required
-        placeholder="000-000-0000"
+        placeholder="340-000-0000"
         autocomplete="tel"
         inputmode="numeric"
         maxlength="12"
         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-        title="Enter phone number as 000-000-0000"
+        title="Enter phone number as 340-000-0000"
       />
 
       <label for="date">Date</label>
@@ -281,10 +281,9 @@
         min="1"
         inputmode="numeric"
         required
-        placeholder="Enter number of passengers"
       />
       <div id="passenger-warning" class="helper-note">
-        Groups over 6 passengers may require a second vehicle. Weâ€™ll follow up to
+        Groups over 6 passengers may require a second vehicle. We'll follow up to
         confirm arrangements.
       </div>
 
@@ -325,16 +324,21 @@
       </div>
 
       <label for="notes">Additional Details or Special Instructions</label>
-      <textarea id="notes" name="notes" rows="3"></textarea>
+      <textarea
+        id="notes"
+        name="notes"
+        rows="3"
+        placeholder="Villa name, gate code, or special instructions"
+      ></textarea>
 
       <button id="submit-btn" type="submit">Submit Booking</button>
     </form>
 
     <div class="contact-info">
-      <p>ðŸ“ž <a href="tel:3406428686">340-642-8686</a></p>
-      <p>ðŸ“§ <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
+      <p>Phone: <a href="tel:3406428686">340-642-8686</a></p>
+      <p>Email: <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
       <p>
-        ðŸŒ
+        Website:
         <a href="https://set-vi.github.io/set-limo-vi/" target="_blank" rel="noopener noreferrer">
           https://set-vi.github.io/set-limo-vi/
         </a>
@@ -582,4 +586,3 @@
   </script>
 </body>
 </html>
-
