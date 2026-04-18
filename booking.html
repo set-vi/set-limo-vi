@@ -3,628 +3,1162 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Elevate Your Journey | Superb Executive Transportation</title>
+  <title>Book Your Ride | SET VI</title>
   <style>
+    :root {
+      --bg: #070707;
+      --panel: rgba(12, 12, 12, 0.94);
+      --panel-2: rgba(20, 20, 20, 0.96);
+      --gold: #d4af37;
+      --gold-soft: #f4db83;
+      --text: #f4f4f4;
+      --muted: #c7c7c7;
+      --line: rgba(212, 175, 55, 0.22);
+      --danger: #ff7b7b;
+      --ok: #9fdaa0;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    }
+
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      padding: 40px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.86)),
+        url("./png/luxury-int.png") center/cover no-repeat fixed;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    .topbar {
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 26px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .brand-kicker {
+      color: var(--gold-soft);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .brand-title {
+      font-size: clamp(28px, 4vw, 42px);
+      color: var(--gold);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .brand-sub {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+      max-width: 680px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ghost-link,
+    .solid-link {
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-    }
-
-    .container {
-      background: #111;
-      padding: 30px;
+      min-height: 46px;
+      padding: 12px 18px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-      width: 100%;
-      max-width: 500px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
-    .hero-image {
-      position: relative;
-      width: 100%;
-      max-height: 280px;
-      overflow: hidden;
-      border-radius: 10px;
-      margin-bottom: 20px;
+    .ghost-link:hover,
+    .solid-link:hover {
+      transform: translateY(-1px);
+      opacity: 0.98;
     }
 
-    .hero-image img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
+    .ghost-link {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+    }
+
+    .solid-link {
+      background: var(--gold);
+      color: #111;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .hero-card,
+    .form-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-card {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--gold-soft);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1.02;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .point {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 14px;
+      min-height: 92px;
+    }
+
+    .point strong {
       display: block;
+      color: var(--gold-soft);
+      margin-bottom: 6px;
+      font-size: 14px;
     }
 
-    .hero-heading {
-      text-align: center;
-      font-size: 1.6em;
-      font-weight: bold;
-      color: #fff;
-      margin-top: -10px;
-      margin-bottom: 25px;
-      text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;
+    .point span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .side-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .side-card-title {
+      color: var(--gold);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .side-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    .contact-pills {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .contact-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--gold-soft);
+    }
+
+    .form-card {
+      padding: 28px;
+    }
+
+    .section-title {
+      margin: 0 0 6px;
+      color: var(--gold);
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .section-sub {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field,
+    .field-full {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field-full {
+      grid-column: 1 / -1;
     }
 
     label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
+      color: var(--gold-soft);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
     }
 
     input,
-    textarea,
-    select {
+    select,
+    textarea {
       width: 100%;
-      padding: 10px;
-      font-size: 1em;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      background: #222;
-      color: #fff;
+      min-height: 52px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 12px 14px;
+      font: inherit;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: #d4af37;
-      outline: none;
+      border-color: rgba(212, 175, 55, 0.7);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
     }
 
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background-color: #000;
-      color: #fff;
-      font-weight: bold;
-      border: 2px solid #d4af37;
-      border-radius: 5px;
+    select option {
+      color: #111;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .panel-title {
+      margin: 0 0 14px;
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .notice,
+    .error,
+    .success {
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .notice {
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      background: rgba(212, 175, 55, 0.08);
+      color: var(--gold-soft);
+    }
+
+    .error {
+      border: 1px solid rgba(255, 123, 123, 0.28);
+      background: rgba(255, 123, 123, 0.08);
+      color: #ffd0d0;
+      display: none;
+    }
+
+    .success {
+      border: 1px solid rgba(159, 218, 160, 0.28);
+      background: rgba(159, 218, 160, 0.08);
+      color: #d7f4d8;
+      display: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .pricing {
+      display: grid;
+      gap: 12px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+    }
+
+    .price-row:last-child {
+      border-bottom: 0;
+    }
+
+    .price-row strong {
+      color: var(--text);
+    }
+
+    .price-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(212, 175, 55, 0.22);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .submit-note {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 620px;
+    }
+
+    .submit-btn {
+      min-width: 220px;
+      min-height: 56px;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 22px;
+      background: var(--gold);
+      color: #111;
+      font-weight: 800;
+      font-size: 16px;
       cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
-    button:hover:not(:disabled) {
-      background-color: #d4af37;
-      color: #000;
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      opacity: 0.98;
     }
 
-    button:disabled {
-      opacity: 0.75;
+    .submit-btn:disabled {
+      opacity: 0.7;
       cursor: not-allowed;
     }
 
-    .contact-info {
-      margin-top: 30px;
-      text-align: center;
-      font-size: 0.95em;
-      color: #ccc;
+    .footer-space {
+      height: 22px;
     }
 
-    .contact-info a {
-      color: #d4af37;
-      text-decoration: none;
-    }
-
-    .contact-info a:hover {
-      text-decoration: underline;
-    }
-
-    .hidden-section {
-      display: none;
-    }
-
-    .helper-note {
-      font-size: 0.8em;
-      color: #d4af37;
-      margin-top: 6px;
-      display: none;
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 20px;
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
       }
 
-      .container {
-        padding: 20px;
+      .hero-points {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .grid,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .form-card,
+      .hero-card,
+      .side-card {
+        padding: 22px;
+      }
+
+      .submit-row {
+        align-items: stretch;
+      }
+
+      .submit-btn {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="hero-image">
-      <img src="./png/luxury-int.png" alt="Luxury Interior" />
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-kicker">Superb Executive Transport VI</div>
+        <div class="brand-title">SET VI</div>
+        <div class="brand-sub">
+          Premium transportation booking for airport transfers, island rides, and executive service.
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <a class="ghost-link" href="./index.html">Return to Home</a>
+        <a class="solid-link" href="tel:+13406428686">Call 340-642-8686</a>
+      </div>
     </div>
 
-    <h1 class="hero-heading">Elevate Your Journey</h1>
+    <section class="hero">
+      <div class="hero-card">
+        <div>
+          <div class="hero-badge">Luxury Ground Transportation</div>
+          <h1>Book Your Ride</h1>
+          <p>
+            Complete the form below and submit your request directly to SET VI.
+            The booking path stays live through Formspree and returns to the thank-you page after submit.
+          </p>
+        </div>
 
-    <form
-      id="booking-form"
-      action="https://formspree.io/f/mldbjzgj"
-      method="POST"
-      accept-charset="UTF-8"
-    >
-      <input type="hidden" name="_subject" value="New SET Limo booking request" />
-      <input type="hidden" name="_next" value="https://set-vi.github.io/set-limo-vi/thank-you.html" />
-
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required autocomplete="name" />
-
-      <label for="email">Email</label>
-      <input type="email" id="email" name="_replyto" required autocomplete="email" />
-
-      <label for="confirm-email">Confirm Email</label>
-      <input
-        type="email"
-        id="confirm-email"
-        name="confirm-email"
-        required
-        autocomplete="email"
-      />
-
-      <label for="phone">Phone</label>
-      <input
-        type="tel"
-        id="phone"
-        name="phone"
-        required
-        autocomplete="tel"
-        inputmode="numeric"
-        maxlength="12"
-        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-      />
-
-      <label for="date">Date</label>
-      <input
-        type="text"
-        id="date"
-        name="date"
-        required
-        autocomplete="off"
-        inputmode="none"
-      />
-
-      <label for="time">Time of Service</label>
-      <select id="time" name="time" required>
-        <option value="" selected disabled hidden></option>
-        <option value="05:00">5:00 AM</option>
-        <option value="06:00">6:00 AM</option>
-        <option value="07:00">7:00 AM</option>
-        <option value="08:00">8:00 AM</option>
-        <option value="09:00">9:00 AM</option>
-        <option value="10:00">10:00 AM</option>
-        <option value="11:00">11:00 AM</option>
-        <option value="12:00">12:00 PM</option>
-        <option value="13:00">1:00 PM</option>
-        <option value="14:00">2:00 PM</option>
-        <option value="15:00">3:00 PM</option>
-        <option value="16:00">4:00 PM</option>
-        <option value="17:00">5:00 PM</option>
-        <option value="18:00">6:00 PM</option>
-        <option value="19:00">7:00 PM</option>
-        <option value="20:00">8:00 PM</option>
-        <option value="21:00">9:00 PM</option>
-        <option value="22:00">10:00 PM</option>
-        <option value="23:00">11:00 PM</option>
-        <option value="00:00">12:00 AM (Midnight)</option>
-      </select>
-
-      <label for="pickup">Pick-up Location</label>
-      <select id="pickup" name="pickup" required>
-        <option value="" selected disabled hidden></option>
-        <option value="Bluebeard's Castle">Bluebeard's Castle</option>
-        <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
-        <option value="Charlotte Amalie">Charlotte Amalie</option>
-        <option value="Cyril E. King Airport">Cyril E. King Airport</option>
-        <option value="Emerald Beach Resort">Emerald Beach Resort</option>
-        <option value="Havensight">Havensight</option>
-        <option value="Magens Bay">Magens Bay</option>
-        <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
-        <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
-        <option value="Point Pleasant Resort">Point Pleasant Resort</option>
-        <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
-        <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
-        <option value="St. John">St. John</option>
-        <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
-        <option value="Tutu Park Mall">Tutu Park Mall</option>
-        <option value="Yacht Haven Grande">Yacht Haven Grande</option>
-      </select>
-
-      <div id="airport-extra" class="hidden-section">
-        <label for="airline">Airline</label>
-        <input
-          type="text"
-          id="airline"
-          name="airline"
-          placeholder="e.g. American Airlines"
-        />
-
-        <label for="baggage">Baggage Info</label>
-        <textarea
-          id="baggage"
-          name="baggage"
-          rows="2"
-          placeholder="e.g. 2 checked bags, 1 carry-on"
-        ></textarea>
+        <div class="hero-points">
+          <div class="point">
+            <strong>Airport Transfers</strong>
+            <span>Pickup and drop-off service with airport-specific details when needed.</span>
+          </div>
+          <div class="point">
+            <strong>Round Trip Support</strong>
+            <span>Return date and time stay tied to the trip without breaking the form flow.</span>
+          </div>
+          <div class="point">
+            <strong>Direct Confirmation Path</strong>
+            <span>Submit goes to Formspree, then to the thank-you page, then back into the site cleanly.</span>
+          </div>
+        </div>
       </div>
 
-      <label for="dropoff">Drop-off Location</label>
-      <select id="dropoff" name="dropoff" required>
-        <option value="" selected disabled hidden></option>
-        <option value="Bluebeard's Castle">Bluebeard's Castle</option>
-        <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
-        <option value="Charlotte Amalie">Charlotte Amalie</option>
-        <option value="Cyril E. King Airport">Cyril E. King Airport</option>
-        <option value="Emerald Beach Resort">Emerald Beach Resort</option>
-        <option value="Havensight">Havensight</option>
-        <option value="Magens Bay">Magens Bay</option>
-        <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
-        <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
-        <option value="Point Pleasant Resort">Point Pleasant Resort</option>
-        <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
-        <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
-        <option value="St. John">St. John</option>
-        <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
-        <option value="Tutu Park Mall">Tutu Park Mall</option>
-        <option value="Yacht Haven Grande">Yacht Haven Grande</option>
-      </select>
+      <div class="hero-card side-card">
+        <h2 class="side-card-title">Need help before booking?</h2>
+        <p>
+          Use the booking form for standard requests. Use the direct contact actions below for urgent coordination.
+        </p>
 
-      <label for="passengers"># of Passengers</label>
-      <input
-        type="number"
-        id="passengers"
-        name="passengers"
-        min="1"
-        inputmode="numeric"
-        required
-      />
-      <div id="passenger-warning" class="helper-note">
-        Groups over 6 passengers may require a second vehicle. We'll follow up to
-        confirm arrangements.
+        <div class="contact-pills">
+          <a class="contact-pill" href="tel:+13406428686">Call 340-642-8686</a>
+          <a class="contact-pill" href="sms:+13406428686">Text 340-642-8686</a>
+        </div>
       </div>
+    </section>
 
-      <label for="roundtrip">Round Trip?</label>
-      <select id="roundtrip" name="roundtrip" required>
-        <option value="" selected disabled hidden></option>
-        <option value="no">No</option>
-        <option value="yes">Yes</option>
-      </select>
-
-      <div id="return-fields" class="hidden-section">
-        <label for="return-date">Return Date</label>
-        <input
-          type="text"
-          id="return-date"
-          name="return-date"
-          autocomplete="off"
-          inputmode="none"
-        />
-
-        <label for="return-time">Return Time</label>
-        <select id="return-time" name="return-time">
-          <option value="" selected disabled hidden></option>
-          <option value="05:00">5:00 AM</option>
-          <option value="06:00">6:00 AM</option>
-          <option value="07:00">7:00 AM</option>
-          <option value="08:00">8:00 AM</option>
-          <option value="09:00">9:00 AM</option>
-          <option value="10:00">10:00 AM</option>
-          <option value="11:00">11:00 AM</option>
-          <option value="12:00">12:00 PM</option>
-          <option value="13:00">1:00 PM</option>
-          <option value="14:00">2:00 PM</option>
-          <option value="15:00">3:00 PM</option>
-          <option value="16:00">4:00 PM</option>
-          <option value="17:00">5:00 PM</option>
-          <option value="18:00">6:00 PM</option>
-          <option value="19:00">7:00 PM</option>
-          <option value="20:00">8:00 PM</option>
-          <option value="21:00">9:00 PM</option>
-          <option value="22:00">10:00 PM</option>
-          <option value="23:00">11:00 PM</option>
-          <option value="00:00">12:00 AM (Midnight)</option>
-        </select>
-      </div>
-
-      <label for="notes">Additional Details or Special Instructions</label>
-      <textarea
-        id="notes"
-        name="notes"
-        rows="3"
-      ></textarea>
-
-      <button id="submit-btn" type="submit">Submit Booking</button>
-    </form>
-
-    <div class="contact-info">
-      <p>Phone: <a href="tel:3406428686">340-642-8686</a></p>
-      <p>Email: <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
-      <p>
-        Website:
-        <a href="https://set-vi.github.io/set-limo-vi/" target="_blank" rel="noopener noreferrer">
-          https://set-vi.github.io/set-limo-vi/
-        </a>
+    <section class="form-card">
+      <h2 class="section-title">Reservation Request</h2>
+      <p class="section-sub">
+        Fill out the ride details below. Required fields must be completed before submit.
       </p>
-    </div>
+
+      <div id="formError" class="error" aria-live="polite"></div>
+      <div id="passengerNotice" class="notice hidden" aria-live="polite">
+        Passenger count is greater than 6. A larger vehicle or coordination may be needed.
+      </div>
+
+      <form
+        id="booking-form"
+        action="https://formspree.io/f/mldbjzgj"
+        method="POST"
+        novalidate
+      >
+        <input type="hidden" name="_subject" value="New SET Limo booking request" />
+        <input type="hidden" name="_next" value="https://set-vi.github.io/set-limo-vi/thank-you.html" />
+        <input type="hidden" name="Estimated Price" id="estimatedPriceField" value="$0.00" />
+
+        <div class="panel">
+          <h3 class="panel-title">Contact Details</h3>
+
+          <div class="grid">
+            <div class="field">
+              <label for="fullName">Full Name</label>
+              <input id="fullName" name="Full Name" type="text" required autocomplete="name" />
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input
+                id="phone"
+                name="Phone"
+                type="tel"
+                inputmode="tel"
+                maxlength="12"
+                required
+                autocomplete="tel"
+              />
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                name="Email"
+                type="email"
+                required
+                autocomplete="email"
+              />
+            </div>
+
+            <div class="field">
+              <label for="confirmEmail">Confirm Email</label>
+              <input
+                id="confirmEmail"
+                name="Confirm Email"
+                type="email"
+                required
+                autocomplete="email"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel-title">Trip Setup</h3>
+
+          <div class="grid-3">
+            <div class="field">
+              <label for="tripType">Trip Type</label>
+              <select id="tripType" name="Trip Type" required>
+                <option value="">Select trip type</option>
+                <option value="One Way">One Way</option>
+                <option value="Round Trip">Round Trip</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="passengers">Passengers</label>
+              <select id="passengers" name="Passengers" required>
+                <option value="">Select passengers</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="luggageCount">Luggage</label>
+              <select id="luggageCount" name="Luggage Count">
+                <option value="">Select luggage</option>
+                <option value="0">0</option>
+                <option value="1-2">1-2</option>
+                <option value="3-4">3-4</option>
+                <option value="5+">5+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label for="pickupLocation">Pick-up Location</label>
+              <select id="pickupLocation" name="Pick-up Location" required>
+                <option value="">Select pick-up location</option>
+                <option value="Cyril E. King Airport">Cyril E. King Airport</option>
+                <option value="Charlotte Amalie">Charlotte Amalie</option>
+                <option value="Red Hook">Red Hook</option>
+                <option value="Frenchtown">Frenchtown</option>
+                <option value="Havensight">Havensight</option>
+                <option value="Magens Bay">Magens Bay</option>
+                <option value="Sapphire Beach">Sapphire Beach</option>
+                <option value="Secret Harbour">Secret Harbour</option>
+                <option value="East End">East End</option>
+                <option value="West End">West End</option>
+                <option value="Custom Address">Custom Address</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="dropoffLocation">Drop-off Location</label>
+              <select id="dropoffLocation" name="Drop-off Location" required>
+                <option value="">Select drop-off location</option>
+                <option value="Cyril E. King Airport">Cyril E. King Airport</option>
+                <option value="Charlotte Amalie">Charlotte Amalie</option>
+                <option value="Red Hook">Red Hook</option>
+                <option value="Frenchtown">Frenchtown</option>
+                <option value="Havensight">Havensight</option>
+                <option value="Magens Bay">Magens Bay</option>
+                <option value="Sapphire Beach">Sapphire Beach</option>
+                <option value="Secret Harbour">Secret Harbour</option>
+                <option value="East End">East End</option>
+                <option value="West End">West End</option>
+                <option value="Custom Address">Custom Address</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label for="pickupDate">Pick-up Date</label>
+              <input id="pickupDate" name="Pick-up Date" type="date" required />
+            </div>
+
+            <div class="field">
+              <label for="pickupTime">Pick-up Time</label>
+              <select id="pickupTime" name="Pick-up Time" required>
+                <option value="">Select pick-up time</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="roundTripPanel" class="panel hidden" style="margin-top:16px;">
+            <h3 class="panel-title">Return Trip</h3>
+
+            <div class="grid">
+              <div class="field">
+                <label for="returnDate">Return Date</label>
+                <input id="returnDate" name="Return Date" type="date" />
+              </div>
+
+              <div class="field">
+                <label for="returnTime">Return Time</label>
+                <select id="returnTime" name="Return Time">
+                  <option value="">Select return time</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="airportPanel" class="panel hidden" style="margin-top:16px;">
+            <h3 class="panel-title">Airport Details</h3>
+
+            <div class="grid">
+              <div class="field">
+                <label for="airline">Airline</label>
+                <input id="airline" name="Airline" type="text" />
+              </div>
+
+              <div class="field">
+                <label for="flightNumber">Flight Number</label>
+                <input id="flightNumber" name="Flight Number" type="text" />
+              </div>
+            </div>
+
+            <div class="grid">
+              <div class="field">
+                <label for="arrivalDeparture">Flight Type</label>
+                <select id="arrivalDeparture" name="Flight Type">
+                  <option value="">Select flight type</option>
+                  <option value="Arrival">Arrival</option>
+                  <option value="Departure">Departure</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="airportNotes">Airport Notes</label>
+                <input id="airportNotes" name="Airport Notes" type="text" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel-title">Special Instructions</h3>
+
+          <div class="field-full">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="Special Instructions"></textarea>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel-title">Estimated Fare</h3>
+
+          <div class="pricing">
+            <div class="price-row">
+              <span>Base Trip</span>
+              <strong id="baseFareDisplay">$0.00</strong>
+            </div>
+
+            <div class="price-row">
+              <span>Round Trip Add-on</span>
+              <strong id="roundTripFareDisplay">$0.00</strong>
+            </div>
+
+            <div class="price-row">
+              <span>Airport Add-on</span>
+              <strong id="airportFareDisplay">$0.00</strong>
+            </div>
+
+            <div class="price-row">
+              <span>Passenger Adjustment</span>
+              <strong id="passengerFareDisplay">$0.00</strong>
+            </div>
+
+            <div class="price-total">
+              <span>Estimated Total</span>
+              <span id="estimatedTotalDisplay">$0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <div class="submit-note">
+            Submit sends the request through the live Formspree path and returns to the thank-you page.
+          </div>
+
+          <button id="submitBtn" class="submit-btn" type="submit">
+            Submit Booking Request
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <div class="footer-space"></div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('booking-form');
-      const submitBtn = document.getElementById('submit-btn');
-      const phoneInput = document.getElementById('phone');
-      const emailInput = document.getElementById('email');
-      const confirmEmailInput = document.getElementById('confirm-email');
-      const dateInput = document.getElementById('date');
-      const serviceTime = document.getElementById('time');
-      const pickupInput = document.getElementById('pickup');
-      const airportExtra = document.getElementById('airport-extra');
-      const roundTripSelect = document.getElementById('roundtrip');
-      const returnFields = document.getElementById('return-fields');
-      const returnDateInput = document.getElementById('return-date');
-      const returnTime = document.getElementById('return-time');
-      const passengerInput = document.getElementById('passengers');
-      const passengerWarning = document.getElementById('passenger-warning');
+    (function () {
+      const SUBMIT_FLAG = "setvi_booking_submitted";
+      const HOME_URL = "./index.html";
 
-      function getTodayLocalISO() {
+      const form = document.getElementById("booking-form");
+      const tripType = document.getElementById("tripType");
+      const passengers = document.getElementById("passengers");
+      const passengerNotice = document.getElementById("passengerNotice");
+      const pickupLocation = document.getElementById("pickupLocation");
+      const dropoffLocation = document.getElementById("dropoffLocation");
+      const pickupDate = document.getElementById("pickupDate");
+      const pickupTime = document.getElementById("pickupTime");
+      const returnDate = document.getElementById("returnDate");
+      const returnTime = document.getElementById("returnTime");
+      const roundTripPanel = document.getElementById("roundTripPanel");
+      const airportPanel = document.getElementById("airportPanel");
+      const email = document.getElementById("email");
+      const confirmEmail = document.getElementById("confirmEmail");
+      const phone = document.getElementById("phone");
+      const submitBtn = document.getElementById("submitBtn");
+      const formError = document.getElementById("formError");
+
+      const baseFareDisplay = document.getElementById("baseFareDisplay");
+      const roundTripFareDisplay = document.getElementById("roundTripFareDisplay");
+      const airportFareDisplay = document.getElementById("airportFareDisplay");
+      const passengerFareDisplay = document.getElementById("passengerFareDisplay");
+      const estimatedTotalDisplay = document.getElementById("estimatedTotalDisplay");
+      const estimatedPriceField = document.getElementById("estimatedPriceField");
+
+      function navIsBackForward(event) {
+        const navEntry = performance.getEntriesByType("navigation")[0];
+
+        return !!(
+          event.persisted ||
+          (navEntry && navEntry.type === "back_forward") ||
+          (performance.navigation && performance.navigation.type === 2)
+        );
+      }
+
+      window.addEventListener("pageshow", function (event) {
+        if (sessionStorage.getItem(SUBMIT_FLAG) === "1" && navIsBackForward(event)) {
+          sessionStorage.removeItem(SUBMIT_FLAG);
+          window.location.replace(HOME_URL);
+        }
+      });
+
+      function todayLocalString() {
         const now = new Date();
-        const offset = now.getTimezoneOffset();
-        const local = new Date(now.getTime() - offset * 60000);
-        return local.toISOString().split('T')[0];
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+        return year + "-" + month + "-" + day;
       }
 
-      function prepareDateInput(input, required) {
-        if (!input) return;
+      function pad(num) {
+        return String(num).padStart(2, "0");
+      }
 
-        if (required) {
-          input.required = true;
+      function formatMoney(num) {
+        return "$" + num.toFixed(2);
+      }
+
+      function minutesNowRounded() {
+        const now = new Date();
+        let hour = now.getHours();
+        let minute = now.getMinutes();
+        minute = Math.ceil(minute / 15) * 15;
+        if (minute === 60) {
+          hour += 1;
+          minute = 0;
         }
+        return hour * 60 + minute;
+      }
 
-        input.addEventListener('focus', function () {
-          input.type = 'date';
-          if (input.showPicker) {
-            input.showPicker();
+      function toMinutes(timeValue) {
+        const parts = timeValue.split(":");
+        const hour = Number(parts[0]);
+        const minute = Number(parts[1]);
+        return (hour * 60) + minute;
+      }
+
+      function format12Hour(hour, minute) {
+        const suffix = hour >= 12 ? "PM" : "AM";
+        const hour12 = hour % 12 || 12;
+        return hour12 + ":" + pad(minute) + " " + suffix;
+      }
+
+      function fillTimeOptions(selectEl, selectedDateValue) {
+        const previousValue = selectEl.value;
+        selectEl.innerHTML = '<option value="">Select time</option>';
+
+        const today = todayLocalString();
+        const applyTodayFilter = selectedDateValue && selectedDateValue === today;
+        const currentMin = minutesNowRounded();
+
+        for (let hour = 0; hour < 24; hour++) {
+          for (let minute = 0; minute < 60; minute += 15) {
+            const value = pad(hour) + ":" + pad(minute);
+            const totalMinutes = toMinutes(value);
+
+            if (applyTodayFilter && totalMinutes < currentMin) {
+              continue;
+            }
+
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = format12Hour(hour, minute);
+            selectEl.appendChild(option);
           }
-        });
+        }
 
-        input.addEventListener('blur', function () {
-          if (!input.value) {
-            input.type = 'text';
-          }
-        });
+        if (previousValue && Array.from(selectEl.options).some(function (opt) { return opt.value === previousValue; })) {
+          selectEl.value = previousValue;
+        }
       }
 
-      function formatPhone(value) {
-        const numbers = value.replace(/\D/g, '').slice(0, 10);
+      function setDateMins() {
+        const today = todayLocalString();
+        pickupDate.min = today;
 
-        if (numbers.length > 6) {
-          return numbers.replace(/(\d{3})(\d{3})(\d{0,4})/, '$1-$2-$3');
+        if (!pickupDate.value || pickupDate.value < today) {
+          pickupDate.value = today;
         }
 
-        if (numbers.length > 3) {
-          return numbers.replace(/(\d{3})(\d{0,3})/, '$1-$2');
-        }
+        returnDate.min = pickupDate.value || today;
 
-        return numbers;
+        if (returnDate.value && pickupDate.value && returnDate.value < pickupDate.value) {
+          returnDate.value = pickupDate.value;
+        }
       }
 
-      function validateEmails() {
-        if (!emailInput || !confirmEmailInput) return;
+      function toggleRoundTrip() {
+        const isRoundTrip = tripType.value === "Round Trip";
+        roundTripPanel.classList.toggle("hidden", !isRoundTrip);
+        returnDate.required = isRoundTrip;
+        returnTime.required = isRoundTrip;
 
-        if (
-          confirmEmailInput.value &&
-          emailInput.value.trim() !== confirmEmailInput.value.trim()
-        ) {
-          confirmEmailInput.setCustomValidity('Emails do not match.');
-        } else {
-          confirmEmailInput.setCustomValidity('');
+        if (!isRoundTrip) {
+          returnDate.value = "";
+          returnTime.value = "";
         }
+
+        setDateMins();
+        fillTimeOptions(returnTime, returnDate.value);
+        calculatePrice();
       }
 
       function toggleAirportFields() {
-        if (!pickupInput || !airportExtra) return;
+        const airportSelected =
+          pickupLocation.value === "Cyril E. King Airport" ||
+          dropoffLocation.value === "Cyril E. King Airport";
 
-        const isAirport = pickupInput.value.trim() === 'Cyril E. King Airport';
-        airportExtra.style.display = isAirport ? 'block' : 'none';
+        airportPanel.classList.toggle("hidden", !airportSelected);
 
-        if (!isAirport) {
-          const airline = document.getElementById('airline');
-          const baggage = document.getElementById('baggage');
-          if (airline) airline.value = '';
-          if (baggage) baggage.value = '';
-        }
+        const airportInputs = airportPanel.querySelectorAll("input, select");
+        airportInputs.forEach(function (field) {
+          if (!airportSelected) {
+            field.value = "";
+          }
+        });
+
+        calculatePrice();
       }
 
-      function toggleReturnFields() {
-        if (!roundTripSelect || !returnFields) return;
+      function formatPhoneValue(value) {
+        const digits = value.replace(/\D/g, "").slice(0, 10);
+        const part1 = digits.slice(0, 3);
+        const part2 = digits.slice(3, 6);
+        const part3 = digits.slice(6, 10);
 
-        const isRoundTrip = roundTripSelect.value === 'yes';
-        returnFields.style.display = isRoundTrip ? 'block' : 'none';
-
-        if (returnDateInput) {
-          returnDateInput.required = isRoundTrip;
-          if (!isRoundTrip && !returnDateInput.value) {
-            returnDateInput.type = 'text';
-          }
-          if (isRoundTrip && returnDateInput.value) {
-            returnDateInput.type = 'date';
-          }
-        }
-
-        if (returnTime) {
-          returnTime.required = isRoundTrip;
-        }
-
-        if (!isRoundTrip) {
-          if (returnDateInput) returnDateInput.value = '';
-          if (returnTime) returnTime.value = '';
-        }
+        if (digits.length > 6) return part1 + "-" + part2 + "-" + part3;
+        if (digits.length > 3) return part1 + "-" + part2;
+        return part1;
       }
 
-      function minutesFromTimeValue(value) {
-        if (!value || !value.includes(':')) return null;
-        let [hours, minutes] = value.split(':').map(Number);
-        if (hours === 0 && minutes === 0) {
-          hours = 24;
-        }
-        return hours * 60 + minutes;
+      function phoneIsComplete() {
+        return phone.value.replace(/\D/g, "").length === 10;
       }
 
-      function disablePastTimes(selectEl, selectedDate, minimumMinutes) {
-        if (!selectEl) return;
+      function emailsMatch() {
+        return (
+          email.value.trim() !== "" &&
+          confirmEmail.value.trim() !== "" &&
+          email.value.trim().toLowerCase() === confirmEmail.value.trim().toLowerCase()
+        );
+      }
 
-        const today = getTodayLocalISO();
-        const now = new Date();
-        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+      function showError(message) {
+        formError.textContent = message;
+        formError.style.display = "block";
+      }
 
-        Array.from(selectEl.options).forEach((option) => {
-          if (!option.value) {
-            option.disabled = false;
-            return;
-          }
+      function clearError() {
+        formError.textContent = "";
+        formError.style.display = "none";
+      }
 
-          const optionMinutes = minutesFromTimeValue(option.value);
-          let disable = false;
+      function updatePassengerNotice() {
+        const count = Number(passengers.value || 0);
+        passengerNotice.classList.toggle("hidden", !(count > 6));
+        calculatePrice();
+      }
 
-          if (selectedDate === today) {
-            disable = optionMinutes <= currentMinutes + 180;
-          }
+      function calculatePrice() {
+        let base = 0;
+        let roundTripAdd = 0;
+        let airportAdd = 0;
+        let passengerAdd = 0;
 
-          if (
-            minimumMinutes !== null &&
-            minimumMinutes !== undefined &&
-            optionMinutes !== null &&
-            optionMinutes <= minimumMinutes
+        const pickup = pickupLocation.value;
+        const dropoff = dropoffLocation.value;
+        const trip = tripType.value;
+        const passengerCount = Number(passengers.value || 0);
+
+        if (pickup && dropoff) {
+          if (pickup === dropoff) {
+            base = 80;
+          } else if (
+            pickup === "Cyril E. King Airport" ||
+            dropoff === "Cyril E. King Airport"
           ) {
-            disable = true;
-          }
-
-          option.disabled = disable;
-        });
-
-        if (selectEl.selectedOptions.length) {
-          const selected = selectEl.selectedOptions[0];
-          if (selected && selected.disabled) {
-            selectEl.value = '';
+            base = 95;
+          } else {
+            base = 85;
           }
         }
-      }
 
-      function refreshTimeRules() {
-        const outboundDate = dateInput ? dateInput.value : '';
-        const returnDate = returnDateInput ? returnDateInput.value : '';
-        const outboundMinutes = serviceTime ? minutesFromTimeValue(serviceTime.value) : null;
-
-        if (serviceTime && outboundDate) {
-          disablePastTimes(serviceTime, outboundDate, null);
+        if (trip === "Round Trip") {
+          roundTripAdd = base > 0 ? base : 85;
         }
 
-        if (returnTime && returnDate) {
-          let minimumMinutes = null;
-
-          if (outboundDate && returnDate && outboundDate === returnDate && outboundMinutes !== null) {
-            minimumMinutes = outboundMinutes;
-          }
-
-          disablePastTimes(returnTime, returnDate, minimumMinutes);
+        if (
+          pickup === "Cyril E. King Airport" ||
+          dropoff === "Cyril E. King Airport"
+        ) {
+          airportAdd = 15;
         }
+
+        if (passengerCount > 4) {
+          passengerAdd = (passengerCount - 4) * 10;
+        }
+
+        const total = base + roundTripAdd + airportAdd + passengerAdd;
+
+        baseFareDisplay.textContent = formatMoney(base);
+        roundTripFareDisplay.textContent = formatMoney(roundTripAdd);
+        airportFareDisplay.textContent = formatMoney(airportAdd);
+        passengerFareDisplay.textContent = formatMoney(passengerAdd);
+        estimatedTotalDisplay.textContent = formatMoney(total);
+        estimatedPriceField.value = formatMoney(total);
       }
 
-      function togglePassengerWarning() {
-        if (!passengerInput || !passengerWarning) return;
-        passengerWarning.style.display =
-          Number(passengerInput.value || 0) > 6 ? 'block' : 'none';
-      }
+      function validateForm() {
+        clearError();
 
-      const today = getTodayLocalISO();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return false;
+        }
 
-      if (dateInput) {
-        dateInput.setAttribute('min', today);
-      }
+        if (!phoneIsComplete()) {
+          showError("Phone number must be in full 10-digit format.");
+          phone.focus();
+          return false;
+        }
 
-      if (returnDateInput) {
-        returnDateInput.setAttribute('min', today);
-      }
+        if (!emailsMatch()) {
+          showError("Email and Confirm Email must match.");
+          confirmEmail.focus();
+          return false;
+        }
 
-      prepareDateInput(dateInput, true);
-      prepareDateInput(returnDateInput, false);
-
-      if (phoneInput) {
-        phoneInput.addEventListener('input', function () {
-          phoneInput.value = formatPhone(phoneInput.value);
-        });
-      }
-
-      if (emailInput) {
-        emailInput.addEventListener('input', validateEmails);
-      }
-
-      if (confirmEmailInput) {
-        confirmEmailInput.addEventListener('input', validateEmails);
-      }
-
-      if (pickupInput) {
-        pickupInput.addEventListener('change', toggleAirportFields);
-      }
-
-      if (roundTripSelect) {
-        roundTripSelect.addEventListener('change', toggleReturnFields);
-      }
-
-      if (dateInput) {
-        dateInput.addEventListener('change', function () {
-          if (returnDateInput && dateInput.value) {
-            returnDateInput.setAttribute('min', dateInput.value);
-            if (returnDateInput.value && returnDateInput.value < dateInput.value) {
-              returnDateInput.value = '';
-              returnDateInput.type = 'text';
-            }
-          }
-          refreshTimeRules();
-        });
-      }
-
-      if (returnDateInput) {
-        returnDateInput.addEventListener('change', refreshTimeRules);
-      }
-
-      if (serviceTime) {
-        serviceTime.addEventListener('change', refreshTimeRules);
-      }
-
-      if (passengerInput) {
-        passengerInput.addEventListener('input', togglePassengerWarning);
-      }
-
-      if (form) {
-        form.addEventListener('submit', function () {
-          validateEmails();
-
-          if (!form.checkValidity()) {
-            return;
+        if (tripType.value === "Round Trip") {
+          if (!returnDate.value || !returnTime.value) {
+            showError("Return date and return time are required for round trip bookings.");
+            return false;
           }
 
-          if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
+          if (pickupDate.value && returnDate.value && returnDate.value < pickupDate.value) {
+            showError("Return date cannot be earlier than the pick-up date.");
+            returnDate.focus();
+            return false;
           }
-        });
+        }
+
+        return true;
       }
 
+      phone.addEventListener("input", function () {
+        phone.value = formatPhoneValue(phone.value);
+      });
+
+      email.addEventListener("input", clearError);
+      confirmEmail.addEventListener("input", function () {
+        if (confirmEmail.value.trim() && !emailsMatch()) {
+          showError("Email and Confirm Email must match.");
+        } else {
+          clearError();
+        }
+      });
+
+      tripType.addEventListener("change", toggleRoundTrip);
+      passengers.addEventListener("change", updatePassengerNotice);
+      pickupLocation.addEventListener("change", toggleAirportFields);
+      dropoffLocation.addEventListener("change", toggleAirportFields);
+
+      pickupDate.addEventListener("change", function () {
+        setDateMins();
+        fillTimeOptions(pickupTime, pickupDate.value);
+
+        if (returnDate.value && returnDate.value < pickupDate.value) {
+          returnDate.value = pickupDate.value;
+        }
+
+        if (returnDate.value) {
+          fillTimeOptions(returnTime, returnDate.value);
+        }
+      });
+
+      returnDate.addEventListener("change", function () {
+        setDateMins();
+        fillTimeOptions(returnTime, returnDate.value);
+      });
+
+      pickupLocation.addEventListener("change", calculatePrice);
+      dropoffLocation.addEventListener("change", calculatePrice);
+      tripType.addEventListener("change", calculatePrice);
+      passengers.addEventListener("change", calculatePrice);
+
+      form.addEventListener("submit", function (event) {
+        if (!validateForm()) {
+          event.preventDefault();
+          return;
+        }
+
+        sessionStorage.setItem(SUBMIT_FLAG, "1");
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+      });
+
+      setDateMins();
+      fillTimeOptions(pickupTime, pickupDate.value);
+      fillTimeOptions(returnTime, returnDate.value);
+      toggleRoundTrip();
       toggleAirportFields();
-      toggleReturnFields();
-      togglePassengerWarning();
-      refreshTimeRules();
-    });
+      updatePassengerNotice();
+      calculatePrice();
+    })();
   </script>
 </body>
 </html>
