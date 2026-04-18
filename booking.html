@@ -177,12 +177,12 @@
         id="phone"
         name="phone"
         required
-        placeholder="340-000-0000"
+        placeholder="000-000-0000"
         autocomplete="tel"
         inputmode="numeric"
         maxlength="12"
         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-        title="Enter phone number as 340-000-0000"
+        title="Enter phone number as 000-000-0000"
       />
 
       <label for="date">Date</label>
@@ -190,7 +190,7 @@
 
       <label for="time">Time of Service</label>
       <select id="time" name="time" required>
-        <option value="">-- Select Time --</option>
+        <option value="" selected disabled>Choose time</option>
         <option value="05:00">5:00 AM</option>
         <option value="06:00">6:00 AM</option>
         <option value="07:00">7:00 AM</option>
@@ -215,7 +215,7 @@
 
       <label for="pickup">Pick-up Location</label>
       <select id="pickup" name="pickup" required>
-        <option value="">-- Select Pick-up Location --</option>
+        <option value="" selected disabled>Choose location</option>
         <option value="Bluebeard's Castle">Bluebeard's Castle</option>
         <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
         <option value="Charlotte Amalie">Charlotte Amalie</option>
@@ -254,7 +254,7 @@
 
       <label for="dropoff">Drop-off Location</label>
       <select id="dropoff" name="dropoff" required>
-        <option value="">-- Select Drop-off Location --</option>
+        <option value="" selected disabled>Choose location</option>
         <option value="Bluebeard's Castle">Bluebeard's Castle</option>
         <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
         <option value="Charlotte Amalie">Charlotte Amalie</option>
@@ -288,7 +288,8 @@
       </div>
 
       <label for="roundtrip">Round Trip?</label>
-      <select id="roundtrip" name="roundtrip">
+      <select id="roundtrip" name="roundtrip" required>
+        <option value="" selected disabled>Choose option</option>
         <option value="no">No</option>
         <option value="yes">Yes</option>
       </select>
@@ -299,7 +300,7 @@
 
         <label for="return-time">Return Time</label>
         <select id="return-time" name="return-time">
-          <option value="">-- Select Time --</option>
+          <option value="" selected disabled>Choose time</option>
           <option value="05:00">5:00 AM</option>
           <option value="06:00">6:00 AM</option>
           <option value="07:00">7:00 AM</option>
