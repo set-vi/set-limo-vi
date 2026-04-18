@@ -208,5 +208,13 @@
       <div class="brand">Superb Executive Transport VI</div>
     </section>
   </main>
+
+  <script>
+    history.pushState({ page: "thank-you" }, "", location.href);
+
+    window.addEventListener("popstate", function () {
+      window.location.replace("./index.html");
+    });
+  </script>
 </body>
 </html>
