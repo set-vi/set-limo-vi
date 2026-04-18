@@ -72,6 +72,12 @@
       color: #fff;
     }
 
+    input::placeholder,
+    textarea::placeholder {
+      color: #b8b8b8;
+      opacity: 1;
+    }
+
     input:focus,
     select:focus,
     textarea:focus {
@@ -329,7 +335,7 @@
         id="notes"
         name="notes"
         rows="3"
-        placeholder="Villa name, gate code, or special instructions"
+        placeholder="Villa name or special instructions"
       ></textarea>
 
       <button id="submit-btn" type="submit">Submit Booking</button>
@@ -484,7 +490,7 @@
 
       function refreshTimeRules() {
         const outboundDate = dateInput ? dateInput.value : '';
-        const returnDate = returnDateInput ? dateInput.value : '';
+        const returnDate = returnDateInput ? returnDateInput.value : '';
         const outboundMinutes = serviceTime ? minutesFromTimeValue(serviceTime.value) : null;
 
         if (serviceTime && outboundDate) {
