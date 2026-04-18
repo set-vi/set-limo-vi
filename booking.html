@@ -484,7 +484,7 @@
 
       function refreshTimeRules() {
         const outboundDate = dateInput ? dateInput.value : '';
-        const returnDate = returnDateInput ? returnDateInput.value : '';
+        const returnDate = returnDateInput ? dateInput.value : '';
         const outboundMinutes = serviceTime ? minutesFromTimeValue(serviceTime.value) : null;
 
         if (serviceTime && outboundDate) {
