@@ -85,6 +85,19 @@
       outline: none;
     }
 
+    input[type="date"] {
+      color-scheme: dark;
+    }
+
+    input[type="date"]:required:invalid::-webkit-datetime-edit {
+      color: transparent;
+    }
+
+    input[type="date"]:focus::-webkit-datetime-edit,
+    input[type="date"]:valid::-webkit-datetime-edit {
+      color: #fff;
+    }
+
     button {
       margin-top: 20px;
       width: 100%;
@@ -335,7 +348,6 @@
         id="notes"
         name="notes"
         rows="3"
-        placeholder="Villa name or special instructions"
       ></textarea>
 
       <button id="submit-btn" type="submit">Submit Booking</button>
