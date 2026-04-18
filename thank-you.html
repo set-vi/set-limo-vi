@@ -1,60 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thank You - Superb Executive Transportation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Request Received | SET VI</title>
   <style>
+    :root {
+      --bg: #070707;
+      --panel: rgba(15, 15, 15, 0.94);
+      --gold: #d4af37;
+      --gold-soft: #f4db83;
+      --text: #f5f5f5;
+      --muted: #c8c8c8;
+      --line: rgba(212, 175, 55, 0.24);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: #000;
-      color: #fff;
-      padding: 40px;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.84)),
+        url("./png/luxury-int.png") center/cover no-repeat fixed;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      text-align: center;
+      justify-content: center;
+      padding: 24px;
     }
-    .container {
-      background: #111;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-      max-width: 500px;
+
+    .wrap {
       width: 100%;
+      max-width: 820px;
     }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 40px 30px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--gold-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     h1 {
-      color: #d4af37;
-      margin-bottom: 20px;
+      margin: 0 0 16px;
+      color: var(--gold);
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.08;
     }
-    p {
-      margin-top: 10px;
+
+    .lead {
+      max-width: 640px;
+      margin: 0 auto 18px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
     }
-    a {
-      color: #d4af37;
+
+    .next-step {
+      max-width: 640px;
+      margin: 0 auto 30px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 14px 18px;
+      border-radius: 14px;
       text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
-    a:hover {
-      text-decoration: underline;
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.97;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #101010;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .contact-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--gold-soft);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+      font-weight: 700;
+    }
+
+    .footer-note {
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .brand {
+      margin-top: 14px;
+      color: var(--gold-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 560px) {
+      .card {
+        padding: 30px 20px;
+      }
+
+      .lead,
+      .next-step {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Thank You!</h1>
-    <p>Your booking request has been received.</p>
-    <p>We will contact you shortly to confirm your trip details and provide a secure link for prepayment.</p>
+  <main class="wrap">
+    <section class="card">
+      <div class="eyebrow">SET VI Booking</div>
 
-    <div style="margin-top: 40px;">
-      <p><a href="tel:3406428686">📞 340-642-8686</a></p>
-      <p><a href="mailto:setvi@gmail.com">📧 setlimovi@gmail.com</a></p>
-      <p><a href="https://set-vi.github.io/Luxury-limo/">🌐 set-vi.github.io/Luxury-limo</a></p>
-    </div>
+      <h1>Booking Request Received</h1>
 
-    <p style="margin-top: 30px; font-size: 0.9em; color: #ccc;">We look forward to delivering an experience that defines luxury and excellence.</p>
-  </div>
+      <p class="lead">
+        Your transportation request has been sent successfully.
+      </p>
+
+      <div class="next-step">
+        A member of SET VI will review your request and follow up if any additional details are needed to confirm the ride.
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="./index.html">Return to Home</a>
+        <a class="btn btn-secondary" href="./booking.html">Book Another Ride</a>
+      </div>
+
+      <div class="contact-actions">
+        <a class="contact-link" href="tel:+13406428686">Call 340-642-8686</a>
+        <a class="contact-link" href="sms:+13406428686">Text 340-642-8686</a>
+      </div>
+
+      <div class="footer-note">
+        You should never have to search, scroll, or guess what to do next after submitting a booking.
+      </div>
+
+      <div class="brand">Superb Executive Transport VI</div>
+    </section>
+  </main>
 </body>
 </html>
-
