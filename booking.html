@@ -85,19 +85,6 @@
       outline: none;
     }
 
-    input[type="date"] {
-      color-scheme: dark;
-    }
-
-    input[type="date"]:required:invalid::-webkit-datetime-edit {
-      color: transparent;
-    }
-
-    input[type="date"]:focus::-webkit-datetime-edit,
-    input[type="date"]:valid::-webkit-datetime-edit {
-      color: #fff;
-    }
-
     button {
       margin-top: 20px;
       width: 100%;
@@ -205,7 +192,14 @@
       />
 
       <label for="date">Date</label>
-      <input type="date" id="date" name="date" required />
+      <input
+        type="text"
+        id="date"
+        name="date"
+        required
+        autocomplete="off"
+        inputmode="none"
+      />
 
       <label for="time">Time of Service</label>
       <select id="time" name="time" required>
@@ -315,7 +309,13 @@
 
       <div id="return-fields" class="hidden-section">
         <label for="return-date">Return Date</label>
-        <input type="date" id="return-date" name="return-date" />
+        <input
+          type="text"
+          id="return-date"
+          name="return-date"
+          autocomplete="off"
+          inputmode="none"
+        />
 
         <label for="return-time">Return Time</label>
         <select id="return-time" name="return-time">
@@ -390,6 +390,27 @@
         return local.toISOString().split('T')[0];
       }
 
+      function prepareDateInput(input, required) {
+        if (!input) return;
+
+        if (required) {
+          input.required = true;
+        }
+
+        input.addEventListener('focus', function () {
+          input.type = 'date';
+          if (input.showPicker) {
+            input.showPicker();
+          }
+        });
+
+        input.addEventListener('blur', function () {
+          if (!input.value) {
+            input.type = 'text';
+          }
+        });
+      }
+
       function formatPhone(value) {
         const numbers = value.replace(/\D/g, '').slice(0, 10);
 
@@ -439,6 +460,12 @@
 
         if (returnDateInput) {
           returnDateInput.required = isRoundTrip;
+          if (!isRoundTrip && !returnDateInput.value) {
+            returnDateInput.type = 'text';
+          }
+          if (isRoundTrip && returnDateInput.value) {
+            returnDateInput.type = 'date';
+          }
         }
 
         if (returnTime) {
@@ -529,12 +556,15 @@
       const today = getTodayLocalISO();
 
       if (dateInput) {
-        dateInput.min = today;
+        dateInput.setAttribute('min', today);
       }
 
       if (returnDateInput) {
-        returnDateInput.min = today;
+        returnDateInput.setAttribute('min', today);
       }
+
+      prepareDateInput(dateInput, true);
+      prepareDateInput(returnDateInput, false);
 
       if (phoneInput) {
         phoneInput.addEventListener('input', function () {
@@ -561,9 +591,10 @@
       if (dateInput) {
         dateInput.addEventListener('change', function () {
           if (returnDateInput && dateInput.value) {
-            returnDateInput.min = dateInput.value;
+            returnDateInput.setAttribute('min', dateInput.value);
             if (returnDateInput.value && returnDateInput.value < dateInput.value) {
               returnDateInput.value = '';
+              returnDateInput.type = 'text';
             }
           }
           refreshTimeRules();
