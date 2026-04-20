@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Elevate Your Journey | Superb Executive Transportation</title>
+  <title>Book Your Airport Transfer | Superb Executive Transportation</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       background: #000;
       color: #fff;
       padding: 40px;
       display: flex;
       justify-content: center;
     }
+
     .container {
       background: #111;
       padding: 30px;
@@ -22,17 +23,64 @@
       width: 100%;
       max-width: 500px;
     }
-    h1 {
-      color: #d4af37;
-      text-align: center;
+
+    .hero-image {
+      position: relative;
+      width: 100%;
+      max-height: 280px;
+      overflow: hidden;
+      border-radius: 10px;
       margin-bottom: 20px;
     }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-heading {
+      text-align: center;
+      font-size: 1.6em;
+      font-weight: bold;
+      color: #fff;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;
+    }
+
+    .booking-subhead {
+      text-align: center;
+      color: #ccc;
+      margin-top: 0;
+      margin-bottom: 24px;
+      font-size: 0.95em;
+    }
+
+    .form-section-title {
+      margin-top: 28px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #d4af37;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+      padding-bottom: 6px;
+    }
+
+    .form-section-title:first-of-type {
+      margin-top: 0;
+    }
+
     label {
       display: block;
       margin-top: 15px;
       margin-bottom: 5px;
     }
-    input, textarea, select {
+
+    input,
+    textarea,
+    select {
       box-sizing: border-box;
       width: 100%;
       padding: 10px;
@@ -42,10 +90,14 @@
       background: #222;
       color: #fff;
     }
-    input:focus, select:focus, textarea:focus {
+
+    input:focus,
+    select:focus,
+    textarea:focus {
       border-color: #d4af37;
       outline: none;
     }
+
     button {
       margin-top: 20px;
       width: 100%;
@@ -57,43 +109,48 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #d4af37;
       color: #000;
     }
+
+    #price-box {
+      margin-top: 20px;
+      padding: 12px;
+      border: 1px solid #d4af37;
+      border-radius: 6px;
+      background: #1a1a1a;
+      color: #d4af37;
+      font-weight: bold;
+      display: none;
+    }
+
     .contact-info {
       margin-top: 30px;
       text-align: center;
       font-size: 0.95em;
       color: #ccc;
     }
+
     .contact-info a {
       color: #d4af37;
       text-decoration: none;
     }
-    .hero-image {
-      position: relative;
-      width: 100%;
-      max-height: 280px;
-      overflow: hidden;
-      border-radius: 10px;
-      margin-bottom: 20px;
+
+    .contact-info p:first-child {
+      margin-bottom: 12px;
+      color: #aaa;
+      font-size: 0.9em;
     }
-    .hero-image img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      display: block;
+
+    #passenger-warning {
+      font-size: 0.8em;
+      color: #d4af37;
+      margin-top: 6px;
+      display: none;
     }
-    .hero-heading {
-      text-align: center;
-      font-size: 1.6em;
-      font-weight: bold;
-      color: #fff;
-      margin-top: -10px;
-      margin-bottom: 25px;
-      text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;
-    }
+
     @media (max-width: 480px) {
       body {
         padding: 20px;
@@ -102,99 +159,38 @@
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="hero-image">
-    <img src="./png/luxury-int.png" alt="Luxury Interior">
-  </div>
-  <h1 class="hero-heading">Elevate Your Journey</h1>
-
-  <form id="booking-form">
-    
-  <label for="name">Name</label>
-    <input type="text" id="name" name="name" required autocomplete="name" />
-
-    <label for="email">Email</label>
-    <input type="email" id="email" name="_replyto" required autocomplete="email" />
-
-    <label for="confirm-email">Confirm Email</label>
-    <input type="email" id="confirm-email" name="confirm-email" required autocomplete="email" />
-
-<label for="phone">Phone</label>
-<input type="tel" id="phone" name="phone" required placeholder="000-000-0000" autocomplete="tel" inputmode="numeric" maxlength="12" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Enter phone number as 000-000-0000"
-/>
-<script>
-  const phoneInput = document.getElementById("phone");
-
-  phoneInput.addEventListener("input", function () {
-    let numbers = this.value.replace(/\D/g, "").slice(0, 10);
-
-    if (numbers.length > 6) {
-      this.value = numbers.replace(/(\d{3})(\d{3})(\d{0,4})/, "$1-$2-$3");
-    } else if (numbers.length > 3) {
-      this.value = numbers.replace(/(\d{3})(\d{0,3})/, "$1-$2");
-    } else {
-      this.value = numbers;
-    }
-  });
-</script>
-    <label for="date">Date</label>
-    <input type="date" id="date" name="date" required min="" onfocus="this.min = new Date().toISOString().split('T')[0]" />
-
-    <label for="time">Time of Service</label>
-    <select id="time" name="time" required>
-      <option value="">-- Select Time --</option>
-      <option value="05:00">5:00 AM</option>
-      <option value="06:00">6:00 AM</option>
-      <option value="07:00">7:00 AM</option>
-      <option value="08:00">8:00 AM</option>
-      <option value="09:00">9:00 AM</option>
-      <option value="10:00">10:00 AM</option>
-      <option value="11:00">11:00 AM</option>
-      <option value="12:00">12:00 PM</option>
-      <option value="13:00">1:00 PM</option>
-      <option value="14:00">2:00 PM</option>
-      <option value="15:00">3:00 PM</option>
-      <option value="16:00">4:00 PM</option>
-      <option value="17:00">5:00 PM</option>
-      <option value="18:00">6:00 PM</option>
-      <option value="19:00">7:00 PM</option>
-      <option value="20:00">8:00 PM</option>
-      <option value="21:00">9:00 PM</option>
-      <option value="22:00">10:00 PM</option>
-      <option value="23:00">11:00 PM</option>
-      <option value="00:00">12:00 AM (Midnight)</option>
-    </select>
-
-    <label for="pickup">Pick-up Location</label>
-    <input list="locations" id="pickup" name="pickup" required />
-
-    <div id="airport-extra" style="display: none;">
-      <label for="airline">Airline</label>
-      <input type="text" id="airline" name="airline" placeholder="e.g. American Airlines" />
-
-      <label for="baggage">Baggage Info</label>
-      <textarea id="baggage" name="baggage" rows="2" placeholder="e.g. 2 checked bags, 1 carry-on"></textarea>
+  <div class="container">
+    <div class="hero-image">
+      <img src="./png/luxury-int.png" alt="Luxury Interior" />
     </div>
 
-    <label for="dropoff">Drop-off Location</label>
-    <input list="locations" id="dropoff" name="dropoff" required />
+    <h1 class="hero-heading">Book Your Airport Transfer</h1>
+    <p class="booking-subhead">Fast, reliable transportation in St. Thomas &amp; St. John.</p>
 
-    <label for="passengers"># of Passengers</label>
-    <input type="number" id="passengers" name="passengers" min="1" inputmode="numeric" required placeholder="Enter number of passengers" />
+    <form id="booking-form">
+      <h2 class="form-section-title">Trip Details</h2>
 
-    <label for="roundtrip">Round Trip?</label>
-    <select id="roundtrip" name="roundtrip">
-      <option value="no">No</option>
-      <option value="yes">Yes</option>
-    </select>
+      <label for="date">Date</label>
+      <input
+        type="date"
+        id="date"
+        name="date"
+        required
+        min=""
+        onfocus="this.min = new Date().toISOString().split('T')[0]"
+      />
 
-    <div id="return-fields" style="display: none;">
-      <label for="return-date">Return Date</label>
-      <input type="date" id="return-date" name="return-date" />
-
-      <label for="return-time">Return Time</label>
-      <select id="return-time" name="return-time">
+      <label for="time">Pickup Time</label>
+      <select id="time" name="time" required>
         <option value="">-- Select Time --</option>
+        <option value="05:00">5:00 AM</option>
+        <option value="06:00">6:00 AM</option>
+        <option value="07:00">7:00 AM</option>
+        <option value="08:00">8:00 AM</option>
+        <option value="09:00">9:00 AM</option>
+        <option value="10:00">10:00 AM</option>
+        <option value="11:00">11:00 AM</option>
+        <option value="12:00">12:00 PM</option>
         <option value="13:00">1:00 PM</option>
         <option value="14:00">2:00 PM</option>
         <option value="15:00">3:00 PM</option>
@@ -208,180 +204,364 @@
         <option value="23:00">11:00 PM</option>
         <option value="00:00">12:00 AM (Midnight)</option>
       </select>
+
+      <label for="pickup">Pickup Location</label>
+      <input
+        list="locations"
+        id="pickup"
+        name="pickup"
+        required
+        placeholder="Select airport, hotel, ferry, or location"
+      />
+
+      <label for="dropoff">Destination</label>
+      <input
+        list="locations"
+        id="dropoff"
+        name="dropoff"
+        required
+        placeholder="Select hotel, ferry, airport, or address"
+      />
+
+      <h2 class="form-section-title">Travel Details</h2>
+
+      <div id="airport-extra" style="display: none;">
+        <label for="flight-info" id="flight-info-label">Flight Information</label>
+        <input
+          type="text"
+          id="flight-info"
+          name="flight-info"
+          placeholder="Example: American 1234"
+        />
+
+        <label for="baggage">Luggage Details</label>
+        <textarea
+          id="baggage"
+          name="baggage"
+          rows="2"
+          placeholder="Example: 2 checked bags, 1 carry-on"
+        ></textarea>
+      </div>
+
+      <label for="passengers">Passengers</label>
+      <input
+        type="number"
+        id="passengers"
+        name="passengers"
+        min="1"
+        inputmode="numeric"
+        required
+        placeholder="Number of passengers"
+      />
+      <div id="passenger-warning">More than 6 passengers may require a second vehicle. We’ll follow up to confirm arrangements.</div>
+
+      <label for="roundtrip">Trip Type</label>
+      <select id="roundtrip" name="roundtrip">
+        <option value="no">One Way</option>
+        <option value="yes">Round Trip</option>
+      </select>
+
+      <div id="return-fields" style="display: none;">
+        <label for="return-date">Return Date</label>
+        <input type="date" id="return-date" name="return-date" />
+
+        <label for="return-time">Return Time</label>
+        <select id="return-time" name="return-time">
+          <option value="">-- Select Time --</option>
+          <option value="05:00">5:00 AM</option>
+          <option value="06:00">6:00 AM</option>
+          <option value="07:00">7:00 AM</option>
+          <option value="08:00">8:00 AM</option>
+          <option value="09:00">9:00 AM</option>
+          <option value="10:00">10:00 AM</option>
+          <option value="11:00">11:00 AM</option>
+          <option value="12:00">12:00 PM</option>
+          <option value="13:00">1:00 PM</option>
+          <option value="14:00">2:00 PM</option>
+          <option value="15:00">3:00 PM</option>
+          <option value="16:00">4:00 PM</option>
+          <option value="17:00">5:00 PM</option>
+          <option value="18:00">6:00 PM</option>
+          <option value="19:00">7:00 PM</option>
+          <option value="20:00">8:00 PM</option>
+          <option value="21:00">9:00 PM</option>
+          <option value="22:00">10:00 PM</option>
+          <option value="23:00">11:00 PM</option>
+          <option value="00:00">12:00 AM (Midnight)</option>
+        </select>
+      </div>
+
+      <h2 class="form-section-title">Contact Information</h2>
+
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        autocomplete="name"
+        placeholder="Full name"
+      />
+
+      <label for="phone">Phone</label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        required
+        placeholder="000-000-0000"
+        autocomplete="tel"
+        inputmode="numeric"
+        maxlength="12"
+        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+        title="Enter phone number as 000-000-0000"
+      />
+
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="_replyto"
+        required
+        autocomplete="email"
+        placeholder="name@example.com"
+      />
+
+      <h2 class="form-section-title">Final Notes</h2>
+
+      <label for="notes">Special Instructions</label>
+      <textarea
+        id="notes"
+        name="notes"
+        rows="3"
+        placeholder="Flight delays, child seat needs, pickup details, or other notes"
+      ></textarea>
+
+      <div id="price-box">Estimated Fare: $0</div>
+
+      <button type="submit">Request Booking</button>
+
+      <datalist id="locations">
+        <option value="Bluebeard's Castle"></option>
+        <option value="Bolongo Bay Beach Resort"></option>
+        <option value="Charlotte Amalie"></option>
+        <option value="Cyril E. King Airport"></option>
+        <option value="Emerald Beach Resort"></option>
+        <option value="Havensight"></option>
+        <option value="Magens Bay"></option>
+        <option value="Marriott Frenchman's Reef"></option>
+        <option value="Margaritaville Vacation Club"></option>
+        <option value="Point Pleasant Resort"></option>
+        <option value="Red Hook Ferry Terminal"></option>
+        <option value="Secret Harbour Beach Resort"></option>
+        <option value="St. John"></option>
+        <option value="The Ritz-Carlton, St. Thomas"></option>
+        <option value="Tutu Park Mall"></option>
+        <option value="Yacht Haven Grande"></option>
+      </datalist>
+    </form>
+
+    <div class="contact-info">
+      <p>Questions? Call or email us directly.</p>
+      <p>📞 <a href="tel:3406428686">340-642-8686</a></p>
+      <p>📧 <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
     </div>
-
-    <label for="notes">Additional Details or Special Instructions</label>
-    <textarea id="notes" name="notes" rows="3"></textarea>
-
-    <button type="submit">Submit Booking</button>
-
-    <datalist id="locations">
-      <option value="Bluebeard's Castle">
-      <option value="Bolongo Bay Beach Resort">
-      <option value="Charlotte Amalie">
-      <option value="Cyril E. King Airport">
-      <option value="Emerald Beach Resort">
-      <option value="Havensight">
-      <option value="Magens Bay">
-      <option value="Marriott Frenchman's Reef">
-      <option value="Margaritaville Vacation Club">
-      <option value="Point Pleasant Resort">
-      <option value="Red Hook Ferry Terminal">
-      <option value="Secret Harbour Beach Resort">
-      <option value="St. John">
-      <option value="The Ritz-Carlton, St. Thomas">
-      <option value="Tutu Park Mall">
-      <option value="Yacht Haven Grande">
-    </datalist>
-  </form>
-
-  <div class="contact-info">
-    <p>📞 <a href="tel:3406428686">340-642-8686</a></p>
-    <p>📧 <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
-    <p>🌐 <a href="https://set-vi.github.io/set-limo-vi/" target="_blank">https://set-vi.github.io/set-limo-vi/</a></p>
   </div>
 
-</div>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('booking-form');
-    if (!form) return;
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('booking-form');
+      if (!form) return;
 
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
+      const pickup = document.getElementById('pickup');
+      const dropoff = document.getElementById('dropoff');
+      const airportExtra = document.getElementById('airport-extra');
+      const flightInfoLabel = document.getElementById('flight-info-label');
+      const roundTripSelect = document.getElementById('roundtrip');
+      const returnFields = document.getElementById('return-fields');
+      const serviceTime = document.getElementById('time');
+      const returnTime = document.getElementById('return-time');
+      const dateField = document.getElementById('date');
+      const returnDateField = document.getElementById('return-date');
+      const phoneInput = document.getElementById('phone');
+      const passengerInput = document.getElementById('passengers');
+      const passengerWarning = document.getElementById('passenger-warning');
+      const priceBox = document.getElementById('price-box');
+      const flightInfo = document.getElementById('flight-info');
+      const baggage = document.getElementById('baggage');
 
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
+      const airportRates = {
+        "Bluebeard's Castle": 35,
+        "Bolongo Bay Beach Resort": 30,
+        "Charlotte Amalie": 25,
+        "Cyril E. King Airport": 20,
+        "Emerald Beach Resort": 20,
+        "Havensight": 28,
+        "Magens Bay": 30,
+        "Marriott Frenchman's Reef": 30,
+        "Margaritaville Vacation Club": 40,
+        "Point Pleasant Resort": 40,
+        "Red Hook Ferry Terminal": 45,
+        "Secret Harbour Beach Resort": 40,
+        "St. John": 75,
+        "The Ritz-Carlton, St. Thomas": 45,
+        "Tutu Park Mall": 22,
+        "Yacht Haven Grande": 28
+      };
+
+      function formatPhoneNumber(value) {
+        const digits = value.replace(/\D/g, '').slice(0, 10);
+
+        if (digits.length < 4) return digits;
+        if (digits.length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+        return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
       }
 
-      const email = form.email.value;
-      const confirmEmail = form['confirm-email'].value;
-      if (email !== confirmEmail) {
-        alert("Emails do not match.");
-        return;
+      function isAirportSelected() {
+        const pickupValue = pickup.value.trim().toLowerCase();
+        const dropoffValue = dropoff.value.trim().toLowerCase();
+        return pickupValue.includes('airport') || dropoffValue.includes('airport');
       }
 
-      const button = form.querySelector('button');
-      button.disabled = true;
-      button.textContent = 'Submitting...';
-
-      const formData = new FormData(form);
-      const payload = {};
-      formData.forEach((value, key) => {
-        payload[key] = value;
-      });
-
-      try {
-        await fetch('https://formspree.io/f/meoazyoy', {
-        method: 'POST',
-        body: formData
-      });
-
-        window.location.href = 'https://set-vi.github.io/set-limo-vi/thank-you.html';
-      } catch (error) {
-        console.error("Submission error:", error);
-        alert("Something went wrong. Please try again or call us directly.");
-        button.disabled = false;
-        button.textContent = 'Submit Booking';
-      }
-    });
-
-    const pickup = document.getElementById('pickup');
-    const airportExtra = document.getElementById('airport-extra');
-    const roundTripSelect = document.getElementById('roundtrip');
-    const returnFields = document.getElementById('return-fields');
-    const returnTime = document.getElementById('return-time');
-    const serviceTime = document.getElementById('time');
-
-    if (pickup) {
-      pickup.addEventListener('input', function () {
-        if (pickup.value === 'Cyril E. King Airport') {
+      function updateAirportFields() {
+        if (isAirportSelected()) {
           airportExtra.style.display = 'block';
+
+          if (pickup.value.trim().toLowerCase().includes('airport')) {
+            flightInfoLabel.textContent = 'Flight Information';
+          } else if (dropoff.value.trim().toLowerCase().includes('airport')) {
+            flightInfoLabel.textContent = 'Flight Information';
+          } else {
+            flightInfoLabel.textContent = 'Flight Information';
+          }
         } else {
           airportExtra.style.display = 'none';
-          airportExtra.querySelectorAll('input, textarea').forEach(el => el.value = '');
+          flightInfo.value = '';
+          baggage.value = '';
         }
-      });
-    }
-
-    if (roundTripSelect) {
-      roundTripSelect.addEventListener('change', function () {
-        if (this.value === 'yes') {
-          returnFields.style.display = 'block';
-        } else {
-          returnFields.style.display = 'none';
-          returnFields.querySelectorAll('input, select').forEach(el => el.value = '');
-        }
-      });
-    }
-
-    function disablePastTimes(select, bufferMinutes = 180) {
-      const dateInput = document.getElementById('date');
-      if (!dateInput) return;
-      const selectedDate = dateInput.value;
-      const today = new Date().toISOString().split('T')[0];
-      const now = new Date();
-      const reference = now.getHours() * 60 + now.getMinutes() + bufferMinutes;
-
-      Array.from(select.options).forEach(option => {
-        const val = option.value;
-        if (!val || !val.includes(':')) return;
-
-        let [h, m] = val.split(':').map(Number);
-        if (h === 0 && m === 0) h = 24;
-
-        const optionTime = h * 60 + m;
-        if (selectedDate === today) {
-        option.disabled = optionTime <= reference;
-      } else {
-        option.disabled = false;
       }
-      });
-    }
 
-    const dateField = document.getElementById('date');
-    if (dateField) {
+      function updateRoundTripFields() {
+        const isRoundTrip = roundTripSelect.value === 'yes';
+        returnFields.style.display = isRoundTrip ? 'block' : 'none';
+        returnDateField.required = isRoundTrip;
+        returnTime.required = isRoundTrip;
+
+        if (!isRoundTrip) {
+          returnDateField.value = '';
+          returnTime.value = '';
+        }
+
+        updatePrice();
+      }
+
+      function updatePassengerWarning() {
+        const passengerCount = parseInt(passengerInput.value, 10);
+
+        if (!isNaN(passengerCount) && passengerCount >= 7) {
+          passengerWarning.style.display = 'block';
+        } else {
+          passengerWarning.style.display = 'none';
+        }
+      }
+
+      function updatePrice() {
+        const pickupRate = airportRates[pickup.value] || 0;
+        const dropoffRate = airportRates[dropoff.value] || 0;
+        const baseFare = Math.max(pickupRate, dropoffRate);
+
+        if (baseFare > 0) {
+          const totalFare = roundTripSelect.value === 'yes' ? baseFare * 2 : baseFare;
+          const label = roundTripSelect.value === 'yes' ? 'Round Trip Estimate' : 'One-Way Estimate';
+          priceBox.textContent = `${label}: $${totalFare}`;
+          priceBox.style.display = 'block';
+        } else {
+          priceBox.textContent = 'Estimated Fare: $0';
+          priceBox.style.display = 'none';
+        }
+      }
+
+      function validateReturnTrip() {
+        if (roundTripSelect.value !== 'yes') return true;
+        if (!returnDateField.value || !returnTime.value) return true;
+        if (!dateField.value || !serviceTime.value) return true;
+
+        const outboundDateTime = new Date(`${dateField.value}T${serviceTime.value}`);
+        const returnDateTime = new Date(`${returnDateField.value}T${returnTime.value}`);
+
+        return returnDateTime >= outboundDateTime;
+      }
+
+      pickup.addEventListener('input', function () {
+        updateAirportFields();
+        updatePrice();
+      });
+
+      dropoff.addEventListener('input', function () {
+        updateAirportFields();
+        updatePrice();
+      });
+
+      roundTripSelect.addEventListener('change', updateRoundTripFields);
+      passengerInput.addEventListener('input', updatePassengerWarning);
+
+      phoneInput.addEventListener('input', function () {
+        this.value = formatPhoneNumber(this.value);
+      });
+
       dateField.addEventListener('change', function () {
-        if (dateField && dateField.value) {
-        
-      }
-      });
-    }
-
-    if (serviceTime) {
-      serviceTime.addEventListener('change', function () {
-        const selectedVal = this.value;
-        if (!selectedVal || !selectedVal.includes(':')) return;
-
-        let [h, m] = selectedVal.split(':').map(Number);
-        if (h === 0 && m === 0) h = 24;
-
-        const selectedMinutes = h * 60 + m;
-        disablePastTimes(returnTime, selectedMinutes);
+        returnDateField.min = dateField.value;
       });
 
-      disablePastTimes(serviceTime);
-    }
-
-    const passengerInput = document.getElementById('passengers');
-    if (passengerInput) {
-      const passengerNote = document.createElement('div');
-      passengerNote.id = 'passenger-warning';
-      passengerNote.style.cssText = 'font-size: 0.8em; color: #d4af37; margin-top: 6px; display: none;';
-      passengerNote.textContent = 'Groups over 6 passengers may require a second vehicle. We’ll follow up to confirm arrangements.';
-      passengerInput.parentNode.insertBefore(passengerNote, passengerInput.nextSibling);
-
-      passengerInput.addEventListener('input', function () {
-        const warning = document.getElementById('passenger-warning');
-        if (this.value > 6) {
-          warning.style.display = 'block';
-        } else {
-          warning.style.display = 'none';
+      returnDateField.addEventListener('change', function () {
+        if (dateField.value && returnDateField.value < dateField.value) {
+          alert('Return date cannot be earlier than outbound date.');
+          returnDateField.value = '';
         }
       });
-    }
-  });
-</script>
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!validateReturnTrip()) {
+          alert('Return trip date and time cannot be earlier than the outbound trip.');
+          return;
+        }
+
+        const fareText = priceBox.style.display === 'block' ? priceBox.textContent : 'Fare estimate unavailable';
+        const summary =
+`Please review your booking request:
+
+Date: ${dateField.value || '-'}
+Pickup Time: ${serviceTime.value || '-'}
+Pickup Location: ${pickup.value || '-'}
+Destination: ${dropoff.value || '-'}
+Passengers: ${passengerInput.value || '-'}
+Trip Type: ${roundTripSelect.value === 'yes' ? 'Round Trip' : 'One Way'}
+Return Date: ${returnDateField.value || '-'}
+Return Time: ${returnTime.value || '-'}
+Name: ${document.getElementById('name').value || '-'}
+Phone: ${phoneInput.value || '-'}
+Email: ${document.getElementById('email').value || '-'}
+${fareText}`;
+
+        const confirmed = confirm(summary);
+
+        if (confirmed) {
+          alert('Booking request captured. Connect your form handler or email service to complete live submissions.');
+          form.reset();
+          airportExtra.style.display = 'none';
+          returnFields.style.display = 'none';
+          passengerWarning.style.display = 'none';
+          priceBox.style.display = 'none';
+        }
+      });
+
+      updateAirportFields();
+      updateRoundTripFields();
+      updatePassengerWarning();
+      updatePrice();
+    });
+  </script>
 </body>
 </html>
