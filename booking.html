@@ -116,13 +116,31 @@
       color: #ccc;
     }
 
-    .contact-info a {
-      color: #d4af37;
+    .contact-line {
+      margin: 10px 0;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       text-decoration: none;
     }
 
-    .contact-info a:hover {
+    .contact-link:hover .contact-text {
       text-decoration: underline;
+    }
+
+    .contact-icon {
+      width: 18px;
+      height: 18px;
+      color: #d4af37;
+      flex-shrink: 0;
+    }
+
+    .contact-text {
+      color: #fff;
     }
 
     .helper-text {
@@ -479,15 +497,29 @@
 
         <div id="price-box"></div>
         <div class="helper-text">
-          Standard route: $180 up to 6 passengers, then $30 each over 6. Any St. John route: $600 up to 6 passengers, then $70 each over 6.
+          Pricing is shown automatically based on your trip details. Larger groups and St. John trips are calculated accordingly.
         </div>
 
         <button type="submit" id="review-booking-btn">Review Booking</button>
       </form>
 
       <div class="contact-info">
-        <p>📞 <a href="tel:3406428686">340-642-8686</a></p>
-        <p>📧 <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
+        <p class="contact-line">
+          <a href="tel:3406428686" class="contact-link">
+            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.56 3.58.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.3 21 3 13.7 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.19 2.46.56 3.58a1 1 0 0 1-.25 1.01l-2.19 2.2Z"/>
+            </svg>
+            <span class="contact-text">340-642-8686</span>
+          </a>
+        </p>
+        <p class="contact-line">
+          <a href="mailto:setlimovi@gmail.com" class="contact-link">
+            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 3.24-7.4 5.55a1 1 0 0 1-1.2 0L4 7.24V6l8 6 8-6v1.24Z"/>
+            </svg>
+            <span class="contact-text">setlimovi@gmail.com</span>
+          </a>
+        </p>
       </div>
     </div>
 
@@ -503,8 +535,22 @@
         </div>
 
         <div style="margin-top: 40px;">
-          <p><a href="tel:3406428686">📞 340-642-8686</a></p>
-          <p><a href="mailto:setlimovi@gmail.com">📧 setlimovi@gmail.com</a></p>
+          <p class="contact-line">
+            <a href="tel:3406428686" class="contact-link">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.56 3.58.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.3 21 3 13.7 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.19 2.46.56 3.58a1 1 0 0 1-.25 1.01l-2.19 2.2Z"/>
+              </svg>
+              <span class="contact-text">340-642-8686</span>
+            </a>
+          </p>
+          <p class="contact-line">
+            <a href="mailto:setlimovi@gmail.com" class="contact-link">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 3.24-7.4 5.55a1 1 0 0 1-1.2 0L4 7.24V6l8 6 8-6v1.24Z"/>
+              </svg>
+              <span class="contact-text">setlimovi@gmail.com</span>
+            </a>
+          </p>
         </div>
 
         <p style="margin-top: 30px; font-size: 0.9em; color: #ccc;">
