@@ -162,14 +162,16 @@
       text-decoration: none;
     }
 
+    .contact-info p:first-child {
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      font-size: 0.9em;
+    }
+
     #passenger-warning {
       font-size: 0.8em;
       color: #e2c768;
       margin-top: 6px;
-      display: none;
-    }
-
-    .hidden-field {
       display: none;
     }
 
@@ -187,7 +189,7 @@
     </div>
 
     <h1 class="hero-heading">Elevate Your Journey</h1>
-    <p class="booking-subhead">Safe, reliable, premium transportation serving St. Thomas &amp; St. John.</p>
+    <p class="booking-subhead">Safe, reliable transportation in St. Thomas &amp; St. John.</p>
 
     <form id="booking-form">
       <h2 class="form-section-title">Trip Details</h2>
@@ -228,68 +230,22 @@
       </select>
 
       <label for="pickup">Pickup Location</label>
-      <select id="pickup" name="pickup" required>
-        <option value="">-- Select Pickup Location --</option>
-        <option value="Bluebeard's Castle">Bluebeard's Castle</option>
-        <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
-        <option value="Charlotte Amalie">Charlotte Amalie</option>
-        <option value="Cyril E. King Airport">Cyril E. King Airport</option>
-        <option value="Emerald Beach Resort">Emerald Beach Resort</option>
-        <option value="Havensight">Havensight</option>
-        <option value="Magens Bay">Magens Bay</option>
-        <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
-        <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
-        <option value="Point Pleasant Resort">Point Pleasant Resort</option>
-        <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
-        <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
-        <option value="St. John">St. John</option>
-        <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
-        <option value="Tutu Park Mall">Tutu Park Mall</option>
-        <option value="Yacht Haven Grande">Yacht Haven Grande</option>
-        <option value="Other / Custom Address">Other / Custom Address</option>
-      </select>
-
-      <div id="pickup-custom-wrap" class="hidden-field">
-        <label for="pickup-custom">Custom Pickup Location</label>
-        <input
-          type="text"
-          id="pickup-custom"
-          name="pickup_custom"
-          placeholder="Enter pickup address or custom location"
-        />
-      </div>
+      <input
+        list="locations"
+        id="pickup"
+        name="pickup"
+        required
+        placeholder="Select airport, hotel, ferry, or location"
+      />
 
       <label for="dropoff">Destination</label>
-      <select id="dropoff" name="dropoff" required>
-        <option value="">-- Select Destination --</option>
-        <option value="Bluebeard's Castle">Bluebeard's Castle</option>
-        <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
-        <option value="Charlotte Amalie">Charlotte Amalie</option>
-        <option value="Cyril E. King Airport">Cyril E. King Airport</option>
-        <option value="Emerald Beach Resort">Emerald Beach Resort</option>
-        <option value="Havensight">Havensight</option>
-        <option value="Magens Bay">Magens Bay</option>
-        <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
-        <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
-        <option value="Point Pleasant Resort">Point Pleasant Resort</option>
-        <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
-        <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
-        <option value="St. John">St. John</option>
-        <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
-        <option value="Tutu Park Mall">Tutu Park Mall</option>
-        <option value="Yacht Haven Grande">Yacht Haven Grande</option>
-        <option value="Other / Custom Address">Other / Custom Address</option>
-      </select>
-
-      <div id="dropoff-custom-wrap" class="hidden-field">
-        <label for="dropoff-custom">Custom Destination</label>
-        <input
-          type="text"
-          id="dropoff-custom"
-          name="dropoff_custom"
-          placeholder="Enter destination address or custom location"
-        />
-      </div>
+      <input
+        list="locations"
+        id="dropoff"
+        name="dropoff"
+        required
+        placeholder="Select hotel, ferry, airport, or address"
+      />
 
       <h2 class="form-section-title">Travel Details</h2>
 
@@ -377,10 +333,12 @@
         id="phone"
         name="phone"
         required
-        placeholder="340-000-0000"
+        placeholder="000-000-0000"
         autocomplete="tel"
         inputmode="numeric"
         maxlength="12"
+        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+        title="Enter phone number as 000-000-0000"
       />
 
       <label for="email">Email</label>
@@ -400,15 +358,35 @@
         id="notes"
         name="notes"
         rows="3"
-        placeholder="Pickup details, or other notes"
+        placeholder="Flight delays, child seat needs, pickup details, or other notes"
       ></textarea>
 
       <div id="price-box">One-Way Estimate: $180.00</div>
 
       <button type="submit" id="submit-button">Request Booking</button>
+
+      <datalist id="locations">
+        <option value="Bluebeard's Castle"></option>
+        <option value="Bolongo Bay Beach Resort"></option>
+        <option value="Charlotte Amalie"></option>
+        <option value="Cyril E. King Airport"></option>
+        <option value="Emerald Beach Resort"></option>
+        <option value="Havensight"></option>
+        <option value="Magens Bay"></option>
+        <option value="Marriott Frenchman's Reef"></option>
+        <option value="Margaritaville Vacation Club"></option>
+        <option value="Point Pleasant Resort"></option>
+        <option value="Red Hook Ferry Terminal"></option>
+        <option value="Secret Harbour Beach Resort"></option>
+        <option value="St. John"></option>
+        <option value="The Ritz-Carlton, St. Thomas"></option>
+        <option value="Tutu Park Mall"></option>
+        <option value="Yacht Haven Grande"></option>
+      </datalist>
     </form>
 
     <div class="contact-info">
+      <p>Questions? Call or email us directly.</p>
       <p>📞 <a href="tel:3406428686">340-642-8686</a></p>
       <p>📧 <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
     </div>
@@ -421,10 +399,6 @@
 
       const pickup = document.getElementById('pickup');
       const dropoff = document.getElementById('dropoff');
-      const pickupCustomWrap = document.getElementById('pickup-custom-wrap');
-      const dropoffCustomWrap = document.getElementById('dropoff-custom-wrap');
-      const pickupCustom = document.getElementById('pickup-custom');
-      const dropoffCustom = document.getElementById('dropoff-custom');
       const airportExtra = document.getElementById('airport-extra');
       const flightInfoLabel = document.getElementById('flight-info-label');
       const roundTripSelect = document.getElementById('roundtrip');
@@ -444,7 +418,6 @@
       const BASE_TRANSFER_RATE = 180.00;
       const INCLUDED_PASSENGERS = 6;
       const EXTRA_PASSENGER_RATE = 30.00;
-      const CUSTOM_LOCATION_VALUE = 'Other / Custom Address';
 
       function formatPhoneNumber(value) {
         const digits = value.replace(/\D/g, '').slice(0, 10);
@@ -454,39 +427,9 @@
         return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
       }
 
-      function getPhoneDigits() {
-        return phoneInput.value.replace(/\D/g, '');
-      }
-
-      function getResolvedLocation(selectEl, customEl) {
-        return selectEl.value === CUSTOM_LOCATION_VALUE
-          ? customEl.value.trim()
-          : selectEl.value.trim();
-      }
-
-      function updateCustomLocationFields() {
-        const pickupIsCustom = pickup.value === CUSTOM_LOCATION_VALUE;
-        const dropoffIsCustom = dropoff.value === CUSTOM_LOCATION_VALUE;
-
-        pickupCustomWrap.style.display = pickupIsCustom ? 'block' : 'none';
-        dropoffCustomWrap.style.display = dropoffIsCustom ? 'block' : 'none';
-
-        pickupCustom.required = pickupIsCustom;
-        dropoffCustom.required = dropoffIsCustom;
-
-        if (!pickupIsCustom) {
-          pickupCustom.value = '';
-        }
-
-        if (!dropoffIsCustom) {
-          dropoffCustom.value = '';
-        }
-      }
-
       function isAirportSelected() {
-        const pickupValue = getResolvedLocation(pickup, pickupCustom).toLowerCase();
-        const dropoffValue = getResolvedLocation(dropoff, dropoffCustom).toLowerCase();
-
+        const pickupValue = pickup.value.trim().toLowerCase();
+        const dropoffValue = dropoff.value.trim().toLowerCase();
         return pickupValue.includes('airport') || dropoffValue.includes('airport');
       }
 
@@ -517,7 +460,7 @@
 
       function getPassengerCount() {
         const passengerCount = parseInt(passengerInput.value, 10);
-        return Number.isNaN(passengerCount) || passengerCount < 1 ? 1 : passengerCount;
+        return Number.isNaN(passengerCount) 11 passengerCount < 1 ? 1 : passengerCount;
       }
 
       function getExtraPassengerCount() {
@@ -559,20 +502,17 @@
         return returnDateTime >= outboundDateTime;
       }
 
-      pickup.addEventListener('change', function () {
-        updateCustomLocationFields();
+      pickup.addEventListener('input', function () {
         updateAirportFields();
       });
 
-      dropoff.addEventListener('change', function () {
-        updateCustomLocationFields();
+      dropoff.addEventListener('input', function () {
         updateAirportFields();
       });
 
-      pickupCustom.addEventListener('input', updateAirportFields);
-      dropoffCustom.addEventListener('input', updateAirportFields);
-
-      roundTripSelect.addEventListener('change', updateRoundTripFields);
+      roundTripSelect.addEventListener('change', function () {
+        updateRoundTripFields();
+      });
 
       passengerInput.addEventListener('input', function () {
         updatePassengerWarning();
@@ -597,25 +537,8 @@
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const phoneDigits = getPhoneDigits();
-        phoneInput.value = formatPhoneNumber(phoneInput.value);
-
-        if (phoneDigits.length !== 10) {
-          alert('Please enter a valid 10-digit phone number.');
-          phoneInput.focus();
-          return;
-        }
-
         if (!validateReturnTrip()) {
           alert('Return trip date and time cannot be earlier than the outbound trip.');
-          return;
-        }
-
-        const resolvedPickup = getResolvedLocation(pickup, pickupCustom);
-        const resolvedDropoff = getResolvedLocation(dropoff, dropoffCustom);
-
-        if (!resolvedPickup || !resolvedDropoff) {
-          alert('Please complete both pickup and destination.');
           return;
         }
 
@@ -628,8 +551,8 @@
 
 Date: ${dateField.value || '-'}
 Pickup Time: ${serviceTime.value || '-'}
-Pickup Location: ${resolvedPickup || '-'}
-Destination: ${resolvedDropoff || '-'}
+Pickup Location: ${pickup.value || '-'}
+Destination: ${dropoff.value || '-'}
 Passengers: ${passengerInput.value || '-'}
 Trip Type: ${roundTripSelect.value === 'yes' ? 'Round Trip' : 'One Way'}
 Return Date: ${returnDateField.value || '-'}
@@ -647,13 +570,6 @@ ${fareText}`;
 
         const extraPassengerCount = getExtraPassengerCount();
         const formData = new FormData(form);
-
-        formData.set('pickup', resolvedPickup);
-        formData.set('dropoff', resolvedDropoff);
-        formData.set('phone', phoneInput.value);
-        formData.delete('pickup_custom');
-        formData.delete('dropoff_custom');
-
         formData.append('estimated_fare', `$${totalFare.toFixed(2)}`);
         formData.append('extra_passengers', String(extraPassengerCount));
         formData.append('second_vehicle_required', extraPassengerCount > 0 ? 'Yes' : 'No');
@@ -684,7 +600,6 @@ ${fareText}`;
         }
       });
 
-      updateCustomLocationFields();
       updateAirportFields();
       updateRoundTripFields();
       updatePassengerWarning();
