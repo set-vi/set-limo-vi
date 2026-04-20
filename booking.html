@@ -3,37 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Book Your Airport Transfer | Superb Executive Transportation</title>
+  <title>Elevate Your Journey | Superb Executive Transportation</title>
   <style>
-    :root {
-      --bg: #050505;
-      --panel: #111111;
-      --panel-soft: #171717;
-      --text: #f3efe6;
-      --text-soft: #d2cab9;
-      --text-muted: #b8af9a;
-      --border: #5f594d;
-      --gold: #d4af37;
-      --gold-soft: rgba(212, 175, 55, 0.35);
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: #000;
+      color: #fff;
       padding: 40px;
       display: flex;
       justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
 
     .container {
-      background: var(--panel);
+      background: #111;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.38);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
       width: 100%;
-      max-width: 500px;
+      max-width: 520px;
+      box-sizing: border-box;
+    }
+
+    input,
+    textarea,
+    select,
+    button {
+      font-family: inherit;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    input,
+    textarea,
+    select {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background: #222;
+      color: #fff;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #d4af37;
+      outline: none;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #000;
+      color: #fff;
+      font-weight: bold;
+      border: 2px solid #d4af37;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #d4af37;
+      color: #000;
+    }
+
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
     }
 
     .hero-image {
@@ -58,242 +105,240 @@
       font-weight: bold;
       color: #fff;
       margin-top: -10px;
-      margin-bottom: 10px;
-      text-shadow: 0 0 3px var(--gold), 0 0 6px var(--gold);
-    }
-
-    .booking-subhead {
-      text-align: center;
-      color: var(--text-soft);
-      margin-top: 0;
-      margin-bottom: 24px;
-      font-size: 0.95em;
-    }
-
-    .form-section-title {
-      margin-top: 28px;
-      margin-bottom: 10px;
-      font-size: 1rem;
-      font-weight: bold;
-      color: var(--gold);
-      border-bottom: 1px solid var(--gold-soft);
-      padding-bottom: 6px;
-    }
-
-    .form-section-title:first-of-type {
-      margin-top: 0;
-    }
-
-    label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
-      color: var(--text);
-    }
-
-    input,
-    textarea,
-    select {
-      box-sizing: border-box;
-      width: 100%;
-      padding: 10px;
-      font-size: 1em;
-      border-radius: 5px;
-      border: 1px solid var(--border);
-      background: var(--panel-soft);
-      color: var(--text);
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: var(--text-muted);
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--gold);
-      outline: none;
-      box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.15);
-    }
-
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background-color: #000;
-      color: #fff;
-      font-weight: bold;
-      border: 2px solid var(--gold);
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: var(--gold);
-      color: #000;
-    }
-
-    button:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-
-    #price-box {
-      margin-top: 20px;
-      padding: 12px;
-      border: 1px solid var(--gold);
-      border-radius: 6px;
-      background: #17140d;
-      color: #f2d97c;
-      font-weight: bold;
-      display: none;
+      margin-bottom: 25px;
+      text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;
     }
 
     .contact-info {
       margin-top: 30px;
       text-align: center;
       font-size: 0.95em;
-      color: var(--text-soft);
+      color: #ccc;
     }
 
     .contact-info a {
-      color: var(--gold);
+      color: #d4af37;
       text-decoration: none;
     }
 
-    .contact-info p:first-child {
-      margin-bottom: 12px;
-      color: var(--text-muted);
-      font-size: 0.9em;
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    .helper-text {
+      margin-top: 6px;
+      font-size: 0.82em;
+      color: #bfbfbf;
+      line-height: 1.4;
+    }
+
+    #pickup-custom-wrap,
+    #dropoff-custom-wrap,
+    #airport-extra,
+    #return-fields,
+    #thank-you-screen,
+    #price-box,
+    #review-modal {
+      display: none;
     }
 
     #passenger-warning {
       font-size: 0.8em;
-      color: #e2c768;
+      color: #d4af37;
       margin-top: 6px;
       display: none;
+    }
+
+    #price-box {
+      margin-top: 20px;
+      padding: 12px;
+      border: 1px solid #d4af37;
+      border-radius: 6px;
+      background: #1a1a1a;
+      color: #d4af37;
+      font-weight: bold;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .thank-you-box {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .thank-you-box h1 {
+      color: #d4af37;
+      margin-bottom: 20px;
+    }
+
+    .thank-you-box p {
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .thank-you-actions {
+      margin-top: 30px;
+    }
+
+    .thank-you-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #000;
+      color: #fff;
+      font-weight: bold;
+      border: 2px solid #d4af37;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0;
+    }
+
+    .thank-you-btn:hover {
+      background-color: #d4af37;
+      color: #000;
+    }
+
+    .thank-you-link {
+      display: inline-block;
+      margin-top: 14px;
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 0.95em;
+    }
+
+    .thank-you-link:hover {
+      text-decoration: underline;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #111;
+      border: 1px solid rgba(212, 175, 55, 0.6);
+      border-radius: 12px;
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.3);
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .modal-title {
+      margin: 0 0 10px;
+      color: #d4af37;
+      text-align: center;
+      font-size: 1.45em;
+    }
+
+    .modal-subtitle {
+      margin: 0 0 20px;
+      text-align: center;
+      color: #ccc;
+      line-height: 1.45;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .review-row {
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #171717;
+    }
+
+    .review-label {
+      display: block;
+      font-size: 0.82em;
+      color: #d4af37;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .review-value {
+      color: #fff;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .modal-actions {
+      margin-top: 20px;
+    }
+
+    .secondary-btn {
+      background: transparent;
+      color: #fff;
+    }
+
+    .secondary-btn:hover {
+      background-color: #2b2b2b;
+      color: #fff;
     }
 
     @media (max-width: 480px) {
       body {
         padding: 20px;
       }
+
+      .container {
+        padding: 20px;
+      }
+
+      .modal-box {
+        padding: 18px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="hero-image">
-      <img src="./png/luxury-int.png" alt="Luxury Interior" />
-    </div>
-
-    <h1 class="hero-heading">Elevate Your Journey</h1>
-    <p class="booking-subhead">Safe, reliable transportation in St. Thomas &amp; St. John.</p>
-
-    <!-- Added action & method and a hidden _next for non-JS fallback -->
-    <form id="booking-form" action="https://formspree.io/f/meoazyoy" method="POST">
-      <input type="hidden" name="_next" value="./thank-you.html">
-
-      <h2 class="form-section-title">Trip Details</h2>
-
-      <label for="date">Date</label>
-      <input
-        type="date"
-        id="date"
-        name="date"
-        required
-        min=""
-        onfocus="this.min = new Date().toISOString().split('T')[0]"
-      />
-
-      <label for="time">Pickup Time</label>
-      <select id="time" name="time" required>
-        <option value="">-- Select Time --</option>
-        <option value="05:00">5:00 AM</option>
-        <option value="06:00">6:00 AM</option>
-        <option value="07:00">7:00 AM</option>
-        <option value="08:00">8:00 AM</option>
-        <option value="09:00">9:00 AM</option>
-        <option value="10:00">10:00 AM</option>
-        <option value="11:00">11:00 AM</option>
-        <option value="12:00">12:00 PM</option>
-        <option value="13:00">1:00 PM</option>
-        <option value="14:00">2:00 PM</option>
-        <option value="15:00">3:00 PM</option>
-        <option value="16:00">4:00 PM</option>
-        <option value="17:00">5:00 PM</option>
-        <option value="18:00">6:00 PM</option>
-        <option value="19:00">7:00 PM</option>
-        <option value="20:00">8:00 PM</option>
-        <option value="21:00">9:00 PM</option>
-        <option value="22:00">10:00 PM</option>
-        <option value="23:00">11:00 PM</option>
-        <option value="00:00">12:00 AM (Midnight)</option>
-      </select>
-
-      <label for="pickup">Pickup Location</label>
-      <input
-        list="locations"
-        id="pickup"
-        name="pickup"
-        required
-        placeholder="Select airport, hotel, ferry, or location"
-      />
-
-      <label for="dropoff">Destination</label>
-      <input
-        list="locations"
-        id="dropoff"
-        name="dropoff"
-        required
-        placeholder="Select hotel, ferry, airport, or address"
-      />
-
-      <h2 class="form-section-title">Travel Details</h2>
-
-      <div id="airport-extra" style="display: none;">
-        <label for="flight-info" id="flight-info-label">Flight Information</label>
-        <input
-          type="text"
-          id="flight-info"
-          name="flight-info"
-          placeholder="Example: American 1234"
-        />
-
-        <label for="baggage">Luggage Details</label>
-        <textarea
-          id="baggage"
-          name="baggage"
-          rows="2"
-          placeholder="Example: 2 checked bags, 1 carry-on"
-        ></textarea>
+    <div id="booking-screen">
+      <div class="hero-image">
+        <img src="./png/luxury-int.png" alt="Luxury Interior" />
       </div>
 
-      <label for="passengers">Passengers</label>
-      <input
-        type="number"
-        id="passengers"
-        name="passengers"
-        min="1"
-        inputmode="numeric"
-        required
-        placeholder="Number of passengers"
-      />
-      <div id="passenger-warning">More than 6 passengers requires a second vehicle. We will follow up to confirm arrangements.</div>
+      <h1 class="hero-heading">Elevate Your Journey</h1>
 
-      <label for="roundtrip">Trip Type</label>
-      <select id="roundtrip" name="roundtrip">
-        <option value="no">One Way</option>
-        <option value="yes">Round Trip</option>
-      </select>
+      <form id="booking-form">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required autocomplete="name" />
 
-      <div id="return-fields" style="display: none;">
-        <label for="return-date">Return Date</label>
-        <input type="date" id="return-date" name="return-date" />
+        <label for="email">Email</label>
+        <input type="email" id="email" name="_replyto" required autocomplete="email" />
 
-        <label for="return-time">Return Time</label>
-        <select id="return-time" name="return-time">
+        <label for="phone">Phone</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          required
+          placeholder="000-000-0000"
+          autocomplete="tel"
+          inputmode="numeric"
+          maxlength="12"
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          title="Enter phone number as 000-000-0000"
+        />
+
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required />
+
+        <label for="time">Time of Service</label>
+        <select id="time" name="time" required>
           <option value="">-- Select Time --</option>
           <option value="05:00">5:00 AM</option>
           <option value="06:00">6:00 AM</option>
@@ -316,294 +361,575 @@
           <option value="23:00">11:00 PM</option>
           <option value="00:00">12:00 AM (Midnight)</option>
         </select>
+
+        <label for="pickup">Pick-up Location</label>
+        <select id="pickup" name="pickup" required>
+          <option value="">-- Select Pick-up Location --</option>
+          <option value="Bluebeard's Castle">Bluebeard's Castle</option>
+          <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
+          <option value="Charlotte Amalie">Charlotte Amalie</option>
+          <option value="Cyril E. King Airport">Cyril E. King Airport</option>
+          <option value="Emerald Beach Resort">Emerald Beach Resort</option>
+          <option value="Havensight">Havensight</option>
+          <option value="Magens Bay">Magens Bay</option>
+          <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
+          <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
+          <option value="Point Pleasant Resort">Point Pleasant Resort</option>
+          <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+          <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
+          <option value="St. John">St. John</option>
+          <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
+          <option value="Tutu Park Mall">Tutu Park Mall</option>
+          <option value="Yacht Haven Grande">Yacht Haven Grande</option>
+          <option value="__other__">Other / Custom Location</option>
+        </select>
+
+        <div id="pickup-custom-wrap">
+          <label for="pickup-custom">Custom Pick-up Location</label>
+          <input type="text" id="pickup-custom" name="pickup-custom" placeholder="Enter custom pick-up location" />
+        </div>
+
+        <div id="airport-extra">
+          <label for="airline">Airline / Flight Info</label>
+          <input type="text" id="airline" name="airline" placeholder="e.g. American 1234" />
+
+          <label for="baggage">Baggage Info</label>
+          <textarea id="baggage" name="baggage" rows="2" placeholder="e.g. 2 checked bags, 1 carry-on"></textarea>
+        </div>
+
+        <label for="dropoff">Drop-off Location</label>
+        <select id="dropoff" name="dropoff" required>
+          <option value="">-- Select Drop-off Location --</option>
+          <option value="Bluebeard's Castle">Bluebeard's Castle</option>
+          <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
+          <option value="Charlotte Amalie">Charlotte Amalie</option>
+          <option value="Cyril E. King Airport">Cyril E. King Airport</option>
+          <option value="Emerald Beach Resort">Emerald Beach Resort</option>
+          <option value="Havensight">Havensight</option>
+          <option value="Magens Bay">Magens Bay</option>
+          <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
+          <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
+          <option value="Point Pleasant Resort">Point Pleasant Resort</option>
+          <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+          <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
+          <option value="St. John">St. John</option>
+          <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
+          <option value="Tutu Park Mall">Tutu Park Mall</option>
+          <option value="Yacht Haven Grande">Yacht Haven Grande</option>
+          <option value="__other__">Other / Custom Location</option>
+        </select>
+
+        <div id="dropoff-custom-wrap">
+          <label for="dropoff-custom">Custom Drop-off Location</label>
+          <input type="text" id="dropoff-custom" name="dropoff-custom" placeholder="Enter custom drop-off location" />
+        </div>
+
+        <label for="passengers"># of Passengers</label>
+        <input
+          type="number"
+          id="passengers"
+          name="passengers"
+          min="1"
+          inputmode="numeric"
+          required
+          placeholder="Enter number of passengers"
+        />
+        <div id="passenger-warning">
+          Groups over 6 passengers may require a second vehicle. We’ll follow up to confirm arrangements.
+        </div>
+
+        <label for="roundtrip">Round Trip?</label>
+        <select id="roundtrip" name="roundtrip">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+
+        <div id="return-fields">
+          <label for="return-date">Return Date</label>
+          <input type="date" id="return-date" name="return-date" />
+
+          <label for="return-time">Return Time</label>
+          <select id="return-time" name="return-time">
+            <option value="">-- Select Time --</option>
+            <option value="05:00">5:00 AM</option>
+            <option value="06:00">6:00 AM</option>
+            <option value="07:00">7:00 AM</option>
+            <option value="08:00">8:00 AM</option>
+            <option value="09:00">9:00 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="13:00">1:00 PM</option>
+            <option value="14:00">2:00 PM</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+            <option value="17:00">5:00 PM</option>
+            <option value="18:00">6:00 PM</option>
+            <option value="19:00">7:00 PM</option>
+            <option value="20:00">8:00 PM</option>
+            <option value="21:00">9:00 PM</option>
+            <option value="22:00">10:00 PM</option>
+            <option value="23:00">11:00 PM</option>
+            <option value="00:00">12:00 AM (Midnight)</option>
+          </select>
+        </div>
+
+        <label for="notes">Additional Details or Special Instructions</label>
+        <textarea id="notes" name="notes" rows="3"></textarea>
+
+        <div id="price-box"></div>
+        <div class="helper-text">
+          Standard route: $180 up to 6 passengers, then $30 each over 6. Any St. John route: $600 up to 6 passengers, then $70 each over 6.
+        </div>
+
+        <button type="submit" id="review-booking-btn">Review Booking</button>
+      </form>
+
+      <div class="contact-info">
+        <p>📞 <a href="tel:3406428686">340-642-8686</a></p>
+        <p>📧 <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
       </div>
+    </div>
 
-      <h2 class="form-section-title">Contact Information</h2>
+    <div id="thank-you-screen">
+      <div class="thank-you-box">
+        <h1>Thank You!</h1>
+        <p>Your booking request has been received.</p>
+        <p>We will contact you shortly to confirm your trip details and provide a secure link for prepayment.</p>
 
-      <label for="name">Name</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        required
-        autocomplete="name"
-        placeholder="Full name"
-      />
+        <div class="thank-you-actions">
+          <button type="button" id="book-again-btn" class="thank-you-btn">Book Another Ride</button>
+          <a href="https://set-vi.github.io/set-limo-vi/flyer.html" class="thank-you-link">Back to Flyer</a>
+        </div>
 
-      <label for="phone">Phone</label>
-      <input
-        type="tel"
-        id="phone"
-        name="phone"
-        required
-        placeholder="000-000-0000"
-        autocomplete="tel"
-        inputmode="numeric"
-        maxlength="12"
-        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-        title="Enter phone number as 000-000-0000"
-      />
+        <div style="margin-top: 40px;">
+          <p><a href="tel:3406428686">📞 340-642-8686</a></p>
+          <p><a href="mailto:setlimovi@gmail.com">📧 setlimovi@gmail.com</a></p>
+        </div>
 
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="_replyto"
-        required
-        autocomplete="email"
-        placeholder="name@example.com"
-      />
+        <p style="margin-top: 30px; font-size: 0.9em; color: #ccc;">
+          We look forward to delivering an experience that defines luxury and excellence.
+        </p>
+      </div>
+    </div>
+  </div>
 
-      <h2 class="form-section-title">Final Notes</h2>
+  <div id="review-modal" class="modal-overlay">
+    <div class="modal-box">
+      <h2 class="modal-title">Review Your Booking</h2>
+      <p class="modal-subtitle">Please review your booking details before you submit.</p>
 
-      <label for="notes">Special Instructions</label>
-      <textarea
-        id="notes"
-        name="notes"
-        rows="3"
-        placeholder="Flight delays, child seat needs, pickup details, or other notes"
-      ></textarea>
+      <div id="review-summary" class="review-grid"></div>
 
-      <div id="price-box">One-Way Estimate: $180.00</div>
-
-      <button type="submit" id="submit-button">Request Booking</button>
-
-      <datalist id="locations">
-        <option value="Bluebeard's Castle"></option>
-        <option value="Bolongo Bay Beach Resort"></option>
-        <option value="Charlotte Amalie"></option>
-        <option value="Cyril E. King Airport"></option>
-        <option value="Emerald Beach Resort"></option>
-        <option value="Havensight"></option>
-        <option value="Magens Bay"></option>
-        <option value="Marriott Frenchman's Reef"></option>
-        <option value="Margaritaville Vacation Club"></option>
-        <option value="Point Pleasant Resort"></option>
-        <option value="Red Hook Ferry Terminal"></option>
-        <option value="Secret Harbour Beach Resort"></option>
-        <option value="St. John"></option>
-        <option value="The Ritz-Carlton, St. Thomas"></option>
-        <option value="Tutu Park Mall"></option>
-        <option value="Yacht Haven Grande"></option>
-      </datalist>
-    </form>
-
-    <div class="contact-info">
-      <p>Questions? Call or email us directly.</p>
-      <p>📞 <a href="tel:3406428686">340-642-8686</a></p>
-      <p>📧 <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a></p>
+      <div class="modal-actions">
+        <button type="button" id="edit-booking-btn" class="secondary-btn">Edit Booking</button>
+        <button type="button" id="confirm-booking-btn">Confirm Booking</button>
+      </div>
     </div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('booking-form');
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("booking-form");
       if (!form) return;
 
-      const pickup = document.getElementById('pickup');
-      const dropoff = document.getElementById('dropoff');
-      const airportExtra = document.getElementById('airport-extra');
-      const flightInfoLabel = document.getElementById('flight-info-label');
-      const roundTripSelect = document.getElementById('roundtrip');
-      const returnFields = document.getElementById('return-fields');
-      const serviceTime = document.getElementById('time');
-      const returnTime = document.getElementById('return-time');
-      const dateField = document.getElementById('date');
-      const returnDateField = document.getElementById('return-date');
-      const phoneInput = document.getElementById('phone');
-      const passengerInput = document.getElementById('passengers');
-      const passengerWarning = document.getElementById('passenger-warning');
-      const priceBox = document.getElementById('price-box');
-      const flightInfo = document.getElementById('flight-info');
-      const baggage = document.getElementById('baggage');
-      const submitButton = document.getElementById('submit-button');
+      const bookingScreen = document.getElementById("booking-screen");
+      const thankYouScreen = document.getElementById("thank-you-screen");
+      const reviewModal = document.getElementById("review-modal");
+      const reviewSummary = document.getElementById("review-summary");
+      const editBookingBtn = document.getElementById("edit-booking-btn");
+      const confirmBookingBtn = document.getElementById("confirm-booking-btn");
+      const bookAgainBtn = document.getElementById("book-again-btn");
 
-      const BASE_TRANSFER_RATE = 180.00;
-      const INCLUDED_PASSENGERS = 6;
-      const EXTRA_PASSENGER_RATE = 30.00;
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const phoneInput = document.getElementById("phone");
+      const dateField = document.getElementById("date");
+      const timeField = document.getElementById("time");
+
+      const pickupSelect = document.getElementById("pickup");
+      const dropoffSelect = document.getElementById("dropoff");
+      const pickupCustomWrap = document.getElementById("pickup-custom-wrap");
+      const dropoffCustomWrap = document.getElementById("dropoff-custom-wrap");
+      const pickupCustomInput = document.getElementById("pickup-custom");
+      const dropoffCustomInput = document.getElementById("dropoff-custom");
+
+      const airportExtra = document.getElementById("airport-extra");
+      const airlineInput = document.getElementById("airline");
+      const baggageInput = document.getElementById("baggage");
+
+      const passengerInput = document.getElementById("passengers");
+      const passengerWarning = document.getElementById("passenger-warning");
+      const roundTripSelect = document.getElementById("roundtrip");
+      const returnFields = document.getElementById("return-fields");
+      const returnDateField = document.getElementById("return-date");
+      const returnTimeField = document.getElementById("return-time");
+      const notesInput = document.getElementById("notes");
+      const priceBox = document.getElementById("price-box");
+
+      const reviewButton = document.getElementById("review-booking-btn");
+      const today = new Date().toISOString().split("T")[0];
+
+      dateField.min = today;
+      returnDateField.min = today;
 
       function formatPhoneNumber(value) {
-        const digits = value.replace(/\D/g, '').slice(0, 10);
+        const digits = value.replace(/\D/g, "").slice(0, 10);
 
         if (digits.length < 4) return digits;
         if (digits.length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
         return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
       }
 
-      function isAirportSelected() {
-        const pickupValue = pickup.value.trim().toLowerCase();
-        const dropoffValue = dropoff.value.trim().toLowerCase();
-        return pickupValue.includes('airport') || dropoffValue.includes('airport');
+      function normalizeLocation(value) {
+        return value
+          .trim()
+          .toLowerCase()
+          .replace(/\./g, "")
+          .replace(/\s+/g, " ");
+      }
+
+      function isOtherSelection(value) {
+        return value === "__other__";
+      }
+
+      function getResolvedPickup() {
+        return isOtherSelection(pickupSelect.value)
+          ? pickupCustomInput.value.trim()
+          : pickupSelect.value.trim();
+      }
+
+      function getResolvedDropoff() {
+        return isOtherSelection(dropoffSelect.value)
+          ? dropoffCustomInput.value.trim()
+          : dropoffSelect.value.trim();
+      }
+
+      function isAirportValue(value) {
+        return normalizeLocation(value).includes("airport");
+      }
+
+      function isStJohnValue(value) {
+        return normalizeLocation(value).includes("st john");
+      }
+
+      function isStJohnRoute() {
+        return isStJohnValue(getResolvedPickup()) || isStJohnValue(getResolvedDropoff());
+      }
+
+      function updateCustomLocationFields() {
+        const pickupIsOther = isOtherSelection(pickupSelect.value);
+        const dropoffIsOther = isOtherSelection(dropoffSelect.value);
+
+        pickupCustomWrap.style.display = pickupIsOther ? "block" : "none";
+        dropoffCustomWrap.style.display = dropoffIsOther ? "block" : "none";
+
+        pickupCustomInput.required = pickupIsOther;
+        dropoffCustomInput.required = dropoffIsOther;
+
+        if (!pickupIsOther) {
+          pickupCustomInput.value = "";
+        }
+
+        if (!dropoffIsOther) {
+          dropoffCustomInput.value = "";
+        }
       }
 
       function updateAirportFields() {
-        if (isAirportSelected()) {
-          airportExtra.style.display = 'block';
-          flightInfoLabel.textContent = 'Flight Information';
-        } else {
-          airportExtra.style.display = 'none';
-          flightInfo.value = '';
-          baggage.value = '';
+        const pickupValue = getResolvedPickup();
+        const dropoffValue = getResolvedDropoff();
+        const showAirportFields = isAirportValue(pickupValue) || isAirportValue(dropoffValue);
+
+        airportExtra.style.display = showAirportFields ? "block" : "none";
+
+        if (!showAirportFields) {
+          airlineInput.value = "";
+          baggageInput.value = "";
         }
       }
 
       function updateRoundTripFields() {
-        const isRoundTrip = roundTripSelect.value === 'yes';
-        returnFields.style.display = isRoundTrip ? 'block' : 'none';
-        returnDateField.required = isRoundTrip;
-        returnTime.required = isRoundTrip;
+        const showReturn = roundTripSelect.value === "yes";
+        returnFields.style.display = showReturn ? "block" : "none";
+        returnDateField.required = showReturn;
+        returnTimeField.required = showReturn;
 
-        if (!isRoundTrip) {
-          returnDateField.value = '';
-          returnTime.value = '';
+        if (!showReturn) {
+          returnDateField.value = "";
+          returnTimeField.value = "";
         }
-
-        updatePrice();
-      }
-
-      // Fixed syntax error here
-      function getPassengerCount() {
-        const passengerCount = parseInt(passengerInput.value, 10);
-        return Number.isNaN(passengerCount) || passengerCount < 1 ? 1 : passengerCount;
-      }
-
-      function getExtraPassengerCount() {
-        const passengerCount = getPassengerCount();
-        return Math.max(0, passengerCount - INCLUDED_PASSENGERS);
       }
 
       function updatePassengerWarning() {
-        passengerWarning.style.display = getExtraPassengerCount() > 0 ? 'block' : 'none';
+        const count = parseInt(passengerInput.value, 10);
+        passengerWarning.style.display = !isNaN(count) && count >= 7 ? "block" : "none";
       }
 
-      function calculateFare() {
-        const extraPassengerCount = getExtraPassengerCount();
-        const oneWayFare = BASE_TRANSFER_RATE + (extraPassengerCount * EXTRA_PASSENGER_RATE);
+      function getFareAmount() {
+        const passengerCount = parseInt(passengerInput.value, 10);
 
-        return roundTripSelect.value === 'yes'
-          ? oneWayFare * 2
-          : oneWayFare;
+        if (isNaN(passengerCount) || passengerCount < 1) {
+          return null;
+        }
+
+        const stJohnRoute = isStJohnRoute();
+        const baseFare = stJohnRoute ? 600 : 180;
+        const overageRate = stJohnRoute ? 70 : 30;
+        const additionalPassengers = Math.max(passengerCount - 6, 0);
+
+        return baseFare + (additionalPassengers * overageRate);
       }
 
       function updatePrice() {
-        const totalFare = calculateFare();
-        const label = roundTripSelect.value === 'yes'
-          ? 'Round Trip Estimate'
-          : 'One-Way Estimate';
+        const passengerCount = parseInt(passengerInput.value, 10);
+        const pickupValue = getResolvedPickup();
+        const dropoffValue = getResolvedDropoff();
 
-        priceBox.textContent = `${label}: $${totalFare.toFixed(2)}`;
-        priceBox.style.display = 'block';
+        if (!pickupValue || !dropoffValue || isNaN(passengerCount) || passengerCount < 1) {
+          priceBox.style.display = "none";
+          priceBox.textContent = "";
+          return;
+        }
+
+        const totalFare = getFareAmount();
+        const stJohnRoute = isStJohnRoute();
+
+        priceBox.textContent = stJohnRoute
+          ? `Estimated Fare: $${totalFare} (St. John route pricing applied)`
+          : `Estimated Fare: $${totalFare}`;
+
+        priceBox.style.display = "block";
+      }
+
+      function validateCustomLocations() {
+        if (isOtherSelection(pickupSelect.value) && !pickupCustomInput.value.trim()) {
+          pickupCustomInput.focus();
+          alert("Enter a custom pick-up location.");
+          return false;
+        }
+
+        if (isOtherSelection(dropoffSelect.value) && !dropoffCustomInput.value.trim()) {
+          dropoffCustomInput.focus();
+          alert("Enter a custom drop-off location.");
+          return false;
+        }
+
+        return true;
       }
 
       function validateReturnTrip() {
-        if (roundTripSelect.value !== 'yes') return true;
-        if (!returnDateField.value || !returnTime.value) return true;
-        if (!dateField.value || !serviceTime.value) return true;
+        if (roundTripSelect.value !== "yes") return true;
+        if (!returnDateField.value || !returnTimeField.value) return true;
+        if (!dateField.value || !timeField.value) return true;
 
-        const outboundDateTime = new Date(`${dateField.value}T${serviceTime.value}`);
-        const returnDateTime = new Date(`${returnDateField.value}T${returnTime.value}`);
+        const outbound = new Date(`${dateField.value}T${timeField.value}`);
+        const returning = new Date(`${returnDateField.value}T${returnTimeField.value}`);
 
-        return returnDateTime >= outboundDateTime;
+        return returning >= outbound;
       }
 
-      pickup.addEventListener('input', function () {
-        updateAirportFields();
-      });
+      function createReviewRow(label, value) {
+        const safeValue = value && String(value).trim() !== "" ? value : "-";
+        return `
+          <div class="review-row">
+            <span class="review-label">${label}</span>
+            <div class="review-value">${safeValue}</div>
+          </div>
+        `;
+      }
 
-      dropoff.addEventListener('input', function () {
-        updateAirportFields();
-      });
+      function buildReviewSummary() {
+        const fareText = priceBox.style.display === "block" ? priceBox.textContent : "-";
 
-      roundTripSelect.addEventListener('change', function () {
+        reviewSummary.innerHTML = [
+          createReviewRow("Name", nameInput.value),
+          createReviewRow("Email", emailInput.value),
+          createReviewRow("Phone", phoneInput.value),
+          createReviewRow("Date", dateField.value),
+          createReviewRow("Time of Service", timeField.value),
+          createReviewRow("Pick-up Location", getResolvedPickup()),
+          createReviewRow("Drop-off Location", getResolvedDropoff()),
+          createReviewRow("Airline / Flight Info", airlineInput.value),
+          createReviewRow("Baggage Info", baggageInput.value),
+          createReviewRow("Passengers", passengerInput.value),
+          createReviewRow("Round Trip", roundTripSelect.value === "yes" ? "Yes" : "No"),
+          createReviewRow("Return Date", returnDateField.value),
+          createReviewRow("Return Time", returnTimeField.value),
+          createReviewRow("Additional Details", notesInput.value),
+          createReviewRow("Estimated Fare", fareText)
+        ].join("");
+      }
+
+      function openReviewModal() {
+        reviewModal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeReviewModal() {
+        reviewModal.style.display = "none";
+        document.body.style.overflow = "";
+        confirmBookingBtn.disabled = false;
+        confirmBookingBtn.textContent = "Confirm Booking";
+      }
+
+      function showThankYouScreen() {
+        closeReviewModal();
+        bookingScreen.style.display = "none";
+        thankYouScreen.style.display = "block";
+        document.title = "Thank You - Superb Executive Transportation";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function showBookingScreen() {
+        thankYouScreen.style.display = "none";
+        bookingScreen.style.display = "block";
+        document.title = "Elevate Your Journey | Superb Executive Transportation";
+        form.reset();
+        reviewButton.disabled = false;
+        reviewButton.textContent = "Review Booking";
+        confirmBookingBtn.disabled = false;
+        confirmBookingBtn.textContent = "Confirm Booking";
+        dateField.min = today;
+        returnDateField.min = today;
+        updateCustomLocationFields();
+        updateAirportFields();
         updateRoundTripFields();
+        updatePassengerWarning();
+        updatePrice();
+        document.body.style.overflow = "";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      async function submitBooking() {
+        reviewButton.disabled = true;
+        confirmBookingBtn.disabled = true;
+        confirmBookingBtn.textContent = "Submitting...";
+
+        const formData = new FormData(form);
+        formData.set("pickup", getResolvedPickup());
+        formData.set("dropoff", getResolvedDropoff());
+        formData.delete("pickup-custom");
+        formData.delete("dropoff-custom");
+
+        const totalFare = getFareAmount();
+        if (totalFare !== null) {
+          formData.set("estimated_fare", `$${totalFare}`);
+        }
+
+        try {
+          const response = await fetch("https://formspree.io/f/meoazyoy", {
+            method: "POST",
+            body: formData,
+            headers: {
+              Accept: "application/json"
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error(`Formspree returned ${response.status}`);
+          }
+
+          showThankYouScreen();
+        } catch (error) {
+          console.error("Submission error:", error);
+          alert("Something went wrong. Please try again or call us directly.");
+          reviewButton.disabled = false;
+          reviewButton.textContent = "Review Booking";
+          confirmBookingBtn.disabled = false;
+          confirmBookingBtn.textContent = "Confirm Booking";
+        }
+      }
+
+      phoneInput.addEventListener("input", function () {
+        this.value = formatPhoneNumber(this.value);
       });
 
-      passengerInput.addEventListener('input', function () {
+      pickupSelect.addEventListener("change", function () {
+        updateCustomLocationFields();
+        updateAirportFields();
+        updatePrice();
+      });
+
+      dropoffSelect.addEventListener("change", function () {
+        updateCustomLocationFields();
+        updateAirportFields();
+        updatePrice();
+      });
+
+      pickupCustomInput.addEventListener("input", function () {
+        updateAirportFields();
+        updatePrice();
+      });
+
+      dropoffCustomInput.addEventListener("input", function () {
+        updateAirportFields();
+        updatePrice();
+      });
+
+      roundTripSelect.addEventListener("change", updateRoundTripFields);
+
+      passengerInput.addEventListener("input", function () {
         updatePassengerWarning();
         updatePrice();
       });
 
-      phoneInput.addEventListener('input', function () {
-        this.value = formatPhoneNumber(this.value);
-      });
+      dateField.addEventListener("change", function () {
+        if (dateField.value) {
+          returnDateField.min = dateField.value;
 
-      dateField.addEventListener('change', function () {
-        returnDateField.min = dateField.value;
-      });
-
-      returnDateField.addEventListener('change', function () {
-        if (dateField.value && returnDateField.value < dateField.value) {
-          alert('Return date cannot be earlier than outbound date.');
-          returnDateField.value = '';
+          if (returnDateField.value && returnDateField.value < dateField.value) {
+            returnDateField.value = "";
+            returnTimeField.value = "";
+          }
+        } else {
+          returnDateField.min = today;
         }
       });
 
-      form.addEventListener('submit', async function (e) {
+      returnDateField.addEventListener("change", function () {
+        if (dateField.value && returnDateField.value < dateField.value) {
+          alert("Return date cannot be earlier than outbound date.");
+          returnDateField.value = "";
+        }
+      });
+
+      editBookingBtn.addEventListener("click", closeReviewModal);
+      bookAgainBtn.addEventListener("click", showBookingScreen);
+
+      reviewModal.addEventListener("click", function (e) {
+        if (e.target === reviewModal) {
+          closeReviewModal();
+        }
+      });
+
+      confirmBookingBtn.addEventListener("click", async function () {
+        await submitBooking();
+      });
+
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
 
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        if (!validateCustomLocations()) {
+          return;
+        }
+
         if (!validateReturnTrip()) {
-          alert('Return trip date and time cannot be earlier than the outbound trip.');
+          alert("Return trip date and time cannot be earlier than the outbound trip.");
           return;
         }
 
-        const totalFare = calculateFare();
-        const fareLabel = roundTripSelect.value === 'yes' ? 'Round Trip Estimate' : 'One-Way Estimate';
-        const fareText = `${fareLabel}: $${totalFare.toFixed(2)}`;
-
-        const summary =
-`Please review your booking request:
-
-Date: ${dateField.value || '-'}
-Pickup Time: ${serviceTime.value || '-'}
-Pickup Location: ${pickup.value || '-'}
-Destination: ${dropoff.value || '-'}
-Passengers: ${passengerInput.value || '-'}
-Trip Type: ${roundTripSelect.value === 'yes' ? 'Round Trip' : 'One Way'}
-Return Date: ${returnDateField.value || '-'}
-Return Time: ${returnTime.value || '-'}
-Name: ${document.getElementById('name').value || '-'}
-Phone: ${phoneInput.value || '-'}
-Email: ${document.getElementById('email').value || '-'}
-${fareText}`;
-
-        const confirmed = confirm(summary);
-
-        if (!confirmed) {
-          return;
-        }
-
-        const extraPassengerCount = getExtraPassengerCount();
-        const formData = new FormData(form);
-        formData.append('estimated_fare', `$${totalFare.toFixed(2)}`);
-        formData.append('extra_passengers', String(extraPassengerCount));
-        formData.append('second_vehicle_required', extraPassengerCount > 0 ? 'Yes' : 'No');
-
-        try {
-          submitButton.disabled = true;
-          submitButton.textContent = 'Submitting...';
-
-          const response = await fetch('https://formspree.io/f/meoazyoy', {
-            method: 'POST',
-            body: formData,
-            headers: {
-              Accept: 'application/json'
-            }
-          });
-
-          if (response.ok) {
-            window.location.href = './thank-you.html';
-            return;
-          }
-
-          alert('Submission failed. Please try again or call 340-642-8686.');
-        } catch (error) {
-          alert('Network error. Please try again or call 340-642-8686.');
-        } finally {
-          submitButton.disabled = false;
-          submitButton.textContent = 'Request Booking';
-        }
+        updatePrice();
+        buildReviewSummary();
+        openReviewModal();
       });
 
+      updateCustomLocationFields();
       updateAirportFields();
       updateRoundTripFields();
       updatePassengerWarning();
