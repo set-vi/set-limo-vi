@@ -191,7 +191,10 @@
     <h1 class="hero-heading">Elevate Your Journey</h1>
     <p class="booking-subhead">Safe, reliable transportation in St. Thomas &amp; St. John.</p>
 
-    <form id="booking-form">
+    <!-- Added action & method and a hidden _next for non-JS fallback -->
+    <form id="booking-form" action="https://formspree.io/f/meoazyoy" method="POST">
+      <input type="hidden" name="_next" value="./thank-you.html">
+
       <h2 class="form-section-title">Trip Details</h2>
 
       <label for="date">Date</label>
@@ -458,9 +461,10 @@
         updatePrice();
       }
 
+      // Fixed syntax error here
       function getPassengerCount() {
         const passengerCount = parseInt(passengerInput.value, 10);
-        return Number.isNaN(passengerCount) 11 passengerCount < 1 ? 1 : passengerCount;
+        return Number.isNaN(passengerCount) || passengerCount < 1 ? 1 : passengerCount;
       }
 
       function getExtraPassengerCount() {
