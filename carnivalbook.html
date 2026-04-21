@@ -613,6 +613,17 @@
   <script>
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/meoazyoy";
 
+    const TIME_OPTIONS = Array.from({ length: 48 }, (_, index) => {
+      const hour = Math.floor(index / 2);
+      const minute = index % 2 === 0 ? "00" : "30";
+      const period = hour >= 12 ? "PM" : "AM";
+      const displayHour = hour % 12 || 12;
+      return {
+        value: `${String(hour).padStart(2, "0")}:${minute}`,
+        label: `${displayHour}:${minute} ${period}`,
+      };
+    });
+
     const KNOWN_EVENT_OPTIONS = [
       { id: "food-fair-04292026", event: "Food Fair", date: "2026-04-29", eventTime: "10:00" },
       { id: "village-night-04292026", event: "Village Night", date: "2026-04-29", eventTime: "19:00" },
@@ -701,6 +712,16 @@
       return KNOWN_EVENT_OPTIONS.filter((item) => !activeIds.has(item.id));
     }
 
+    function renderTimeOptions(selectedValue) {
+      return ['<option value="">Select pickup time</option>']
+        .concat(
+          TIME_OPTIONS.map((time) =>
+            `<option value="${time.value}"${time.value === selectedValue ? " selected" : ""}>${time.label}</option>`
+          )
+        )
+        .join("");
+    }
+
     function buildSummaryText() {
       const knownLines = state.knownEvents.map((event) =>
         `${event.event} — ${formatDateForDisplay(event.date)} — Event Time: ${formatTimeForDisplay(event.eventTime)}${event.pickupTime ? ` — Pickup Time: ${formatTimeForDisplay(event.pickupTime)}` : ""}${event.notes ? ` — Notes: ${event.notes}` : ""}`
@@ -770,7 +791,7 @@
           <div class="grid-2">
             <div>
               <label>Pickup Time</label>
-              <input type="time" data-known-pickup="${event.id}" value="${event.pickupTime || ""}" />
+              <select data-known-pickup="${event.id}">${renderTimeOptions(event.pickupTime || "")}</select>
             </div>
             <div>
               <label>Notes</label>
@@ -1078,13 +1099,19 @@
 
     el.knownEventsList.addEventListener("input", (event) => {
       const target = event.target;
-      if (target.dataset.knownPickup) {
-        const item = state.knownEvents.find((entry) => entry.id === target.dataset.knownPickup);
-        if (item) item.pickupTime = target.value;
-      }
       if (target.dataset.knownNotes) {
         const item = state.knownEvents.find((entry) => entry.id === target.dataset.knownNotes);
         if (item) item.notes = target.value;
+      }
+      updateSummaryOutput();
+      clearMessage();
+    });
+
+    el.knownEventsList.addEventListener("change", (event) => {
+      const target = event.target;
+      if (target.dataset.knownPickup) {
+        const item = state.knownEvents.find((entry) => entry.id === target.dataset.knownPickup);
+        if (item) item.pickupTime = target.value;
       }
       updateSummaryOutput();
       clearMessage();
