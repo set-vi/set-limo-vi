@@ -1,807 +1,1154 @@
-import React, { useMemo, useState } from "react";
-import {
-  CalendarDays,
-  Clock3,
-  Plane,
-  MapPin,
-  Plus,
-  Trash2,
-  CarFront,
-  ChevronDown,
-  Send,
-  Phone,
-  Mail,
-  User,
-} from "lucide-react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carnival Planning Form | Superb Executive Transportation</title>
+  <style>
+    :root {
+      --bg: #000;
+      --panel: #111;
+      --panel-2: #161616;
+      --border: #2d2d2d;
+      --gold: #c5a03c;
+      --gold-soft: rgba(197, 160, 60, 0.14);
+      --text: #fff;
+      --muted: #b4b4b4;
+      --danger: #ff6b6b;
+      --danger-soft: rgba(255, 107, 107, 0.12);
+      --success: #57d38c;
+      --success-soft: rgba(87, 211, 140, 0.12);
+    }
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/meoazyoy";
+    * { box-sizing: border-box; }
 
-const KNOWN_EVENT_OPTIONS = [
-  { id: "food-fair-04292026", event: "Food Fair", date: "04/29/2026", eventTime: "10:00 AM" },
-  { id: "village-night-04292026", event: "Village Night", date: "04/29/2026", eventTime: "7:00 PM" },
-  { id: "jouvert-04302026", event: "J’ouvert", date: "04/30/2026", eventTime: "5:30 AM" },
-  { id: "village-night-04302026", event: "Village Night", date: "04/30/2026", eventTime: "7:00 PM" },
-  { id: "childrens-parade-05012026", event: "Children’s Parade", date: "05/01/2026", eventTime: "10:00 AM" },
-  { id: "village-night-05012026", event: "Village Night", date: "05/01/2026", eventTime: "7:00 PM" },
-  { id: "adults-parade-05022026", event: "Adult’s Parade", date: "05/02/2026", eventTime: "10:00 AM" },
-  { id: "village-night-05022026", event: "Village Night", date: "05/02/2026", eventTime: "7:00 PM" },
-  { id: "fireworks-05022026", event: "Fireworks", date: "05/02/2026", eventTime: "9:00 PM" },
-];
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      padding: 24px;
+    }
 
-function SectionHeader({ icon: Icon, title, subtitle }) {
-  return (
-    <div className="mb-4 flex items-start gap-3">
-      <div className="mt-0.5 rounded-2xl border border-amber-400/40 bg-amber-400/10 p-2">
-        <Icon className="h-5 w-5" />
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero,
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)), var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .hero {
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-end;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 38px;
+      line-height: 1.05;
+    }
+
+    .hero-copy {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 12px;
+      min-width: 320px;
+    }
+
+    .stat {
+      background: #0c0c0c;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+    }
+
+    .stat-label {
+      color: #8e8e8e;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.85fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 22px;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .section-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .section-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      border: 1px solid rgba(197, 160, 60, 0.4);
+      background: var(--gold-soft);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      font-size: 18px;
+      flex: 0 0 auto;
+    }
+
+    .section-title {
+      margin: 0 0 4px;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .section-subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #ececec;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font: inherit;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid #3a3a3a;
+      background: #0c0c0c;
+      color: #fff;
+      padding: 12px 14px;
+      min-height: 48px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .inline-note,
+    .empty-state,
+    .summary-card,
+    .status-card {
+      border: 1px solid var(--border);
+      background: #0c0c0c;
+      border-radius: 20px;
+    }
+
+    .inline-note,
+    .empty-state {
+      padding: 14px 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .event-actions {
+      display: flex;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .event-actions .grow {
+      flex: 1 1 auto;
+    }
+
+    .chip-btn,
+    .main-btn,
+    .sub-btn,
+    .danger-btn {
+      min-height: 48px;
+      padding: 12px 16px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .chip-btn,
+    .sub-btn {
+      background: #0c0c0c;
+      color: #fff;
+      border-color: var(--border);
+    }
+
+    .chip-btn {
+      border-color: rgba(197, 160, 60, 0.42);
+      background: var(--gold-soft);
+      color: #f4df9f;
+      font-weight: 700;
+    }
+
+    .chip-btn:hover,
+    .sub-btn:hover {
+      border-color: var(--gold);
+    }
+
+    .main-btn {
+      background: var(--gold);
+      color: #000;
+      font-weight: 800;
+    }
+
+    .main-btn:hover { filter: brightness(1.06); }
+
+    .main-btn:disabled,
+    .sub-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .event-card {
+      border: 1px solid var(--border);
+      background: #0c0c0c;
+      border-radius: 22px;
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .card-title {
+      margin: 0 0 6px;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .danger-btn {
+      background: var(--danger-soft);
+      color: #ffd3d3;
+      border-color: rgba(255, 107, 107, 0.3);
+      min-width: 48px;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .danger-btn:hover {
+      background: rgba(255, 107, 107, 0.18);
+    }
+
+    .summary-panel {
+      position: sticky;
+      top: 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .summary-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .message {
+      display: none;
+      padding: 14px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      line-height: 1.45;
+      border: 1px solid transparent;
+    }
+
+    .message.show { display: block; }
+    .message.success {
+      border-color: rgba(87, 211, 140, 0.35);
+      background: var(--success-soft);
+      color: #bdf4d3;
+    }
+    .message.error {
+      border-color: rgba(255, 107, 107, 0.35);
+      background: var(--danger-soft);
+      color: #ffd3d3;
+    }
+
+    .status-card {
+      padding: 16px;
+    }
+
+    .status-title {
+      margin: 0 0 10px;
+      color: #8e8e8e;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .status-lines {
+      display: grid;
+      gap: 8px;
+      color: #ddd;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    pre.summary-output {
+      display: none;
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #ddd;
+      background: #050505;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    pre.summary-output.show {
+      display: block;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .summary-panel {
+        position: static;
+      }
+      .stats {
+        min-width: 0;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 16px; }
+      h1 { font-size: 30px; }
+      .grid-3,
+      .grid-2,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+      .event-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <p class="eyebrow">Superb Executive Transportation</p>
+          <h1>Carnival Planning Form</h1>
+          <p class="hero-copy">Share your Carnival transportation needs, review them, then send them as a live request email.</p>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">Service Dates</div>
+            <div class="stat-value">Apr 29 – May 4</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Fixed Events Left</div>
+            <div class="stat-value" id="fixedEventsLeft">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Added Items</div>
+            <div class="stat-value" id="addedItemsCount">0</div>
+          </div>
+        </div>
       </div>
-      <div>
-        <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
-        <p className="text-sm text-zinc-400">{subtitle}</p>
+    </section>
+
+    <div class="layout">
+      <div class="stack">
+        <section class="panel">
+          <div class="section-head">
+            <div class="section-icon">👤</div>
+            <div>
+              <h2 class="section-title">Your Information</h2>
+              <p class="section-subtitle">Keep the contact information attached to the request from the start.</p>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" type="text" placeholder="Enter name" />
+            </div>
+            <div>
+              <label for="phone">Phone</label>
+              <input id="phone" type="tel" placeholder="000-000-0000" inputmode="numeric" maxlength="12" />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="name@example.com" />
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div class="section-icon">✈️</div>
+            <div>
+              <h2 class="section-title">Arrival Information</h2>
+              <p class="section-subtitle">Make airport pickup simple: choose whether you need it, then fill only the fields that apply.</p>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="full-span" style="grid-column: 1 / -1;">
+              <label for="needsArrivalService">Do You Need Airport Pickup?</label>
+              <select id="needsArrivalService">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="arrivalFields" class="grid-2 hidden" style="margin-top: 16px;">
+            <div>
+              <label for="arrivalDate">Arrival Date</label>
+              <input id="arrivalDate" type="date" />
+            </div>
+            <div>
+              <label for="flightNumber">Flight Number</label>
+              <input id="flightNumber" type="text" placeholder="AA1234" />
+            </div>
+            <div>
+              <label for="arrivalTime">Arrival Time</label>
+              <input id="arrivalTime" type="time" />
+            </div>
+            <div>
+              <label for="arrivalDestination">Arrival Drop-off</label>
+              <select id="arrivalDestination">
+                <option value="">Choose destination</option>
+                <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
+                <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
+                <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
+                <option value="Point Pleasant Resort">Point Pleasant Resort</option>
+                <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
+                <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
+                <option value="Emerald Beach Resort">Emerald Beach Resort</option>
+                <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+                <option value="Charlotte Amalie">Charlotte Amalie</option>
+                <option value="Yacht Haven Grande">Yacht Haven Grande</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div id="arrivalDestinationOtherWrap" class="hidden" style="grid-column: 1 / -1;">
+              <label for="arrivalDestinationOther">Enter Drop-off Location</label>
+              <input id="arrivalDestinationOther" type="text" placeholder="Hotel, villa, marina, or address" />
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div class="section-icon">📅</div>
+            <div>
+              <h2 class="section-title">Event</h2>
+              <p class="section-subtitle">All known Carnival events live in the dropdown. Only selected events appear below.</p>
+            </div>
+          </div>
+
+          <div class="event-actions">
+            <div class="grow">
+              <label for="knownEventSelect">Select Event</label>
+              <select id="knownEventSelect">
+                <option value="">Choose an event</option>
+              </select>
+            </div>
+            <div class="inline-note">Select it once. Then fill the movement details below.</div>
+          </div>
+
+          <div id="knownEventsList" class="stack"></div>
+          <div id="knownEventsEmpty" class="empty-state">No events added yet. Select one from the dropdown.</div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div class="section-icon">🚘</div>
+            <div>
+              <h2 class="section-title">Custom Event</h2>
+              <p class="section-subtitle">Add a custom event and manage it in the same card style as the fixed Carnival events.</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 18px;">
+            <button type="button" id="addCustomEvent" class="chip-btn">＋ Add Custom Event</button>
+          </div>
+
+          <div id="customEventsList" class="stack"></div>
+          <div id="customEventsEmpty" class="empty-state">No custom events added yet. Use the button above to add one.</div>
+        </section>
       </div>
+
+      <aside class="panel summary-panel">
+        <div class="section-head">
+          <div class="section-icon">📍</div>
+          <div>
+            <h2 class="section-title">Live Summary</h2>
+            <p class="section-subtitle">Review it, then send it as an email-backed planning request.</p>
+          </div>
+        </div>
+
+        <div class="summary-actions">
+          <button type="button" id="toggleSummary" class="chip-btn">Show Summary</button>
+          <button type="button" id="copySummary" class="sub-btn">Copy Summary</button>
+          <button type="button" id="submitRequest" class="main-btn">Submit Request</button>
+          <button type="button" id="resetForm" class="sub-btn">Reset Form</button>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <div class="status-card">
+          <div class="status-title">Request Contact</div>
+          <div class="status-lines">
+            <div id="contactPhoneLine">No phone entered</div>
+            <div id="contactEmailLine">No email entered</div>
+          </div>
+        </div>
+
+        <div class="status-card">
+          <div class="status-title">Arrival Status</div>
+          <div class="status-lines">
+            <div id="arrivalStatusMain">No airport pickup requested</div>
+            <div id="arrivalStatusDetail" style="color: var(--muted);"></div>
+          </div>
+        </div>
+
+        <pre id="summaryOutput" class="summary-output"></pre>
+      </aside>
     </div>
-  );
-}
+  </div>
 
-function FieldLabel({ children }) {
-  return <label className="mb-1 block text-sm font-medium text-zinc-200">{children}</label>;
-}
+  <script>
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/meoazyoy";
 
-function Input(props) {
-  return (
-    <input
-      {...props}
-      className={`w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-sm text-white outline-none transition focus:border-amber-400 ${props.className || ""}`}
-    />
-  );
-}
+    const KNOWN_EVENT_OPTIONS = [
+      { id: "food-fair-04292026", event: "Food Fair", date: "2026-04-29", eventTime: "10:00" },
+      { id: "village-night-04292026", event: "Village Night", date: "2026-04-29", eventTime: "19:00" },
+      { id: "jouvert-04302026", event: "J’ouvert", date: "2026-04-30", eventTime: "05:30" },
+      { id: "village-night-04302026", event: "Village Night", date: "2026-04-30", eventTime: "19:00" },
+      { id: "childrens-parade-05012026", event: "Children’s Parade", date: "2026-05-01", eventTime: "10:00" },
+      { id: "village-night-05012026", event: "Village Night", date: "2026-05-01", eventTime: "19:00" },
+      { id: "adults-parade-05022026", event: "Adult’s Parade", date: "2026-05-02", eventTime: "10:00" },
+      { id: "village-night-05022026", event: "Village Night", date: "2026-05-02", eventTime: "19:00" },
+      { id: "fireworks-05022026", event: "Fireworks", date: "2026-05-02", eventTime: "21:00" },
+    ];
 
-function Textarea(props) {
-  return (
-    <textarea
-      {...props}
-      className={`w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-sm text-white outline-none transition focus:border-amber-400 ${props.className || ""}`}
-    />
-  );
-}
+    const state = {
+      knownEvents: [],
+      customEvents: [],
+      showSummary: false,
+      isSubmitting: false,
+    };
 
-function Select(props) {
-  return (
-    <div className="relative">
-      <select
-        {...props}
-        className={`w-full appearance-none rounded-2xl border border-zinc-700 bg-zinc-950 px-3 py-2.5 pr-10 text-sm text-white outline-none transition focus:border-amber-400 ${props.className || ""}`}
-      />
-      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
-    </div>
-  );
-}
+    const el = {
+      name: document.getElementById("name"),
+      phone: document.getElementById("phone"),
+      email: document.getElementById("email"),
+      needsArrivalService: document.getElementById("needsArrivalService"),
+      arrivalFields: document.getElementById("arrivalFields"),
+      arrivalDate: document.getElementById("arrivalDate"),
+      flightNumber: document.getElementById("flightNumber"),
+      arrivalTime: document.getElementById("arrivalTime"),
+      arrivalDestination: document.getElementById("arrivalDestination"),
+      arrivalDestinationOtherWrap: document.getElementById("arrivalDestinationOtherWrap"),
+      arrivalDestinationOther: document.getElementById("arrivalDestinationOther"),
+      knownEventSelect: document.getElementById("knownEventSelect"),
+      knownEventsList: document.getElementById("knownEventsList"),
+      knownEventsEmpty: document.getElementById("knownEventsEmpty"),
+      customEventsList: document.getElementById("customEventsList"),
+      customEventsEmpty: document.getElementById("customEventsEmpty"),
+      addCustomEvent: document.getElementById("addCustomEvent"),
+      fixedEventsLeft: document.getElementById("fixedEventsLeft"),
+      addedItemsCount: document.getElementById("addedItemsCount"),
+      toggleSummary: document.getElementById("toggleSummary"),
+      copySummary: document.getElementById("copySummary"),
+      submitRequest: document.getElementById("submitRequest"),
+      resetForm: document.getElementById("resetForm"),
+      message: document.getElementById("message"),
+      contactPhoneLine: document.getElementById("contactPhoneLine"),
+      contactEmailLine: document.getElementById("contactEmailLine"),
+      arrivalStatusMain: document.getElementById("arrivalStatusMain"),
+      arrivalStatusDetail: document.getElementById("arrivalStatusDetail"),
+      summaryOutput: document.getElementById("summaryOutput"),
+    };
 
-function formatPhoneNumber(value) {
-  const digits = value.replace(/\D/g, "").slice(0, 10);
+    function formatPhoneNumber(value) {
+      const digits = value.replace(/\D/g, "").slice(0, 10);
+      if (digits.length < 4) return digits;
+      if (digits.length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+      return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+    }
 
-  if (digits.length < 4) return digits;
-  if (digits.length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
-  return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
-}
+    function formatDateForDisplay(value) {
+      if (!value) return "";
+      const [year, month, day] = value.split("-");
+      return `${month}/${day}/${year}`;
+    }
 
-export default function App() {
-  const [clientName, setClientName] = useState("");
-  const [contact, setContact] = useState({
-    phone: "",
-    email: "",
-  });
-  const [selectedKnownEvent, setSelectedKnownEvent] = useState("");
-  const [activeKnownEvents, setActiveKnownEvents] = useState([]);
-  const [customRequests, setCustomRequests] = useState([]);
-  const [arrival, setArrival] = useState({
-    needsArrivalService: "no",
-    arrivalDate: "",
-    flightNumber: "",
-    arrivalTime: "",
-    destination: "",
-    destinationOther: "",
-  });
-  const [showSummary, setShowSummary] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionState, setSubmissionState] = useState({
-    type: "idle",
-    message: "",
-  });
+    function formatTimeForDisplay(value) {
+      if (!value) return "";
+      const [hours, minutes] = value.split(":");
+      let h = Number(hours);
+      const suffix = h >= 12 ? "PM" : "AM";
+      h = h % 12 || 12;
+      return `${h}:${minutes} ${suffix}`;
+    }
 
-  const availableKnownEvents = useMemo(() => {
-    const activeIds = new Set(activeKnownEvents.map((event) => event.id));
-    return KNOWN_EVENT_OPTIONS.filter((event) => !activeIds.has(event.id));
-  }, [activeKnownEvents]);
+    function showMessage(type, text) {
+      el.message.className = `message show ${type}`;
+      el.message.textContent = text;
+    }
 
-  const addedItemsCount = activeKnownEvents.length + customRequests.length;
+    function clearMessage() {
+      el.message.className = "message";
+      el.message.textContent = "";
+    }
 
-  const addKnownEvent = (eventId) => {
-    if (!eventId) return;
-    const match = KNOWN_EVENT_OPTIONS.find((event) => event.id === eventId);
-    if (!match) return;
+    function getAvailableKnownEvents() {
+      const activeIds = new Set(state.knownEvents.map((item) => item.id));
+      return KNOWN_EVENT_OPTIONS.filter((item) => !activeIds.has(item.id));
+    }
 
-    setActiveKnownEvents((current) => {
-      if (current.some((event) => event.id === eventId)) return current;
+    function buildSummaryText() {
+      const knownLines = state.knownEvents.map((event) =>
+        `${event.event} — ${formatDateForDisplay(event.date)} — Event Time: ${formatTimeForDisplay(event.eventTime)}${event.pickupTime ? ` — Pickup Time: ${formatTimeForDisplay(event.pickupTime)}` : ""}${event.notes ? ` — Notes: ${event.notes}` : ""}`
+      );
+
+      const customLines = state.customEvents
+        .filter((event) => event.event || event.date || event.eventTime || event.pickupTime || event.notes)
+        .map((event) =>
+          `${event.event || "Custom Event"}${event.date ? ` — ${formatDateForDisplay(event.date)}` : ""}${event.eventTime ? ` — Event Time: ${formatTimeForDisplay(event.eventTime)}` : ""}${event.pickupTime ? ` — Pickup Time: ${formatTimeForDisplay(event.pickupTime)}` : ""}${event.notes ? ` — Notes: ${event.notes}` : ""}`
+        );
+
+      const arrivalDestination = el.arrivalDestination.value === "Other"
+        ? el.arrivalDestinationOther.value.trim()
+        : el.arrivalDestination.value.trim();
+
       return [
-        ...current,
-        {
-          ...match,
-          pickupTime: "",
-          notes: "",
-        },
-      ];
-    });
+        "Carnival Chauffeur Planning Request",
+        "",
+        `Name: ${el.name.value.trim()}`,
+        `Phone: ${el.phone.value.trim()}`,
+        `Email: ${el.email.value.trim()}`,
+        "",
+        "Known Carnival Events:",
+        ...(knownLines.length ? knownLines : ["None added yet."]),
+        "",
+        "Custom Events:",
+        ...(customLines.length ? customLines : ["None added yet."]),
+        "",
+        "Arrival Information:",
+        `Arrival Service Needed: ${el.needsArrivalService.value === "yes" ? "Yes" : "No"}`,
+        ...(el.needsArrivalService.value === "yes"
+          ? [
+              `Arrival Date: ${formatDateForDisplay(el.arrivalDate.value) || ""}`,
+              `Flight Number: ${el.flightNumber.value.trim()}`,
+              `Arrival Time: ${formatTimeForDisplay(el.arrivalTime.value) || ""}`,
+              `Arrival Drop-off: ${arrivalDestination || ""}`,
+            ]
+          : []),
+      ].join("\n");
+    }
 
-    setSelectedKnownEvent("");
-    setSubmissionState({ type: "idle", message: "" });
-  };
+    function updateKnownEventSelect() {
+      const available = getAvailableKnownEvents();
+      el.knownEventSelect.innerHTML = '<option value="">Choose an event</option>' +
+        available.map((event) => `<option value="${event.id}">${event.event} — ${formatDateForDisplay(event.date)} — ${formatTimeForDisplay(event.eventTime)}</option>`).join("");
+      el.fixedEventsLeft.textContent = String(available.length);
+    }
 
-  const updateKnownEvent = (id, field, value) => {
-    setActiveKnownEvents((current) =>
-      current.map((event) => (event.id === id ? { ...event, [field]: value } : event))
-    );
-    setSubmissionState({ type: "idle", message: "" });
-  };
+    function renderKnownEvents() {
+      el.knownEventsList.innerHTML = "";
+      el.knownEventsEmpty.classList.toggle("hidden", state.knownEvents.length > 0);
 
-  const removeKnownEvent = (id) => {
-    setActiveKnownEvents((current) => current.filter((event) => event.id !== id));
-    setSubmissionState({ type: "idle", message: "" });
-  };
+      state.knownEvents.forEach((event) => {
+        const card = document.createElement("div");
+        card.className = "event-card";
+        card.innerHTML = `
+          <div class="card-head">
+            <div>
+              <h3 class="card-title">${event.event}</h3>
+              <div class="card-meta">
+                <span>📅 ${formatDateForDisplay(event.date)}</span>
+                <span>⏰ ${formatTimeForDisplay(event.eventTime)}</span>
+              </div>
+            </div>
+            <button type="button" class="danger-btn" data-remove-known="${event.id}">✕</button>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label>Pickup Time</label>
+              <input type="time" data-known-pickup="${event.id}" value="${event.pickupTime || ""}" />
+            </div>
+            <div>
+              <label>Notes</label>
+              <textarea data-known-notes="${event.id}" rows="2" placeholder="Meeting point, party size, route note">${escapeHtml(event.notes || "")}</textarea>
+            </div>
+          </div>
+        `;
+        el.knownEventsList.appendChild(card);
+      });
+    }
 
-  const addCustomRequest = () => {
-    setCustomRequests((current) => [
-      ...current,
-      {
-        id: Date.now() + Math.floor(Math.random() * 1000),
+    function renderCustomEvents() {
+      el.customEventsList.innerHTML = "";
+      el.customEventsEmpty.classList.toggle("hidden", state.customEvents.length > 0);
+
+      state.customEvents.forEach((event) => {
+        const card = document.createElement("div");
+        card.className = "event-card";
+        card.innerHTML = `
+          <div class="card-head">
+            <div>
+              <h3 class="card-title">${escapeHtml(event.event || "Custom Event")}</h3>
+              <div class="card-meta">
+                <span>📅 ${event.date ? formatDateForDisplay(event.date) : "No date"}</span>
+                <span>⏰ ${event.eventTime ? formatTimeForDisplay(event.eventTime) : "No event time"}</span>
+              </div>
+            </div>
+            <button type="button" class="danger-btn" data-remove-custom="${event.id}">✕</button>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label>Event Name</label>
+              <input type="text" data-custom-event="${event.id}" value="${escapeHtml(event.event || "")}" placeholder="Enter custom event" />
+            </div>
+            <div>
+              <label>Date</label>
+              <input type="date" data-custom-date="${event.id}" value="${event.date || ""}" />
+            </div>
+            <div>
+              <label>Event Time</label>
+              <input type="time" data-custom-eventtime="${event.id}" value="${event.eventTime || ""}" />
+            </div>
+            <div>
+              <label>Pickup Time</label>
+              <input type="time" data-custom-pickup="${event.id}" value="${event.pickupTime || ""}" />
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <label>Notes</label>
+              <textarea data-custom-notes="${event.id}" rows="2" placeholder="Meeting point, destination, route note, or any special instruction">${escapeHtml(event.notes || "")}</textarea>
+            </div>
+          </div>
+        `;
+        el.customEventsList.appendChild(card);
+      });
+    }
+
+    function escapeHtml(value) {
+      return value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function updateCounts() {
+      el.addedItemsCount.textContent = String(state.knownEvents.length + state.customEvents.length);
+    }
+
+    function updateContactStatus() {
+      el.contactPhoneLine.textContent = el.phone.value.trim() || "No phone entered";
+      el.contactEmailLine.textContent = el.email.value.trim() || "No email entered";
+    }
+
+    function updateArrivalVisibility() {
+      const show = el.needsArrivalService.value === "yes";
+      el.arrivalFields.classList.toggle("hidden", !show);
+      updateArrivalStatus();
+    }
+
+    function updateArrivalOtherVisibility() {
+      const show = el.arrivalDestination.value === "Other";
+      el.arrivalDestinationOtherWrap.classList.toggle("hidden", !show);
+      if (!show) el.arrivalDestinationOther.value = "";
+      updateArrivalStatus();
+    }
+
+    function updateArrivalStatus() {
+      if (el.needsArrivalService.value !== "yes") {
+        el.arrivalStatusMain.textContent = "No airport pickup requested";
+        el.arrivalStatusDetail.textContent = "";
+        return;
+      }
+
+      const destination = el.arrivalDestination.value === "Other"
+        ? el.arrivalDestinationOther.value.trim()
+        : el.arrivalDestination.value.trim();
+
+      el.arrivalStatusMain.textContent = "Airport pickup requested";
+      const parts = [
+        el.arrivalDate.value ? formatDateForDisplay(el.arrivalDate.value) : "No date",
+        el.arrivalTime.value ? formatTimeForDisplay(el.arrivalTime.value) : "",
+        el.flightNumber.value.trim(),
+        destination,
+      ].filter(Boolean);
+      el.arrivalStatusDetail.textContent = parts.join(" • ");
+    }
+
+    function updateSummaryOutput() {
+      el.summaryOutput.textContent = buildSummaryText();
+      if (state.showSummary) {
+        el.summaryOutput.classList.add("show");
+        el.toggleSummary.textContent = "Hide Summary";
+      } else {
+        el.summaryOutput.classList.remove("show");
+        el.toggleSummary.textContent = "Show Summary";
+      }
+    }
+
+    function sync() {
+      updateKnownEventSelect();
+      renderKnownEvents();
+      renderCustomEvents();
+      updateCounts();
+      updateContactStatus();
+      updateArrivalVisibility();
+      updateArrivalOtherVisibility();
+      updateSummaryOutput();
+    }
+
+    function addKnownEvent(eventId) {
+      const match = KNOWN_EVENT_OPTIONS.find((event) => event.id === eventId);
+      if (!match) return;
+      if (state.knownEvents.some((event) => event.id === eventId)) return;
+      state.knownEvents.push({ ...match, pickupTime: "", notes: "" });
+      clearMessage();
+      sync();
+    }
+
+    function addCustomEvent() {
+      state.customEvents.push({
+        id: String(Date.now() + Math.floor(Math.random() * 1000)),
         event: "",
         date: "",
         eventTime: "",
         pickupTime: "",
         notes: "",
-      },
-    ]);
-    setSubmissionState({ type: "idle", message: "" });
-  };
+      });
+      clearMessage();
+      sync();
+    }
 
-  const updateCustomRequest = (id, field, value) => {
-    setCustomRequests((current) =>
-      current.map((request) => (request.id === id ? { ...request, [field]: value } : request))
-    );
-    setSubmissionState({ type: "idle", message: "" });
-  };
+    function validateBeforeSubmit() {
+      if (!el.name.value.trim()) {
+        showMessage("error", "Name is required.");
+        return false;
+      }
+      if (!el.phone.value.trim()) {
+        showMessage("error", "Phone is required.");
+        return false;
+      }
+      if (!el.email.value.trim()) {
+        showMessage("error", "Email is required.");
+        return false;
+      }
+      if (state.knownEvents.length + state.customEvents.length === 0) {
+        showMessage("error", "Add at least one event or custom event before submitting.");
+        return false;
+      }
+      if (el.needsArrivalService.value === "yes") {
+        if (!el.arrivalDate.value) {
+          showMessage("error", "Arrival date is required when airport pickup is requested.");
+          return false;
+        }
+        if (!el.arrivalTime.value) {
+          showMessage("error", "Arrival time is required when airport pickup is requested.");
+          return false;
+        }
+        const destination = el.arrivalDestination.value === "Other"
+          ? el.arrivalDestinationOther.value.trim()
+          : el.arrivalDestination.value.trim();
+        if (!destination) {
+          showMessage("error", "Arrival drop-off is required when airport pickup is requested.");
+          return false;
+        }
+      }
+      return true;
+    }
 
-  const removeCustomRequest = (id) => {
-    setCustomRequests((current) => current.filter((request) => request.id !== id));
-    setSubmissionState({ type: "idle", message: "" });
-  };
+    async function handleSubmit() {
+      clearMessage();
+      if (!validateBeforeSubmit()) return;
 
-  const resetForm = () => {
-    setClientName("");
-    setContact({
-      phone: "",
-      email: "",
+      const summaryText = buildSummaryText();
+      const confirmed = window.confirm(`Please review before sending:\n\n${summaryText}`);
+      if (!confirmed) return;
+
+      const arrivalDestination = el.arrivalDestination.value === "Other"
+        ? el.arrivalDestinationOther.value.trim()
+        : el.arrivalDestination.value.trim();
+
+      const payload = new FormData();
+      payload.append("client_name", el.name.value.trim());
+      payload.append("phone", el.phone.value.trim());
+      payload.append("email", el.email.value.trim());
+      payload.append("arrival_service_needed", el.needsArrivalService.value);
+      payload.append("arrival_date", el.arrivalDate.value);
+      payload.append("flight_number", el.flightNumber.value.trim());
+      payload.append("arrival_time", el.arrivalTime.value);
+      payload.append("arrival_destination", arrivalDestination);
+      payload.append("summary", summaryText);
+      payload.append("_subject", `Carnival Planning Request — ${el.name.value.trim()}`);
+      payload.append("_replyto", el.email.value.trim());
+
+      state.isSubmitting = true;
+      el.submitRequest.disabled = true;
+      el.submitRequest.textContent = "Sending...";
+
+      try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          body: payload,
+          headers: { Accept: "application/json" }
+        });
+
+        if (!response.ok) throw new Error("Submission failed");
+
+        resetForm();
+        showMessage("success", "Request sent. Check the inbox tied to Formspree.");
+      } catch (error) {
+        showMessage("error", "Submission failed. Check the Formspree endpoint and active form settings.");
+      } finally {
+        state.isSubmitting = false;
+        el.submitRequest.disabled = false;
+        el.submitRequest.textContent = "Submit Request";
+      }
+    }
+
+    function resetForm() {
+      el.name.value = "";
+      el.phone.value = "";
+      el.email.value = "";
+      el.needsArrivalService.value = "no";
+      el.arrivalDate.value = "";
+      el.flightNumber.value = "";
+      el.arrivalTime.value = "";
+      el.arrivalDestination.value = "";
+      el.arrivalDestinationOther.value = "";
+      state.knownEvents = [];
+      state.customEvents = [];
+      state.showSummary = false;
+      clearMessage();
+      sync();
+    }
+
+    el.phone.addEventListener("input", () => {
+      el.phone.value = formatPhoneNumber(el.phone.value);
+      updateContactStatus();
+      updateSummaryOutput();
+      clearMessage();
     });
-    setSelectedKnownEvent("");
-    setActiveKnownEvents([]);
-    setCustomRequests([]);
-    setArrival({
-      needsArrivalService: "no",
-      arrivalDate: "",
-      flightNumber: "",
-      arrivalTime: "",
-      destination: "",
-      destinationOther: "",
+
+    [el.name, el.email, el.arrivalDate, el.arrivalTime, el.arrivalDestinationOther].forEach((node) => {
+      node.addEventListener("input", () => {
+        if (node === el.email || node === el.name) updateContactStatus();
+        if (node === el.arrivalDestinationOther || node === el.arrivalDate || node === el.arrivalTime) updateArrivalStatus();
+        updateSummaryOutput();
+        clearMessage();
+      });
     });
-    setShowSummary(false);
-    setSubmissionState({ type: "idle", message: "" });
-  };
 
-  const summaryText = useMemo(() => {
-    const knownEventLines = activeKnownEvents.map(
-      (event) =>
-        `${event.event} — ${event.date} — Event Time: ${event.eventTime}${event.pickupTime ? ` — Pickup Time: ${event.pickupTime}` : ""}${event.notes ? ` — Notes: ${event.notes}` : ""}`
-    );
+    el.flightNumber.addEventListener("input", () => {
+      el.flightNumber.value = el.flightNumber.value.toUpperCase();
+      updateArrivalStatus();
+      updateSummaryOutput();
+      clearMessage();
+    });
 
-    const customLines = customRequests
-      .filter(
-        (request) =>
-          request.event ||
-          request.date ||
-          request.eventTime ||
-          request.pickupTime ||
-          request.notes
-      )
-      .map(
-        (request) =>
-          `${request.event || "Custom Event"}${request.date ? ` — ${request.date}` : ""}${request.eventTime ? ` — Event Time: ${request.eventTime}` : ""}${request.pickupTime ? ` — Pickup Time: ${request.pickupTime}` : ""}${request.notes ? ` — Notes: ${request.notes}` : ""}`
-      );
-
-    return [
-      "Carnival Chauffeur Planning Request",
-      "",
-      `Name: ${clientName || ""}`,
-      `Phone: ${contact.phone || ""}`,
-      `Email: ${contact.email || ""}`,
-      "",
-      "Known Carnival Events:",
-      ...(knownEventLines.length ? knownEventLines : ["None added yet."]),
-      "",
-      "Custom Events:",
-      ...(customLines.length ? customLines : ["None added yet."]),
-      "",
-      "Arrival Information:",
-      `Arrival Service Needed: ${arrival.needsArrivalService === "yes" ? "Yes" : "No"}`,
-      ...(arrival.needsArrivalService === "yes"
-        ? [
-            `Arrival Date: ${arrival.arrivalDate || ""}`,
-            `Flight Number: ${arrival.flightNumber || ""}`,
-            `Arrival Time: ${arrival.arrivalTime || ""}`,
-            `Arrival Drop-off: ${arrival.destination === "Other" ? arrival.destinationOther || "" : arrival.destination || ""}`,
-          ]
-        : []),
-    ].join("\n");
-  }, [activeKnownEvents, arrival, clientName, contact, customRequests]);
-
-  const copySummary = async () => {
-    try {
-      await navigator.clipboard.writeText(summaryText);
-      alert("Summary copied.");
-    } catch {
-      alert("Copy failed.");
-    }
-  };
-
-  const validateBeforeSubmit = () => {
-    if (!clientName.trim()) {
-      setSubmissionState({ type: "error", message: "Name is required." });
-      return false;
-    }
-
-    if (!contact.phone.trim()) {
-      setSubmissionState({ type: "error", message: "Phone is required." });
-      return false;
-    }
-
-    if (!contact.email.trim()) {
-      setSubmissionState({ type: "error", message: "Email is required." });
-      return false;
-    }
-
-    if (addedItemsCount === 0) {
-      setSubmissionState({ type: "error", message: "Add at least one event or custom request before submitting." });
-      return false;
-    }
-
-    if (arrival.needsArrivalService === "yes") {
-      if (!arrival.arrivalDate) {
-        setSubmissionState({ type: "error", message: "Arrival date is required when airport pickup is requested." });
-        return false;
+    el.needsArrivalService.addEventListener("change", () => {
+      if (el.needsArrivalService.value === "no") {
+        el.arrivalDate.value = "";
+        el.flightNumber.value = "";
+        el.arrivalTime.value = "";
+        el.arrivalDestination.value = "";
+        el.arrivalDestinationOther.value = "";
       }
+      sync();
+      clearMessage();
+    });
 
-      if (!arrival.arrivalTime) {
-        setSubmissionState({ type: "error", message: "Arrival time is required when airport pickup is requested." });
-        return false;
+    el.arrivalDestination.addEventListener("change", () => {
+      updateArrivalOtherVisibility();
+      updateSummaryOutput();
+      clearMessage();
+    });
+
+    el.knownEventSelect.addEventListener("change", () => {
+      const value = el.knownEventSelect.value;
+      if (value) addKnownEvent(value);
+      el.knownEventSelect.value = "";
+    });
+
+    el.addCustomEvent.addEventListener("click", () => {
+      addCustomEvent();
+    });
+
+    el.knownEventsList.addEventListener("input", (event) => {
+      const target = event.target;
+      if (target.dataset.knownPickup) {
+        const item = state.knownEvents.find((entry) => entry.id === target.dataset.knownPickup);
+        if (item) item.pickupTime = target.value;
       }
-
-      if (!arrival.destination || (arrival.destination === "Other" && !arrival.destinationOther.trim())) {
-        setSubmissionState({ type: "error", message: "Arrival drop-off is required when airport pickup is requested." });
-        return false;
+      if (target.dataset.knownNotes) {
+        const item = state.knownEvents.find((entry) => entry.id === target.dataset.knownNotes);
+        if (item) item.notes = target.value;
       }
-    }
+      updateSummaryOutput();
+      clearMessage();
+    });
 
-    return true;
-  };
+    el.knownEventsList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove-known]");
+      if (!button) return;
+      state.knownEvents = state.knownEvents.filter((entry) => entry.id !== button.dataset.removeKnown);
+      sync();
+      clearMessage();
+    });
 
-  const handleSubmit = async () => {
-    setSubmissionState({ type: "idle", message: "" });
+    el.customEventsList.addEventListener("input", (event) => {
+      const target = event.target;
+      const keyMap = [
+        ["customEvent", "event"],
+        ["customDate", "date"],
+        ["customEventtime", "eventTime"],
+        ["customPickup", "pickupTime"],
+        ["customNotes", "notes"],
+      ];
 
-    if (!validateBeforeSubmit()) return;
-
-    const confirmed = window.confirm(`Please review before sending:\n\n${summaryText}`);
-    if (!confirmed) return;
-
-    const payload = new FormData();
-    payload.append("client_name", clientName.trim());
-    payload.append("phone", contact.phone.trim());
-    payload.append("email", contact.email.trim());
-    payload.append("arrival_service_needed", arrival.needsArrivalService);
-    payload.append("arrival_date", arrival.arrivalDate);
-    payload.append("flight_number", arrival.flightNumber.trim());
-    payload.append("arrival_time", arrival.arrivalTime);
-    payload.append(
-      "arrival_destination",
-      arrival.destination === "Other" ? arrival.destinationOther.trim() : arrival.destination.trim()
-    );
-    payload.append("summary", summaryText);
-    payload.append("_subject", `Carnival Planning Request — ${clientName.trim()}`);
-    payload.append("_replyto", contact.email.trim());
-
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        body: payload,
-        headers: {
-          Accept: "application/json",
-        },
+      keyMap.forEach(([datasetKey, field]) => {
+        const id = target.dataset[datasetKey];
+        if (!id) return;
+        const item = state.customEvents.find((entry) => entry.id === id);
+        if (item) item[field] = target.value;
       });
 
-      if (!response.ok) {
-        throw new Error("Submission failed");
+      if (target.dataset.customEvent) {
+        renderCustomEvents();
+      } else {
+        updateSummaryOutput();
       }
+      clearMessage();
+    });
 
-      resetForm();
-      setSubmissionState({
-        type: "success",
-        message: "Request sent. Check the inbox tied to Formspree.",
-      });
-    } catch {
-      setSubmissionState({
-        type: "error",
-        message: "Submission failed. Check the Formspree endpoint and active form settings.",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    el.customEventsList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove-custom]");
+      if (!button) return;
+      state.customEvents = state.customEvents.filter((entry) => entry.id !== button.dataset.removeCustom);
+      sync();
+      clearMessage();
+    });
 
-  return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
-        <div className="mb-6 rounded-[28px] border border-amber-400/30 bg-zinc-900/70 p-5 shadow-2xl shadow-black/40 backdrop-blur">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-300">Superb Executive Transportation</p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Carnival Planning Form</h1>
-              <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-400 sm:text-base">
-                Share your Carnival transportation needs, review them, then send them as a live request email.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-950 px-4 py-3">
-                <div className="text-xs uppercase tracking-wide text-zinc-500">Service Dates</div>
-                <div className="mt-1 text-sm font-medium">Apr 29 – May 4</div>
-              </div>
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-950 px-4 py-3">
-                <div className="text-xs uppercase tracking-wide text-zinc-500">Fixed Events Left</div>
-                <div className="mt-1 text-sm font-medium">{availableKnownEvents.length}</div>
-              </div>
-              <div className="col-span-2 rounded-2xl border border-zinc-800 bg-zinc-950 px-4 py-3 sm:col-span-1">
-                <div className="text-xs uppercase tracking-wide text-zinc-500">Added Items</div>
-                <div className="mt-1 text-sm font-medium">{addedItemsCount}</div>
-              </div>
-            </div>
-          </div>
-        </div>
+    el.toggleSummary.addEventListener("click", () => {
+      state.showSummary = !state.showSummary;
+      updateSummaryOutput();
+    });
 
-        <div className="grid gap-6 xl:grid-cols-[1.35fr_0.85fr]">
-          <div className="space-y-6">
-            <div className="rounded-[28px] border border-zinc-800 bg-zinc-900/60 p-5 shadow-xl shadow-black/30">
-              <SectionHeader
-                icon={User}
-                title="Your Information"
-                subtitle="Keep the contact information attached to the request from the start."
-              />
-              <div className="grid gap-4 md:grid-cols-3">
-                <div>
-                  <FieldLabel>Name</FieldLabel>
-                  <Input value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="Enter name" />
-                </div>
-                <div>
-                  <FieldLabel>Phone</FieldLabel>
-                  <Input
-                    value={contact.phone}
-                    onChange={(e) => setContact((current) => ({ ...current, phone: formatPhoneNumber(e.target.value) }))}
-                    placeholder="000-000-0000"
-                    inputMode="numeric"
-                    maxLength={12}
-                  />
-                </div>
-                <div>
-                  <FieldLabel>Email</FieldLabel>
-                  <Input
-                    type="email"
-                    value={contact.email}
-                    onChange={(e) => setContact((current) => ({ ...current, email: e.target.value }))}
-                    placeholder="name@example.com"
-                  />
-                </div>
-              </div>
-            </div>
+    el.copySummary.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(buildSummaryText());
+        showMessage("success", "Summary copied.");
+      } catch {
+        showMessage("error", "Copy failed.");
+      }
+    });
 
-            <div className="rounded-[28px] border border-zinc-800 bg-zinc-900/60 p-5 shadow-xl shadow-black/30">
-              <SectionHeader
-                icon={Plane}
-                title="Arrival Information"
-                subtitle="Make airport pickup simple: choose whether you need it, then fill only the fields that apply."
-              />
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="md:col-span-2">
-                  <FieldLabel>Do You Need Airport Pickup?</FieldLabel>
-                  <Select
-                    value={arrival.needsArrivalService}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setArrival((current) => ({
-                        ...current,
-                        needsArrivalService: value,
-                        ...(value === "no"
-                          ? {
-                              arrivalDate: "",
-                              flightNumber: "",
-                              arrivalTime: "",
-                              destination: "",
-                              destinationOther: "",
-                            }
-                          : {}),
-                      }));
-                      setSubmissionState({ type: "idle", message: "" });
-                    }}
-                  >
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
-                  </Select>
-                </div>
+    el.submitRequest.addEventListener("click", handleSubmit);
+    el.resetForm.addEventListener("click", resetForm);
 
-                {arrival.needsArrivalService === "yes" && (
-                  <>
-                    <div>
-                      <FieldLabel>Arrival Date</FieldLabel>
-                      <Input
-                        type="date"
-                        value={arrival.arrivalDate}
-                        onChange={(e) => {
-                          setArrival((current) => ({ ...current, arrivalDate: e.target.value }));
-                          setSubmissionState({ type: "idle", message: "" });
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <FieldLabel>Flight Number</FieldLabel>
-                      <Input
-                        value={arrival.flightNumber}
-                        onChange={(e) => {
-                          setArrival((current) => ({ ...current, flightNumber: e.target.value.toUpperCase() }));
-                          setSubmissionState({ type: "idle", message: "" });
-                        }}
-                        placeholder="AA1234"
-                      />
-                    </div>
-                    <div>
-                      <FieldLabel>Arrival Time</FieldLabel>
-                      <Input
-                        type="time"
-                        value={arrival.arrivalTime}
-                        onChange={(e) => {
-                          setArrival((current) => ({ ...current, arrivalTime: e.target.value }));
-                          setSubmissionState({ type: "idle", message: "" });
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <FieldLabel>Arrival Drop-off</FieldLabel>
-                      <Select
-                        value={arrival.destination}
-                        onChange={(e) => {
-                          setArrival((current) => ({
-                            ...current,
-                            destination: e.target.value,
-                            ...(e.target.value !== "Other" ? { destinationOther: "" } : {}),
-                          }));
-                          setSubmissionState({ type: "idle", message: "" });
-                        }}
-                      >
-                        <option value="">Choose destination</option>
-                        <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
-                        <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
-                        <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
-                        <option value="Point Pleasant Resort">Point Pleasant Resort</option>
-                        <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
-                        <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
-                        <option value="Emerald Beach Resort">Emerald Beach Resort</option>
-                        <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
-                        <option value="Charlotte Amalie">Charlotte Amalie</option>
-                        <option value="Yacht Haven Grande">Yacht Haven Grande</option>
-                        <option value="Other">Other</option>
-                      </Select>
-                    </div>
-                    {arrival.destination === "Other" && (
-                      <div className="md:col-span-2">
-                        <FieldLabel>Enter Drop-off Location</FieldLabel>
-                        <Input
-                          value={arrival.destinationOther}
-                          onChange={(e) => {
-                            setArrival((current) => ({ ...current, destinationOther: e.target.value }));
-                            setSubmissionState({ type: "idle", message: "" });
-                          }}
-                          placeholder="Hotel, villa, marina, or address"
-                        />
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-
-            <div className="rounded-[28px] border border-zinc-800 bg-zinc-900/60 p-5 shadow-xl shadow-black/30">
-              <SectionHeader
-                icon={CalendarDays}
-                title="Event"
-                subtitle="All known Carnival events live in the dropdown. Only selected events appear below."
-              />
-
-              <div className="mb-5 grid gap-4 md:grid-cols-[1fr_auto] md:items-end">
-                <div>
-                  <FieldLabel>Select Event</FieldLabel>
-                  <Select
-                    value={selectedKnownEvent}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setSelectedKnownEvent(value);
-                      addKnownEvent(value);
-                    }}
-                  >
-                    <option value="">Choose an event</option>
-                    {availableKnownEvents.map((event) => (
-                      <option key={event.id} value={event.id}>
-                        {event.event} — {event.date} — {event.eventTime}
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="rounded-2xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm text-zinc-400">
-                  Select it once. Then fill the movement details below.
-                </div>
-              </div>
-
-              {activeKnownEvents.length === 0 ? (
-                <div className="rounded-[24px] border border-dashed border-zinc-700 bg-zinc-950/70 p-5 text-sm text-zinc-400">
-                  No events added yet. Select one from the dropdown.
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {activeKnownEvents.map((event) => (
-                    <div key={event.id} className="rounded-[24px] border border-zinc-800 bg-zinc-950/80 p-4">
-                      <div className="mb-4 flex items-start justify-between gap-3">
-                        <div>
-                          <div className="text-lg font-semibold tracking-tight">{event.event}</div>
-                          <div className="mt-1 flex flex-wrap gap-3 text-sm text-zinc-400">
-                            <span className="inline-flex items-center gap-1.5">
-                              <CalendarDays className="h-4 w-4" /> {event.date}
-                            </span>
-                            <span className="inline-flex items-center gap-1.5">
-                              <Clock3 className="h-4 w-4" /> {event.eventTime}
-                            </span>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => removeKnownEvent(event.id)}
-                          className="rounded-2xl border border-red-500/30 bg-red-500/10 p-2 text-red-200 transition hover:bg-red-500/20"
-                          aria-label={`Delete ${event.event}`}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
-
-                      <div className="grid gap-4 md:grid-cols-2">
-                        <div>
-                          <FieldLabel>Pickup Time</FieldLabel>
-                          <Input
-                            type="time"
-                            value={event.pickupTime}
-                            onChange={(e) => updateKnownEvent(event.id, "pickupTime", e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <FieldLabel>Notes</FieldLabel>
-                          <Textarea
-                            rows={2}
-                            value={event.notes}
-                            onChange={(e) => updateKnownEvent(event.id, "notes", e.target.value)}
-                            placeholder="Meeting point, party size, route note"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="rounded-[28px] border border-zinc-800 bg-zinc-900/60 p-5 shadow-xl shadow-black/30">
-              <SectionHeader
-                icon={CarFront}
-                title="Custom Event"
-                subtitle="Add a custom event and manage it in the same card style as the fixed Carnival events."
-              />
-
-              <div className="mb-4 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={addCustomRequest}
-                  className="rounded-2xl border border-amber-400/40 bg-amber-400/10 px-4 py-2 text-sm font-medium text-amber-200 transition hover:bg-amber-400/20"
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <Plus className="h-4 w-4" /> Add Custom Event
-                  </span>
-                </button>
-              </div>
-
-              {customRequests.length === 0 ? (
-                <div className="rounded-[24px] border border-dashed border-zinc-700 bg-zinc-950/70 p-5 text-sm text-zinc-400">
-                  No custom events added yet. Use the button above to add one.
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {customRequests.map((request) => (
-                    <div key={request.id} className="rounded-[24px] border border-zinc-800 bg-zinc-950/80 p-4">
-                      <div className="mb-4 flex items-start justify-between gap-3">
-                        <div>
-                          <div className="text-lg font-semibold tracking-tight">{request.event || "Custom Event"}</div>
-                          <div className="mt-1 flex flex-wrap gap-3 text-sm text-zinc-400">
-                            <span className="inline-flex items-center gap-1.5">
-                              <CalendarDays className="h-4 w-4" /> {request.date || "No date"}
-                            </span>
-                            <span className="inline-flex items-center gap-1.5">
-                              <Clock3 className="h-4 w-4" /> {request.eventTime || "No event time"}
-                            </span>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => removeCustomRequest(request.id)}
-                          className="rounded-2xl border border-red-500/30 bg-red-500/10 p-2 text-red-200 transition hover:bg-red-500/20"
-                          aria-label={`Delete ${request.event || "custom event"}`}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
-
-                      <div className="grid gap-4 md:grid-cols-2">
-                        <div>
-                          <FieldLabel>Event Name</FieldLabel>
-                          <Input
-                            value={request.event}
-                            onChange={(e) => updateCustomRequest(request.id, "event", e.target.value)}
-                            placeholder="Enter custom event"
-                          />
-                        </div>
-                        <div>
-                          <FieldLabel>Date</FieldLabel>
-                          <Input
-                            type="date"
-                            value={request.date}
-                            onChange={(e) => updateCustomRequest(request.id, "date", e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <FieldLabel>Event Time</FieldLabel>
-                          <Input
-                            type="time"
-                            value={request.eventTime}
-                            onChange={(e) => updateCustomRequest(request.id, "eventTime", e.target.value)}
-                          />
-                        </div>
-                        <div>
-                          <FieldLabel>Pickup Time</FieldLabel>
-                          <Input
-                            type="time"
-                            value={request.pickupTime}
-                            onChange={(e) => updateCustomRequest(request.id, "pickupTime", e.target.value)}
-                          />
-                        </div>
-                        <div className="md:col-span-2">
-                          <FieldLabel>Notes</FieldLabel>
-                          <Textarea
-                            value={request.notes}
-                            onChange={(e) => updateCustomRequest(request.id, "notes", e.target.value)}
-                            rows={2}
-                            placeholder="Meeting point, destination, route note, or any special instruction"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="rounded-[28px] border border-zinc-800 bg-zinc-900/60 p-5 shadow-xl shadow-black/30 xl:sticky xl:top-6">
-              <SectionHeader
-                icon={MapPin}
-                title="Live Summary"
-                subtitle="Review it, then send it as an email-backed planning request."
-              />
-
-              <div className="space-y-3 text-sm">
-                <button
-                  type="button"
-                  onClick={() => setShowSummary((current) => !current)}
-                  className="w-full rounded-2xl border border-amber-400/40 bg-amber-400/10 px-4 py-3 font-medium text-amber-200 transition hover:bg-amber-400/20"
-                >
-                  {showSummary ? "Hide Summary" : "Show Summary"}
-                </button>
-                <button
-                  type="button"
-                  onClick={copySummary}
-                  className="w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-medium text-white transition hover:border-zinc-500"
-                >
-                  Copy Summary
-                </button>
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
-                  className="w-full rounded-2xl border border-amber-400/40 bg-amber-400 px-4 py-3 font-semibold text-black transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  <span className="inline-flex items-center justify-center gap-2">
-                    <Send className="h-4 w-4" /> {isSubmitting ? "Sending..." : "Submit Request"}
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  onClick={resetForm}
-                  disabled={isSubmitting}
-                  className="w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 font-medium text-white transition hover:border-zinc-500 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  Reset Form
-                </button>
-              </div>
-
-              {submissionState.type !== "idle" && (
-                <div
-                  className={`mt-4 rounded-[24px] border p-4 text-sm ${
-                    submissionState.type === "success"
-                      ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
-                      : "border-red-500/30 bg-red-500/10 text-red-200"
-                  }`}
-                >
-                  {submissionState.message}
-                </div>
-              )}
-
-              <div className="mt-4 rounded-[24px] border border-zinc-800 bg-zinc-950/80 p-4 text-sm text-zinc-300">
-                <div className="mb-2 text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">Request Contact</div>
-                <div className="space-y-2">
-                  <div className="inline-flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-amber-300" /> {contact.phone || "No phone entered"}
-                  </div>
-                  <div className="inline-flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-amber-300" /> {contact.email || "No email entered"}
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 rounded-[24px] border border-zinc-800 bg-zinc-950/80 p-4 text-sm text-zinc-300">
-                <div className="mb-2 text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">Arrival Status</div>
-                <div className="space-y-2">
-                  <div>{arrival.needsArrivalService === "yes" ? "Airport pickup requested" : "No airport pickup requested"}</div>
-                  {arrival.needsArrivalService === "yes" && (
-                    <div className="text-zinc-400">
-                      {arrival.arrivalDate || "No date"}
-                      {arrival.arrivalTime ? ` • ${arrival.arrivalTime}` : ""}
-                      {arrival.flightNumber ? ` • ${arrival.flightNumber}` : ""}
-                      {(arrival.destination === "Other" ? arrival.destinationOther : arrival.destination)
-                        ? ` • ${arrival.destination === "Other" ? arrival.destinationOther : arrival.destination}`
-                        : ""}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {showSummary && (
-                <pre className="mt-4 whitespace-pre-wrap rounded-[24px] border border-zinc-800 bg-black p-4 text-xs leading-6 text-zinc-300">
-                  {summaryText}
-                </pre>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+    sync();
+  </script>
+</body>
+</html>
