@@ -206,14 +206,17 @@
     .inline-note,
     .empty-state,
     .summary-card,
-    .status-card {
+    .status-card,
+    .review-note,
+    .review-box {
       border: 1px solid var(--border);
       background: #0c0c0c;
       border-radius: 20px;
     }
 
     .inline-note,
-    .empty-state {
+    .empty-state,
+    .review-note {
       padding: 14px 16px;
       color: var(--muted);
       font-size: 14px;
@@ -391,6 +394,30 @@
       display: block;
     }
 
+    .review-box {
+      display: none;
+      padding: 14px 16px;
+      gap: 12px;
+      align-items: start;
+      color: #ddd;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .review-box.show {
+      display: flex;
+    }
+
+    .review-box input {
+      width: 18px;
+      min-height: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--gold);
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
     .hidden { display: none !important; }
 
     @media (max-width: 980px) {
@@ -479,24 +506,18 @@
             <div class="section-icon">✈️</div>
             <div>
               <h2 class="section-title">Arrival Information</h2>
-              <p class="section-subtitle">Make airport pickup simple: choose whether you need it, then fill only the fields that apply.</p>
+              <p class="section-subtitle">Arrival details stay open here so the client can fill them out directly.</p>
             </div>
           </div>
 
           <div class="grid-2">
-            <div class="full-span" style="grid-column: 1 / -1;">
-              <label for="needsArrivalService">Do You Need Airport Pickup?</label>
-              <select id="needsArrivalService">
-                <option value="no">No</option>
-                <option value="yes">Yes</option>
-              </select>
-            </div>
-          </div>
-
-          <div id="arrivalFields" class="grid-2 hidden" style="margin-top: 16px;">
             <div>
               <label for="arrivalDate">Arrival Date</label>
               <input id="arrivalDate" type="date" />
+            </div>
+            <div>
+              <label for="departureDate">Departure Date</label>
+              <input id="departureDate" type="date" />
             </div>
             <div>
               <label for="flightNumber">Flight Number</label>
@@ -504,7 +525,7 @@
             </div>
             <div>
               <label for="arrivalTime">Arrival Time</label>
-              <input id="arrivalTime" type="time" />
+              <select id="arrivalTime"></select>
             </div>
             <div>
               <label for="arrivalDestination">Arrival Drop-off</label>
@@ -523,7 +544,7 @@
                 <option value="Other">Other</option>
               </select>
             </div>
-            <div id="arrivalDestinationOtherWrap" class="hidden" style="grid-column: 1 / -1;">
+            <div id="arrivalDestinationOtherWrap" class="hidden">
               <label for="arrivalDestinationOther">Enter Drop-off Location</label>
               <input id="arrivalDestinationOther" type="text" placeholder="Hotel, villa, marina, or address" />
             </div>
@@ -583,7 +604,9 @@
         <div class="summary-actions">
           <button type="button" id="toggleSummary" class="chip-btn">Show Summary</button>
           <button type="button" id="copySummary" class="sub-btn">Copy Summary</button>
-          <button type="button" id="submitRequest" class="main-btn">Submit Request</button>
+          <div id="reviewNoteClosed" class="review-note">Open the summary first. Submit stays locked until the summary is reviewed.</div>
+          <div id="reviewNoteOpen" class="review-note hidden">Check the review box under the summary to unlock submit.</div>
+          <button type="button" id="submitRequest" class="main-btn" disabled>Submit Request</button>
           <button type="button" id="resetForm" class="sub-btn">Reset Form</button>
         </div>
 
@@ -598,20 +621,30 @@
         </div>
 
         <div class="status-card">
-          <div class="status-title">Arrival Status</div>
+          <div class="status-title">Arrival Details</div>
           <div class="status-lines">
-            <div id="arrivalStatusMain">No airport pickup requested</div>
-            <div id="arrivalStatusDetail" style="color: var(--muted);"></div>
+            <div id="arrivalStatusDate">No arrival date</div>
+            <div id="arrivalStatusDeparture">No departure date</div>
+            <div id="arrivalStatusTime">No arrival time</div>
+            <div id="arrivalStatusFlight">No flight number</div>
+            <div id="arrivalStatusDestination">No drop-off</div>
           </div>
         </div>
 
         <pre id="summaryOutput" class="summary-output"></pre>
+
+        <label id="reviewWrap" class="review-box">
+          <input id="reviewCheckbox" type="checkbox" />
+          <span>I reviewed the summary above and I am ready to submit this request.</span>
+        </label>
       </aside>
     </div>
   </div>
 
   <script>
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/meoazyoy";
+    const DEFAULT_DATE = "2026-04-29";
+    const DEFAULT_DEPARTURE_DATE = "2026-05-04";
 
     const TIME_OPTIONS = Array.from({ length: 48 }, (_, index) => {
       const hour = Math.floor(index / 2);
@@ -640,6 +673,7 @@
       knownEvents: [],
       customEvents: [],
       showSummary: false,
+      hasReviewedSummary: false,
       isSubmitting: false,
     };
 
@@ -647,9 +681,8 @@
       name: document.getElementById("name"),
       phone: document.getElementById("phone"),
       email: document.getElementById("email"),
-      needsArrivalService: document.getElementById("needsArrivalService"),
-      arrivalFields: document.getElementById("arrivalFields"),
       arrivalDate: document.getElementById("arrivalDate"),
+      departureDate: document.getElementById("departureDate"),
       flightNumber: document.getElementById("flightNumber"),
       arrivalTime: document.getElementById("arrivalTime"),
       arrivalDestination: document.getElementById("arrivalDestination"),
@@ -667,13 +700,28 @@
       copySummary: document.getElementById("copySummary"),
       submitRequest: document.getElementById("submitRequest"),
       resetForm: document.getElementById("resetForm"),
+      reviewNoteClosed: document.getElementById("reviewNoteClosed"),
+      reviewNoteOpen: document.getElementById("reviewNoteOpen"),
+      reviewWrap: document.getElementById("reviewWrap"),
+      reviewCheckbox: document.getElementById("reviewCheckbox"),
       message: document.getElementById("message"),
       contactPhoneLine: document.getElementById("contactPhoneLine"),
       contactEmailLine: document.getElementById("contactEmailLine"),
-      arrivalStatusMain: document.getElementById("arrivalStatusMain"),
-      arrivalStatusDetail: document.getElementById("arrivalStatusDetail"),
+      arrivalStatusDate: document.getElementById("arrivalStatusDate"),
+      arrivalStatusDeparture: document.getElementById("arrivalStatusDeparture"),
+      arrivalStatusTime: document.getElementById("arrivalStatusTime"),
+      arrivalStatusFlight: document.getElementById("arrivalStatusFlight"),
+      arrivalStatusDestination: document.getElementById("arrivalStatusDestination"),
       summaryOutput: document.getElementById("summaryOutput"),
     };
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
 
     function formatPhoneNumber(value) {
       const digits = value.replace(/\D/g, "").slice(0, 10);
@@ -712,14 +760,25 @@
       return KNOWN_EVENT_OPTIONS.filter((item) => !activeIds.has(item.id));
     }
 
-    function renderTimeOptions(selectedValue) {
-      return ['<option value="">Select pickup time</option>']
+    function renderTimeOptions(selectedValue, placeholder) {
+      return [`<option value="">${placeholder}</option>`]
         .concat(
           TIME_OPTIONS.map((time) =>
             `<option value="${time.value}"${time.value === selectedValue ? " selected" : ""}>${time.label}</option>`
           )
         )
         .join("");
+    }
+
+    function populateStaticTimeSelects() {
+      el.arrivalTime.innerHTML = renderTimeOptions(el.arrivalTime.value || "", "Select arrival time");
+    }
+
+    function invalidateReview() {
+      state.hasReviewedSummary = false;
+      el.reviewCheckbox.checked = false;
+      updateReviewGate();
+      clearMessage();
     }
 
     function buildSummaryText() {
@@ -751,22 +810,21 @@
         ...(customLines.length ? customLines : ["None added yet."]),
         "",
         "Arrival Information:",
-        `Arrival Service Needed: ${el.needsArrivalService.value === "yes" ? "Yes" : "No"}`,
-        ...(el.needsArrivalService.value === "yes"
-          ? [
-              `Arrival Date: ${formatDateForDisplay(el.arrivalDate.value) || ""}`,
-              `Flight Number: ${el.flightNumber.value.trim()}`,
-              `Arrival Time: ${formatTimeForDisplay(el.arrivalTime.value) || ""}`,
-              `Arrival Drop-off: ${arrivalDestination || ""}`,
-            ]
-          : []),
+        `Arrival Date: ${formatDateForDisplay(el.arrivalDate.value) || ""}`,
+        `Flight Number: ${el.flightNumber.value.trim()}`,
+        `Arrival Time: ${formatTimeForDisplay(el.arrivalTime.value) || ""}`,
+        `Arrival Drop-off: ${arrivalDestination || ""}`,
+        `Departure Date: ${formatDateForDisplay(el.departureDate.value) || ""}`,
       ].join("\n");
     }
 
     function updateKnownEventSelect() {
       const available = getAvailableKnownEvents();
-      el.knownEventSelect.innerHTML = '<option value="">Choose an event</option>' +
-        available.map((event) => `<option value="${event.id}">${event.event} — ${formatDateForDisplay(event.date)} — ${formatTimeForDisplay(event.eventTime)}</option>`).join("");
+      el.knownEventSelect.innerHTML =
+        '<option value="">Choose an event</option>' +
+        available
+          .map((event) => `<option value="${event.id}">${event.event} — ${formatDateForDisplay(event.date)} — ${formatTimeForDisplay(event.eventTime)}</option>`)
+          .join("");
       el.fixedEventsLeft.textContent = String(available.length);
     }
 
@@ -791,7 +849,7 @@
           <div class="grid-2">
             <div>
               <label>Pickup Time</label>
-              <select data-known-pickup="${event.id}">${renderTimeOptions(event.pickupTime || "")}</select>
+              <select data-known-pickup="${event.id}">${renderTimeOptions(event.pickupTime || "", "Select pickup time")}</select>
             </div>
             <div>
               <label>Notes</label>
@@ -832,11 +890,11 @@
             </div>
             <div>
               <label>Event Time</label>
-              <input type="time" data-custom-eventtime="${event.id}" value="${event.eventTime || ""}" />
+              <select data-custom-eventtime="${event.id}">${renderTimeOptions(event.eventTime || "", "Select event time")}</select>
             </div>
             <div>
               <label>Pickup Time</label>
-              <input type="time" data-custom-pickup="${event.id}" value="${event.pickupTime || ""}" />
+              <select data-custom-pickup="${event.id}">${renderTimeOptions(event.pickupTime || "", "Select pickup time")}</select>
             </div>
             <div style="grid-column: 1 / -1;">
               <label>Notes</label>
@@ -848,14 +906,6 @@
       });
     }
 
-    function escapeHtml(value) {
-      return value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;");
-    }
-
     function updateCounts() {
       el.addedItemsCount.textContent = String(state.knownEvents.length + state.customEvents.length);
     }
@@ -863,12 +913,6 @@
     function updateContactStatus() {
       el.contactPhoneLine.textContent = el.phone.value.trim() || "No phone entered";
       el.contactEmailLine.textContent = el.email.value.trim() || "No email entered";
-    }
-
-    function updateArrivalVisibility() {
-      const show = el.needsArrivalService.value === "yes";
-      el.arrivalFields.classList.toggle("hidden", !show);
-      updateArrivalStatus();
     }
 
     function updateArrivalOtherVisibility() {
@@ -879,24 +923,22 @@
     }
 
     function updateArrivalStatus() {
-      if (el.needsArrivalService.value !== "yes") {
-        el.arrivalStatusMain.textContent = "No airport pickup requested";
-        el.arrivalStatusDetail.textContent = "";
-        return;
-      }
-
       const destination = el.arrivalDestination.value === "Other"
         ? el.arrivalDestinationOther.value.trim()
         : el.arrivalDestination.value.trim();
 
-      el.arrivalStatusMain.textContent = "Airport pickup requested";
-      const parts = [
-        el.arrivalDate.value ? formatDateForDisplay(el.arrivalDate.value) : "No date",
-        el.arrivalTime.value ? formatTimeForDisplay(el.arrivalTime.value) : "",
-        el.flightNumber.value.trim(),
-        destination,
-      ].filter(Boolean);
-      el.arrivalStatusDetail.textContent = parts.join(" • ");
+      el.arrivalStatusDate.textContent = el.arrivalDate.value ? formatDateForDisplay(el.arrivalDate.value) : "No arrival date";
+      el.arrivalStatusDeparture.textContent = el.departureDate.value ? formatDateForDisplay(el.departureDate.value) : "No departure date";
+      el.arrivalStatusTime.textContent = el.arrivalTime.value ? formatTimeForDisplay(el.arrivalTime.value) : "No arrival time";
+      el.arrivalStatusFlight.textContent = el.flightNumber.value.trim() || "No flight number";
+      el.arrivalStatusDestination.textContent = destination || "No drop-off";
+    }
+
+    function updateReviewGate() {
+      el.submitRequest.disabled = state.isSubmitting || !state.showSummary || !state.hasReviewedSummary;
+      el.reviewNoteClosed.classList.toggle("hidden", state.showSummary);
+      el.reviewNoteOpen.classList.toggle("hidden", !state.showSummary || state.hasReviewedSummary);
+      el.reviewWrap.classList.toggle("show", state.showSummary);
     }
 
     function updateSummaryOutput() {
@@ -908,15 +950,16 @@
         el.summaryOutput.classList.remove("show");
         el.toggleSummary.textContent = "Show Summary";
       }
+      updateReviewGate();
     }
 
     function sync() {
+      populateStaticTimeSelects();
       updateKnownEventSelect();
       renderKnownEvents();
       renderCustomEvents();
       updateCounts();
       updateContactStatus();
-      updateArrivalVisibility();
       updateArrivalOtherVisibility();
       updateSummaryOutput();
     }
@@ -926,7 +969,7 @@
       if (!match) return;
       if (state.knownEvents.some((event) => event.id === eventId)) return;
       state.knownEvents.push({ ...match, pickupTime: "", notes: "" });
-      clearMessage();
+      invalidateReview();
       sync();
     }
 
@@ -934,12 +977,12 @@
       state.customEvents.push({
         id: String(Date.now() + Math.floor(Math.random() * 1000)),
         event: "",
-        date: "",
+        date: DEFAULT_DATE,
         eventTime: "",
         pickupTime: "",
         notes: "",
       });
-      clearMessage();
+      invalidateReview();
       sync();
     }
 
@@ -960,22 +1003,32 @@
         showMessage("error", "Add at least one event or custom event before submitting.");
         return false;
       }
-      if (el.needsArrivalService.value === "yes") {
-        if (!el.arrivalDate.value) {
-          showMessage("error", "Arrival date is required when airport pickup is requested.");
-          return false;
-        }
-        if (!el.arrivalTime.value) {
-          showMessage("error", "Arrival time is required when airport pickup is requested.");
-          return false;
-        }
-        const destination = el.arrivalDestination.value === "Other"
-          ? el.arrivalDestinationOther.value.trim()
-          : el.arrivalDestination.value.trim();
-        if (!destination) {
-          showMessage("error", "Arrival drop-off is required when airport pickup is requested.");
-          return false;
-        }
+      if (!el.arrivalDate.value) {
+        showMessage("error", "Arrival date is required.");
+        return false;
+      }
+      if (!el.flightNumber.value.trim()) {
+        showMessage("error", "Flight number is required.");
+        return false;
+      }
+      if (!el.arrivalTime.value) {
+        showMessage("error", "Arrival time is required.");
+        return false;
+      }
+      const destination = el.arrivalDestination.value === "Other"
+        ? el.arrivalDestinationOther.value.trim()
+        : el.arrivalDestination.value.trim();
+      if (!destination) {
+        showMessage("error", "Arrival drop-off is required.");
+        return false;
+      }
+      if (!el.departureDate.value) {
+        showMessage("error", "Departure date is required.");
+        return false;
+      }
+      if (!state.showSummary || !state.hasReviewedSummary) {
+        showMessage("error", "Open the summary and confirm that you reviewed it before submitting.");
+        return false;
       }
       return true;
     }
@@ -983,10 +1036,6 @@
     async function handleSubmit() {
       clearMessage();
       if (!validateBeforeSubmit()) return;
-
-      const summaryText = buildSummaryText();
-      const confirmed = window.confirm(`Please review before sending:\n\n${summaryText}`);
-      if (!confirmed) return;
 
       const arrivalDestination = el.arrivalDestination.value === "Other"
         ? el.arrivalDestinationOther.value.trim()
@@ -996,17 +1045,17 @@
       payload.append("client_name", el.name.value.trim());
       payload.append("phone", el.phone.value.trim());
       payload.append("email", el.email.value.trim());
-      payload.append("arrival_service_needed", el.needsArrivalService.value);
       payload.append("arrival_date", el.arrivalDate.value);
       payload.append("flight_number", el.flightNumber.value.trim());
       payload.append("arrival_time", el.arrivalTime.value);
       payload.append("arrival_destination", arrivalDestination);
-      payload.append("summary", summaryText);
+      payload.append("departure_date", el.departureDate.value);
+      payload.append("summary", buildSummaryText());
       payload.append("_subject", `Carnival Planning Request — ${el.name.value.trim()}`);
       payload.append("_replyto", el.email.value.trim());
 
       state.isSubmitting = true;
-      el.submitRequest.disabled = true;
+      updateReviewGate();
       el.submitRequest.textContent = "Sending...";
 
       try {
@@ -1024,8 +1073,8 @@
         showMessage("error", "Submission failed. Check the Formspree endpoint and active form settings.");
       } finally {
         state.isSubmitting = false;
-        el.submitRequest.disabled = false;
         el.submitRequest.textContent = "Submit Request";
+        updateReviewGate();
       }
     }
 
@@ -1033,8 +1082,8 @@
       el.name.value = "";
       el.phone.value = "";
       el.email.value = "";
-      el.needsArrivalService.value = "no";
-      el.arrivalDate.value = "";
+      el.arrivalDate.value = DEFAULT_DATE;
+      el.departureDate.value = DEFAULT_DEPARTURE_DATE;
       el.flightNumber.value = "";
       el.arrivalTime.value = "";
       el.arrivalDestination.value = "";
@@ -1042,6 +1091,7 @@
       state.knownEvents = [];
       state.customEvents = [];
       state.showSummary = false;
+      state.hasReviewedSummary = false;
       clearMessage();
       sync();
     }
@@ -1049,42 +1099,36 @@
     el.phone.addEventListener("input", () => {
       el.phone.value = formatPhoneNumber(el.phone.value);
       updateContactStatus();
+      invalidateReview();
       updateSummaryOutput();
-      clearMessage();
     });
 
-    [el.name, el.email, el.arrivalDate, el.arrivalTime, el.arrivalDestinationOther].forEach((node) => {
+    [el.name, el.email, el.arrivalDate, el.departureDate, el.arrivalDestinationOther].forEach((node) => {
       node.addEventListener("input", () => {
-        if (node === el.email || node === el.name) updateContactStatus();
-        if (node === el.arrivalDestinationOther || node === el.arrivalDate || node === el.arrivalTime) updateArrivalStatus();
+        updateContactStatus();
+        updateArrivalStatus();
+        invalidateReview();
         updateSummaryOutput();
-        clearMessage();
       });
     });
 
     el.flightNumber.addEventListener("input", () => {
       el.flightNumber.value = el.flightNumber.value.toUpperCase();
       updateArrivalStatus();
+      invalidateReview();
       updateSummaryOutput();
-      clearMessage();
     });
 
-    el.needsArrivalService.addEventListener("change", () => {
-      if (el.needsArrivalService.value === "no") {
-        el.arrivalDate.value = "";
-        el.flightNumber.value = "";
-        el.arrivalTime.value = "";
-        el.arrivalDestination.value = "";
-        el.arrivalDestinationOther.value = "";
-      }
-      sync();
-      clearMessage();
+    el.arrivalTime.addEventListener("change", () => {
+      updateArrivalStatus();
+      invalidateReview();
+      updateSummaryOutput();
     });
 
     el.arrivalDestination.addEventListener("change", () => {
       updateArrivalOtherVisibility();
+      invalidateReview();
       updateSummaryOutput();
-      clearMessage();
     });
 
     el.knownEventSelect.addEventListener("change", () => {
@@ -1103,8 +1147,8 @@
         const item = state.knownEvents.find((entry) => entry.id === target.dataset.knownNotes);
         if (item) item.notes = target.value;
       }
+      invalidateReview();
       updateSummaryOutput();
-      clearMessage();
     });
 
     el.knownEventsList.addEventListener("change", (event) => {
@@ -1113,16 +1157,16 @@
         const item = state.knownEvents.find((entry) => entry.id === target.dataset.knownPickup);
         if (item) item.pickupTime = target.value;
       }
+      invalidateReview();
       updateSummaryOutput();
-      clearMessage();
     });
 
     el.knownEventsList.addEventListener("click", (event) => {
       const button = event.target.closest("[data-remove-known]");
       if (!button) return;
       state.knownEvents = state.knownEvents.filter((entry) => entry.id !== button.dataset.removeKnown);
+      invalidateReview();
       sync();
-      clearMessage();
     });
 
     el.customEventsList.addEventListener("input", (event) => {
@@ -1130,8 +1174,6 @@
       const keyMap = [
         ["customEvent", "event"],
         ["customDate", "date"],
-        ["customEventtime", "eventTime"],
-        ["customPickup", "pickupTime"],
         ["customNotes", "notes"],
       ];
 
@@ -1142,25 +1184,52 @@
         if (item) item[field] = target.value;
       });
 
+      invalidateReview();
       if (target.dataset.customEvent) {
         renderCustomEvents();
-      } else {
-        updateSummaryOutput();
       }
-      clearMessage();
+      updateSummaryOutput();
+    });
+
+    el.customEventsList.addEventListener("change", (event) => {
+      const target = event.target;
+      const keyMap = [
+        ["customEventtime", "eventTime"],
+        ["customPickup", "pickupTime"],
+        ["customDate", "date"],
+      ];
+
+      keyMap.forEach(([datasetKey, field]) => {
+        const id = target.dataset[datasetKey];
+        if (!id) return;
+        const item = state.customEvents.find((entry) => entry.id === id);
+        if (item) item[field] = target.value;
+      });
+
+      invalidateReview();
+      sync();
     });
 
     el.customEventsList.addEventListener("click", (event) => {
       const button = event.target.closest("[data-remove-custom]");
       if (!button) return;
       state.customEvents = state.customEvents.filter((entry) => entry.id !== button.dataset.removeCustom);
+      invalidateReview();
       sync();
-      clearMessage();
     });
 
     el.toggleSummary.addEventListener("click", () => {
       state.showSummary = !state.showSummary;
+      state.hasReviewedSummary = false;
+      el.reviewCheckbox.checked = false;
+      clearMessage();
       updateSummaryOutput();
+    });
+
+    el.reviewCheckbox.addEventListener("change", () => {
+      state.hasReviewedSummary = el.reviewCheckbox.checked;
+      clearMessage();
+      updateReviewGate();
     });
 
     el.copySummary.addEventListener("click", async () => {
@@ -1175,7 +1244,7 @@
     el.submitRequest.addEventListener("click", handleSubmit);
     el.resetForm.addEventListener("click", resetForm);
 
-    sync();
+    resetForm();
   </script>
 </body>
 </html>
