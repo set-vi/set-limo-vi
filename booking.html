@@ -160,13 +160,6 @@
       display: none;
     }
 
-    #passenger-warning {
-      font-size: 0.8em;
-      color: #d4af37;
-      margin-top: 6px;
-      display: none;
-    }
-
     #price-box {
       margin-top: 20px;
       padding: 12px;
@@ -448,13 +441,11 @@
           id="passengers"
           name="passengers"
           min="1"
+          max="6"
           inputmode="numeric"
           required
           placeholder="Enter number of passengers"
         />
-        <div id="passenger-warning">
-          Groups over 6 passengers may require a second vehicle. We’ll follow up to confirm arrangements.
-        </div>
 
         <label for="roundtrip">Round Trip?</label>
         <select id="roundtrip" name="roundtrip">
@@ -497,7 +488,7 @@
 
         <div id="price-box"></div>
         <div class="helper-text">
-          Pricing is shown automatically based on your trip details. Larger groups and St. John trips are calculated accordingly.
+          Pricing is shown automatically based on your trip details. Booking is limited to up to 6 passengers.
         </div>
 
         <button type="submit" id="review-booking-btn">Review Booking</button>
@@ -531,7 +522,7 @@
 
         <div class="thank-you-actions">
           <button type="button" id="book-again-btn" class="thank-you-btn">Book Another Ride</button>
-          <a href="https://set-vi.github.io/set-limo-vi/flyer.html" class="thank-you-link">Back to Flyer</a>
+          <a href="https://set-vi.github.io/set-limo-vi/" class="thank-you-link">Back to Flyer</a>
         </div>
 
         <div style="margin-top: 40px;">
@@ -605,7 +596,6 @@
       const baggageInput = document.getElementById("baggage");
 
       const passengerInput = document.getElementById("passengers");
-      const passengerWarning = document.getElementById("passenger-warning");
       const roundTripSelect = document.getElementById("roundtrip");
       const returnFields = document.getElementById("return-fields");
       const returnDateField = document.getElementById("return-date");
@@ -707,24 +697,23 @@
         }
       }
 
-      function updatePassengerWarning() {
+      function enforcePassengerCap() {
         const count = parseInt(passengerInput.value, 10);
-        passengerWarning.style.display = !isNaN(count) && count >= 7 ? "block" : "none";
+
+        if (!isNaN(count) && count > 6) {
+          passengerInput.value = "6";
+          alert("Online booking is limited to 6 passengers.");
+        }
       }
 
       function getFareAmount() {
         const passengerCount = parseInt(passengerInput.value, 10);
 
-        if (isNaN(passengerCount) || passengerCount < 1) {
+        if (isNaN(passengerCount) || passengerCount < 1 || passengerCount > 6) {
           return null;
         }
 
-        const stJohnRoute = isStJohnRoute();
-        const baseFare = stJohnRoute ? 600 : 180;
-        const overageRate = stJohnRoute ? 70 : 30;
-        const additionalPassengers = Math.max(passengerCount - 6, 0);
-
-        return baseFare + (additionalPassengers * overageRate);
+        return isStJohnRoute() ? 600 : 180;
       }
 
       function updatePrice() {
@@ -732,7 +721,7 @@
         const pickupValue = getResolvedPickup();
         const dropoffValue = getResolvedDropoff();
 
-        if (!pickupValue || !dropoffValue || isNaN(passengerCount) || passengerCount < 1) {
+        if (!pickupValue || !dropoffValue || isNaN(passengerCount) || passengerCount < 1 || passengerCount > 6) {
           priceBox.style.display = "none";
           priceBox.textContent = "";
           return;
@@ -758,6 +747,24 @@
         if (isOtherSelection(dropoffSelect.value) && !dropoffCustomInput.value.trim()) {
           dropoffCustomInput.focus();
           alert("Enter a custom drop-off location.");
+          return false;
+        }
+
+        return true;
+      }
+
+      function validatePassengerCount() {
+        const count = parseInt(passengerInput.value, 10);
+
+        if (isNaN(count) || count < 1) {
+          passengerInput.focus();
+          alert("Enter a valid passenger count.");
+          return false;
+        }
+
+        if (count > 6) {
+          passengerInput.focus();
+          alert("Online booking is limited to 6 passengers.");
           return false;
         }
 
@@ -841,7 +848,6 @@
         updateCustomLocationFields();
         updateAirportFields();
         updateRoundTripFields();
-        updatePassengerWarning();
         updatePrice();
         document.body.style.overflow = "";
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -916,7 +922,7 @@
       roundTripSelect.addEventListener("change", updateRoundTripFields);
 
       passengerInput.addEventListener("input", function () {
-        updatePassengerWarning();
+        enforcePassengerCap();
         updatePrice();
       });
 
@@ -965,6 +971,10 @@
           return;
         }
 
+        if (!validatePassengerCount()) {
+          return;
+        }
+
         if (!validateReturnTrip()) {
           alert("Return trip date and time cannot be earlier than the outbound trip.");
           return;
@@ -978,7 +988,6 @@
       updateCustomLocationFields();
       updateAirportFields();
       updateRoundTripFields();
-      updatePassengerWarning();
       updatePrice();
     });
   </script>
