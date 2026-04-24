@@ -565,7 +565,7 @@
           <div class="policy-note">
             <p class="policy-copy">By confirming, you agree to the booking terms and privacy policy. Requests are subject to final confirmation.</p>
             <label class="policy-check" for="policyAgree">
-              <input id="policyAgree" type="checkbox" required />
+              <input id="policyAgree" type="checkbox" />
               <span>I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</span>
             </label>
           </div>
@@ -788,8 +788,7 @@
         successPanel.classList.remove('is-visible');
       }
 
-      function resetPolicyCheck() {
-        policyAgree.checked = false;
+       policyAgree.required = false;
       }
 
       function setSubmittingState(isSubmitting) {
@@ -834,7 +833,9 @@
         }
       }
 
-      function buildReview() {
+      function requirePolicyCheck() {
+        policyAgree.required = true;
+     Review() {
         const route = `${resolveLocation(pickup, pickupCustom)} → ${resolveLocation(dropoff, dropoffCustom)}`;
         const isRoundTrip = roundtrip.value === 'yes';
         let roundTripText = 'No';
@@ -855,7 +856,8 @@
         reviewFields.notes.textContent = getFieldValue(notesField.value, 'None provided.');
         successPanel.classList.remove('is-visible');
         reviewPanel.classList.add('is-visible');
-        reviewPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        requirePolicyCheck();
+        reviewPanel.scrollIart' });
       }
 
       pickup.addEventListener('change', () => {
@@ -918,12 +920,7 @@
       editBtn.addEventListener('click', () => {
         reviewPanel.classList.remove('is-visible');
         resetPolicyCheck();
-        reviewBtn.focus();
-      });
-
-      bookingForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        if (hasBlockedRoute().hasBlocked) return;
+        reviewBt) return;
         if (!bookingForm.reportValidity()) return;
 
         buildReview();
