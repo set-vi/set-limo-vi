@@ -164,6 +164,12 @@
       display: none;
     }
 
+    .airport-note {
+      font-size: 0.82rem;
+      color: #bfb6aa;
+      line-height: 1.35;
+    }
+
     .actions {
       display: grid;
       gap: 12px;
@@ -516,9 +522,15 @@
           </div>
         </div>
 
+        <div class="field-group is-hidden" id="flightNumberGroup">
+          <label for="flightNumber">Flight Number</label>
+          <input id="flightNumber" type="text" placeholder="Enter flight number" />
+          <span class="airport-note">Shown when an airport is selected.</span>
+        </div>
+
         <div class="field-group">
           <label for="notes">Details</label>
-          <textarea id="notes" placeholder="Flight number, address, or special note."></textarea>
+          <textarea id="notes" placeholder="Special note"></textarea>
         </div>
 
         <div class="actions">
@@ -536,6 +548,7 @@
             <div class="review-item"><span class="review-label">Date</span><span class="review-text" id="reviewDate">—</span></div>
             <div class="review-item"><span class="review-label">Pickup Time</span><span class="review-text" id="reviewTime">—</span></div>
             <div class="review-item full"><span class="review-label">Route</span><span class="review-text" id="reviewRoute">—</span></div>
+            <div class="review-item"><span class="review-label">Flight Number</span><span class="review-text" id="reviewFlightNumber">—</span></div>
             <div class="review-item"><span class="review-label">Passengers</span><span class="review-text" id="reviewPassengers">—</span></div>
             <div class="review-item"><span class="review-label">Round Trip</span><span class="review-text" id="reviewRoundTrip">No</span></div>
             <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="reviewNotes">None provided.</span></div>
@@ -565,6 +578,7 @@
             <div class="review-item"><span class="review-label">Date</span><span class="review-text" id="successDate">—</span></div>
             <div class="review-item"><span class="review-label">Pickup Time</span><span class="review-text" id="successTime">—</span></div>
             <div class="review-item full"><span class="review-label">Route</span><span class="review-text" id="successRoute">—</span></div>
+            <div class="review-item"><span class="review-label">Flight Number</span><span class="review-text" id="successFlightNumber">—</span></div>
             <div class="review-item"><span class="review-label">Passengers</span><span class="review-text" id="successPassengers">—</span></div>
             <div class="review-item"><span class="review-label">Round Trip</span><span class="review-text" id="successRoundTrip">No</span></div>
             <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="successNotes">None provided.</span></div>
@@ -604,6 +618,7 @@
       const successDate = document.getElementById('successDate');
       const successTime = document.getElementById('successTime');
       const successRoute = document.getElementById('successRoute');
+      const successFlightNumber = document.getElementById('successFlightNumber');
       const successPassengers = document.getElementById('successPassengers');
       const successRoundTrip = document.getElementById('successRoundTrip');
       const successNotes = document.getElementById('successNotes');
@@ -612,6 +627,8 @@
       const returnDateField = document.getElementById('returnDate');
       const returnTimeField = document.getElementById('returnTime');
       const notesField = document.getElementById('notes');
+      const flightNumberField = document.getElementById('flightNumber');
+      const flightNumberGroup = document.getElementById('flightNumberGroup');
       const nameField = document.getElementById('name');
       const phoneField = document.getElementById('phone');
       const emailField = document.getElementById('email');
@@ -628,7 +645,8 @@
         route: document.getElementById('reviewRoute'),
         passengers: document.getElementById('reviewPassengers'),
         roundTrip: document.getElementById('reviewRoundTrip'),
-        notes: document.getElementById('reviewNotes')
+        notes: document.getElementById('reviewNotes'),
+        flightNumber: document.getElementById('reviewFlightNumber')
       };
 
       function populateTimeSelect(selectEl, placeholderText) {
@@ -663,6 +681,24 @@
         groupEl.classList.toggle('is-hidden', !isCustom);
         inputEl.required = isCustom;
         if (!isCustom) inputEl.value = '';
+      }
+
+      function isAirportLocation(selectEl, customInputEl) {
+        const resolved = resolveLocation(selectEl, customInputEl).toLowerCase();
+        return resolved.includes('airport');
+      }
+
+      function updateAirportField() {
+        const showAirportField = isAirportLocation(pickup, pickupCustom)
+          || isAirportLocation(dropoff, dropoffCustom)
+          || (roundtrip.value === 'yes' && isAirportLocation(returnPickup, returnPickupCustom))
+          || (roundtrip.value === 'yes' && isAirportLocation(returnDropoff, returnDropoffCustom));
+
+        flightNumberGroup.classList.toggle('is-hidden', !showAirportField);
+        flightNumberField.required = showAirportField;
+        if (!showAirportField) {
+          flightNumberField.value = '';
+        }
       }
 
       function syncDateLimits() {
@@ -704,6 +740,7 @@
         });
         toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
         toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
+        updateAirportField();
         validateRoute();
       }
 
@@ -759,6 +796,7 @@
         formData.set('return_time', roundtrip.value === 'yes' ? getFieldValue(returnTimeField.value, '') : '');
         formData.set('return_pickup', roundtrip.value === 'yes' ? resolveLocation(returnPickup, returnPickupCustom) : '');
         formData.set('return_dropoff', roundtrip.value === 'yes' ? resolveLocation(returnDropoff, returnDropoffCustom) : '');
+        formData.set('flight_number', getFieldValue(flightNumberField.value, ''));
         formData.set('details', getFieldValue(notesField.value, ''));
         formData.set('policy_agreed', policyAgree.checked ? 'Yes' : 'No');
 
@@ -790,6 +828,7 @@
         reviewFields.date.textContent = formatDateValue(dateField.value);
         reviewFields.time.textContent = getFieldValue(timeField.value);
         reviewFields.route.textContent = route;
+        reviewFields.flightNumber.textContent = getFieldValue(flightNumberField.value);
         reviewFields.passengers.textContent = getFieldValue(passengers.value);
         reviewFields.roundTrip.textContent = roundTripText;
         reviewFields.notes.textContent = getFieldValue(notesField.value, 'None provided.');
@@ -801,24 +840,28 @@
       pickup.addEventListener('change', () => {
         hidePanels();
         toggleCustomGroup(pickup, pickupCustomGroup, pickupCustom);
+        updateAirportField();
         validateRoute();
       });
 
       dropoff.addEventListener('change', () => {
         hidePanels();
         toggleCustomGroup(dropoff, dropoffCustomGroup, dropoffCustom);
+        updateAirportField();
         validateRoute();
       });
 
       returnPickup.addEventListener('change', () => {
         hidePanels();
         toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
+        updateAirportField();
         validateRoute();
       });
 
       returnDropoff.addEventListener('change', () => {
         hidePanels();
         toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
+        updateAirportField();
         validateRoute();
       });
 
@@ -827,7 +870,7 @@
         updateRoundTrip();
       });
 
-      [nameField, emailField, dateField, timeField, notesField, passengers, pickupCustom, dropoffCustom, returnDateField, returnTimeField, returnPickupCustom, returnDropoffCustom].forEach((el) => {
+      [nameField, emailField, dateField, timeField, notesField, flightNumberField, passengers, pickupCustom, dropoffCustom, returnDateField, returnTimeField, returnPickupCustom, returnDropoffCustom].forEach((el) => {
         if (!el) return;
         const eventName = el.tagName === 'SELECT' ? 'change' : 'input';
         el.addEventListener(eventName, () => {
@@ -873,6 +916,7 @@
           successDate.textContent = reviewFields.date.textContent;
           successTime.textContent = reviewFields.time.textContent;
           successRoute.textContent = reviewFields.route.textContent;
+          successFlightNumber.textContent = reviewFields.flightNumber.textContent;
           successPassengers.textContent = reviewFields.passengers.textContent;
           successRoundTrip.textContent = reviewFields.roundTrip.textContent;
           successNotes.textContent = reviewFields.notes.textContent;
@@ -891,6 +935,7 @@
       populateTimeSelect(returnTimeField, 'Select return time');
       syncDateLimits();
       updateRoundTrip();
+      updateAirportField();
       validateRoute();
     });
   </script>
