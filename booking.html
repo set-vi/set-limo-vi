@@ -788,7 +788,9 @@
         successPanel.classList.remove('is-visible');
       }
 
-       policyAgree.required = false;
+      function resetPolicyCheck() {
+        policyAgree.checked = false;
+        policyAgree.required = false;
       }
 
       function setSubmittingState(isSubmitting) {
@@ -835,7 +837,9 @@
 
       function requirePolicyCheck() {
         policyAgree.required = true;
-     Review() {
+      }
+
+      function buildReview() {
         const route = `${resolveLocation(pickup, pickupCustom)} → ${resolveLocation(dropoff, dropoffCustom)}`;
         const isRoundTrip = roundtrip.value === 'yes';
         let roundTripText = 'No';
@@ -857,7 +861,7 @@
         successPanel.classList.remove('is-visible');
         reviewPanel.classList.add('is-visible');
         requirePolicyCheck();
-        reviewPanel.scrollIart' });
+        reviewPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
       pickup.addEventListener('change', () => {
@@ -920,7 +924,12 @@
       editBtn.addEventListener('click', () => {
         reviewPanel.classList.remove('is-visible');
         resetPolicyCheck();
-        reviewBt) return;
+        reviewBtn.focus();
+      });
+
+      bookingForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (hasBlockedRoute().hasBlocked) return;
         if (!bookingForm.reportValidity()) return;
 
         buildReview();
