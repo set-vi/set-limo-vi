@@ -734,10 +734,23 @@
       function updateRoundTrip() {
         const showReturn = roundtrip.value === 'yes';
         returnFields.classList.toggle('is-hidden', !showReturn);
-        Array.from(returnFields.querySelectorAll('input, select')).forEach((field) => {
-          field.required = showReturn;
-          if (!showReturn) field.value = '';
-        });
+
+        returnDateField.required = showReturn;
+        returnTimeField.required = showReturn;
+        returnPickup.required = showReturn;
+        returnDropoff.required = showReturn;
+
+        if (!showReturn) {
+          returnDateField.value = '';
+          returnTimeField.value = '';
+          returnPickup.value = '';
+          returnDropoff.value = '';
+          returnPickupCustom.value = '';
+          returnDropoffCustom.value = '';
+          returnPickupCustom.required = false;
+          returnDropoffCustom.required = false;
+        }
+
         toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
         toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
         updateAirportField();
@@ -887,6 +900,7 @@
       });
 
       reviewBtn.addEventListener('click', () => {
+        validateRoute();
         if (hasBlockedRoute().hasBlocked) return;
         if (!bookingForm.reportValidity()) return;
         resetPolicyCheck();
