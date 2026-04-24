@@ -3,992 +3,895 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Elevate Your Journey | Superb Executive Transportation</title>
+  <title>Superb Executive Transportation Booking Form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #050505;
+      --panel: #111111;
+      --panel-2: #171717;
+      --gold: #d2ab52;
+      --gold-soft: rgba(210, 171, 82, 0.18);
+      --white: #e8e2d8;
+      --muted: #cfcfcf;
+      --border: rgba(210, 171, 82, 0.34);
+      --danger: #ff9d9d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding: 28px 16px;
       background: #000;
-      color: #fff;
-      padding: 40px;
+      color: var(--white);
+      font-family: 'Inter', Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      min-height: 100vh;
-      box-sizing: border-box;
     }
 
-    .container {
-      background: #111;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    .shell {
       width: 100%;
-      max-width: 520px;
-      box-sizing: border-box;
+      max-width: 620px;
+      background: linear-gradient(180deg, #0b0b0b 0%, #111111 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
     }
 
-    input,
-    textarea,
-    select,
-    button {
-      font-family: inherit;
+    .content {
+      padding: 26px 22px 24px;
+    }
+
+    .intro-panel {
+      padding: 0 0 18px;
+      margin-bottom: 24px;
+      border: 0;
+      border-bottom: 1px solid rgba(210, 171, 82, 0.28);
+      background: transparent;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.72rem;
+      color: rgba(210, 171, 82, 0.82);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      line-height: 1.08;
+      color: var(--white);
+    }
+
+    .subline {
+      margin: 10px auto 0;
+      max-width: 440px;
+      text-align: center;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: #bfb6aa;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .field-group {
+      display: grid;
+      grid-template-rows: auto auto minmax(18px, auto);
+      gap: 6px;
+      align-content: start;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: start;
     }
 
     label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--gold);
+      line-height: 1.2;
     }
 
     input,
-    textarea,
-    select {
-      box-sizing: border-box;
+    select,
+    textarea {
       width: 100%;
-      padding: 10px;
-      font-size: 1em;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      background: #222;
-      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: var(--panel-2);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 14px;
+      min-height: 52px;
+      font-size: 0.98rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #bfb6aa;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: #d4af37;
-      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-soft);
+      background: #1c1c1c;
     }
 
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background-color: #000;
-      color: #fff;
-      font-weight: bold;
-      border: 2px solid #d4af37;
-      border-radius: 5px;
-      cursor: pointer;
+    textarea {
+      min-height: 110px;
+      resize: vertical;
     }
 
-    button:hover {
-      background-color: #d4af37;
-      color: #000;
+    .field-group .inline-note,
+    .field-group .error-note {
+      min-height: 18px;
     }
 
-    button:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
+    .error-note {
+      display: none;
+      color: var(--danger);
+      font-size: 0.84rem;
+      margin: 4px 0 0;
+      line-height: 1.35;
     }
 
-    .hero-image {
-      position: relative;
-      width: 100%;
-      max-height: 280px;
-      overflow: hidden;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    .hero-image img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      display: block;
-    }
-
-    .hero-heading {
-      text-align: center;
-      font-size: 1.6em;
-      font-weight: bold;
-      color: #fff;
-      margin-top: -10px;
-      margin-bottom: 25px;
-      text-shadow: 0 0 3px #d4af37, 0 0 6px #d4af37;
-    }
-
-    .contact-info {
-      margin-top: 30px;
-      text-align: center;
-      font-size: 0.95em;
-      color: #ccc;
-    }
-
-    .contact-line {
-      margin: 10px 0;
-    }
-
-    .contact-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-
-    .contact-link:hover .contact-text {
-      text-decoration: underline;
-    }
-
-    .contact-icon {
-      width: 18px;
-      height: 18px;
-      color: #d4af37;
-      flex-shrink: 0;
-    }
-
-    .contact-text {
-      color: #fff;
-    }
-
-    .helper-text {
-      margin-top: 6px;
-      font-size: 0.82em;
-      color: #bfbfbf;
-      line-height: 1.4;
-    }
-
-    #pickup-custom-wrap,
-    #dropoff-custom-wrap,
-    #airport-extra,
-    #return-fields,
-    #thank-you-screen,
-    #price-box,
-    #review-modal {
+    .is-hidden {
       display: none;
     }
 
-    #price-box {
-      margin-top: 20px;
-      padding: 12px;
-      border: 1px solid #d4af37;
-      border-radius: 6px;
-      background: #1a1a1a;
-      color: #d4af37;
-      font-weight: bold;
-      text-align: center;
-      line-height: 1.4;
+    .actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 8px;
     }
 
-    .thank-you-box {
-      text-align: center;
-      padding: 10px 0;
+    .review-panel,
+    .success-panel {
+      display: none;
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: rgba(210, 171, 82, 0.06);
+      gap: 14px;
     }
 
-    .thank-you-box h1 {
-      color: #d4af37;
-      margin-bottom: 20px;
+    .review-panel.is-visible,
+    .success-panel.is-visible {
+      display: grid;
     }
 
-    .thank-you-box p {
-      margin-top: 10px;
-      line-height: 1.5;
+    .review-title,
+    .success-title {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--white);
     }
 
-    .thank-you-actions {
-      margin-top: 30px;
-    }
-
-    .thank-you-btn {
-      width: 100%;
-      padding: 12px;
-      background-color: #000;
-      color: #fff;
-      font-weight: bold;
-      border: 2px solid #d4af37;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 0;
-    }
-
-    .thank-you-btn:hover {
-      background-color: #d4af37;
-      color: #000;
-    }
-
-    .thank-you-link {
-      display: inline-block;
-      margin-top: 14px;
-      color: #d4af37;
-      text-decoration: none;
-      font-size: 0.95em;
-    }
-
-    .thank-you-link:hover {
-      text-decoration: underline;
-    }
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.82);
-      z-index: 999;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .modal-box {
-      width: 100%;
-      max-width: 560px;
-      max-height: 90vh;
-      overflow-y: auto;
-      background: #111;
-      border: 1px solid rgba(212, 175, 55, 0.6);
-      border-radius: 12px;
-      box-shadow: 0 0 18px rgba(212, 175, 55, 0.3);
-      padding: 24px;
-      box-sizing: border-box;
-    }
-
-    .modal-title {
-      margin: 0 0 10px;
-      color: #d4af37;
-      text-align: center;
-      font-size: 1.45em;
-    }
-
-    .modal-subtitle {
-      margin: 0 0 20px;
-      text-align: center;
-      color: #ccc;
+    .review-subline,
+    .success-text {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--muted);
       line-height: 1.45;
     }
 
     .review-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 16px;
     }
 
-    .review-row {
-      border: 1px solid rgba(212, 175, 55, 0.25);
-      border-radius: 8px;
-      padding: 10px 12px;
-      background: #171717;
+    .review-item {
+      display: grid;
+      gap: 4px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .review-item.full {
+      grid-column: 1 / -1;
     }
 
     .review-label {
-      display: block;
-      font-size: 0.82em;
-      color: #d4af37;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--gold);
+      line-height: 1.2;
     }
 
-    .review-value {
-      color: #fff;
-      line-height: 1.4;
+    .review-text {
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: var(--white);
       word-break: break-word;
     }
 
-    .modal-actions {
-      margin-top: 20px;
+    .review-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
-    .secondary-btn {
+    .policy-note {
+      display: grid;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .policy-copy {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .policy-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: var(--white);
+    }
+
+    .policy-check input {
+      width: 18px;
+      min-width: 18px;
+      height: 18px;
+      min-height: 18px;
+      margin-top: 2px;
+      accent-color: var(--gold);
+      box-shadow: none;
+    }
+
+    .policy-check a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .policy-check a:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      border-radius: 14px;
+      padding: 15px 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #111;
+    }
+
+    .btn-secondary {
       background: transparent;
-      color: #fff;
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
-    .secondary-btn:hover {
-      background-color: #2b2b2b;
-      color: #fff;
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 20px;
+    @media (max-width: 560px) {
+      .content {
+        padding: 22px 16px 20px;
       }
 
-      .container {
-        padding: 20px;
-      }
-
-      .modal-box {
-        padding: 18px;
+      .field-row,
+      .review-grid,
+      .review-actions {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div id="booking-screen">
-      <div class="hero-image">
-        <img src="./png/luxury-int.png" alt="Luxury Interior" />
+  <section class="shell">
+    <div class="content">
+      <div class="intro-panel">
+        <p class="eyebrow">Superb Executive Transportation</p>
+        <h1>Reserve Your Ride</h1>
+        <p class="subline">Enter your trip details below to request your ride.</p>
       </div>
 
-      <h1 class="hero-heading">Elevate Your Journey</h1>
-
-      <form id="booking-form">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required autocomplete="name" />
-
-        <label for="email">Email</label>
-        <input type="email" id="email" name="_replyto" required autocomplete="email" />
-
-        <label for="phone">Phone</label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          required
-          placeholder="000-000-0000"
-          autocomplete="tel"
-          inputmode="numeric"
-          maxlength="12"
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-          title="Enter phone number as 000-000-0000"
-        />
-
-        <label for="date">Date</label>
-        <input type="date" id="date" name="date" required />
-
-        <label for="time">Time of Service</label>
-        <select id="time" name="time" required>
-          <option value="">-- Select Time --</option>
-          <option value="05:00">5:00 AM</option>
-          <option value="06:00">6:00 AM</option>
-          <option value="07:00">7:00 AM</option>
-          <option value="08:00">8:00 AM</option>
-          <option value="09:00">9:00 AM</option>
-          <option value="10:00">10:00 AM</option>
-          <option value="11:00">11:00 AM</option>
-          <option value="12:00">12:00 PM</option>
-          <option value="13:00">1:00 PM</option>
-          <option value="14:00">2:00 PM</option>
-          <option value="15:00">3:00 PM</option>
-          <option value="16:00">4:00 PM</option>
-          <option value="17:00">5:00 PM</option>
-          <option value="18:00">6:00 PM</option>
-          <option value="19:00">7:00 PM</option>
-          <option value="20:00">8:00 PM</option>
-          <option value="21:00">9:00 PM</option>
-          <option value="22:00">10:00 PM</option>
-          <option value="23:00">11:00 PM</option>
-          <option value="00:00">12:00 AM (Midnight)</option>
-        </select>
-
-        <label for="pickup">Pick-up Location</label>
-        <select id="pickup" name="pickup" required>
-          <option value="">-- Select Pick-up Location --</option>
-          <option value="Bluebeard's Castle">Bluebeard's Castle</option>
-          <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
-          <option value="Charlotte Amalie">Charlotte Amalie</option>
-          <option value="Cyril E. King Airport">Cyril E. King Airport</option>
-          <option value="Emerald Beach Resort">Emerald Beach Resort</option>
-          <option value="Havensight">Havensight</option>
-          <option value="Magens Bay">Magens Bay</option>
-          <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
-          <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
-          <option value="Point Pleasant Resort">Point Pleasant Resort</option>
-          <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
-          <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
-          <option value="St. John">St. John</option>
-          <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
-          <option value="Tutu Park Mall">Tutu Park Mall</option>
-          <option value="Yacht Haven Grande">Yacht Haven Grande</option>
-          <option value="__other__">Other / Custom Location</option>
-        </select>
-
-        <div id="pickup-custom-wrap">
-          <label for="pickup-custom">Custom Pick-up Location</label>
-          <input type="text" id="pickup-custom" name="pickup-custom" placeholder="Enter custom pick-up location" />
+      <form class="form-grid" id="bookingForm">
+        <div class="field-row">
+          <div class="field-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="Full name" required />
+          </div>
+          <div class="field-group">
+            <label for="phone">Phone</label>
+            <input id="phone" type="tel" placeholder="Enter phone number" inputmode="numeric" autocomplete="tel" maxlength="10" required />
+          </div>
         </div>
 
-        <div id="airport-extra">
-          <label for="airline">Airline / Flight Info</label>
-          <input type="text" id="airline" name="airline" placeholder="e.g. American 1234" />
-
-          <label for="baggage">Baggage Info</label>
-          <textarea id="baggage" name="baggage" rows="2" placeholder="e.g. 2 checked bags, 1 carry-on"></textarea>
+        <div class="field-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="name@example.com" required />
         </div>
 
-        <label for="dropoff">Drop-off Location</label>
-        <select id="dropoff" name="dropoff" required>
-          <option value="">-- Select Drop-off Location --</option>
-          <option value="Bluebeard's Castle">Bluebeard's Castle</option>
-          <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
-          <option value="Charlotte Amalie">Charlotte Amalie</option>
-          <option value="Cyril E. King Airport">Cyril E. King Airport</option>
-          <option value="Emerald Beach Resort">Emerald Beach Resort</option>
-          <option value="Havensight">Havensight</option>
-          <option value="Magens Bay">Magens Bay</option>
-          <option value="Marriott Frenchman's Reef">Marriott Frenchman's Reef</option>
-          <option value="Margaritaville Vacation Club">Margaritaville Vacation Club</option>
-          <option value="Point Pleasant Resort">Point Pleasant Resort</option>
-          <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
-          <option value="Secret Harbour Beach Resort">Secret Harbour Beach Resort</option>
-          <option value="St. John">St. John</option>
-          <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
-          <option value="Tutu Park Mall">Tutu Park Mall</option>
-          <option value="Yacht Haven Grande">Yacht Haven Grande</option>
-          <option value="__other__">Other / Custom Location</option>
-        </select>
-
-        <div id="dropoff-custom-wrap">
-          <label for="dropoff-custom">Custom Drop-off Location</label>
-          <input type="text" id="dropoff-custom" name="dropoff-custom" placeholder="Enter custom drop-off location" />
+        <div class="field-row">
+          <div class="field-group">
+            <label for="date">Date</label>
+            <input id="date" type="date" required />
+          </div>
+          <div class="field-group">
+            <label for="time">Time</label>
+            <select id="time" required>
+              <option value="">Select time</option>
+            </select>
+          </div>
         </div>
 
-        <label for="passengers"># of Passengers</label>
-        <input
-          type="number"
-          id="passengers"
-          name="passengers"
-          min="1"
-          max="6"
-          inputmode="numeric"
-          required
-          placeholder="Enter number of passengers"
-        />
+        <div class="field-row">
+          <div class="field-group">
+            <label for="pickup">Pick-up</label>
+            <select id="pickup" required>
+              <option value="">Select pick-up location</option>
+              <option value="Cyril E. King Airport">Cyril E. King Airport</option>
+              <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+              <option value="Charlotte Amalie">Charlotte Amalie</option>
+              <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
+              <option value="The Westin St. Thomas Beach Resort &amp; Spa">The Westin St. Thomas Beach Resort &amp; Spa</option>
+              <option value="Buoy Haus Beach Resort St. Thomas, Autograph Collection">Buoy Haus Beach Resort St. Thomas, Autograph Collection</option>
+              <option value="Marriott's Frenchman's Cove">Marriott's Frenchman's Cove</option>
+              <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
+              <option value="Emerald Beach Resort">Emerald Beach Resort</option>
+              <option value="Lindbergh Bay Hotel and Villas">Lindbergh Bay Hotel and Villas</option>
+              <option value="Bluebeard's Castle">Bluebeard's Castle</option>
+              <option value="Windward Passage Hotel">Windward Passage Hotel</option>
+              <option value="Bunker Hill Hotel">Bunker Hill Hotel</option>
+              <option value="Mafolie Hotel &amp; Restaurant">Mafolie Hotel &amp; Restaurant</option>
+              <option value="Hotel 1829">Hotel 1829</option>
+              <option value="The Pink Palm Hotel">The Pink Palm Hotel</option>
+              <option value="Other / Custom Location">Other / Custom Location</option>
+            </select>
+          </div>
 
-        <label for="roundtrip">Round Trip?</label>
-        <select id="roundtrip" name="roundtrip">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-
-        <div id="return-fields">
-          <label for="return-date">Return Date</label>
-          <input type="date" id="return-date" name="return-date" />
-
-          <label for="return-time">Return Time</label>
-          <select id="return-time" name="return-time">
-            <option value="">-- Select Time --</option>
-            <option value="05:00">5:00 AM</option>
-            <option value="06:00">6:00 AM</option>
-            <option value="07:00">7:00 AM</option>
-            <option value="08:00">8:00 AM</option>
-            <option value="09:00">9:00 AM</option>
-            <option value="10:00">10:00 AM</option>
-            <option value="11:00">11:00 AM</option>
-            <option value="12:00">12:00 PM</option>
-            <option value="13:00">1:00 PM</option>
-            <option value="14:00">2:00 PM</option>
-            <option value="15:00">3:00 PM</option>
-            <option value="16:00">4:00 PM</option>
-            <option value="17:00">5:00 PM</option>
-            <option value="18:00">6:00 PM</option>
-            <option value="19:00">7:00 PM</option>
-            <option value="20:00">8:00 PM</option>
-            <option value="21:00">9:00 PM</option>
-            <option value="22:00">10:00 PM</option>
-            <option value="23:00">11:00 PM</option>
-            <option value="00:00">12:00 AM (Midnight)</option>
-          </select>
+          <div class="field-group">
+            <label for="dropoff">Drop-off</label>
+            <select id="dropoff" required>
+              <option value="">Select drop-off location</option>
+              <option value="Cyril E. King Airport">Cyril E. King Airport</option>
+              <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+              <option value="Charlotte Amalie">Charlotte Amalie</option>
+              <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
+              <option value="The Westin St. Thomas Beach Resort &amp; Spa">The Westin St. Thomas Beach Resort &amp; Spa</option>
+              <option value="Buoy Haus Beach Resort St. Thomas, Autograph Collection">Buoy Haus Beach Resort St. Thomas, Autograph Collection</option>
+              <option value="Marriott's Frenchman's Cove">Marriott's Frenchman's Cove</option>
+              <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
+              <option value="Emerald Beach Resort">Emerald Beach Resort</option>
+              <option value="Lindbergh Bay Hotel and Villas">Lindbergh Bay Hotel and Villas</option>
+              <option value="Bluebeard's Castle">Bluebeard's Castle</option>
+              <option value="Windward Passage Hotel">Windward Passage Hotel</option>
+              <option value="Bunker Hill Hotel">Bunker Hill Hotel</option>
+              <option value="Mafolie Hotel &amp; Restaurant">Mafolie Hotel &amp; Restaurant</option>
+              <option value="Hotel 1829">Hotel 1829</option>
+              <option value="The Pink Palm Hotel">The Pink Palm Hotel</option>
+              <option value="Other / Custom Location">Other / Custom Location</option>
+            </select>
+            <p class="error-note" id="routeError">Pick-up and drop-off cannot be the same location.</p>
+          </div>
         </div>
 
-        <label for="notes">Additional Details or Special Instructions</label>
-        <textarea id="notes" name="notes" rows="3"></textarea>
+        <div class="field-row">
+          <div class="field-group is-hidden" id="pickupCustomGroup">
+            <label for="pickupCustom">Custom Pick-up</label>
+            <input id="pickupCustom" type="text" placeholder="Enter custom pick-up location" />
+          </div>
 
-        <div id="price-box"></div>
-        <div class="helper-text">
-          Pricing is shown automatically based on your trip details. Booking is limited to up to 6 passengers.
+          <div class="field-group is-hidden" id="dropoffCustomGroup">
+            <label for="dropoffCustom">Custom Drop-off</label>
+            <input id="dropoffCustom" type="text" placeholder="Enter custom drop-off location" />
+          </div>
         </div>
 
-        <button type="submit" id="review-booking-btn">Review Booking</button>
+        <div class="field-row">
+          <div class="field-group">
+            <label for="passengers">Passengers</label>
+            <input id="passengers" type="number" min="1" max="6" placeholder="1 to 6" required />
+          </div>
+          <div class="field-group">
+            <label for="roundtrip">Round Trip</label>
+            <select id="roundtrip" required>
+              <option value="">Select</option>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="is-hidden" id="returnFields">
+          <div class="field-row">
+            <div class="field-group">
+              <label for="returnDate">Return Date</label>
+              <input id="returnDate" type="date" />
+            </div>
+            <div class="field-group">
+              <label for="returnTime">Return Time</label>
+              <select id="returnTime">
+                <option value="">Select return time</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label for="returnPickup">Return Pick-up</label>
+              <select id="returnPickup">
+                <option value="">Select return pick-up location</option>
+                <option value="Cyril E. King Airport">Cyril E. King Airport</option>
+                <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+                <option value="Charlotte Amalie">Charlotte Amalie</option>
+                <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
+                <option value="The Westin St. Thomas Beach Resort &amp; Spa">The Westin St. Thomas Beach Resort &amp; Spa</option>
+                <option value="Buoy Haus Beach Resort St. Thomas, Autograph Collection">Buoy Haus Beach Resort St. Thomas, Autograph Collection</option>
+                <option value="Marriott's Frenchman's Cove">Marriott's Frenchman's Cove</option>
+                <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
+                <option value="Emerald Beach Resort">Emerald Beach Resort</option>
+                <option value="Lindbergh Bay Hotel and Villas">Lindbergh Bay Hotel and Villas</option>
+                <option value="Bluebeard's Castle">Bluebeard's Castle</option>
+                <option value="Windward Passage Hotel">Windward Passage Hotel</option>
+                <option value="Bunker Hill Hotel">Bunker Hill Hotel</option>
+                <option value="Mafolie Hotel &amp; Restaurant">Mafolie Hotel &amp; Restaurant</option>
+                <option value="Hotel 1829">Hotel 1829</option>
+                <option value="The Pink Palm Hotel">The Pink Palm Hotel</option>
+                <option value="Other / Custom Location">Other / Custom Location</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="returnDropoff">Return Drop-off</label>
+              <select id="returnDropoff">
+                <option value="">Select return drop-off location</option>
+                <option value="Cyril E. King Airport">Cyril E. King Airport</option>
+                <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+                <option value="Charlotte Amalie">Charlotte Amalie</option>
+                <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
+                <option value="The Westin St. Thomas Beach Resort &amp; Spa">The Westin St. Thomas Beach Resort &amp; Spa</option>
+                <option value="Buoy Haus Beach Resort St. Thomas, Autograph Collection">Buoy Haus Beach Resort St. Thomas, Autograph Collection</option>
+                <option value="Marriott's Frenchman's Cove">Marriott's Frenchman's Cove</option>
+                <option value="Bolongo Bay Beach Resort">Bolongo Bay Beach Resort</option>
+                <option value="Emerald Beach Resort">Emerald Beach Resort</option>
+                <option value="Lindbergh Bay Hotel and Villas">Lindbergh Bay Hotel and Villas</option>
+                <option value="Bluebeard's Castle">Bluebeard's Castle</option>
+                <option value="Windward Passage Hotel">Windward Passage Hotel</option>
+                <option value="Bunker Hill Hotel">Bunker Hill Hotel</option>
+                <option value="Mafolie Hotel &amp; Restaurant">Mafolie Hotel &amp; Restaurant</option>
+                <option value="Hotel 1829">Hotel 1829</option>
+                <option value="The Pink Palm Hotel">The Pink Palm Hotel</option>
+                <option value="Other / Custom Location">Other / Custom Location</option>
+              </select>
+              <p class="error-note" id="returnRouteError">Return pick-up and return drop-off cannot be the same location.</p>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group is-hidden" id="returnPickupCustomGroup">
+              <label for="returnPickupCustom">Custom Return Pick-up</label>
+              <input id="returnPickupCustom" type="text" placeholder="Enter custom return pick-up location" />
+            </div>
+
+            <div class="field-group is-hidden" id="returnDropoffCustomGroup">
+              <label for="returnDropoffCustom">Custom Return Drop-off</label>
+              <input id="returnDropoffCustom" type="text" placeholder="Enter custom return drop-off location" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="notes">Details</label>
+          <textarea id="notes" placeholder="Flight number, address, or special note."></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" type="button" id="reviewBtn">Review Request</button>
+        </div>
+
+        <section class="review-panel" id="reviewPanel" aria-live="polite">
+          <h2 class="review-title">Review Your Request</h2>
+          <p class="review-subline">Check the details below before you submit your booking request.</p>
+
+          <div class="review-grid">
+            <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="reviewName">—</span></div>
+            <div class="review-item"><span class="review-label">Phone</span><span class="review-text" id="reviewPhone">—</span></div>
+            <div class="review-item"><span class="review-label">Email</span><span class="review-text" id="reviewEmail">—</span></div>
+            <div class="review-item"><span class="review-label">Date</span><span class="review-text" id="reviewDate">—</span></div>
+            <div class="review-item"><span class="review-label">Pickup Time</span><span class="review-text" id="reviewTime">—</span></div>
+            <div class="review-item full"><span class="review-label">Route</span><span class="review-text" id="reviewRoute">—</span></div>
+            <div class="review-item"><span class="review-label">Passengers</span><span class="review-text" id="reviewPassengers">—</span></div>
+            <div class="review-item"><span class="review-label">Round Trip</span><span class="review-text" id="reviewRoundTrip">No</span></div>
+            <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="reviewNotes">None provided.</span></div>
+          </div>
+
+          <div class="policy-note">
+            <p class="policy-copy">By confirming, you agree to the booking terms and privacy policy. Requests are subject to final confirmation.</p>
+            <label class="policy-check" for="policyAgree">
+              <input id="policyAgree" type="checkbox" required />
+              <span>I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</span>
+            </label>
+          </div>
+
+          <div class="review-actions">
+            <button class="btn btn-primary" type="submit" id="submitBtn">Confirm Request</button>
+            <button class="btn btn-secondary" type="button" id="editBtn">Edit Booking</button>
+          </div>
+        </section>
+
+        <section class="success-panel" id="successPanel" aria-live="polite">
+          <h2 class="success-title">Request Summary</h2>
+          <p class="success-text">Your trip details are listed below.</p>
+          <div class="review-grid">
+            <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="successName">—</span></div>
+            <div class="review-item"><span class="review-label">Phone</span><span class="review-text" id="successPhone">—</span></div>
+            <div class="review-item"><span class="review-label">Email</span><span class="review-text" id="successEmail">—</span></div>
+            <div class="review-item"><span class="review-label">Date</span><span class="review-text" id="successDate">—</span></div>
+            <div class="review-item"><span class="review-label">Pickup Time</span><span class="review-text" id="successTime">—</span></div>
+            <div class="review-item full"><span class="review-label">Route</span><span class="review-text" id="successRoute">—</span></div>
+            <div class="review-item"><span class="review-label">Passengers</span><span class="review-text" id="successPassengers">—</span></div>
+            <div class="review-item"><span class="review-label">Round Trip</span><span class="review-text" id="successRoundTrip">No</span></div>
+            <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="successNotes">None provided.</span></div>
+          </div>
+        </section>
       </form>
-
-      <div class="contact-info">
-        <p class="contact-line">
-          <a href="tel:3406428686" class="contact-link">
-            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.56 3.58.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.3 21 3 13.7 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.19 2.46.56 3.58a1 1 0 0 1-.25 1.01l-2.19 2.2Z"/>
-            </svg>
-            <span class="contact-text">340-642-8686</span>
-          </a>
-        </p>
-        <p class="contact-line">
-          <a href="mailto:setlimovi@gmail.com" class="contact-link">
-            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 3.24-7.4 5.55a1 1 0 0 1-1.2 0L4 7.24V6l8 6 8-6v1.24Z"/>
-            </svg>
-            <span class="contact-text">setlimovi@gmail.com</span>
-          </a>
-        </p>
-      </div>
     </div>
-
-    <div id="thank-you-screen">
-      <div class="thank-you-box">
-        <h1>Thank You!</h1>
-        <p>Your booking request has been received.</p>
-        <p>We will contact you shortly to confirm your trip details and provide a secure link for prepayment.</p>
-
-        <div class="thank-you-actions">
-          <button type="button" id="book-again-btn" class="thank-you-btn">Book Another Ride</button>
-          <a href="https://set-vi.github.io/set-limo-vi/" class="thank-you-link">Back to Flyer</a>
-        </div>
-
-        <div style="margin-top: 40px;">
-          <p class="contact-line">
-            <a href="tel:3406428686" class="contact-link">
-              <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.56 3.58.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.3 21 3 13.7 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.19 2.46.56 3.58a1 1 0 0 1-.25 1.01l-2.19 2.2Z"/>
-              </svg>
-              <span class="contact-text">340-642-8686</span>
-            </a>
-          </p>
-          <p class="contact-line">
-            <a href="mailto:setlimovi@gmail.com" class="contact-link">
-              <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 3.24-7.4 5.55a1 1 0 0 1-1.2 0L4 7.24V6l8 6 8-6v1.24Z"/>
-              </svg>
-              <span class="contact-text">setlimovi@gmail.com</span>
-            </a>
-          </p>
-        </div>
-
-        <p style="margin-top: 30px; font-size: 0.9em; color: #ccc;">
-          We look forward to delivering an experience that defines luxury and excellence.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div id="review-modal" class="modal-overlay">
-    <div class="modal-box">
-      <h2 class="modal-title">Review Your Booking</h2>
-      <p class="modal-subtitle">Please review your booking details before you submit.</p>
-
-      <div id="review-summary" class="review-grid"></div>
-
-      <div class="modal-actions">
-        <button type="button" id="edit-booking-btn" class="secondary-btn">Edit Booking</button>
-        <button type="button" id="confirm-booking-btn">Confirm Booking</button>
-      </div>
-    </div>
-  </div>
+  </section>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.getElementById("booking-form");
-      if (!form) return;
+    document.addEventListener('DOMContentLoaded', () => {
+      const pickup = document.getElementById('pickup');
+      const dropoff = document.getElementById('dropoff');
+      const pickupCustomGroup = document.getElementById('pickupCustomGroup');
+      const dropoffCustomGroup = document.getElementById('dropoffCustomGroup');
+      const pickupCustom = document.getElementById('pickupCustom');
+      const dropoffCustom = document.getElementById('dropoffCustom');
+      const roundtrip = document.getElementById('roundtrip');
+      const returnFields = document.getElementById('returnFields');
+      const returnPickup = document.getElementById('returnPickup');
+      const returnDropoff = document.getElementById('returnDropoff');
+      const returnPickupCustomGroup = document.getElementById('returnPickupCustomGroup');
+      const returnDropoffCustomGroup = document.getElementById('returnDropoffCustomGroup');
+      const returnPickupCustom = document.getElementById('returnPickupCustom');
+      const returnDropoffCustom = document.getElementById('returnDropoffCustom');
+      const passengers = document.getElementById('passengers');
+      const routeError = document.getElementById('routeError');
+      const returnRouteError = document.getElementById('returnRouteError');
+      const reviewBtn = document.getElementById('reviewBtn');
+      const bookingForm = document.getElementById('bookingForm');
+      const reviewPanel = document.getElementById('reviewPanel');
+      const editBtn = document.getElementById('editBtn');
+      const successPanel = document.getElementById('successPanel');
+      const successName = document.getElementById('successName');
+      const successPhone = document.getElementById('successPhone');
+      const successEmail = document.getElementById('successEmail');
+      const successDate = document.getElementById('successDate');
+      const successTime = document.getElementById('successTime');
+      const successRoute = document.getElementById('successRoute');
+      const successPassengers = document.getElementById('successPassengers');
+      const successRoundTrip = document.getElementById('successRoundTrip');
+      const successNotes = document.getElementById('successNotes');
+      const dateField = document.getElementById('date');
+      const timeField = document.getElementById('time');
+      const returnDateField = document.getElementById('returnDate');
+      const returnTimeField = document.getElementById('returnTime');
+      const notesField = document.getElementById('notes');
+      const nameField = document.getElementById('name');
+      const phoneField = document.getElementById('phone');
+      const emailField = document.getElementById('email');
+      const policyAgree = document.getElementById('policyAgree');
+      const submitBtn = document.getElementById('submitBtn');
+      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/meoazyoy';
 
-      const bookingScreen = document.getElementById("booking-screen");
-      const thankYouScreen = document.getElementById("thank-you-screen");
-      const reviewModal = document.getElementById("review-modal");
-      const reviewSummary = document.getElementById("review-summary");
-      const editBookingBtn = document.getElementById("edit-booking-btn");
-      const confirmBookingBtn = document.getElementById("confirm-booking-btn");
-      const bookAgainBtn = document.getElementById("book-again-btn");
+      const reviewFields = {
+        name: document.getElementById('reviewName'),
+        phone: document.getElementById('reviewPhone'),
+        email: document.getElementById('reviewEmail'),
+        date: document.getElementById('reviewDate'),
+        time: document.getElementById('reviewTime'),
+        route: document.getElementById('reviewRoute'),
+        passengers: document.getElementById('reviewPassengers'),
+        roundTrip: document.getElementById('reviewRoundTrip'),
+        notes: document.getElementById('reviewNotes')
+      };
 
-      const nameInput = document.getElementById("name");
-      const emailInput = document.getElementById("email");
-      const phoneInput = document.getElementById("phone");
-      const dateField = document.getElementById("date");
-      const timeField = document.getElementById("time");
+      function populateTimeSelect(selectEl, placeholderText) {
+        const currentValue = selectEl.value;
+        selectEl.innerHTML = '';
 
-      const pickupSelect = document.getElementById("pickup");
-      const dropoffSelect = document.getElementById("dropoff");
-      const pickupCustomWrap = document.getElementById("pickup-custom-wrap");
-      const dropoffCustomWrap = document.getElementById("dropoff-custom-wrap");
-      const pickupCustomInput = document.getElementById("pickup-custom");
-      const dropoffCustomInput = document.getElementById("dropoff-custom");
+        const placeholderOption = document.createElement('option');
+        placeholderOption.value = '';
+        placeholderOption.textContent = placeholderText;
+        selectEl.appendChild(placeholderOption);
 
-      const airportExtra = document.getElementById("airport-extra");
-      const airlineInput = document.getElementById("airline");
-      const baggageInput = document.getElementById("baggage");
-
-      const passengerInput = document.getElementById("passengers");
-      const roundTripSelect = document.getElementById("roundtrip");
-      const returnFields = document.getElementById("return-fields");
-      const returnDateField = document.getElementById("return-date");
-      const returnTimeField = document.getElementById("return-time");
-      const notesInput = document.getElementById("notes");
-      const priceBox = document.getElementById("price-box");
-
-      const reviewButton = document.getElementById("review-booking-btn");
-      const today = new Date().toISOString().split("T")[0];
-
-      dateField.min = today;
-      returnDateField.min = today;
-
-      function formatPhoneNumber(value) {
-        const digits = value.replace(/\D/g, "").slice(0, 10);
-
-        if (digits.length < 4) return digits;
-        if (digits.length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
-        return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
-      }
-
-      function normalizeLocation(value) {
-        return value
-          .trim()
-          .toLowerCase()
-          .replace(/\./g, "")
-          .replace(/\s+/g, " ");
-      }
-
-      function isOtherSelection(value) {
-        return value === "__other__";
-      }
-
-      function getResolvedPickup() {
-        return isOtherSelection(pickupSelect.value)
-          ? pickupCustomInput.value.trim()
-          : pickupSelect.value.trim();
-      }
-
-      function getResolvedDropoff() {
-        return isOtherSelection(dropoffSelect.value)
-          ? dropoffCustomInput.value.trim()
-          : dropoffSelect.value.trim();
-      }
-
-      function isAirportValue(value) {
-        return normalizeLocation(value).includes("airport");
-      }
-
-      function isStJohnValue(value) {
-        return normalizeLocation(value).includes("st john");
-      }
-
-      function isStJohnRoute() {
-        return isStJohnValue(getResolvedPickup()) || isStJohnValue(getResolvedDropoff());
-      }
-
-      function updateCustomLocationFields() {
-        const pickupIsOther = isOtherSelection(pickupSelect.value);
-        const dropoffIsOther = isOtherSelection(dropoffSelect.value);
-
-        pickupCustomWrap.style.display = pickupIsOther ? "block" : "none";
-        dropoffCustomWrap.style.display = dropoffIsOther ? "block" : "none";
-
-        pickupCustomInput.required = pickupIsOther;
-        dropoffCustomInput.required = dropoffIsOther;
-
-        if (!pickupIsOther) {
-          pickupCustomInput.value = "";
+        for (let hour = 0; hour < 24; hour += 1) {
+          for (let minute = 0; minute < 60; minute += 15) {
+            const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+            const minuteText = String(minute).padStart(2, '0');
+            const meridiem = hour < 12 ? 'AM' : 'PM';
+            const displayValue = `${hour12}:${minuteText} ${meridiem}`;
+            const option = document.createElement('option');
+            option.value = displayValue;
+            option.textContent = displayValue;
+            selectEl.appendChild(option);
+          }
         }
 
-        if (!dropoffIsOther) {
-          dropoffCustomInput.value = "";
+        if (currentValue) {
+          selectEl.value = currentValue;
         }
       }
 
-      function updateAirportFields() {
-        const pickupValue = getResolvedPickup();
-        const dropoffValue = getResolvedDropoff();
-        const showAirportFields = isAirportValue(pickupValue) || isAirportValue(dropoffValue);
+      function toggleCustomGroup(selectEl, groupEl, inputEl) {
+        const isCustom = selectEl.value === 'Other / Custom Location';
+        groupEl.classList.toggle('is-hidden', !isCustom);
+        inputEl.required = isCustom;
+        if (!isCustom) inputEl.value = '';
+      }
 
-        airportExtra.style.display = showAirportFields ? "block" : "none";
-
-        if (!showAirportFields) {
-          airlineInput.value = "";
-          baggageInput.value = "";
+      function syncDateLimits() {
+        const today = new Date();
+        const offset = today.getTimezoneOffset();
+        const localToday = new Date(today.getTime() - offset * 60000).toISOString().split('T')[0];
+        dateField.min = localToday;
+        returnDateField.min = dateField.value || localToday;
+        if (returnDateField.value && dateField.value && returnDateField.value < dateField.value) {
+          returnDateField.value = dateField.value;
         }
       }
 
-      function updateRoundTripFields() {
-        const showReturn = roundTripSelect.value === "yes";
-        returnFields.style.display = showReturn ? "block" : "none";
-        returnDateField.required = showReturn;
-        returnTimeField.required = showReturn;
+      function hasBlockedRoute() {
+        const samePrimaryRoute = pickup.value && dropoff.value && pickup.value === dropoff.value && pickup.value !== 'Other / Custom Location';
+        const sameReturnRoute = roundtrip.value === 'yes' && returnPickup.value && returnDropoff.value && returnPickup.value === returnDropoff.value && returnPickup.value !== 'Other / Custom Location';
+        return {
+          samePrimaryRoute,
+          sameReturnRoute,
+          hasBlocked: samePrimaryRoute || sameReturnRoute
+        };
+      }
 
-        if (!showReturn) {
-          returnDateField.value = "";
-          returnTimeField.value = "";
+      function validateRoute() {
+        const { samePrimaryRoute, sameReturnRoute, hasBlocked } = hasBlockedRoute();
+        routeError.style.display = samePrimaryRoute ? 'block' : 'none';
+        returnRouteError.style.display = sameReturnRoute ? 'block' : 'none';
+        reviewBtn.disabled = hasBlocked;
+        reviewBtn.style.opacity = hasBlocked ? '0.6' : '1';
+        reviewBtn.style.cursor = hasBlocked ? 'not-allowed' : 'pointer';
+      }
+
+      function updateRoundTrip() {
+        const showReturn = roundtrip.value === 'yes';
+        returnFields.classList.toggle('is-hidden', !showReturn);
+        Array.from(returnFields.querySelectorAll('input, select')).forEach((field) => {
+          field.required = showReturn;
+          if (!showReturn) field.value = '';
+        });
+        toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
+        toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
+        validateRoute();
+      }
+
+      function getFieldValue(value, fallback = '—') {
+        return value && String(value).trim() ? String(value).trim() : fallback;
+      }
+
+      function formatDateValue(value) {
+        if (!value) return '—';
+        const parts = value.split('-');
+        if (parts.length !== 3) return value;
+        return `${parts[1]}/${parts[2]}/${parts[0]}`;
+      }
+
+      function resolveLocation(selectEl, customInputEl) {
+        if (selectEl.value === 'Other / Custom Location') {
+          return getFieldValue(customInputEl.value, 'Custom location pending');
+        }
+        return getFieldValue(selectEl.value);
+      }
+
+      function hidePanels() {
+        reviewPanel.classList.remove('is-visible');
+        successPanel.classList.remove('is-visible');
+      }
+
+      function resetPolicyCheck() {
+        policyAgree.checked = false;
+      }
+
+      function setSubmittingState(isSubmitting) {
+        if (submitBtn) {
+          submitBtn.disabled = isSubmitting;
+          submitBtn.textContent = isSubmitting ? 'Submitting...' : 'Confirm Request';
+        }
+        reviewBtn.disabled = isSubmitting || hasBlockedRoute().hasBlocked;
+        reviewBtn.style.opacity = reviewBtn.disabled ? '0.6' : '1';
+        reviewBtn.style.cursor = reviewBtn.disabled ? 'not-allowed' : 'pointer';
+      }
+
+      async function submitBookingRequest() {
+        const formData = new FormData();
+        formData.set('name', getFieldValue(nameField.value, ''));
+        formData.set('_replyto', getFieldValue(emailField.value, ''));
+        formData.set('phone', getFieldValue(phoneField.value, ''));
+        formData.set('date', getFieldValue(dateField.value, ''));
+        formData.set('time', getFieldValue(timeField.value, ''));
+        formData.set('pickup', resolveLocation(pickup, pickupCustom));
+        formData.set('dropoff', resolveLocation(dropoff, dropoffCustom));
+        formData.set('passengers', getFieldValue(passengers.value, ''));
+        formData.set('roundtrip', roundtrip.value === 'yes' ? 'Yes' : 'No');
+        formData.set('return_date', roundtrip.value === 'yes' ? getFieldValue(returnDateField.value, '') : '');
+        formData.set('return_time', roundtrip.value === 'yes' ? getFieldValue(returnTimeField.value, '') : '');
+        formData.set('return_pickup', roundtrip.value === 'yes' ? resolveLocation(returnPickup, returnPickupCustom) : '');
+        formData.set('return_dropoff', roundtrip.value === 'yes' ? resolveLocation(returnDropoff, returnDropoffCustom) : '');
+        formData.set('details', getFieldValue(notesField.value, ''));
+        formData.set('policy_agreed', policyAgree.checked ? 'Yes' : 'No');
+
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Accept: 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Formspree returned ${response.status}`);
         }
       }
 
-      function enforcePassengerCap() {
-        const count = parseInt(passengerInput.value, 10);
+      function buildReview() {
+        const route = `${resolveLocation(pickup, pickupCustom)} → ${resolveLocation(dropoff, dropoffCustom)}`;
+        const isRoundTrip = roundtrip.value === 'yes';
+        let roundTripText = 'No';
 
-        if (!isNaN(count) && count > 6) {
-          passengerInput.value = "6";
-          alert("Online booking is limited to 6 passengers.");
-        }
-      }
-
-      function getFareAmount() {
-        const passengerCount = parseInt(passengerInput.value, 10);
-
-        if (isNaN(passengerCount) || passengerCount < 1 || passengerCount > 6) {
-          return null;
+        if (isRoundTrip) {
+          roundTripText = `${formatDateValue(returnDateField.value)} at ${getFieldValue(returnTimeField.value)} | ${resolveLocation(returnPickup, returnPickupCustom)} → ${resolveLocation(returnDropoff, returnDropoffCustom)}`;
         }
 
-        return isStJohnRoute() ? 600 : 180;
+        reviewFields.name.textContent = getFieldValue(nameField.value);
+        reviewFields.phone.textContent = getFieldValue(phoneField.value);
+        reviewFields.email.textContent = getFieldValue(emailField.value);
+        reviewFields.date.textContent = formatDateValue(dateField.value);
+        reviewFields.time.textContent = getFieldValue(timeField.value);
+        reviewFields.route.textContent = route;
+        reviewFields.passengers.textContent = getFieldValue(passengers.value);
+        reviewFields.roundTrip.textContent = roundTripText;
+        reviewFields.notes.textContent = getFieldValue(notesField.value, 'None provided.');
+        successPanel.classList.remove('is-visible');
+        reviewPanel.classList.add('is-visible');
+        reviewPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
-      function updatePrice() {
-        const passengerCount = parseInt(passengerInput.value, 10);
-        const pickupValue = getResolvedPickup();
-        const dropoffValue = getResolvedDropoff();
+      pickup.addEventListener('change', () => {
+        hidePanels();
+        toggleCustomGroup(pickup, pickupCustomGroup, pickupCustom);
+        validateRoute();
+      });
 
-        if (!pickupValue || !dropoffValue || isNaN(passengerCount) || passengerCount < 1 || passengerCount > 6) {
-          priceBox.style.display = "none";
-          priceBox.textContent = "";
-          return;
-        }
+      dropoff.addEventListener('change', () => {
+        hidePanels();
+        toggleCustomGroup(dropoff, dropoffCustomGroup, dropoffCustom);
+        validateRoute();
+      });
 
-        const totalFare = getFareAmount();
-        const stJohnRoute = isStJohnRoute();
+      returnPickup.addEventListener('change', () => {
+        hidePanels();
+        toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
+        validateRoute();
+      });
 
-        priceBox.textContent = stJohnRoute
-          ? `Estimated Fare: $${totalFare} (St. John route pricing applied)`
-          : `Estimated Fare: $${totalFare}`;
+      returnDropoff.addEventListener('change', () => {
+        hidePanels();
+        toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
+        validateRoute();
+      });
 
-        priceBox.style.display = "block";
-      }
+      roundtrip.addEventListener('change', () => {
+        hidePanels();
+        updateRoundTrip();
+      });
 
-      function validateCustomLocations() {
-        if (isOtherSelection(pickupSelect.value) && !pickupCustomInput.value.trim()) {
-          pickupCustomInput.focus();
-          alert("Enter a custom pick-up location.");
-          return false;
-        }
+      [nameField, emailField, dateField, timeField, notesField, passengers, pickupCustom, dropoffCustom, returnDateField, returnTimeField, returnPickupCustom, returnDropoffCustom].forEach((el) => {
+        if (!el) return;
+        const eventName = el.tagName === 'SELECT' ? 'change' : 'input';
+        el.addEventListener(eventName, () => {
+          hidePanels();
+          if (el === dateField || el === returnDateField) {
+            syncDateLimits();
+          }
+        });
+      });
 
-        if (isOtherSelection(dropoffSelect.value) && !dropoffCustomInput.value.trim()) {
-          dropoffCustomInput.focus();
-          alert("Enter a custom drop-off location.");
-          return false;
-        }
+      phoneField.addEventListener('input', () => {
+        phoneField.value = phoneField.value.replace(/[^0-9]/g, '').slice(0, 10);
+        hidePanels();
+      });
 
-        return true;
-      }
+      reviewBtn.addEventListener('click', () => {
+        if (hasBlockedRoute().hasBlocked) return;
+        if (!bookingForm.reportValidity()) return;
+        resetPolicyCheck();
+        buildReview();
+      });
 
-      function validatePassengerCount() {
-        const count = parseInt(passengerInput.value, 10);
+      editBtn.addEventListener('click', () => {
+        reviewPanel.classList.remove('is-visible');
+        resetPolicyCheck();
+        reviewBtn.focus();
+      });
 
-        if (isNaN(count) || count < 1) {
-          passengerInput.focus();
-          alert("Enter a valid passenger count.");
-          return false;
-        }
+      bookingForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (hasBlockedRoute().hasBlocked) return;
+        if (!bookingForm.reportValidity()) return;
 
-        if (count > 6) {
-          passengerInput.focus();
-          alert("Online booking is limited to 6 passengers.");
-          return false;
-        }
-
-        return true;
-      }
-
-      function validateReturnTrip() {
-        if (roundTripSelect.value !== "yes") return true;
-        if (!returnDateField.value || !returnTimeField.value) return true;
-        if (!dateField.value || !timeField.value) return true;
-
-        const outbound = new Date(`${dateField.value}T${timeField.value}`);
-        const returning = new Date(`${returnDateField.value}T${returnTimeField.value}`);
-
-        return returning >= outbound;
-      }
-
-      function createReviewRow(label, value) {
-        const safeValue = value && String(value).trim() !== "" ? value : "-";
-        return `
-          <div class="review-row">
-            <span class="review-label">${label}</span>
-            <div class="review-value">${safeValue}</div>
-          </div>
-        `;
-      }
-
-      function buildReviewSummary() {
-        const fareText = priceBox.style.display === "block" ? priceBox.textContent : "-";
-
-        reviewSummary.innerHTML = [
-          createReviewRow("Name", nameInput.value),
-          createReviewRow("Email", emailInput.value),
-          createReviewRow("Phone", phoneInput.value),
-          createReviewRow("Date", dateField.value),
-          createReviewRow("Time of Service", timeField.value),
-          createReviewRow("Pick-up Location", getResolvedPickup()),
-          createReviewRow("Drop-off Location", getResolvedDropoff()),
-          createReviewRow("Airline / Flight Info", airlineInput.value),
-          createReviewRow("Baggage Info", baggageInput.value),
-          createReviewRow("Passengers", passengerInput.value),
-          createReviewRow("Round Trip", roundTripSelect.value === "yes" ? "Yes" : "No"),
-          createReviewRow("Return Date", returnDateField.value),
-          createReviewRow("Return Time", returnTimeField.value),
-          createReviewRow("Additional Details", notesInput.value),
-          createReviewRow("Estimated Fare", fareText)
-        ].join("");
-      }
-
-      function openReviewModal() {
-        reviewModal.style.display = "flex";
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeReviewModal() {
-        reviewModal.style.display = "none";
-        document.body.style.overflow = "";
-        confirmBookingBtn.disabled = false;
-        confirmBookingBtn.textContent = "Confirm Booking";
-      }
-
-      function showThankYouScreen() {
-        closeReviewModal();
-        bookingScreen.style.display = "none";
-        thankYouScreen.style.display = "block";
-        document.title = "Thank You - Superb Executive Transportation";
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-
-      function showBookingScreen() {
-        thankYouScreen.style.display = "none";
-        bookingScreen.style.display = "block";
-        document.title = "Elevate Your Journey | Superb Executive Transportation";
-        form.reset();
-        reviewButton.disabled = false;
-        reviewButton.textContent = "Review Booking";
-        confirmBookingBtn.disabled = false;
-        confirmBookingBtn.textContent = "Confirm Booking";
-        dateField.min = today;
-        returnDateField.min = today;
-        updateCustomLocationFields();
-        updateAirportFields();
-        updateRoundTripFields();
-        updatePrice();
-        document.body.style.overflow = "";
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-
-      async function submitBooking() {
-        reviewButton.disabled = true;
-        confirmBookingBtn.disabled = true;
-        confirmBookingBtn.textContent = "Submitting...";
-
-        const formData = new FormData(form);
-        formData.set("pickup", getResolvedPickup());
-        formData.set("dropoff", getResolvedDropoff());
-        formData.delete("pickup-custom");
-        formData.delete("dropoff-custom");
-
-        const totalFare = getFareAmount();
-        if (totalFare !== null) {
-          formData.set("estimated_fare", `$${totalFare}`);
-        }
+        buildReview();
+        setSubmittingState(true);
 
         try {
-          const response = await fetch("https://formspree.io/f/meoazyoy", {
-            method: "POST",
-            body: formData,
-            headers: {
-              Accept: "application/json"
-            }
-          });
-
-          if (!response.ok) {
-            throw new Error(`Formspree returned ${response.status}`);
-          }
-
-          showThankYouScreen();
+          await submitBookingRequest();
+          reviewPanel.classList.remove('is-visible');
+          successName.textContent = reviewFields.name.textContent;
+          successPhone.textContent = reviewFields.phone.textContent;
+          successEmail.textContent = reviewFields.email.textContent;
+          successDate.textContent = reviewFields.date.textContent;
+          successTime.textContent = reviewFields.time.textContent;
+          successRoute.textContent = reviewFields.route.textContent;
+          successPassengers.textContent = reviewFields.passengers.textContent;
+          successRoundTrip.textContent = reviewFields.roundTrip.textContent;
+          successNotes.textContent = reviewFields.notes.textContent;
+          resetPolicyCheck();
+          successPanel.classList.add('is-visible');
+          successPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } catch (error) {
-          console.error("Submission error:", error);
-          alert("Something went wrong. Please try again or call us directly.");
-          reviewButton.disabled = false;
-          reviewButton.textContent = "Review Booking";
-          confirmBookingBtn.disabled = false;
-          confirmBookingBtn.textContent = "Confirm Booking";
-        }
-      }
-
-      phoneInput.addEventListener("input", function () {
-        this.value = formatPhoneNumber(this.value);
-      });
-
-      pickupSelect.addEventListener("change", function () {
-        updateCustomLocationFields();
-        updateAirportFields();
-        updatePrice();
-      });
-
-      dropoffSelect.addEventListener("change", function () {
-        updateCustomLocationFields();
-        updateAirportFields();
-        updatePrice();
-      });
-
-      pickupCustomInput.addEventListener("input", function () {
-        updateAirportFields();
-        updatePrice();
-      });
-
-      dropoffCustomInput.addEventListener("input", function () {
-        updateAirportFields();
-        updatePrice();
-      });
-
-      roundTripSelect.addEventListener("change", updateRoundTripFields);
-
-      passengerInput.addEventListener("input", function () {
-        enforcePassengerCap();
-        updatePrice();
-      });
-
-      dateField.addEventListener("change", function () {
-        if (dateField.value) {
-          returnDateField.min = dateField.value;
-
-          if (returnDateField.value && returnDateField.value < dateField.value) {
-            returnDateField.value = "";
-            returnTimeField.value = "";
-          }
-        } else {
-          returnDateField.min = today;
+          console.error('Submission error:', error);
+          alert('Something went wrong. Please try again or contact us directly.');
+        } finally {
+          setSubmittingState(false);
         }
       });
 
-      returnDateField.addEventListener("change", function () {
-        if (dateField.value && returnDateField.value < dateField.value) {
-          alert("Return date cannot be earlier than outbound date.");
-          returnDateField.value = "";
-        }
-      });
-
-      editBookingBtn.addEventListener("click", closeReviewModal);
-      bookAgainBtn.addEventListener("click", showBookingScreen);
-
-      reviewModal.addEventListener("click", function (e) {
-        if (e.target === reviewModal) {
-          closeReviewModal();
-        }
-      });
-
-      confirmBookingBtn.addEventListener("click", async function () {
-        await submitBooking();
-      });
-
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-
-        if (!validateCustomLocations()) {
-          return;
-        }
-
-        if (!validatePassengerCount()) {
-          return;
-        }
-
-        if (!validateReturnTrip()) {
-          alert("Return trip date and time cannot be earlier than the outbound trip.");
-          return;
-        }
-
-        updatePrice();
-        buildReviewSummary();
-        openReviewModal();
-      });
-
-      updateCustomLocationFields();
-      updateAirportFields();
-      updateRoundTripFields();
-      updatePrice();
+      populateTimeSelect(timeField, 'Select time');
+      populateTimeSelect(returnTimeField, 'Select return time');
+      syncDateLimits();
+      updateRoundTrip();
+      validateRoute();
     });
   </script>
 </body>
