@@ -177,6 +177,11 @@
       margin-top: 8px;
     }
 
+    .actions.is-hidden,
+    .form-body.is-hidden {
+      display: none;
+    }
+
     .review-panel,
     .success-panel {
       display: none;
@@ -338,6 +343,7 @@
       </div>
 
       <form class="form-grid" id="bookingForm">
+        <div class="form-body" id="formBody">
         <div class="field-row">
           <div class="field-group">
             <label for="name">Name</label>
@@ -542,7 +548,7 @@
           <textarea id="notes" name="details" placeholder="Special note"></textarea>
         </div>
 
-        <div class="actions">
+        <div class="actions" id="formActions">
           <button class="btn btn-primary" type="button" id="reviewBtn">Review Request</button>
         </div>
 
@@ -593,6 +599,7 @@
             <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="successNotes">None provided.</span></div>
           </div>
         </section>
+        </div>
       </form>
     </div>
   </section>
@@ -618,6 +625,8 @@
       const returnRouteError = document.getElementById('returnRouteError');
       const reviewBtn = document.getElementById('reviewBtn');
       const bookingForm = document.getElementById('bookingForm');
+      const formBody = document.getElementById('formBody');
+      const formActions = document.getElementById('formActions');
       const reviewPanel = document.getElementById('reviewPanel');
       const editBtn = document.getElementById('editBtn');
       const successPanel = document.getElementById('successPanel');
@@ -795,6 +804,16 @@
         successPanel.classList.remove('is-visible');
       }
 
+      function showFormMode() {
+        formBody.classList.remove('is-hidden');
+        formActions.classList.remove('is-hidden');
+      }
+
+      function showSuccessMode() {
+        formBody.classList.add('is-hidden');
+        formActions.classList.add('is-hidden');
+      }
+
       function resetPolicyCheck() {
         policyAgree.checked = false;
         policyAgree.required = false;
@@ -842,6 +861,7 @@
       }
 
       function buildReview() {
+        showFormMode();
         const route = `${resolveLocation(pickup, pickupCustom)} → ${resolveLocation(dropoff, dropoffCustom)}`;
         const isRoundTrip = roundtrip.value === 'yes';
         let roundTripText = 'No';
@@ -924,6 +944,7 @@
       });
 
       editBtn.addEventListener('click', () => {
+        showFormMode();
         reviewPanel.classList.remove('is-visible');
         resetPolicyCheck();
         reviewBtn.focus();
@@ -937,6 +958,7 @@
 
         try {
           await submitBookingRequest();
+          showSuccessMode();
           reviewPanel.classList.remove('is-visible');
           successName.textContent = reviewFields.name.textContent;
           successPhone.textContent = reviewFields.phone.textContent;
@@ -965,6 +987,7 @@
       updateRoundTrip();
       updateAirportField();
       validateRoute();
+      showFormMode();
     });
   </script>
 </body>
