@@ -933,8 +933,6 @@
         event.preventDefault();
         if (hasBlockedRoute().hasBlocked) return;
         if (!bookingForm.reportValidity()) return;
-
-        buildReview();
         setSubmittingState(true);
 
         try {
