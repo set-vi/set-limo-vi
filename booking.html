@@ -188,7 +188,32 @@
       display: block;
     }
 
-    .actions {
+    
+    .pricing-note {
+      display: grid;
+      gap: 5px;
+      margin: 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(210, 171, 82, 0.08);
+    }
+
+    .pricing-title {
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pricing-text {
+      margin: 0;
+      color: var(--white);
+      font-size: 0.94rem;
+      line-height: 1.45;
+    }
+.actions {
       display: grid;
       gap: 12px;
       margin-top: 8px;
@@ -580,6 +605,11 @@
           <textarea id="notes" name="details" placeholder="Special note"></textarea>
         </div>
 
+        <div class="pricing-note" id="pricingNote">
+          <span class="pricing-title">Pricing</span>
+          <p class="pricing-text" id="pricingText">Standard St. Thomas private transfers are $180 each way for up to 6 passengers. St. John-connected and custom-location trips require confirmation before final pricing.</p>
+        </div>
+
         <div class="actions" id="formActions">
           <button class="btn btn-primary" type="button" id="reviewBtn">Review Ride Details</button>
         </div>
@@ -598,6 +628,7 @@
             <div class="review-item"><span class="review-label">Flight Number</span><span class="review-text" id="reviewFlightNumber">Not provided.</span></div>
             <div class="review-item"><span class="review-label">Passengers</span><span class="review-text" id="reviewPassengers">—</span></div>
             <div class="review-item"><span class="review-label">Round Trip</span><span class="review-text" id="reviewRoundTrip">No</span></div>
+            <div class="review-item full"><span class="review-label">Pricing</span><span class="review-text" id="reviewPricing">—</span></div>
             <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="reviewNotes">None provided.</span></div>
           </div>
 
@@ -630,6 +661,7 @@
             <div class="review-item"><span class="review-label">Flight Number</span><span class="review-text" id="successFlightNumber">—</span></div>
             <div class="review-item"><span class="review-label">Passengers</span><span class="review-text" id="successPassengers">—</span></div>
             <div class="review-item"><span class="review-label">Round Trip</span><span class="review-text" id="successRoundTrip">No</span></div>
+            <div class="review-item full"><span class="review-label">Pricing</span><span class="review-text" id="successPricing">—</span></div>
             <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="successNotes">None provided.</span></div>
           </div>
           <div class="success-actions">
@@ -640,6 +672,55 @@
       </form>
     </div>
   </section>
+
+  <!--
+    EmailJS Customer Auto-Reply Template Reference
+
+    Template label:
+    Superb Ride Request Reply
+
+    Subject:
+    Ride Request Received — Superb Executive Transportation
+
+    To Email:
+    {{email}}
+
+    Reply To:
+    setlimovi@gmail.com
+
+    Body:
+    <p>Hello {{name}},</p>
+
+    <p>Thank you for submitting your ride request with Superb Executive Transportation.</p>
+
+    <p>We received the following trip details:</p>
+
+    <p><strong>Date:</strong> {{date}}<br>
+    <strong>Time:</strong> {{time}}<br>
+    <strong>Pick-up:</strong> {{pickup}}<br>
+    <strong>Drop-off:</strong> {{dropoff}}<br>
+    <strong>Route:</strong> {{route}}<br>
+    <strong>Passengers:</strong> {{passengers}}<br>
+    <strong>Round Trip:</strong> {{roundtrip}}<br>
+    <strong>Pricing:</strong> {{pricing}}</p>
+
+    <p><strong>Return Date:</strong> {{return_date}}<br>
+    <strong>Return Time:</strong> {{return_time}}<br>
+    <strong>Return Pick-up:</strong> {{return_pickup}}<br>
+    <strong>Return Drop-off:</strong> {{return_dropoff}}</p>
+
+    <p><strong>Flight Number:</strong> {{flight_number}}<br>
+    <strong>Details:</strong> {{details}}</p>
+
+    <p>Your request has been received. We will contact you to confirm availability and finalize your ride.</p>
+
+    <p>If any detail is incorrect, reply to this email or contact us directly at (340) 642-8686.</p>
+
+    <p>Superb Executive Transportation<br>
+    St. Thomas, U.S. Virgin Islands<br>
+    (340) 642-8686<br>
+    setlimovi@gmail.com</p>
+  -->
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -692,6 +773,8 @@
       const policyAgree = document.getElementById('policyAgree');
       const submitBtn = document.getElementById('submitBtn');
       const coordinationNote = document.getElementById('coordinationNote');
+      const pricingText = document.getElementById('pricingText');
+      const successPricing = document.getElementById('successPricing');
 
       const EMAILJS_PUBLIC_KEY = 'NOK9sJ5BhK_ywij8U';
       const EMAILJS_SERVICE_ID = 'service_dmvxcdi';
@@ -713,7 +796,8 @@
         passengers: document.getElementById('reviewPassengers'),
         roundTrip: document.getElementById('reviewRoundTrip'),
         notes: document.getElementById('reviewNotes'),
-        flightNumber: document.getElementById('reviewFlightNumber')
+        flightNumber: document.getElementById('reviewFlightNumber'),
+        pricing: document.getElementById('reviewPricing')
       };
 
       function populateTimeSelect(selectEl, placeholderText) {
@@ -786,6 +870,41 @@
         return resolved.includes('st. john') || resolved.includes('st john') || resolved.includes('saint john');
       }
 
+      function isCustomLocation(selectEl) {
+        return selectEl.value === 'Other / Custom Location';
+      }
+
+      function hasCustomLocationSelected() {
+        return isCustomLocation(pickup)
+          || isCustomLocation(dropoff)
+          || (roundtrip.value === 'yes' && isCustomLocation(returnPickup))
+          || (roundtrip.value === 'yes' && isCustomLocation(returnDropoff));
+      }
+
+      function requiresManualPricing() {
+        return isStJohnLocation(pickup, pickupCustom)
+          || isStJohnLocation(dropoff, dropoffCustom)
+          || (roundtrip.value === 'yes' && isStJohnLocation(returnPickup, returnPickupCustom))
+          || (roundtrip.value === 'yes' && isStJohnLocation(returnDropoff, returnDropoffCustom))
+          || hasCustomLocationSelected();
+      }
+
+      function getPricingText() {
+        if (requiresManualPricing()) {
+          return 'Standard St. Thomas private transfers are $180 each way for up to 6 passengers. St. John-connected and custom-location trips require confirmation before final pricing.';
+        }
+
+        if (roundtrip.value === 'yes') {
+          return 'Standard St. Thomas round-trip private transfer: $360 for up to 6 passengers.';
+        }
+
+        return 'Standard St. Thomas private transfer: $180 each way for up to 6 passengers.';
+      }
+
+      function updatePricingNote() {
+        pricingText.textContent = getPricingText();
+      }
+
       function updateCoordinationNotice() {
         const requiresCoordination = isStJohnLocation(pickup, pickupCustom)
           || isStJohnLocation(dropoff, dropoffCustom)
@@ -848,6 +967,7 @@
       function updateRouteDependentFields() {
         updateAirportField();
         updateCoordinationNotice();
+        updatePricingNote();
         validateRoute();
       }
 
@@ -945,7 +1065,8 @@
           flight_number: getFieldValue(flightNumberField.value, 'Not provided.'),
           details: getFieldValue(notesField.value, 'None provided.'),
           policy_agreed: policyAgree.checked ? 'Yes' : 'No',
-          manual_confirmation_required: coordinationNote.classList.contains('is-visible') ? 'Yes' : 'No'
+          manual_confirmation_required: coordinationNote.classList.contains('is-visible') ? 'Yes' : 'No',
+          pricing: getPricingText()
         };
       }
 
@@ -991,6 +1112,7 @@
         reviewFields.flightNumber.textContent = getFieldValue(flightNumberField.value, 'Not provided.');
         reviewFields.passengers.textContent = getFieldValue(passengers.value);
         reviewFields.roundTrip.textContent = roundTripText;
+        reviewFields.pricing.textContent = getPricingText();
         reviewFields.notes.textContent = getFieldValue(notesField.value, 'None provided.');
 
         successPanel.classList.remove('is-visible');
@@ -1133,6 +1255,7 @@
           successFlightNumber.textContent = reviewFields.flightNumber.textContent;
           successPassengers.textContent = reviewFields.passengers.textContent;
           successRoundTrip.textContent = reviewFields.roundTrip.textContent;
+          successPricing.textContent = reviewFields.pricing.textContent;
           successNotes.textContent = reviewFields.notes.textContent;
           resetPolicyCheck();
           successPanel.classList.add('is-visible');
