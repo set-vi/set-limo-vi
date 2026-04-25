@@ -620,8 +620,8 @@
           <p class="pricing-text" id="pricingText">Standard St. Thomas private transfers are $180 each way for up to 6 passengers. St. John-connected and custom-location trips require confirmation before final pricing.</p>
         </div>
 
-        <div class="actions" id="formActions">
-          <button class="btn btn-primary" type="button" id="reviewBtn">Review Ride Details</button>
+        <div class="actions is-hidden" id="formActions">
+          <button class="btn btn-primary" type="button" id="reviewBtn">Review Ride Request</button>
         </div>
 
         <section class="review-panel" id="reviewPanel" aria-live="polite">
@@ -952,14 +952,54 @@
         };
       }
 
+      function isFilled(fieldEl) {
+        return Boolean(fieldEl && String(fieldEl.value || '').trim());
+      }
+
+      function isReviewReady() {
+        const routeStatus = hasBlockedRoute();
+        const phoneDigits = String(phoneField.value || '').replace(/[^0-9]/g, '');
+
+        if (routeStatus.hasBlocked) return false;
+        if (!isFilled(nameField)) return false;
+        if (phoneDigits.length !== 10) return false;
+        if (!isFilled(emailField) || !emailField.checkValidity()) return false;
+        if (!isFilled(dateField)) return false;
+        if (!isFilled(timeField)) return false;
+        if (!isFilled(pickup)) return false;
+        if (!isFilled(dropoff)) return false;
+        if (pickup.value === 'Other / Custom Location' && !isFilled(pickupCustom)) return false;
+        if (dropoff.value === 'Other / Custom Location' && !isFilled(dropoffCustom)) return false;
+        if (!isFilled(passengers)) return false;
+        if (!isFilled(roundtrip)) return false;
+        if (flightNumberField.required && !isFilled(flightNumberField)) return false;
+
+        if (roundtrip.value === 'yes') {
+          if (!isFilled(returnDateField)) return false;
+          if (!isFilled(returnTimeField)) return false;
+          if (!isFilled(returnPickup)) return false;
+          if (!isFilled(returnDropoff)) return false;
+          if (returnPickup.value === 'Other / Custom Location' && !isFilled(returnPickupCustom)) return false;
+          if (returnDropoff.value === 'Other / Custom Location' && !isFilled(returnDropoffCustom)) return false;
+        }
+
+        return true;
+      }
+
+      function updateReviewActionVisibility() {
+        const ready = isReviewReady();
+        formActions.classList.toggle('is-hidden', !ready);
+        reviewBtn.disabled = !ready;
+        reviewBtn.style.opacity = ready ? '1' : '0.6';
+        reviewBtn.style.cursor = ready ? 'pointer' : 'not-allowed';
+      }
+
       function validateRoute() {
         const routeStatus = hasBlockedRoute();
 
         routeError.style.display = routeStatus.samePrimaryRoute ? 'block' : 'none';
         returnRouteError.style.display = routeStatus.sameReturnRoute ? 'block' : 'none';
-        reviewBtn.disabled = routeStatus.hasBlocked;
-        reviewBtn.style.opacity = routeStatus.hasBlocked ? '0.6' : '1';
-        reviewBtn.style.cursor = routeStatus.hasBlocked ? 'not-allowed' : 'pointer';
+        updateReviewActionVisibility();
       }
 
       function updateRouteDependentFields() {
@@ -1018,12 +1058,13 @@
         reviewPanel.classList.remove('is-visible');
         successPanel.classList.remove('is-visible');
         resetPolicyCheck();
+        updateReviewActionVisibility();
       }
 
       function showFormMode() {
         introPanel.classList.remove('is-hidden');
         formBody.classList.remove('is-hidden');
-        formActions.classList.remove('is-hidden');
+        updateReviewActionVisibility();
       }
 
       function showSuccessMode() {
@@ -1039,9 +1080,10 @@
         }
 
         const routeStatus = hasBlockedRoute();
-        reviewBtn.disabled = isSubmitting || routeStatus.hasBlocked;
+        reviewBtn.disabled = isSubmitting || routeStatus.hasBlocked || !isReviewReady();
         reviewBtn.style.opacity = reviewBtn.disabled ? '0.6' : '1';
         reviewBtn.style.cursor = reviewBtn.disabled ? 'not-allowed' : 'pointer';
+        formActions.classList.toggle('is-hidden', !isReviewReady());
       }
 
       function buildTemplateParams() {
@@ -1174,6 +1216,7 @@
         const eventName = el.tagName === 'SELECT' ? 'change' : 'input';
         el.addEventListener(eventName, function () {
           hidePanels();
+          updateReviewActionVisibility();
         });
       });
 
@@ -1181,12 +1224,14 @@
         el.addEventListener('input', function () {
           hidePanels();
           syncDateLimits();
+          updateReviewActionVisibility();
         });
       });
 
       phoneField.addEventListener('input', function () {
         phoneField.value = phoneField.value.replace(/[^0-9]/g, '').slice(0, 10);
         hidePanels();
+        updateReviewActionVisibility();
       });
 
       reviewBtn.addEventListener('click', function () {
@@ -1263,6 +1308,7 @@
       syncDateLimits();
       updateRoundTrip();
       updateRouteDependentFields();
+      updateReviewActionVisibility();
       showFormMode();
     });
   </script>
