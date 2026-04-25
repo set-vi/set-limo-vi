@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Private Airport &amp; Island Transfer Requests | Superb Executive Transportation</title>
-  <meta name="description" content="Request private airport, resort, Red Hook Ferry Terminal, and custom pick-up/drop-off service across St. Thomas. St. John-connected trips require confirmation." />
+  <meta name="description" content="Request private airport, resort, Red Hook Ferry Terminal, and custom pick-up/drop-off service across St. Thomas. St. John-connected and custom-location trips require confirmation." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -79,12 +79,16 @@
     }
 
     .subline {
-      margin: 12px auto 0;
+      margin: 6px auto 0;
       max-width: 500px;
       text-align: center;
+      font-family: 'Playfair Display', serif;
       font-size: 0.98rem;
-      line-height: 1.5;
-      color: #bfb6aa;
+      font-weight: 500;
+      line-height: 1.35;
+      letter-spacing: 0.03em;
+      color: rgba(232, 226, 216, 0.78);
+      text-shadow: none;
     }
 
     .form-grid {
@@ -213,7 +217,8 @@
       font-size: 0.94rem;
       line-height: 1.45;
     }
-.actions {
+
+    .actions {
       display: grid;
       gap: 12px;
       margin-top: 8px;
@@ -393,8 +398,7 @@
     <div class="content">
       <div class="intro-panel" id="introPanel">
         <p class="eyebrow">Superb Executive Transportation</p>
-        <h1>Request Your Ride</h1>
-        <p class="subline">Enter your pick-up, drop-off, date, and passenger details below. St. John-connected trips require confirmation.</p>
+        <p class="subline">Elevate your journey.</p>
       </div>
 
       <form class="form-grid" id="bookingForm">
@@ -491,7 +495,7 @@
           </div>
         </div>
 
-        <p class="coordination-note" id="coordinationNote">St. John trips require additional coordination. After you submit your request, we will reach out to confirm arrangements.</p>
+        <p class="coordination-note" id="coordinationNote">This trip requires additional coordination. After you submit your request, we will reach out to confirm arrangements.</p>
 
         <div class="field-row">
           <div class="field-group">
@@ -674,26 +678,28 @@
   </section>
 
   <!--
-    EmailJS Customer Auto-Reply Template Reference
+    EmailJS Admin Template Reference
 
     Template label:
-    Superb Ride Request Reply
+    Contact Us / Booking Admin
 
     Subject:
-    Ride Request Received — Superb Executive Transportation
+    New Ride Request — {{name}}
 
     To Email:
-    {{email}}
-
-    Reply To:
     setlimovi@gmail.com
 
+    Reply To:
+    {{email}}
+
     Body:
-    <p>Hello {{name}},</p>
+    <p>New ride request received.</p>
 
-    <p>Thank you for submitting your ride request with Superb Executive Transportation.</p>
+    <p><strong>Manual Confirmation Required:</strong> {{manual_confirmation_required}}</p>
 
-    <p>We received the following trip details:</p>
+    <p><strong>Name:</strong> {{name}}<br>
+    <strong>Phone:</strong> {{phone}}<br>
+    <strong>Email:</strong> {{email}}</p>
 
     <p><strong>Date:</strong> {{date}}<br>
     <strong>Time:</strong> {{time}}<br>
@@ -712,14 +718,7 @@
     <p><strong>Flight Number:</strong> {{flight_number}}<br>
     <strong>Details:</strong> {{details}}</p>
 
-    <p>Your request has been received. We will contact you to confirm availability and finalize your ride.</p>
-
-    <p>If any detail is incorrect, reply to this email or contact us directly at (340) 642-8686.</p>
-
-    <p>Superb Executive Transportation<br>
-    St. Thomas, U.S. Virgin Islands<br>
-    (340) 642-8686<br>
-    setlimovi@gmail.com</p>
+    <p><strong>Trip Details Confirmed:</strong> {{policy_agreed}}</p>
   -->
 
   <script>
@@ -779,8 +778,6 @@
       const EMAILJS_PUBLIC_KEY = 'NOK9sJ5BhK_ywij8U';
       const EMAILJS_SERVICE_ID = 'service_dmvxcdi';
       const EMAILJS_ADMIN_TEMPLATE_ID = 'template_ysacch6';
-      const EMAILJS_CUSTOMER_TEMPLATE_ID = '';
-      const SEND_CUSTOMER_EMAIL = Boolean(EMAILJS_CUSTOMER_TEMPLATE_ID);
 
       if (window.emailjs) {
         emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -906,12 +903,7 @@
       }
 
       function updateCoordinationNotice() {
-        const requiresCoordination = isStJohnLocation(pickup, pickupCustom)
-          || isStJohnLocation(dropoff, dropoffCustom)
-          || (roundtrip.value === 'yes' && isStJohnLocation(returnPickup, returnPickupCustom))
-          || (roundtrip.value === 'yes' && isStJohnLocation(returnDropoff, returnDropoffCustom));
-
-        coordinationNote.classList.toggle('is-visible', requiresCoordination);
+        coordinationNote.classList.toggle('is-visible', requiresManualPricing());
       }
 
       function updateAirportField() {
@@ -1065,7 +1057,7 @@
           flight_number: getFieldValue(flightNumberField.value, 'Not provided.'),
           details: getFieldValue(notesField.value, 'None provided.'),
           policy_agreed: policyAgree.checked ? 'Yes' : 'No',
-          manual_confirmation_required: coordinationNote.classList.contains('is-visible') ? 'Yes' : 'No',
+          manual_confirmation_required: requiresManualPricing() ? 'Yes' : 'No',
           pricing: getPricingText()
         };
       }
@@ -1078,14 +1070,6 @@
         const templateParams = buildTemplateParams();
 
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ADMIN_TEMPLATE_ID, templateParams);
-
-        if (SEND_CUSTOMER_EMAIL) {
-          try {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CUSTOMER_TEMPLATE_ID, templateParams);
-          } catch (customerEmailError) {
-            console.warn('Customer email failed after admin request was sent:', customerEmailError);
-          }
-        }
       }
 
       function requirePolicyCheck() {
