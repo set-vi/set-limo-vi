@@ -336,7 +336,7 @@
 <body>
   <section class="shell">
     <div class="content">
-      <div class="intro-panel">
+      <div class="intro-panel" id="introPanel">
         <p class="eyebrow">Superb Executive Transportation</p>
         <h1>Reserve Your Ride</h1>
         <p class="subline">Enter your trip details below to request your ride.</p>
@@ -583,6 +583,8 @@
           </div>
         </section>
 
+        </div>
+
         <section class="success-panel" id="successPanel" aria-live="polite">
           <h2 class="success-title">Request Received</h2>
           <p class="success-text">Your booking request was received. We will review the details and follow up to confirm your ride.</p>
@@ -599,7 +601,6 @@
             <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="successNotes">None provided.</span></div>
           </div>
         </section>
-        </div>
       </form>
     </div>
   </section>
@@ -625,6 +626,7 @@
       const returnRouteError = document.getElementById('returnRouteError');
       const reviewBtn = document.getElementById('reviewBtn');
       const bookingForm = document.getElementById('bookingForm');
+      const introPanel = document.getElementById('introPanel');
       const formBody = document.getElementById('formBody');
       const formActions = document.getElementById('formActions');
       const reviewPanel = document.getElementById('reviewPanel');
@@ -805,11 +807,13 @@
       }
 
       function showFormMode() {
+        introPanel.classList.remove('is-hidden');
         formBody.classList.remove('is-hidden');
         formActions.classList.remove('is-hidden');
       }
 
       function showSuccessMode() {
+        introPanel.classList.add('is-hidden');
         formBody.classList.add('is-hidden');
         formActions.classList.add('is-hidden');
       }
