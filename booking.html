@@ -171,7 +171,7 @@
       line-height: 1.35;
     }
 
-    .actions {
+.actions {
       display: grid;
       gap: 12px;
       margin-top: 8px;
@@ -306,12 +306,18 @@
 
     .btn {
       appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
       border: none;
       border-radius: 14px;
       padding: 15px 18px;
       font-size: 1rem;
       font-weight: 700;
       font-family: inherit;
+      text-align: center;
+      text-decoration: none;
       cursor: pointer;
     }
 
@@ -345,8 +351,7 @@
     <div class="content">
       <div class="intro-panel" id="introPanel">
         <p class="eyebrow">Superb Executive Transportation</p>
-        <h1>Reserve Your Ride</h1>
-        <p class="subline">Enter your trip details below. We will review the request and confirm arrangements.</p>
+        <h1>Book Your Ride</h1>
       </div>
 
       <form class="form-grid" id="bookingForm">
@@ -442,7 +447,6 @@
             <input id="dropoffCustom" name="dropoff_custom" type="text" placeholder="Enter custom drop-off location" />
           </div>
         </div>
-
         <div class="field-row">
           <div class="field-group">
             <label for="passengers">Passengers</label>
@@ -556,12 +560,12 @@
         </div>
 
         <div class="actions" id="formActions">
-          <button class="btn btn-primary" type="button" id="reviewBtn">Review Request</button>
+          <button class="btn btn-primary" type="button" id="reviewBtn">Review Ride Details</button>
         </div>
 
         <section class="review-panel" id="reviewPanel" aria-live="polite">
-          <h2 class="review-title">Review Your Request</h2>
-          <p class="review-subline">Check the details below before you submit your request.</p>
+          <h2 class="review-title">Review Your Ride</h2>
+          <p class="review-subline">Make sure everything is correct before sending your booking request.</p>
 
           <div class="review-grid">
             <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="reviewName">—</span></div>
@@ -586,7 +590,7 @@
 
           <div class="review-actions">
             <button class="btn btn-secondary" type="button" id="editBtn">Edit Request</button>
-            <button class="btn btn-primary" type="submit" id="submitBtn">Submit Request</button>
+            <button class="btn btn-primary" type="submit" id="submitBtn">Send Booking Request</button>
           </div>
         </section>
 
@@ -594,7 +598,7 @@
 
         <section class="success-panel" id="successPanel" aria-live="polite">
           <h2 class="success-title">Request Received</h2>
-          <p class="success-text">Your booking request has been received. We will review the trip details and contact you to confirm arrangements.</p>
+          <p class="success-text">Your booking request has been received. We will contact you to confirm availability and finalize your ride.</p>
           <div class="review-grid">
             <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="successName">—</span></div>
             <div class="review-item"><span class="review-label">Phone</span><span class="review-text" id="successPhone">—</span></div>
@@ -668,7 +672,9 @@
       const submitBtn = document.getElementById('submitBtn');
       const EMAILJS_PUBLIC_KEY = 'NOK9sJ5BhK_ywij8U';
       const EMAILJS_SERVICE_ID = 'service_dmvxcdi';
-      const EMAILJS_TEMPLATE_ID = 'template_ysacch6';
+      const EMAILJS_ADMIN_TEMPLATE_ID = 'template_ysacch6';
+      const EMAILJS_CUSTOMER_TEMPLATE_ID = '';
+      const SEND_CUSTOMER_EMAIL = Boolean(EMAILJS_CUSTOMER_TEMPLATE_ID);
 
       if (window.emailjs) {
         emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -725,8 +731,7 @@
         const resolved = resolveLocation(selectEl, customInputEl).toLowerCase();
         return resolved.includes('airport');
       }
-
-      function updateAirportField() {
+function updateAirportField() {
         const showAirportField = isAirportLocation(pickup, pickupCustom)
           || isAirportLocation(dropoff, dropoffCustom)
           || (roundtrip.value === 'yes' && isAirportLocation(returnPickup, returnPickupCustom))
@@ -883,7 +888,7 @@
       function setSubmittingState(isSubmitting) {
         if (submitBtn) {
           submitBtn.disabled = isSubmitting;
-          submitBtn.textContent = isSubmitting ? 'Submitting...' : 'Submit Request';
+          submitBtn.textContent = isSubmitting ? 'Sending...' : 'Send Booking Request';
         }
         reviewBtn.disabled = isSubmitting || hasBlockedRoute().hasBlocked;
         reviewBtn.style.opacity = reviewBtn.disabled ? '0.6' : '1';
@@ -911,7 +916,15 @@
           policy_agreed: policyAgree.checked ? 'Yes' : 'No',
         };
 
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ADMIN_TEMPLATE_ID, templateParams);
+
+        if (SEND_CUSTOMER_EMAIL) {
+          try {
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CUSTOMER_TEMPLATE_ID, templateParams);
+          } catch (customerEmailError) {
+            console.warn('Customer email failed after admin request was sent:', customerEmailError);
+          }
+        }
       }
 
       function requirePolicyCheck() {
@@ -989,7 +1002,7 @@
           }
           if (routeSensitiveFields.includes(el)) {
             updateAirportField();
-            validateRoute();
+        validateRoute();
           }
         });
       });
@@ -1067,7 +1080,7 @@
       syncDateLimits();
       updateRoundTrip();
       updateAirportField();
-      validateRoute();
+        validateRoute();
       showFormMode();
     });
   </script>
