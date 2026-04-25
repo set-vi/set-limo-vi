@@ -339,7 +339,7 @@
       <div class="intro-panel" id="introPanel">
         <p class="eyebrow">Superb Executive Transportation</p>
         <h1>Reserve Your Ride</h1>
-        <p class="subline">Enter your trip details below to request your ride.</p>
+        <p class="subline">Enter your trip details below to book your ride instantly.</p>
       </div>
 
       <form class="form-grid" id="bookingForm">
@@ -549,12 +549,12 @@
         </div>
 
         <div class="actions" id="formActions">
-          <button class="btn btn-primary" type="button" id="reviewBtn">Review Request</button>
+          <button class="btn btn-primary" type="button" id="reviewBtn">Review Booking</button>
         </div>
 
         <section class="review-panel" id="reviewPanel" aria-live="polite">
-          <h2 class="review-title">Review Your Request</h2>
-          <p class="review-subline">Check the details below before you submit your request.</p>
+          <h2 class="review-title">Review Your Booking</h2>
+          <p class="review-subline">Check the details below before you confirm your booking.</p>
 
           <div class="review-grid">
             <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="reviewName">—</span></div>
@@ -570,7 +570,7 @@
           </div>
 
           <div class="policy-note">
-            <p class="policy-copy">By submitting, you agree to the booking terms and privacy policy. Requests are subject to final confirmation.</p>
+            <p class="policy-copy">By confirming, you agree to the booking terms and privacy policy.</p>
             <label class="policy-check" for="policyAgree">
               <input id="policyAgree" type="checkbox" />
               <span>I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</span>
@@ -578,7 +578,7 @@
           </div>
 
           <div class="review-actions">
-            <button class="btn btn-primary" type="submit" id="submitBtn">Submit Request</button>
+            <button class="btn btn-primary" type="submit" id="submitBtn">Confirm Booking</button>
             <button class="btn btn-secondary" type="button" id="editBtn">Edit Booking</button>
           </div>
         </section>
@@ -586,8 +586,8 @@
         </div>
 
         <section class="success-panel" id="successPanel" aria-live="polite">
-          <h2 class="success-title">Request Received</h2>
-          <p class="success-text">Your booking request was received. We will review the details and follow up to confirm your ride.</p>
+          <h2 class="success-title">Thank You</h2>
+          <p class="success-text">Your booking has been received and placed on our schedule. A confirmation email has been sent with your trip details.</p>
           <div class="review-grid">
             <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="successName">—</span></div>
             <div class="review-item"><span class="review-label">Phone</span><span class="review-text" id="successPhone">—</span></div>
@@ -826,7 +826,7 @@
       function setSubmittingState(isSubmitting) {
         if (submitBtn) {
           submitBtn.disabled = isSubmitting;
-          submitBtn.textContent = isSubmitting ? 'Submitting...' : 'Submit Request';
+          submitBtn.textContent = isSubmitting ? 'Confirming...' : 'Confirm Booking';
         }
         reviewBtn.disabled = isSubmitting || hasBlockedRoute().hasBlocked;
         reviewBtn.style.opacity = reviewBtn.disabled ? '0.6' : '1';
