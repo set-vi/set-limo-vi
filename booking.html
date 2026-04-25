@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     :root {
       --bg: #050505;
@@ -340,27 +341,27 @@
         <div class="field-row">
           <div class="field-group">
             <label for="name">Name</label>
-            <input id="name" type="text" placeholder="Full name" required />
+            <input id="name" name="name" type="text" placeholder="Full name" required />
           </div>
           <div class="field-group">
             <label for="phone">Phone</label>
-            <input id="phone" type="tel" placeholder="Enter phone number" inputmode="numeric" autocomplete="tel" maxlength="10" required />
+            <input id="phone" name="phone" type="tel" placeholder="Enter phone number" inputmode="numeric" autocomplete="tel" maxlength="10" required />
           </div>
         </div>
 
         <div class="field-group">
           <label for="email">Email</label>
-          <input id="email" type="email" placeholder="name@example.com" required />
+          <input id="email" name="email" type="email" placeholder="name@example.com" required />
         </div>
 
         <div class="field-row">
           <div class="field-group">
             <label for="date">Date</label>
-            <input id="date" type="date" required />
+            <input id="date" name="date" type="date" required />
           </div>
           <div class="field-group">
             <label for="time">Time</label>
-            <select id="time" required>
+            <select id="time" name="time" required>
               <option value="">Select time</option>
             </select>
           </div>
@@ -369,7 +370,7 @@
         <div class="field-row">
           <div class="field-group">
             <label for="pickup">Pick-up</label>
-            <select id="pickup" required>
+            <select id="pickup" name="pickup" required>
               <option value="">Select pick-up location</option>
               <option value="Cyril E. King Airport">Cyril E. King Airport</option>
               <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
@@ -393,7 +394,7 @@
 
           <div class="field-group">
             <label for="dropoff">Drop-off</label>
-            <select id="dropoff" required>
+            <select id="dropoff" name="dropoff" required>
               <option value="">Select drop-off location</option>
               <option value="Cyril E. King Airport">Cyril E. King Airport</option>
               <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
@@ -420,19 +421,19 @@
         <div class="field-row">
           <div class="field-group is-hidden" id="pickupCustomGroup">
             <label for="pickupCustom">Custom Pick-up</label>
-            <input id="pickupCustom" type="text" placeholder="Enter custom pick-up location" />
+            <input id="pickupCustom" name="pickup_custom" type="text" placeholder="Enter custom pick-up location" />
           </div>
 
           <div class="field-group is-hidden" id="dropoffCustomGroup">
             <label for="dropoffCustom">Custom Drop-off</label>
-            <input id="dropoffCustom" type="text" placeholder="Enter custom drop-off location" />
+            <input id="dropoffCustom" name="dropoff_custom" type="text" placeholder="Enter custom drop-off location" />
           </div>
         </div>
 
         <div class="field-row">
           <div class="field-group">
             <label for="passengers">Passengers</label>
-            <select id="passengers" required>
+            <select id="passengers" name="passengers" required>
               <option value="">Select</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -444,7 +445,7 @@
           </div>
           <div class="field-group">
             <label for="roundtrip">Round Trip</label>
-            <select id="roundtrip" required>
+            <select id="roundtrip" name="roundtrip" required>
               <option value="">Select</option>
               <option value="no">No</option>
               <option value="yes">Yes</option>
@@ -456,11 +457,11 @@
           <div class="field-row">
             <div class="field-group">
               <label for="returnDate">Return Date</label>
-              <input id="returnDate" type="date" />
+              <input id="returnDate" name="return_date" type="date" />
             </div>
             <div class="field-group">
               <label for="returnTime">Return Time</label>
-              <select id="returnTime">
+              <select id="returnTime" name="return_time">
                 <option value="">Select return time</option>
               </select>
             </div>
@@ -469,7 +470,7 @@
           <div class="field-row">
             <div class="field-group">
               <label for="returnPickup">Return Pick-up</label>
-              <select id="returnPickup">
+              <select id="returnPickup" name="return_pickup">
                 <option value="">Select return pick-up location</option>
                 <option value="Cyril E. King Airport">Cyril E. King Airport</option>
                 <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
@@ -493,7 +494,7 @@
 
             <div class="field-group">
               <label for="returnDropoff">Return Drop-off</label>
-              <select id="returnDropoff">
+              <select id="returnDropoff" name="return_dropoff">
                 <option value="">Select return drop-off location</option>
                 <option value="Cyril E. King Airport">Cyril E. King Airport</option>
                 <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
@@ -520,25 +521,25 @@
           <div class="field-row">
             <div class="field-group is-hidden" id="returnPickupCustomGroup">
               <label for="returnPickupCustom">Custom Return Pick-up</label>
-              <input id="returnPickupCustom" type="text" placeholder="Enter custom return pick-up location" />
+              <input id="returnPickupCustom" name="return_pickup_custom" type="text" placeholder="Enter custom return pick-up location" />
             </div>
 
             <div class="field-group is-hidden" id="returnDropoffCustomGroup">
               <label for="returnDropoffCustom">Custom Return Drop-off</label>
-              <input id="returnDropoffCustom" type="text" placeholder="Enter custom return drop-off location" />
+              <input id="returnDropoffCustom" name="return_dropoff_custom" type="text" placeholder="Enter custom return drop-off location" />
             </div>
           </div>
         </div>
 
         <div class="field-group is-hidden" id="flightNumberGroup">
           <label for="flightNumber">Flight Number</label>
-          <input id="flightNumber" type="text" placeholder="Enter flight number" />
+          <input id="flightNumber" name="flight_number" type="text" placeholder="Enter flight number" />
           <span class="airport-note">Shown when an airport is selected.</span>
         </div>
 
         <div class="field-group">
           <label for="notes">Details</label>
-          <textarea id="notes" placeholder="Special note"></textarea>
+          <textarea id="notes" name="details" placeholder="Special note"></textarea>
         </div>
 
         <div class="actions">
@@ -547,7 +548,7 @@
 
         <section class="review-panel" id="reviewPanel" aria-live="polite">
           <h2 class="review-title">Review Your Request</h2>
-          <p class="review-subline">Check the details below before you submit your booking request.</p>
+          <p class="review-subline">Check the details below before you submit your request.</p>
 
           <div class="review-grid">
             <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="reviewName">—</span></div>
@@ -563,7 +564,7 @@
           </div>
 
           <div class="policy-note">
-            <p class="policy-copy">By confirming, you agree to the booking terms and privacy policy. Requests are subject to final confirmation.</p>
+            <p class="policy-copy">By submitting, you agree to the booking terms and privacy policy. Requests are subject to final confirmation.</p>
             <label class="policy-check" for="policyAgree">
               <input id="policyAgree" type="checkbox" />
               <span>I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</span>
@@ -571,14 +572,14 @@
           </div>
 
           <div class="review-actions">
-            <button class="btn btn-primary" type="submit" id="submitBtn">Confirm Request</button>
+            <button class="btn btn-primary" type="submit" id="submitBtn">Submit Request</button>
             <button class="btn btn-secondary" type="button" id="editBtn">Edit Booking</button>
           </div>
         </section>
 
         <section class="success-panel" id="successPanel" aria-live="polite">
-          <h2 class="success-title">Request Summary</h2>
-          <p class="success-text">Your trip details are listed below.</p>
+          <h2 class="success-title">Request Received</h2>
+          <p class="success-text">Your booking request was received. We will review the details and follow up to confirm your ride.</p>
           <div class="review-grid">
             <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="successName">—</span></div>
             <div class="review-item"><span class="review-label">Phone</span><span class="review-text" id="successPhone">—</span></div>
@@ -642,7 +643,13 @@
       const emailField = document.getElementById('email');
       const policyAgree = document.getElementById('policyAgree');
       const submitBtn = document.getElementById('submitBtn');
-      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/meoazyoy';
+      const EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY';
+      const EMAILJS_SERVICE_ID = 'YOUR_EMAILJS_SERVICE_ID';
+      const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+
+      if (window.emailjs) {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+      }
 
       const reviewFields = {
         name: document.getElementById('reviewName'),
@@ -796,7 +803,7 @@
       function setSubmittingState(isSubmitting) {
         if (submitBtn) {
           submitBtn.disabled = isSubmitting;
-          submitBtn.textContent = isSubmitting ? 'Submitting...' : 'Confirm Request';
+          submitBtn.textContent = isSubmitting ? 'Submitting...' : 'Submit Request';
         }
         reviewBtn.disabled = isSubmitting || hasBlockedRoute().hasBlocked;
         reviewBtn.style.opacity = reviewBtn.disabled ? '0.6' : '1';
@@ -804,35 +811,30 @@
       }
 
       async function submitBookingRequest() {
-        const formData = new FormData();
-        formData.set('name', getFieldValue(nameField.value, ''));
-        formData.set('_replyto', getFieldValue(emailField.value, ''));
-        formData.set('phone', getFieldValue(phoneField.value, ''));
-        formData.set('date', getFieldValue(dateField.value, ''));
-        formData.set('time', getFieldValue(timeField.value, ''));
-        formData.set('pickup', resolveLocation(pickup, pickupCustom));
-        formData.set('dropoff', resolveLocation(dropoff, dropoffCustom));
-        formData.set('passengers', getFieldValue(passengers.value, ''));
-        formData.set('roundtrip', roundtrip.value === 'yes' ? 'Yes' : 'No');
-        formData.set('return_date', roundtrip.value === 'yes' ? getFieldValue(returnDateField.value, '') : '');
-        formData.set('return_time', roundtrip.value === 'yes' ? getFieldValue(returnTimeField.value, '') : '');
-        formData.set('return_pickup', roundtrip.value === 'yes' ? resolveLocation(returnPickup, returnPickupCustom) : '');
-        formData.set('return_dropoff', roundtrip.value === 'yes' ? resolveLocation(returnDropoff, returnDropoffCustom) : '');
-        formData.set('flight_number', getFieldValue(flightNumberField.value, ''));
-        formData.set('details', getFieldValue(notesField.value, ''));
-        formData.set('policy_agreed', policyAgree.checked ? 'Yes' : 'No');
+        const templateParams = {
+          name: getFieldValue(nameField.value, ''),
+          email: getFieldValue(emailField.value, ''),
+          phone: getFieldValue(phoneField.value, ''),
+          date: formatDateValue(dateField.value),
+          time: getFieldValue(timeField.value, ''),
+          pickup: resolveLocation(pickup, pickupCustom),
+          dropoff: resolveLocation(dropoff, dropoffCustom),
+          route: `${resolveLocation(pickup, pickupCustom)} → ${resolveLocation(dropoff, dropoffCustom)}`,
+          passengers: getFieldValue(passengers.value, ''),
+          roundtrip: roundtrip.value === 'yes' ? 'Yes' : 'No',
+          return_date: roundtrip.value === 'yes' ? formatDateValue(returnDateField.value) : '',
+          return_time: roundtrip.value === 'yes' ? getFieldValue(returnTimeField.value, '') : '',
+          return_pickup: roundtrip.value === 'yes' ? resolveLocation(returnPickup, returnPickupCustom) : '',
+          return_dropoff: roundtrip.value === 'yes' ? resolveLocation(returnDropoff, returnDropoffCustom) : '',
+          flight_number: getFieldValue(flightNumberField.value, ''),
+          details: getFieldValue(notesField.value, 'None provided.'),
+          policy_agreed: policyAgree.checked ? 'Yes' : 'No',
+          business_name: 'Superb Executive Transportation',
+          business_phone: '(340) 642-8686',
+          business_email: 'setlimovi@gmail.com'
+        };
 
-        const response = await fetch(FORMSPREE_ENDPOINT, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Accept: 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Formspree returned ${response.status}`);
-        }
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
       }
 
       function requirePolicyCheck() {
@@ -953,7 +955,7 @@
           successPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } catch (error) {
           console.error('Submission error:', error);
-          alert('Something went wrong. Please try again or contact us directly.');
+          alert('Something went wrong. Please try again or contact us directly at (340) 642-8686 or setlimovi@gmail.com.');
         } finally {
           setSubmittingState(false);
         }
