@@ -254,6 +254,12 @@
       gap: 12px;
     }
 
+    .success-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
     .policy-note {
       display: grid;
       gap: 10px;
@@ -563,7 +569,7 @@
             <div class="review-item"><span class="review-label">Date</span><span class="review-text" id="reviewDate">—</span></div>
             <div class="review-item"><span class="review-label">Pickup Time</span><span class="review-text" id="reviewTime">—</span></div>
             <div class="review-item full"><span class="review-label">Route</span><span class="review-text" id="reviewRoute">—</span></div>
-            <div class="review-item"><span class="review-label">Flight Number</span><span class="review-text" id="reviewFlightNumber">—</span></div>
+            <div class="review-item"><span class="review-label">Flight Number</span><span class="review-text" id="reviewFlightNumber">Not provided.</span></div>
             <div class="review-item"><span class="review-label">Passengers</span><span class="review-text" id="reviewPassengers">—</span></div>
             <div class="review-item"><span class="review-label">Round Trip</span><span class="review-text" id="reviewRoundTrip">No</span></div>
             <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="reviewNotes">None provided.</span></div>
@@ -572,14 +578,14 @@
           <div class="policy-note">
             <p class="policy-copy">By confirming, you agree to the booking terms and privacy policy.</p>
             <label class="policy-check" for="policyAgree">
-              <input id="policyAgree" type="checkbox" />
-              <span>I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</span>
+              <input id="policyAgree" name="policy_agreed_checkbox" type="checkbox" />
+              <span>I agree to the booking terms and privacy policy.</span>
             </label>
           </div>
 
           <div class="review-actions">
-            <button class="btn btn-primary" type="submit" id="submitBtn">Confirm Booking</button>
             <button class="btn btn-secondary" type="button" id="editBtn">Edit Booking</button>
+            <button class="btn btn-primary" type="submit" id="submitBtn">Confirm Booking</button>
           </div>
         </section>
 
@@ -599,6 +605,10 @@
             <div class="review-item"><span class="review-label">Passengers</span><span class="review-text" id="successPassengers">—</span></div>
             <div class="review-item"><span class="review-label">Round Trip</span><span class="review-text" id="successRoundTrip">No</span></div>
             <div class="review-item full"><span class="review-label">Details</span><span class="review-text" id="successNotes">None provided.</span></div>
+          </div>
+          <div class="success-actions">
+            <button class="btn btn-primary" type="button" id="bookAnotherBtn">Book Another Ride</button>
+            <a class="btn btn-secondary" id="returnToFlyerBtn" href="flyer.html">Return to Flyer</a>
           </div>
         </section>
       </form>
@@ -632,6 +642,7 @@
       const reviewPanel = document.getElementById('reviewPanel');
       const editBtn = document.getElementById('editBtn');
       const successPanel = document.getElementById('successPanel');
+      const bookAnotherBtn = document.getElementById('bookAnotherBtn');
       const successName = document.getElementById('successName');
       const successPhone = document.getElementById('successPhone');
       const successEmail = document.getElementById('successEmail');
@@ -787,6 +798,14 @@
         return value && String(value).trim() ? String(value).trim() : fallback;
       }
 
+      function formatPhoneValue(value) {
+        const digits = String(value || '').replace(/[^0-9]/g, '').slice(0, 10);
+        if (digits.length === 10) {
+          return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+        }
+        return digits || '—';
+      }
+
       function formatDateValue(value) {
         if (!value) return '—';
         const parts = value.split('-');
@@ -818,6 +837,25 @@
         formActions.classList.add('is-hidden');
       }
 
+      function resetBookingForm() {
+        bookingForm.reset();
+        populateTimeSelect(timeField, 'Select time');
+        populateTimeSelect(returnTimeField, 'Select return time');
+        pickupCustom.value = '';
+        dropoffCustom.value = '';
+        returnPickupCustom.value = '';
+        returnDropoffCustom.value = '';
+        toggleCustomGroup(pickup, pickupCustomGroup, pickupCustom);
+        toggleCustomGroup(dropoff, dropoffCustomGroup, dropoffCustom);
+        toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
+        toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
+        syncDateLimits();
+        updateRoundTrip();
+        updateAirportField();
+        validateRoute();
+        resetPolicyCheck();
+      }
+
       function resetPolicyCheck() {
         policyAgree.checked = false;
         policyAgree.required = false;
@@ -837,7 +875,7 @@
         const templateParams = {
           name: getFieldValue(nameField.value, ''),
           email: getFieldValue(emailField.value, ''),
-          phone: getFieldValue(phoneField.value, ''),
+          phone: formatPhoneValue(phoneField.value),
           date: formatDateValue(dateField.value),
           time: getFieldValue(timeField.value, ''),
           pickup: resolveLocation(pickup, pickupCustom),
@@ -845,11 +883,11 @@
           route: `${resolveLocation(pickup, pickupCustom)} → ${resolveLocation(dropoff, dropoffCustom)}`,
           passengers: getFieldValue(passengers.value, ''),
           roundtrip: roundtrip.value === 'yes' ? 'Yes' : 'No',
-          return_date: roundtrip.value === 'yes' ? formatDateValue(returnDateField.value) : '',
-          return_time: roundtrip.value === 'yes' ? getFieldValue(returnTimeField.value, '') : '',
-          return_pickup: roundtrip.value === 'yes' ? resolveLocation(returnPickup, returnPickupCustom) : '',
-          return_dropoff: roundtrip.value === 'yes' ? resolveLocation(returnDropoff, returnDropoffCustom) : '',
-          flight_number: getFieldValue(flightNumberField.value, ''),
+          return_date: roundtrip.value === 'yes' ? formatDateValue(returnDateField.value) : 'Not applicable.',
+          return_time: roundtrip.value === 'yes' ? getFieldValue(returnTimeField.value, '') : 'Not applicable.',
+          return_pickup: roundtrip.value === 'yes' ? resolveLocation(returnPickup, returnPickupCustom) : 'Not applicable.',
+          return_dropoff: roundtrip.value === 'yes' ? resolveLocation(returnDropoff, returnDropoffCustom) : 'Not applicable.',
+          flight_number: getFieldValue(flightNumberField.value, 'Not provided.'),
           details: getFieldValue(notesField.value, 'None provided.'),
           policy_agreed: policyAgree.checked ? 'Yes' : 'No',
           business_name: 'Superb Executive Transportation',
@@ -875,12 +913,12 @@
         }
 
         reviewFields.name.textContent = getFieldValue(nameField.value);
-        reviewFields.phone.textContent = getFieldValue(phoneField.value);
+        reviewFields.phone.textContent = formatPhoneValue(phoneField.value);
         reviewFields.email.textContent = getFieldValue(emailField.value);
         reviewFields.date.textContent = formatDateValue(dateField.value);
         reviewFields.time.textContent = getFieldValue(timeField.value);
         reviewFields.route.textContent = route;
-        reviewFields.flightNumber.textContent = getFieldValue(flightNumberField.value);
+        reviewFields.flightNumber.textContent = getFieldValue(flightNumberField.value, 'Not provided.');
         reviewFields.passengers.textContent = getFieldValue(passengers.value);
         reviewFields.roundTrip.textContent = roundTripText;
         reviewFields.notes.textContent = getFieldValue(notesField.value, 'None provided.');
@@ -952,6 +990,13 @@
         reviewPanel.classList.remove('is-visible');
         resetPolicyCheck();
         reviewBtn.focus();
+      });
+
+      bookAnotherBtn.addEventListener('click', () => {
+        hidePanels();
+        resetBookingForm();
+        showFormMode();
+        nameField.focus();
       });
 
       bookingForm.addEventListener('submit', async (event) => {
