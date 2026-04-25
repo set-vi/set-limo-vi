@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Superb Executive Transportation Booking Form</title>
+  <title>Private Airport &amp; Island Transfer Requests | Superb Executive Transportation</title>
+  <meta name="description" content="Request private airport, resort, Red Hook Ferry Terminal, and custom pick-up/drop-off service across St. Thomas. St. John-connected trips require confirmation." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -78,11 +79,11 @@
     }
 
     .subline {
-      margin: 10px auto 0;
-      max-width: 440px;
+      margin: 12px auto 0;
+      max-width: 500px;
       text-align: center;
-      font-size: 0.95rem;
-      line-height: 1.45;
+      font-size: 0.98rem;
+      line-height: 1.5;
       color: #bfb6aa;
     }
 
@@ -171,7 +172,23 @@
       line-height: 1.35;
     }
 
-.actions {
+    .coordination-note {
+      display: none;
+      margin: 0;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(210, 171, 82, 0.08);
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .coordination-note.is-visible {
+      display: block;
+    }
+
+    .actions {
       display: grid;
       gap: 12px;
       margin-top: 8px;
@@ -351,7 +368,8 @@
     <div class="content">
       <div class="intro-panel" id="introPanel">
         <p class="eyebrow">Superb Executive Transportation</p>
-        <h1>Book Your Ride</h1>
+        <h1>Private Airport &amp; Island Transfers</h1>
+        <p class="subline">Executive pick-up/drop-off across St. Thomas, including resorts and Red Hook Ferry Terminal. St. John-connected trips require confirmation.</p>
       </div>
 
       <form class="form-grid" id="bookingForm">
@@ -392,6 +410,7 @@
               <option value="">Select pick-up location</option>
               <option value="Cyril E. King Airport">Cyril E. King Airport</option>
               <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+              <option value="St. John-Connected Trip / Manual Confirmation">St. John-Connected Trip / Manual Confirmation</option>
               <option value="Charlotte Amalie">Charlotte Amalie</option>
               <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
               <option value="The Westin St. Thomas Beach Resort &amp; Spa">The Westin St. Thomas Beach Resort &amp; Spa</option>
@@ -416,6 +435,7 @@
               <option value="">Select drop-off location</option>
               <option value="Cyril E. King Airport">Cyril E. King Airport</option>
               <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+              <option value="St. John-Connected Trip / Manual Confirmation">St. John-Connected Trip / Manual Confirmation</option>
               <option value="Charlotte Amalie">Charlotte Amalie</option>
               <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
               <option value="The Westin St. Thomas Beach Resort &amp; Spa">The Westin St. Thomas Beach Resort &amp; Spa</option>
@@ -447,6 +467,9 @@
             <input id="dropoffCustom" name="dropoff_custom" type="text" placeholder="Enter custom drop-off location" />
           </div>
         </div>
+
+        <p class="coordination-note" id="coordinationNote">St. John trips require additional coordination. After you submit your request, we will reach out to confirm arrangements.</p>
+
         <div class="field-row">
           <div class="field-group">
             <label for="passengers">Passengers</label>
@@ -491,6 +514,7 @@
                 <option value="">Select return pick-up location</option>
                 <option value="Cyril E. King Airport">Cyril E. King Airport</option>
                 <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+              <option value="St. John-Connected Trip / Manual Confirmation">St. John-Connected Trip / Manual Confirmation</option>
                 <option value="Charlotte Amalie">Charlotte Amalie</option>
                 <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
                 <option value="The Westin St. Thomas Beach Resort &amp; Spa">The Westin St. Thomas Beach Resort &amp; Spa</option>
@@ -515,6 +539,7 @@
                 <option value="">Select return drop-off location</option>
                 <option value="Cyril E. King Airport">Cyril E. King Airport</option>
                 <option value="Red Hook Ferry Terminal">Red Hook Ferry Terminal</option>
+              <option value="St. John-Connected Trip / Manual Confirmation">St. John-Connected Trip / Manual Confirmation</option>
                 <option value="Charlotte Amalie">Charlotte Amalie</option>
                 <option value="The Ritz-Carlton, St. Thomas">The Ritz-Carlton, St. Thomas</option>
                 <option value="The Westin St. Thomas Beach Resort &amp; Spa">The Westin St. Thomas Beach Resort &amp; Spa</option>
@@ -565,7 +590,7 @@
 
         <section class="review-panel" id="reviewPanel" aria-live="polite">
           <h2 class="review-title">Review Your Ride</h2>
-          <p class="review-subline">Make sure everything is correct before sending your booking request.</p>
+          <p class="review-subline">Make sure everything is correct before sending your ride request.</p>
 
           <div class="review-grid">
             <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="reviewName">—</span></div>
@@ -590,7 +615,7 @@
 
           <div class="review-actions">
             <button class="btn btn-secondary" type="button" id="editBtn">Edit Request</button>
-            <button class="btn btn-primary" type="submit" id="submitBtn">Send Booking Request</button>
+            <button class="btn btn-primary" type="submit" id="submitBtn">Send Ride Request</button>
           </div>
         </section>
 
@@ -598,7 +623,7 @@
 
         <section class="success-panel" id="successPanel" aria-live="polite">
           <h2 class="success-title">Request Received</h2>
-          <p class="success-text">Your booking request has been received. We will contact you to confirm availability and finalize your ride.</p>
+          <p class="success-text">Your ride request has been received. We will contact you to confirm availability and finalize your ride.</p>
           <div class="review-grid">
             <div class="review-item"><span class="review-label">Name</span><span class="review-text" id="successName">—</span></div>
             <div class="review-item"><span class="review-label">Phone</span><span class="review-text" id="successPhone">—</span></div>
@@ -621,7 +646,7 @@
   </section>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', function () {
       const pickup = document.getElementById('pickup');
       const dropoff = document.getElementById('dropoff');
       const pickupCustomGroup = document.getElementById('pickupCustomGroup');
@@ -670,6 +695,8 @@
       const emailField = document.getElementById('email');
       const policyAgree = document.getElementById('policyAgree');
       const submitBtn = document.getElementById('submitBtn');
+      const coordinationNote = document.getElementById('coordinationNote');
+
       const EMAILJS_PUBLIC_KEY = 'NOK9sJ5BhK_ywij8U';
       const EMAILJS_SERVICE_ID = 'service_dmvxcdi';
       const EMAILJS_ADMIN_TEMPLATE_ID = 'template_ysacch6';
@@ -720,18 +747,59 @@
         }
       }
 
+      function getFieldValue(value, fallback) {
+        const defaultValue = fallback === undefined ? '—' : fallback;
+        return value && String(value).trim() ? String(value).trim() : defaultValue;
+      }
+
+      function resolveLocation(selectEl, customInputEl) {
+        if (selectEl.value === 'Other / Custom Location') {
+          return getFieldValue(customInputEl.value, 'Custom location pending');
+        }
+        return getFieldValue(selectEl.value);
+      }
+
+      function normalizeRouteValue(value) {
+        return String(value || '').trim().toLowerCase();
+      }
+
+      function getComparableLocation(selectEl, customInputEl) {
+        if (!selectEl.value) return '';
+        if (selectEl.value === 'Other / Custom Location') {
+          return normalizeRouteValue(customInputEl.value);
+        }
+        return normalizeRouteValue(selectEl.value);
+      }
+
       function toggleCustomGroup(selectEl, groupEl, inputEl) {
         const isCustom = selectEl.value === 'Other / Custom Location';
         groupEl.classList.toggle('is-hidden', !isCustom);
         inputEl.required = isCustom;
-        if (!isCustom) inputEl.value = '';
+        if (!isCustom) {
+          inputEl.value = '';
+        }
       }
 
       function isAirportLocation(selectEl, customInputEl) {
         const resolved = resolveLocation(selectEl, customInputEl).toLowerCase();
         return resolved.includes('airport');
       }
-function updateAirportField() {
+
+      function isStJohnLocation(selectEl, customInputEl) {
+        const resolved = resolveLocation(selectEl, customInputEl).toLowerCase();
+        return resolved.includes('st. john') || resolved.includes('st john') || resolved.includes('saint john');
+      }
+
+      function updateCoordinationNotice() {
+        const requiresCoordination = isStJohnLocation(pickup, pickupCustom)
+          || isStJohnLocation(dropoff, dropoffCustom)
+          || (roundtrip.value === 'yes' && isStJohnLocation(returnPickup, returnPickupCustom))
+          || (roundtrip.value === 'yes' && isStJohnLocation(returnDropoff, returnDropoffCustom));
+
+        coordinationNote.classList.toggle('is-visible', requiresCoordination);
+      }
+
+      function updateAirportField() {
         const showAirportField = isAirportLocation(pickup, pickupCustom)
           || isAirportLocation(dropoff, dropoffCustom)
           || (roundtrip.value === 'yes' && isAirportLocation(returnPickup, returnPickupCustom))
@@ -750,21 +818,10 @@ function updateAirportField() {
         const localToday = new Date(today.getTime() - offset * 60000).toISOString().split('T')[0];
         dateField.min = localToday;
         returnDateField.min = dateField.value || localToday;
+
         if (returnDateField.value && dateField.value && returnDateField.value < dateField.value) {
           returnDateField.value = dateField.value;
         }
-      }
-
-      function normalizeRouteValue(value) {
-        return String(value || '').trim().toLowerCase();
-      }
-
-      function getComparableLocation(selectEl, customInputEl) {
-        if (!selectEl.value) return '';
-        if (selectEl.value === 'Other / Custom Location') {
-          return normalizeRouteValue(customInputEl.value);
-        }
-        return normalizeRouteValue(selectEl.value);
       }
 
       function hasBlockedRoute() {
@@ -776,25 +833,32 @@ function updateAirportField() {
         const sameReturnRoute = Boolean(roundtrip.value === 'yes' && returnPickupValue && returnDropoffValue && returnPickupValue === returnDropoffValue);
 
         return {
-          samePrimaryRoute,
-          sameReturnRoute,
+          samePrimaryRoute: samePrimaryRoute,
+          sameReturnRoute: sameReturnRoute,
           hasBlocked: samePrimaryRoute || sameReturnRoute
         };
       }
 
       function validateRoute() {
-        const { samePrimaryRoute, sameReturnRoute, hasBlocked } = hasBlockedRoute();
-        routeError.style.display = samePrimaryRoute ? 'block' : 'none';
-        returnRouteError.style.display = sameReturnRoute ? 'block' : 'none';
-        reviewBtn.disabled = hasBlocked;
-        reviewBtn.style.opacity = hasBlocked ? '0.6' : '1';
-        reviewBtn.style.cursor = hasBlocked ? 'not-allowed' : 'pointer';
+        const routeStatus = hasBlockedRoute();
+
+        routeError.style.display = routeStatus.samePrimaryRoute ? 'block' : 'none';
+        returnRouteError.style.display = routeStatus.sameReturnRoute ? 'block' : 'none';
+        reviewBtn.disabled = routeStatus.hasBlocked;
+        reviewBtn.style.opacity = routeStatus.hasBlocked ? '0.6' : '1';
+        reviewBtn.style.cursor = routeStatus.hasBlocked ? 'not-allowed' : 'pointer';
+      }
+
+      function updateRouteDependentFields() {
+        updateAirportField();
+        updateCoordinationNotice();
+        validateRoute();
       }
 
       function updateRoundTrip() {
         const showReturn = roundtrip.value === 'yes';
-        returnFields.classList.toggle('is-hidden', !showReturn);
 
+        returnFields.classList.toggle('is-hidden', !showReturn);
         returnDateField.required = showReturn;
         returnTimeField.required = showReturn;
         returnPickup.required = showReturn;
@@ -813,12 +877,7 @@ function updateAirportField() {
 
         toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
         toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
-        updateAirportField();
-        validateRoute();
-      }
-
-      function getFieldValue(value, fallback = '—') {
-        return value && String(value).trim() ? String(value).trim() : fallback;
+        updateRouteDependentFields();
       }
 
       function formatPhoneValue(value) {
@@ -836,11 +895,9 @@ function updateAirportField() {
         return parts[1] + '/' + parts[2] + '/' + parts[0];
       }
 
-      function resolveLocation(selectEl, customInputEl) {
-        if (selectEl.value === 'Other / Custom Location') {
-          return getFieldValue(customInputEl.value, 'Custom location pending');
-        }
-        return getFieldValue(selectEl.value);
+      function resetPolicyCheck() {
+        policyAgree.checked = false;
+        policyAgree.required = false;
       }
 
       function hidePanels() {
@@ -861,42 +918,20 @@ function updateAirportField() {
         formActions.classList.add('is-hidden');
       }
 
-      function resetBookingForm() {
-        bookingForm.reset();
-        populateTimeSelect(timeField, 'Select time');
-        populateTimeSelect(returnTimeField, 'Select return time');
-        pickupCustom.value = '';
-        dropoffCustom.value = '';
-        returnPickupCustom.value = '';
-        returnDropoffCustom.value = '';
-        toggleCustomGroup(pickup, pickupCustomGroup, pickupCustom);
-        toggleCustomGroup(dropoff, dropoffCustomGroup, dropoffCustom);
-        toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
-        toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
-        syncDateLimits();
-        updateRoundTrip();
-        updateAirportField();
-        validateRoute();
-        resetPolicyCheck();
-      }
-
-      function resetPolicyCheck() {
-        policyAgree.checked = false;
-        policyAgree.required = false;
-      }
-
       function setSubmittingState(isSubmitting) {
         if (submitBtn) {
           submitBtn.disabled = isSubmitting;
-          submitBtn.textContent = isSubmitting ? 'Sending...' : 'Send Booking Request';
+          submitBtn.textContent = isSubmitting ? 'Sending...' : 'Send Ride Request';
         }
-        reviewBtn.disabled = isSubmitting || hasBlockedRoute().hasBlocked;
+
+        const routeStatus = hasBlockedRoute();
+        reviewBtn.disabled = isSubmitting || routeStatus.hasBlocked;
         reviewBtn.style.opacity = reviewBtn.disabled ? '0.6' : '1';
         reviewBtn.style.cursor = reviewBtn.disabled ? 'not-allowed' : 'pointer';
       }
 
-      async function submitBookingRequest() {
-        const templateParams = {
+      function buildTemplateParams() {
+        return {
           name: getFieldValue(nameField.value, ''),
           email: getFieldValue(emailField.value, ''),
           phone: formatPhoneValue(phoneField.value),
@@ -914,7 +949,16 @@ function updateAirportField() {
           flight_number: getFieldValue(flightNumberField.value, 'Not provided.'),
           details: getFieldValue(notesField.value, 'None provided.'),
           policy_agreed: policyAgree.checked ? 'Yes' : 'No',
+          manual_confirmation_required: coordinationNote.classList.contains('is-visible') ? 'Yes' : 'No'
         };
+      }
+
+      async function submitBookingRequest() {
+        if (!window.emailjs) {
+          throw new Error('EmailJS is not loaded.');
+        }
+
+        const templateParams = buildTemplateParams();
 
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ADMIN_TEMPLATE_ID, templateParams);
 
@@ -933,6 +977,7 @@ function updateAirportField() {
 
       function buildReview() {
         showFormMode();
+
         const route = resolveLocation(pickup, pickupCustom) + ' → ' + resolveLocation(dropoff, dropoffCustom);
         const isRoundTrip = roundtrip.value === 'yes';
         let roundTripText = 'No';
@@ -951,96 +996,123 @@ function updateAirportField() {
         reviewFields.passengers.textContent = getFieldValue(passengers.value);
         reviewFields.roundTrip.textContent = roundTripText;
         reviewFields.notes.textContent = getFieldValue(notesField.value, 'None provided.');
+
         successPanel.classList.remove('is-visible');
         reviewPanel.classList.add('is-visible');
         requirePolicyCheck();
         reviewPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
-      pickup.addEventListener('change', () => {
+      function resetBookingForm() {
+        bookingForm.reset();
+        populateTimeSelect(timeField, 'Select time');
+        populateTimeSelect(returnTimeField, 'Select return time');
+
+        pickupCustom.value = '';
+        dropoffCustom.value = '';
+        returnPickupCustom.value = '';
+        returnDropoffCustom.value = '';
+
+        toggleCustomGroup(pickup, pickupCustomGroup, pickupCustom);
+        toggleCustomGroup(dropoff, dropoffCustomGroup, dropoffCustom);
+        toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
+        toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
+
+        syncDateLimits();
+        updateRoundTrip();
+        updateRouteDependentFields();
+        resetPolicyCheck();
+      }
+
+      pickup.addEventListener('change', function () {
         hidePanels();
         toggleCustomGroup(pickup, pickupCustomGroup, pickupCustom);
-        updateAirportField();
-        validateRoute();
+        updateRouteDependentFields();
       });
 
-      dropoff.addEventListener('change', () => {
+      dropoff.addEventListener('change', function () {
         hidePanels();
         toggleCustomGroup(dropoff, dropoffCustomGroup, dropoffCustom);
-        updateAirportField();
-        validateRoute();
+        updateRouteDependentFields();
       });
 
-      returnPickup.addEventListener('change', () => {
+      returnPickup.addEventListener('change', function () {
         hidePanels();
         toggleCustomGroup(returnPickup, returnPickupCustomGroup, returnPickupCustom);
-        updateAirportField();
-        validateRoute();
+        updateRouteDependentFields();
       });
 
-      returnDropoff.addEventListener('change', () => {
+      returnDropoff.addEventListener('change', function () {
         hidePanels();
         toggleCustomGroup(returnDropoff, returnDropoffCustomGroup, returnDropoffCustom);
-        updateAirportField();
-        validateRoute();
+        updateRouteDependentFields();
       });
 
-      roundtrip.addEventListener('change', () => {
+      roundtrip.addEventListener('change', function () {
         hidePanels();
         updateRoundTrip();
       });
 
-      const routeSensitiveFields = [pickupCustom, dropoffCustom, returnPickupCustom, returnDropoffCustom];
-
-      [nameField, emailField, dateField, timeField, notesField, flightNumberField, passengers, pickupCustom, dropoffCustom, returnDateField, returnTimeField, returnPickupCustom, returnDropoffCustom].forEach((el) => {
-        if (!el) return;
-        const eventName = el.tagName === 'SELECT' ? 'change' : 'input';
-        el.addEventListener(eventName, () => {
+      [pickupCustom, dropoffCustom, returnPickupCustom, returnDropoffCustom].forEach(function (el) {
+        el.addEventListener('input', function () {
           hidePanels();
-          if (el === dateField || el === returnDateField) {
-            syncDateLimits();
-          }
-          if (routeSensitiveFields.includes(el)) {
-            updateAirportField();
-        validateRoute();
-          }
+          updateRouteDependentFields();
         });
       });
 
-      phoneField.addEventListener('input', () => {
+      [nameField, emailField, timeField, notesField, flightNumberField, passengers, returnTimeField].forEach(function (el) {
+        if (!el) return;
+
+        const eventName = el.tagName === 'SELECT' ? 'change' : 'input';
+        el.addEventListener(eventName, function () {
+          hidePanels();
+        });
+      });
+
+      [dateField, returnDateField].forEach(function (el) {
+        el.addEventListener('input', function () {
+          hidePanels();
+          syncDateLimits();
+        });
+      });
+
+      phoneField.addEventListener('input', function () {
         phoneField.value = phoneField.value.replace(/[^0-9]/g, '').slice(0, 10);
         hidePanels();
       });
 
-      reviewBtn.addEventListener('click', () => {
-        validateRoute();
+      reviewBtn.addEventListener('click', function () {
+        updateRouteDependentFields();
+
         if (hasBlockedRoute().hasBlocked) return;
         if (!bookingForm.reportValidity()) return;
+
         resetPolicyCheck();
         buildReview();
       });
 
-      editBtn.addEventListener('click', () => {
+      editBtn.addEventListener('click', function () {
         showFormMode();
         reviewPanel.classList.remove('is-visible');
         resetPolicyCheck();
         reviewBtn.focus();
       });
 
-      bookAnotherBtn.addEventListener('click', () => {
+      bookAnotherBtn.addEventListener('click', function () {
         hidePanels();
         resetBookingForm();
         showFormMode();
         nameField.focus();
       });
 
-      bookingForm.addEventListener('submit', async (event) => {
+      bookingForm.addEventListener('submit', async function (event) {
         event.preventDefault();
+        updateRouteDependentFields();
 
         if (!reviewPanel.classList.contains('is-visible')) {
-          validateRoute();
           if (hasBlockedRoute().hasBlocked) return;
           if (!bookingForm.reportValidity()) return;
+
           resetPolicyCheck();
           buildReview();
           return;
@@ -1048,10 +1120,12 @@ function updateAirportField() {
 
         if (hasBlockedRoute().hasBlocked) return;
         if (!bookingForm.reportValidity()) return;
+
         setSubmittingState(true);
 
         try {
           await submitBookingRequest();
+
           showSuccessMode();
           reviewPanel.classList.remove('is-visible');
           successName.textContent = reviewFields.name.textContent;
@@ -1079,8 +1153,7 @@ function updateAirportField() {
       populateTimeSelect(returnTimeField, 'Select return time');
       syncDateLimits();
       updateRoundTrip();
-      updateAirportField();
-        validateRoute();
+      updateRouteDependentFields();
       showFormMode();
     });
   </script>
