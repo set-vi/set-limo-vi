@@ -627,7 +627,7 @@
   23. Services status: service cards carry the service lanes directly.
   24. Service Promise status: converted from repeated three-card grid into a lighter trust strip.
   25. About status: heading changed to "Our Standard" and copy now explains the private ride experience without repeating the Service Promise or service menu.
-  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, treats event/hourly/daily estimates as review-based instead of fake calculator pricing, and removes the unused service-multiplier row.
+  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for up to 4 passengers, applies a $25 standard passenger adjustment for passengers 5 and 6, treats event/hourly/daily estimates as review-based instead of fake calculator pricing, and removes the unused service-multiplier row.
   27. Hero status: corrected. Hero now identifies the business name first, uses "Elevate Your Journey" as the muted premium tag, and uses one short luxury service-identity line without overstacking adjectives. Detailed service categories remain in Services, not the hero.
   -->
 
@@ -855,9 +855,9 @@
           <div id="route-warning" class="notice">Pickup and drop-off cannot be the same location.</div>
         </div>
 
-        <div class="form-section-label">Service Estimate</div>
+        <div id="service-estimate-label" class="form-section-label" style="display: none;">Service Estimate</div>
 
-        <div id="price-breakdown" class="form-row full">
+        <div id="price-breakdown" class="form-row full" style="display: none;">
           <div id="base-rate-row" class="estimate-row">
             <span>Starting rate</span>
             <span>$<span id="breakdown-base">180</span></span>
@@ -1030,6 +1030,8 @@
         const routeWarning = getRequiredElement("route-warning");
         const stJohnEstimateNote = getRequiredElement("st-john-estimate-note");
         const reviewEstimateMessage = getRequiredElement("review-estimate-message");
+        const serviceEstimateLabel = getRequiredElement("service-estimate-label");
+        const priceBreakdown = getRequiredElement("price-breakdown");
         const baseRateRow = getRequiredElement("base-rate-row");
         const estimateTotalRow = getRequiredElement("estimate-total-row");
         const stJohnAdjustmentRow = getRequiredElement("st-john-adjustment-row");
@@ -1110,6 +1112,17 @@
         }
 
         function updatePrice() {
+          const estimateReady = Boolean(serviceType.value);
+
+          if (!estimateReady) {
+            serviceEstimateLabel.style.display = "none";
+            priceBreakdown.style.display = "none";
+            return;
+          }
+
+          serviceEstimateLabel.style.display = "block";
+          priceBreakdown.style.display = "block";
+
           const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
           const reviewBasedService = serviceType.value && serviceType.value !== "transfer";
           const result = calculateTotal({
