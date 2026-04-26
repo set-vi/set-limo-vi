@@ -307,17 +307,109 @@
       border-radius: 8px;
     }
 
+    .form-row:has(> label + input),
+    .form-row:has(> label + select),
+    .form-row:has(> label + textarea),
+    .flight-grid > div,
+    .return-trip-grid > div {
+      position: relative;
+      padding: 10px 12px 11px;
+      background: #1b1b1b;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+    }
+
+    .form-row:has(> label + input) label,
+    .form-row:has(> label + select) label,
+    .form-row:has(> label + textarea) label,
+    .flight-grid label,
+    .return-trip-grid label {
+      margin-bottom: 4px;
+      color: #b88945;
+      font-size: 0.72em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .form-row:has(> label + input) input,
+    .form-row:has(> label + select) select,
+    .form-row:has(> label + textarea) textarea,
+    .flight-grid input,
+    .return-trip-grid input {
+      padding: 2px 0 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .form-row:has(> label + select) select {
+      min-height: 26px;
+      padding-right: 26px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-row:has(> label + select)::after {
+      content: "";
+      position: absolute;
+      right: 14px;
+      bottom: 17px;
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid rgba(184, 137, 73, 0.9);
+      border-bottom: 2px solid rgba(184, 137, 73, 0.9);
+      pointer-events: none;
+      transform: rotate(45deg);
+    }
+
+    .form-row select option,
+    .form-row select optgroup {
+      color: #e1e1e1;
+      font-family: "Poppins", Arial, sans-serif;
+      background: #111;
+    }
+
+    .form-row select optgroup {
+      color: #b88945;
+      font-weight: 700;
+    }
+
+    .form-row select option {
+      color: #e1e1e1;
+      font-weight: 500;
+    }
+
+    .form-row:has(> label + input):focus-within,
+    .form-row:has(> label + select):focus-within,
+    .form-row:has(> label + textarea):focus-within,
+    .flight-grid > div:focus-within,
+    .return-trip-grid > div:focus-within {
+      border-color: #b88945;
+      box-shadow: 0 0 0 3px rgba(184, 137, 73, 0.16);
+    }
+
     .form-row input:focus,
     .form-row select:focus,
     .form-row textarea:focus {
       outline: none;
-      border-color: #b88945;
-      box-shadow: 0 0 0 3px rgba(184, 137, 73, 0.16);
     }
 
     .form-row input::placeholder,
     .form-row textarea::placeholder {
       color: #9f9f9f;
+    }
+
+    .form-row input[type="date"]:required:invalid:not(:focus),
+    .form-row input[type="time"]:required:invalid:not(:focus) {
+      color: transparent;
+    }
+
+    .form-row input[type="date"]:required:invalid:not(:focus)::-webkit-datetime-edit,
+    .form-row input[type="time"]:required:invalid:not(:focus)::-webkit-datetime-edit {
+      color: transparent;
     }
 
     .form-row input[type="checkbox"] {
@@ -326,6 +418,7 @@
       transform: scale(1.15);
     }
 
+    .route-option-row,
     .round-trip-row {
       display: flex;
       align-items: center;
@@ -339,6 +432,7 @@
       border-radius: 8px;
     }
 
+    .route-option-row label,
     .round-trip-row label {
       margin: 0;
     }
@@ -459,22 +553,6 @@
       max-width: 1180px;
       margin: 0 auto;
     }
-
-
-    .footer-brand {
-      margin: 0 0 18px;
-      text-align: center;
-    }
-
-    .footer-brand-name {
-      margin: 0;
-      color: #b88945;
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: 1.42rem;
-      font-weight: 700;
-      letter-spacing: 0.025em;
-    }
-
     .footer-contact-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -680,6 +758,7 @@
   16. St. Thomas resort names may be listed because they are normal pickup/drop-off locations; St. John resort names should not be listed because St. John requires special coordination.
   17. St. John must remain a special-arrangement lane with customer-facing coordination notice.
   18. If Pickup or Drop-off is Hotel / Resort Not Listed, Villa / Private Residence, or Other / Custom Address, the existing Additional Instructions field becomes required. No new field, no location tab, no map lane.
+  18.1. Extra Stop is separate from Additional Instructions. It appears under Route as a checkbox and reveals Stop Details only when selected.
 
   LOCKED WORK ORDER
   19. Finish one section before moving to the next.
@@ -688,10 +767,10 @@
   22. Current active section: full non-gallery page polish and logic recheck.
   23. Services status: service cards carry the service lanes directly. The chauffeur lane must stay restrained: use concise premium wording, not keyword-stuffed labels.
   24. Service Commitment status: converted from repeated three-card grid into a lighter trust strip using restrained commitment language: Planned Timing, Clean Presentation, and Direct Communication.
-  25. About status: heading changed to "Our Standard" and copy now defines the operating standard without repeating the Service Commitment labels: scheduled rides, pickup timing, route planning, passenger comfort, and confirmation before service.
-  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
+  25. About status: heading changed to "Our Standard" and copy now defines the operating standard without repeating the Service Commitment labels: scheduled rides, pickup timing, route flow, passenger comfort, and a confirmed service plan.
+  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, embedded field labels, blank hidden select placeholders, controlled select-arrow styling, dark select-menu option styling, reduced native placeholder clutter, an Extra Stop route checkbox with conditional Stop Details, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
   27. Hero status: corrected. Hero begins with the business name only. No eyebrow line, no slogan, no tourist phrase, and no repeated service label above the company name. The paragraph uses "premium private transportation" once as the positioning line and does not duplicate the service menu. A compact proof strip supports the hero with verified facts instead of tenure/clientele claims.
-  28. Footer status: contact cards use restrained bronze SVG icons with contact text only. Footer includes one restrained brand anchor above the contact cards. Do not use raw colorful emoji, do not duplicate icon meaning with visible labels, and use intentional icon/text spacing instead of hidden visual spacers.
+  28. Footer status: contact cards use restrained bronze SVG icons with contact text only. Do not repeat the business name above the contact cards because the hero and copyright already carry the name. Do not use raw colorful emoji, do not duplicate icon meaning with visible labels, and use intentional icon/text spacing instead of hidden visual spacers.
   -->
 
   <nav aria-label="Primary navigation">
@@ -747,7 +826,7 @@
   <section id="about">
     <h2>Our Standard</h2>
     <div class="card about-card">
-      <p>Superb Executive Transportation is built for scheduled rides, not guesswork. Each request is reviewed for pickup timing, route planning, passenger comfort, and final service details before confirmation.</p>
+      <p>Superb Executive Transportation is built for scheduled rides, not guesswork. Every ride is planned around pickup timing, route flow, passenger comfort, and a confirmed service plan.</p>
     </div>
   </section>
 
@@ -762,7 +841,7 @@
 
   <section id="book">
     <h2>Request Transportation</h2>
-    <p class="booking-intro">Submit the request. We confirm availability, timing, route details, and final terms before service.</p>
+    <p class="booking-intro">Tell us where, when, and how many. We finalize the ride before service.</p>
 
     <div class="booking-form-container">
       <form id="booking-form" class="booking-grid" novalidate>
@@ -781,7 +860,7 @@
         <div class="form-row">
           <label for="service-type">Service Type</label>
           <select id="service-type" name="service-type" required>
-            <option value="" disabled selected>Select service type</option>
+            <option value="" disabled selected hidden></option>
             <option value="transfer">Airport / Resort Transfer</option>
             <option value="event">Event / Private Chauffeur</option>
             <option value="hourly-rental">Hourly Service</option>
@@ -799,7 +878,7 @@
         <div class="form-row">
           <label for="pickup">Pickup</label>
           <select id="pickup" name="pickup" required>
-            <option value="" disabled selected>Select pickup location</option>
+            <option value="" disabled selected hidden></option>
             <optgroup label="Transportation Hubs">
               <option value="cyril-e-king-airport">Cyril E. King Airport</option>
               <option value="havensight-cruise-port">Havensight Cruise Port</option>
@@ -831,7 +910,7 @@
         <div class="form-row">
           <label for="dropoff">Drop-off</label>
           <select id="dropoff" name="dropoff" required>
-            <option value="" disabled selected>Select drop-off location</option>
+            <option value="" disabled selected hidden></option>
             <optgroup label="Transportation Hubs">
               <option value="cyril-e-king-airport">Cyril E. King Airport</option>
               <option value="havensight-cruise-port">Havensight Cruise Port</option>
@@ -860,6 +939,18 @@
           </select>
         </div>
 
+        <div class="form-row full">
+          <div class="route-option-row">
+            <input type="checkbox" id="extra-stop" name="extra-stop" />
+            <label for="extra-stop">Extra Stop</label>
+          </div>
+        </div>
+
+        <div id="extra-stop-section" class="form-row full" style="display: none;">
+          <label for="stop-details">Stop Details</label>
+          <textarea id="stop-details" name="stop-details" rows="2" placeholder="Stop location, timing, or quick note"></textarea>
+        </div>
+
         <div id="flight-info" class="form-row full" style="display: none;">
           <div class="flight-grid">
             <div>
@@ -882,7 +973,7 @@
 
         <div class="form-row">
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" inputmode="tel" pattern="[0-9]{10}" placeholder="10-digit phone number" autocomplete="tel" required />
+          <input type="tel" id="phone" name="phone" inputmode="tel" pattern="[0-9]{10}" autocomplete="tel" required />
         </div>
 
         <div class="form-row">
@@ -947,7 +1038,7 @@
             <span>$<span id="total-price">180</span></span>
           </div>
           <div id="review-estimate-message" class="estimate-note">Hourly, event, and daily service requests are reviewed based on requested time and itinerary.</div>
-          <div class="estimate-confirmation">Final availability and service details will be confirmed after review.</div>
+          <div class="estimate-confirmation">Final terms are confirmed before service.</div>
           <div id="st-john-estimate-note" class="estimate-note">St. John estimate starts at $700 before capacity or round-trip adjustment.</div>
         </div>
 
@@ -960,10 +1051,6 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-brand">
-        <p class="footer-brand-name">Superb Executive Transportation</p>
-      </div>
-
       <div class="footer-contact-grid" aria-label="Contact information">
         <div class="footer-contact-card">
           <span class="footer-icon" aria-hidden="true">
@@ -1111,6 +1198,9 @@
         const flightNumber = getRequiredElement("flight-number");
         const luggagePieces = getRequiredElement("luggage-pieces");
         const specialRequests = getRequiredElement("special-requests");
+        const extraStop = getRequiredElement("extra-stop");
+        const extraStopSection = getRequiredElement("extra-stop-section");
+        const stopDetails = getRequiredElement("stop-details");
         const returnTime = getRequiredElement("return-time");
         const submitButton = getRequiredElement("submit-button");
         const numPassengers = getRequiredElement("number-of-passengers");
@@ -1201,6 +1291,14 @@
           specialRequests.required = customLocation;
           specialRequests.placeholder = customLocation ? "Enter the hotel, villa, residence, or custom address." : "";
           specialRequests.setCustomValidity(customLocation && !specialRequests.value.trim() ? "Enter the hotel, villa, residence, or custom address." : "");
+
+          extraStopSection.style.display = extraStop.checked ? "block" : "none";
+          stopDetails.required = extraStop.checked;
+          stopDetails.setCustomValidity(extraStop.checked && !stopDetails.value.trim() ? "Enter stop details." : "");
+
+          if (!extraStop.checked) {
+            stopDetails.value = "";
+          }
         }
 
         function updateReviewEstimateMessage() {
@@ -1312,15 +1410,15 @@
           if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event")) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. Final details are confirmed after review.";
+            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr.";
           }
 
           if (reviewBasedService && stJohnTrip) {
-            return "Daily service estimate will be confirmed after review based on requested time, itinerary, and St. John coordination.";
+            return "Daily service is reviewed by requested time, itinerary, vehicle availability, and St. John coordination.";
           }
 
           if (reviewBasedService) {
-            return "Daily service estimate will be confirmed after review based on requested time and itinerary.";
+            return "Daily service is reviewed by requested time, itinerary, and vehicle availability.";
           }
 
           if (stJohnTrip) {
@@ -1352,6 +1450,8 @@
             return_dropoff: roundTrip.checked ? getFieldValue(pickupText, "") : "Not applicable.",
             flight_number: getFieldValue(flightNumber.value, "Not provided."),
             details: getFieldValue(specialRequests.value, "None provided."),
+            extra_stop: extraStop.checked ? "Yes" : "No",
+            stop_details: extraStop.checked ? getFieldValue(stopDetails.value, "Not provided.") : "Not applicable.",
             luggage_pieces: getFieldValue(luggagePieces.value, "0"),
             service_type: getSelectText(serviceType),
             hours_requested: getFieldValue(hoursRequested.value, ""),
@@ -1388,6 +1488,8 @@
         dropoff.addEventListener("change", refreshForm);
         numPassengers.addEventListener("input", refreshForm);
         specialRequests.addEventListener("input", refreshForm);
+        extraStop.addEventListener("change", refreshForm);
+        stopDetails.addEventListener("input", refreshForm);
 
         bookingDate.addEventListener("change", function () {
           returnDate.min = bookingDate.value || bookingDate.min;
@@ -1455,7 +1557,7 @@
 
           try {
             await submitBookingRequest();
-            alert("Request received. We will contact you to confirm availability, timing, route details, and final service terms.");
+            alert("Request received. We will contact you to finalize your ride.");
             form.reset();
             returnTripSection.style.display = "none";
             returnDate.required = false;
