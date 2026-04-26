@@ -418,14 +418,22 @@
       transform: scale(1.15);
     }
 
+    .route-options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
     .route-option-row,
     .round-trip-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: fit-content;
-      min-width: 220px;
-      margin: 0 auto;
+      width: 100%;
+      min-width: 0;
+      margin: 0;
       padding: 10px 22px;
       background: #1b1b1b;
       border: 1px solid rgba(255, 255, 255, 0.14);
@@ -654,6 +662,7 @@
       .hero-proof-strip,
       .trust-strip,
       .booking-grid,
+      .route-options-grid,
       .flight-grid,
       .return-trip-grid {
         grid-template-columns: 1fr;
@@ -768,9 +777,9 @@
   23. Services status: service cards carry the service lanes directly. The chauffeur lane must stay restrained: use concise premium wording, not keyword-stuffed labels.
   24. Service Commitment status: converted from repeated three-card grid into a lighter trust strip using restrained commitment language: Planned Timing, Clean Presentation, and Direct Communication.
   25. About status: heading changed to "Our Standard" and copy now defines the operating standard without repeating the Service Commitment labels: scheduled rides, pickup timing, route flow, passenger comfort, and a confirmed service plan.
-  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, embedded field labels, blank hidden select placeholders, controlled select-arrow styling, dark select-menu option styling, reduced native placeholder clutter, an Extra Stop route checkbox with conditional Stop Details, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Ride Details for custom locations, requires Flight Number when an airport route is selected, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
+  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, embedded field labels, blank hidden select placeholders, controlled select-arrow styling, dark select-menu option styling, reduced native placeholder clutter, Route now contains Round Trip and Extra Stop controls with conditional Return Trip and Stop Details fields, route warnings stay inside the Route section, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Ride Details for custom locations, requires Flight Number for airport pickup, shows flight/luggage fields for any airport route, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
   27. Hero status: corrected. Hero begins with the business name only. No eyebrow line, no slogan, no tourist phrase, and no repeated service label above the company name. The paragraph uses "premium private transportation" once as the positioning line and does not duplicate the service menu. A compact proof strip supports the hero with verified facts instead of tenure/clientele claims.
-  28. Footer status: contact cards use restrained bronze SVG icons with contact text only. Do not repeat the business name above the contact cards because the hero and copyright already carry the name. Do not use raw colorful emoji, do not duplicate icon meaning with visible labels, and use intentional icon/text spacing instead of hidden visual spacers.
+  28. Footer status: contact cards use restrained bronze SVG icons with contact text only. Do not repeat the business name above the contact cards because the hero and copyright already carry the name. Privacy Policy and Terms links are removed until actual pages exist. Do not use raw colorful emoji, do not duplicate icon meaning with visible labels, and use intentional icon/text spacing instead of hidden visual spacers.
   -->
 
   <nav aria-label="Primary navigation">
@@ -940,15 +949,34 @@
         </div>
 
         <div class="form-row full">
-          <div class="route-option-row">
-            <input type="checkbox" id="extra-stop" name="extra-stop" />
-            <label for="extra-stop">Extra Stop</label>
+          <div class="route-options-grid">
+            <div class="round-trip-row">
+              <input type="checkbox" id="round-trip" name="round-trip" />
+              <label for="round-trip">Round Trip</label>
+            </div>
+            <div class="route-option-row">
+              <input type="checkbox" id="extra-stop" name="extra-stop" />
+              <label for="extra-stop">Extra Stop</label>
+            </div>
           </div>
         </div>
 
         <div id="extra-stop-section" class="form-row full" style="display: none;">
           <label for="stop-details">Stop Details</label>
           <textarea id="stop-details" name="stop-details" rows="2" placeholder="Stop location, timing, or quick note"></textarea>
+        </div>
+
+        <div id="return-trip-section" class="form-row full" style="display: none;">
+          <div class="return-trip-grid">
+            <div>
+              <label for="return-date">Return Date</label>
+              <input type="date" id="return-date" name="return-date" />
+            </div>
+            <div>
+              <label for="return-time">Return Time</label>
+              <input type="time" id="return-time" name="return-time" step="1800" />
+            </div>
+          </div>
         </div>
 
         <div id="flight-info" class="form-row full" style="display: none;">
@@ -962,6 +990,11 @@
               <input type="number" id="luggage-pieces" name="luggage-pieces" min="0" value="0" />
             </div>
           </div>
+        </div>
+
+        <div class="form-row full">
+          <div id="st-john-notice" class="notice">St. John trips require additional coordination. After you submit your request, we will reach out to confirm arrangements.</div>
+          <div id="route-warning" class="notice">Pickup and drop-off cannot be the same location.</div>
         </div>
 
         <div class="form-section-label">Passenger &amp; Contact</div>
@@ -988,30 +1021,8 @@
         </div>
 
         <div class="form-row full">
-          <div class="round-trip-row">
-            <input type="checkbox" id="round-trip" name="round-trip" />
-            <label for="round-trip">Round Trip</label>
-          </div>
-        </div>
-
-        <div id="return-trip-section" class="form-row full" style="display: none;">
-          <div class="return-trip-grid">
-            <div>
-              <label for="return-date">Return Date</label>
-              <input type="date" id="return-date" name="return-date" />
-            </div>
-            <div>
-              <label for="return-time">Return Time</label>
-              <input type="time" id="return-time" name="return-time" step="1800" />
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row full">
           <label for="special-requests">Ride Details</label>
           <textarea id="special-requests" name="special-requests" rows="3"></textarea>
-          <div id="st-john-notice" class="notice">St. John trips require additional coordination. After you submit your request, we will reach out to confirm arrangements.</div>
-          <div id="route-warning" class="notice">Pickup and drop-off cannot be the same location.</div>
         </div>
 
         <div id="service-estimate-label" class="form-section-label" style="display: none;">Estimated Rate</div>
@@ -1040,7 +1051,7 @@
           <div id="review-estimate-message" class="estimate-note">Hourly, event, and daily service requests are reviewed based on requested time and itinerary.</div>
           <div class="estimate-confirmation">Final terms are confirmed before service.</div>
           <div id="st-john-estimate-note" class="estimate-note">St. John estimate starts at $700 before capacity or round-trip adjustment.</div>
-          <div id="extra-stop-estimate-note" class="estimate-note">Extra stop requested. Final rate is confirmed before service.</div>
+          <div id="extra-stop-estimate-note" class="estimate-note">Extra stop requested. Extra stops may affect the final rate.</div>
         </div>
 
         <div class="form-row full">
@@ -1086,10 +1097,6 @@
 
       <div class="footer-bottom">
         <span>&copy; 2026 Superb Executive Transportation. All rights reserved.</span>
-        <div class="footer-links">
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms &amp; Conditions</a>
-        </div>
       </div>
     </div>
   </footer>
@@ -1235,8 +1242,9 @@
 
         function toggleFlightInfo() {
           const airportRoute = isAirportRoute(pickup.value, dropoff.value);
+          const airportPickup = pickup.value === AIRPORT_VALUE;
           flightInfo.style.display = airportRoute ? "block" : "none";
-          flightNumber.required = airportRoute;
+          flightNumber.required = airportPickup;
 
           if (!airportRoute) {
             flightNumber.value = "";
@@ -1316,13 +1324,15 @@
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
             const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John coordination requires final review." : "";
-            reviewEstimateMessage.textContent = "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + stJohnText;
+            const extraStopText = extraStop.checked ? " Extra stops may affect the final rate." : "";
+            reviewEstimateMessage.textContent = "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + stJohnText + extraStopText;
             return;
           }
 
           if (serviceType.value === "daily-rental") {
             const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John coordination requires final review." : "";
-            reviewEstimateMessage.textContent = "Daily service is reviewed by requested time, itinerary, and vehicle availability." + stJohnText;
+            const extraStopText = extraStop.checked ? " Extra stops may affect the final rate." : "";
+            reviewEstimateMessage.textContent = "Daily service is reviewed by requested time, itinerary, and vehicle availability." + stJohnText + extraStopText;
             return;
           }
 
@@ -1359,7 +1369,7 @@
             estimateTotalRow.style.display = "none";
             reviewEstimateMessage.style.display = "block";
             stJohnEstimateNote.style.display = "none";
-            extraStopEstimateNote.style.display = extraStop.checked ? "block" : "none";
+            extraStopEstimateNote.style.display = "none";
             return;
           }
 
@@ -1415,21 +1425,21 @@
           if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event") && stJohnTrip) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review.";
+            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
           }
 
           if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event")) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr.";
+            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
           }
 
           if (reviewBasedService && stJohnTrip) {
-            return "Daily service is reviewed by requested time, itinerary, vehicle availability, and St. John coordination.";
+            return "Daily service is reviewed by requested time, itinerary, vehicle availability, and St. John coordination." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
           }
 
           if (reviewBasedService) {
-            return "Daily service is reviewed by requested time, itinerary, and vehicle availability.";
+            return "Daily service is reviewed by requested time, itinerary, and vehicle availability." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
           }
 
           if (stJohnTrip && extraStop.checked) {
@@ -1441,7 +1451,7 @@
           }
 
           if (extraStop.checked) {
-            return "Estimated request total: $" + totalPriceEl.textContent + ". Extra stop requires final rate confirmation.";
+            return "Estimated request total: $" + totalPriceEl.textContent + ". Extra stops may affect the final rate.";
           }
 
           return "Estimated request total: $" + totalPriceEl.textContent + ".";
@@ -1579,6 +1589,8 @@
             alert("Request received. We will contact you to finalize your ride.");
             form.reset();
             returnTripSection.style.display = "none";
+            extraStopSection.style.display = "none";
+            stopDetails.required = false;
             returnDate.required = false;
             returnTime.required = false;
             refreshForm();
