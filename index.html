@@ -232,12 +232,8 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .gallery img.gallery-exterior {
-      padding: 18px;
-      object-fit: contain;
-      object-position: center;
-      background:
-        radial-gradient(circle at center, rgba(184, 137, 73, 0.16), rgba(10, 10, 10, 0.86) 58%, #050505 100%);
+    .gallery img.gallery-location {
+      object-position: center 58%;
     }
 
     .gallery img:hover {
@@ -849,8 +845,8 @@
   LOCKED WORK ORDER
   19. Finish one section before moving to the next.
   20. Current order: Hero, Services, Service Commitment, Our Standard, Gallery / Vehicle Proof, Request Transportation, Footer.
-  21. Gallery is active for vehicle-proof presentation. Do not change the actual image files unless the user provides replacement images.
-  22. Current active section: Gallery / Vehicle Proof exterior-image presentation.
+  21. Gallery is active for vehicle-proof presentation. The exterior gallery image now uses the user-provided black-van ocean photo as the location-proof image.
+  22. Current active section: Gallery / Vehicle Proof exterior-image presentation with real-location proof.
   23. Services status: service cards carry the service lanes directly. The chauffeur lane must stay restrained: use concise premium wording, not keyword-stuffed labels.
   24. Service Commitment status: converted from repeated three-card grid into a lighter trust strip using restrained commitment language: Planned Timing, Clean Presentation, and Direct Communication.
   25. About status: heading changed to "Our Standard" and copy now defines the operating standard without repeating the Service Commitment labels: scheduled rides, pickup timing, route flow, passenger comfort, and a confirmed service plan.
@@ -921,7 +917,7 @@
     <div class="gallery">
       <img src="png/luxury-int.png" alt="Interior of luxury van" />
       <img src="png/luxury-int2.png" alt="Van interior lighting" />
-      <img class="gallery-exterior" src="png/van1.png" alt="Exterior view of van" />
+      <img class="gallery-location" src="png/van-ocean.png" alt="Exterior view of black executive van near the ocean" />
     </div>
   </section>
 
