@@ -3,204 +3,1341 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Superb Executive Transportation Flyer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet" />
+  <title>Superb Executive Transportation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
-    body {
-      margin: 0;
-      padding: 40px 20px;
-      background: #000;
-      color: #fff;
-      font-family: 'Source Sans Pro', sans-serif;
-      display: flex;
-      justify-content: center;
+    html {
+      scroll-padding-top: 80px;
+      scroll-behavior: smooth;
     }
 
-    .flyer {
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", Arial, sans-serif;
+      font-size: 1.1em;
+      background:
+        radial-gradient(circle at top, rgba(201, 163, 74, 0.05), transparent 28%),
+        linear-gradient(180deg, #000 0%, #090909 48%, #181818 100%);
+      color: #d6d6d6;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.92);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    }
+
+    nav a {
+      position: relative;
+      margin: 0 20px;
+      color: #bdbdbd;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background-color: #c9a34a;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #c9a34a;
+    }
+
+    nav a:hover::after {
       width: 100%;
-      max-width: 600px;
-      background: #111;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(197, 160, 60, 0.28);
+    }
+
+    section {
+      max-width: 1180px;
+      margin: auto;
+      padding: 64px 20px;
+    }
+
+    h1,
+    h2 {
+      margin-top: 0;
+      color: #c9a34a;
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.015em;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: clamp(2.35rem, 5.4vw, 4.05rem);
+      line-height: 1.08;
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: clamp(1.85rem, 3.5vw, 2.45rem);
+      color: #c3a25a;
+    }
+
+    .section-intro {
+      max-width: 760px;
+      margin: 0 auto 34px;
+      color: #bdbdbd;
       text-align: center;
     }
 
     .hero {
-      background: #000;
+      padding: 60px 20px 50px;
+      text-align: center;
     }
 
-    .hero img {
-      width: 100%;
-      height: 320px;
-      object-fit: contain;
-      object-position: center center;
-      display: block;
-      background: #000;
-      padding-top: 8px;
+    .hero p {
+      margin-top: 12px;
+      color: #d2d2d2;
+      font-size: 1.12em;
+      letter-spacing: 0.02em;
     }
 
-    .hero-content {
-      padding: 16px 24px 6px;
-    }
-
-    .hero h1 {
-      margin: 8px 0 8px;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.68em;
-      line-height: 1.15;
-      color: #c5a03c;
-    }
-
-    .service-line {
-      margin: 0;
-      font-size: 1.08em;
+    .hero-subline {
+      margin: 0 auto 14px;
+      color: #b8b8b8;
+      font-size: 0.84em;
       font-weight: 600;
-      line-height: 1.35;
-      color: #fff;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
-    .location-line {
-      margin: 8px 0 0;
-      font-size: 1.02em;
-      line-height: 1.4;
-      color: #fff;
-    }
-
-    .vehicle-line {
-      margin-top: 8px;
-      font-size: 1.02em;
-      font-weight: 700;
-      line-height: 1.35;
-      color: #fff;
-    }
-
-    .contact {
-      padding: 24px 24px 30px;
-    }
-
-    .qr-caption {
-      margin: 0 0 14px;
-      font-size: 1.18em;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .qr {
-      margin-bottom: 14px;
-    }
-
-    .qr img {
-      width: 200px;
-      border: 2px solid #c5a03c;
-      border-radius: 8px;
-      background: #fff;
+    .btn {
       display: inline-block;
-    }
-
-    .contact p {
-      margin: 10px 0;
-      font-size: 1.06em;
-    }
-
-    .contact a {
+      margin-top: 22px;
+      padding: 12px 30px;
+      color: #000;
+      font-weight: 700;
       text-decoration: none;
-      display: inline-flex;
+      background: linear-gradient(145deg, #c8a24a, #8f732d);
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 34px 30px;
+      text-align: center;
+      background: rgba(16, 16, 16, 0.92);
+      border: 1px solid rgba(201, 163, 74, 0.16);
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #f0f0f0;
+      font-size: 1.2em;
+    }
+
+    .card p {
+      margin: 0;
+      color: #c9c9c9;
+      line-height: 1.7;
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 940px;
+      margin: 0 auto;
+      background: rgba(16, 16, 16, 0.72);
+      border: 1px solid rgba(201, 163, 74, 0.16);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .trust-item {
+      padding: 22px 24px;
+      color: #f0f0f0;
+      font-size: 1.02em;
+      font-weight: 700;
+      text-align: center;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .trust-item:last-child {
+      border-right: 0;
+    }
+
+    .about-card {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border: 1px solid rgba(201, 163, 74, 0.14);
+      border-radius: 14px;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
+    }
+
+    .booking-intro {
+      max-width: 720px;
+      margin: -4px auto 28px;
+      color: #bdbdbd;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .booking-form-container {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 26px;
+      background: rgba(18, 18, 18, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 20px;
+    }
+
+    .form-row {
+      margin-bottom: 0;
+    }
+
+    .form-section-label {
+      grid-column: 1 / -1;
+      margin: 8px 0 -2px;
+      padding-top: 12px;
+      color: #c9a34a;
+      font-size: 0.82em;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .form-section-label:first-child {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .form-row.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-row label {
+      display: block;
+      margin-bottom: 6px;
+      color: #e7e7e7;
+      font-weight: 600;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      padding: 12px;
+      color: #dcdcdc;
+      font-family: inherit;
+      font-size: 1em;
+      background: #1b1b1b;
+      border: 1px solid rgba(201, 163, 74, 0.28);
+      border-radius: 8px;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      outline: none;
+      border-color: #c9a34a;
+      box-shadow: 0 0 0 3px rgba(224, 176, 0, 0.12);
+    }
+
+    .form-row input::placeholder,
+    .form-row textarea::placeholder {
+      color: #9f9f9f;
+    }
+
+    .form-row input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+      transform: scale(1.15);
+    }
+
+    .round-trip-row {
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      width: fit-content;
+      min-width: 220px;
+      margin: 0 auto;
+      padding: 10px 22px;
+      background: #1b1b1b;
+      border: 1px solid rgba(201, 163, 74, 0.28);
+      border-radius: 8px;
     }
 
-    .contact .icon {
-      width: 18px;
-      height: 18px;
-      color: #c5a03c;
-      flex-shrink: 0;
+    .round-trip-row label {
+      margin: 0;
     }
 
-    .contact .label {
+    .flight-grid,
+    .return-trip-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .notice,
+    #passenger-warning {
+      display: none;
+      margin-top: 10px;
+      padding: 12px 14px;
+      color: #efefef !important;
+      font-size: 0.96em;
+      font-weight: 500;
+      background: rgba(201, 163, 74, 0.09);
+      border-left: 4px solid #c9a34a;
+      border-radius: 8px;
+    }
+
+    .notice.show,
+    #passenger-warning.show {
+      display: block;
+    }
+
+    #price-breakdown {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+    }
+
+    #price-breakdown p {
+      margin: 0 0 14px;
+      color: #f2f2f2;
+      font-size: 1.08em;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    .estimate-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 8px 0;
+      color: #c8c8c8;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .estimate-row:last-child {
+      border-bottom: 0;
+    }
+
+    .estimate-total {
+      margin-top: 6px;
+      padding-top: 12px;
       color: #fff;
+      font-size: 1.18em;
+      font-weight: 700;
+      border-top: 1px solid rgba(201, 163, 74, 0.20);
     }
 
-    @media (max-width: 480px) {
-      .hero img {
-        height: 260px;
-        padding-top: 6px;
+    .estimate-note {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      color: #efefef;
+      font-weight: 500;
+      background: rgba(201, 163, 74, 0.09);
+      border-left: 4px solid #c9a34a;
+      border-radius: 8px;
+    }
+
+    .estimate-confirmation {
+      margin-top: 12px;
+      color: #bdbdbd;
+      font-size: 0.94em;
+      text-align: center;
+    }
+
+    #submit-button {
+      display: block;
+      width: auto;
+      min-width: 220px;
+      margin: 0 auto;
+      padding: 13px 34px;
+      color: #000;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(145deg, #c8a24a, #8f732d);
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    #submit-button:hover {
+      filter: brightness(1.08);
+    }
+
+    .site-footer {
+      margin-top: 32px;
+      padding: 34px 20px 26px;
+      color: #bfbfbf;
+      background: linear-gradient(180deg, rgba(10, 10, 10, 0.96), #000);
+      border-top: 1px solid rgba(201, 163, 74, 0.22);
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+
+    .footer-contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      margin: 10px 0 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-contact-card {
+      padding: 18px 20px;
+      text-align: center;
+      background: transparent;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-contact-card:last-child {
+      border-right: 0;
+    }
+
+    .footer-label {
+      display: block;
+      margin-bottom: 6px;
+      color: #c9a34a;
+      font-size: 0.78em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .footer-contact-card a,
+    .footer-contact-card span:last-child {
+      color: #e1e1e1;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-contact-card a:hover {
+      color: #c9a34a;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 22px;
+      color: #9f9f9f;
+      font-size: 0.92em;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #cfcfcf;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #c9a34a;
+    }
+
+    @media (max-width: 900px) {
+      .card-grid,
+      .trust-strip,
+      .booking-grid,
+      .flight-grid,
+      .return-trip-grid {
+        grid-template-columns: 1fr;
       }
 
-      .hero-content {
-        padding: 14px 18px 6px;
+      .trust-item {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
 
-      .hero h1 {
-        font-size: 1.52em;
+      .trust-item:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 12px;
       }
 
-      .service-line {
-        font-size: 0.98em;
+      nav a {
+        margin: 8px 10px;
+        font-size: 0.92em;
       }
 
-      .location-line {
-        font-size: 0.95em;
+      section {
+        padding: 54px 16px;
       }
 
-      .vehicle-line {
-        font-size: 0.95em;
+      .hero {
+        padding: 46px 16px 40px;
       }
 
-      .qr-caption {
-        font-size: 1.05em;
+      .hero p {
+        font-size: 1.03em;
       }
 
-      .contact p {
-        font-size: 1em;
+      .booking-form-container {
+        padding: 18px;
       }
 
-      .qr img {
-        width: 170px;
+      #submit-button {
+        width: 100%;
+      }
+
+      .site-footer {
+        padding: 36px 16px 26px;
+      }
+
+      .footer-contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-contact-card {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .footer-contact-card:last-child {
+        border-bottom: 0;
+      }
+
+      .footer-bottom {
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
       }
     }
   </style>
 </head>
 <body>
-  <div class="flyer">
-    <div class="hero">
-      <img src="png/van1.png" alt="Luxury Van" />
-      <div class="hero-content">
-        <h1>Superb Executive Transportation</h1>
-        <p class="service-line">Luxury Private Transportation</p>
-        <p class="location-line">Serving St. Thomas &amp; St. John</p>
-        <p class="vehicle-line">6-Passenger Executive Van</p>
+  <!--
+  WORKING WEBSITE PLAN - TEMPORARY CONTROL NOTE
+
+  PURPOSE
+  1. This note controls design direction during development and must be updated whenever an important finding changes the plan.
+  2. Remove this note before publishing.
+
+  MARKET POSITION
+  3. Superb Executive Transportation is a company website first, not a booking advertisement.
+  4. Benchmark only against local premium/private transportation websites a St. Thomas or St. John visitor would compare before booking: Royal Limousine VI, Exclusive Limousine VI, Presidential Limousine VI, Virgin Islands Platinum Services, and functional private-transfer booking pages such as CaribbaConnect.
+  5. Positioning target: premium like Exclusive Limousine VI and Presidential Limousine VI; functional like Royal Limousine VI; cleaner than taxi/shuttle pages; less cluttered than marketplace booking pages.
+  6. Superb must compete through restraint: cleaner hierarchy, fewer claims, stronger trust language, black/gray/champagne discipline, premium spacing, clear route logic, and a minimal request flow.
+  7. Do not add features merely because competitors have them. Add only what strengthens premium private transportation, airport/ferry reliability, St. John coordination, or booking clarity.
+
+  ACTIVE DESIGN RULES
+  8. Booking must remain available but secondary to brand, services, trust, and vehicle proof.
+  8.1. Passenger capacity is capped at 6 passengers. Do not use second-vehicle, larger-group, or flexible capacity language.
+  9. Hero must establish company identity; it must not become a flyer, booking ad, or oversized vehicle showcase.
+  10. Gallery handles vehicle proof unless a hero image is separately planned and approved.
+  11. Gold/champagne is an accent. Gray controls tone. Black controls premium feel.
+  12. No visual change happens without first stating intent, expected effect, and risk.
+  13. If a visible element is identified as weak, remove or repair it in the next controlled pass instead of repeatedly reporting it.
+
+  LOCATION / BOOKING RULES
+  14. Location taxonomy must support airport, cruise ports, Red Hook ferry terminal, downtown Charlotte Amalie ferry terminal, St. Thomas resorts, villas/private residences, St. John, and other custom addresses.
+  15. Red Hook / Urman Victor Fredericks Marine Terminal and Downtown Charlotte Amalie / Edward W. Blyden IV Marine Terminal must remain separate options.
+  16. St. Thomas resort names may be listed because they are normal pickup/drop-off locations; St. John resort names should not be listed because St. John requires special coordination.
+  17. St. John must remain a special-arrangement lane with customer-facing coordination notice.
+  18. If Pickup or Drop-off is Hotel / Resort Not Listed, Villa / Private Residence, or Other / Custom Address, the existing Additional Instructions field becomes required. No new field, no location tab, no map lane.
+
+  LOCKED WORK ORDER
+  19. Finish one section before moving to the next.
+  20. Current order: Hero, Services, Service Promise, Our Standard, Gallery / Vehicle Proof, Request Transportation, Footer.
+  21. Gallery images are parked for now by user instruction; do not touch images yet.
+  22. Current active section: full non-gallery page polish and logic recheck.
+  23. Services status: service cards carry the service lanes directly.
+  24. Service Promise status: converted from repeated three-card grid into a lighter trust strip.
+  25. About status: heading changed to "Our Standard" and copy now explains the private ride experience without repeating the Service Promise or service menu.
+  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, treats event/hourly/daily estimates as review-based instead of fake calculator pricing, and removes the unused service-multiplier row.
+  27. Hero status: corrected. Hero now identifies the business name first, uses "Elevate Your Journey" as the muted premium tag, and uses one short luxury service-identity line without overstacking adjectives. Detailed service categories remain in Services, not the hero.
+  -->
+
+  <nav aria-label="Primary navigation">
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#why-us">Service Promise</a>
+    <a href="#about">Our Standard</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#book">Request Service</a>
+  </nav>
+
+  <section id="home" class="hero">
+    <div class="hero-subline">Elevate Your Journey</div>
+    <h1>Superb Executive Transportation</h1>
+    <p>Private luxury transportation in St. Thomas with coordinated St. John requests.</p>
+    <a href="#book" class="btn">Request Service</a>
+  </section>
+
+  <section id="services">
+    <h2>Our Services</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Airport, Resort &amp; Villa Transfers</h3>
+        <p>Private airport arrivals, resort pickups, villa transportation, and direct point-to-point transfers.</p>
+      </div>
+      <div class="card">
+        <h3>Ferry &amp; St. John Coordination</h3>
+        <p>Transportation planned around ferry movement, Red Hook timing, and coordinated St. John service requests.</p>
+      </div>
+      <div class="card">
+        <h3>Events, Hourly &amp; Private Service</h3>
+        <p>Private service for events, dinners, corporate needs, multi-stop plans, and reserved hourly transportation.</p>
       </div>
     </div>
+  </section>
 
-    <div class="contact">
-      <div class="qr-caption">Scan or Click to Start Your Booking</div>
+  <section id="why-us">
+    <h2>Service Promise</h2>
 
-      <div class="qr">
-        <a href="https://set-vi.github.io/set-limo-vi/booking.html" target="_blank" rel="noopener noreferrer">
-          <img src="https://quickchart.io/qr?text=https%3A%2F%2Fset-vi.github.io%2Fset-limo-vi%2Fbooking.html&size=300&margin=1&ecLevel=H" alt="QR Booking Code" />
-        </a>
+    <div class="trust-strip" aria-label="Service promise">
+      <div class="trust-item">Reliable Timing</div>
+      <div class="trust-item">Private Ride</div>
+      <div class="trust-item">Clear Communication</div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>Our Standard</h2>
+    <div class="card about-card">
+      <p>Superb Executive Transportation is built around a private, scheduled ride experience from the first request to final arrival. Each reservation is handled with professional coordination, clean presentation, and direct attention to the details that matter.</p>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery">
+      <img src="png/luxury-int.png" alt="Interior of luxury van" />
+      <img src="png/luxury-int2.png" alt="Van interior lighting" />
+      <img src="png/van1.png" alt="Exterior view of van" />
+    </div>
+  </section>
+
+  <section id="book">
+    <h2>Request Transportation</h2>
+    <p class="booking-intro">Submit your request and we will contact you to confirm availability and final details.</p>
+
+    <div class="booking-form-container">
+      <form id="booking-form" class="booking-grid" novalidate>
+        <div class="form-section-label">Trip Details</div>
+
+        <div class="form-row">
+          <label for="booking-date">Service Date</label>
+          <input type="date" id="booking-date" name="booking-date" required />
+        </div>
+
+        <div class="form-row">
+          <label for="booking-time">Service Time</label>
+          <input type="time" id="booking-time" name="booking-time" required step="1800" />
+        </div>
+
+        <div class="form-row">
+          <label for="service-type">Service Type</label>
+          <select id="service-type" name="service-type" required>
+            <option value="" disabled selected>Select service type</option>
+            <option value="transfer">Airport / Resort Transfer</option>
+            <option value="event">Event / Private Service</option>
+            <option value="hourly-rental">Hourly Service</option>
+            <option value="daily-rental">Daily Service</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="hours-requested">Hours Requested</label>
+          <input type="number" id="hours-requested" name="hours-requested" min="2" required />
+        </div>
+
+        <div class="form-section-label">Route</div>
+
+        <div class="form-row">
+          <label for="pickup">Pickup</label>
+          <select id="pickup" name="pickup" required>
+            <option value="" disabled selected>Select pickup location</option>
+            <optgroup label="Transportation Hubs">
+              <option value="cyril-e-king-airport">Cyril E. King Airport</option>
+              <option value="havensight-cruise-port">Havensight Cruise Port</option>
+              <option value="crown-bay-cruise-port">Crown Bay Cruise Port</option>
+              <option value="downtown-charlotte-amalie">Downtown Charlotte Amalie / Edward W. Blyden IV Marine Terminal</option>
+              <option value="red-hook">Red Hook / Urman Victor Fredericks Marine Terminal</option>
+            </optgroup>
+            <optgroup label="St. Thomas Resorts">
+              <option value="ritz-carlton-st-thomas">The Ritz-Carlton, St. Thomas</option>
+              <option value="westin-frenchmans-reef">The Westin Beach Resort &amp; Spa at Frenchman's Reef</option>
+              <option value="buoy-haus-frenchmans-reef">Morningstar Buoy Haus Beach Resort at Frenchman's Reef</option>
+              <option value="marriotts-frenchmans-cove">Marriott's Frenchman's Cove</option>
+              <option value="secret-harbour-beach-resort">Secret Harbour Beach Resort</option>
+              <option value="bolongo-bay-beach-resort">Bolongo Bay Beach Resort</option>
+              <option value="margaritaville-vacation-club-st-thomas">Margaritaville Vacation Club St. Thomas</option>
+              <option value="sapphire-beach-resort">Sapphire Beach Resort</option>
+              <option value="emerald-beach-resort">Emerald Beach Resort</option>
+              <option value="point-pleasant-resort">Point Pleasant Resort</option>
+            </optgroup>
+            <optgroup label="Other Locations">
+              <option value="hotel-resort-not-listed">St. Thomas Hotel / Resort Not Listed</option>
+              <option value="villa-private-residence">Villa / Private Residence</option>
+              <option value="st-john">St. John, VI - Special Coordination Required</option>
+              <option value="other">Other / Custom Address</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="dropoff">Drop-off</label>
+          <select id="dropoff" name="dropoff" required>
+            <option value="" disabled selected>Select drop-off location</option>
+            <optgroup label="Transportation Hubs">
+              <option value="cyril-e-king-airport">Cyril E. King Airport</option>
+              <option value="havensight-cruise-port">Havensight Cruise Port</option>
+              <option value="crown-bay-cruise-port">Crown Bay Cruise Port</option>
+              <option value="downtown-charlotte-amalie">Downtown Charlotte Amalie / Edward W. Blyden IV Marine Terminal</option>
+              <option value="red-hook">Red Hook / Urman Victor Fredericks Marine Terminal</option>
+            </optgroup>
+            <optgroup label="St. Thomas Resorts">
+              <option value="ritz-carlton-st-thomas">The Ritz-Carlton, St. Thomas</option>
+              <option value="westin-frenchmans-reef">The Westin Beach Resort &amp; Spa at Frenchman's Reef</option>
+              <option value="buoy-haus-frenchmans-reef">Morningstar Buoy Haus Beach Resort at Frenchman's Reef</option>
+              <option value="marriotts-frenchmans-cove">Marriott's Frenchman's Cove</option>
+              <option value="secret-harbour-beach-resort">Secret Harbour Beach Resort</option>
+              <option value="bolongo-bay-beach-resort">Bolongo Bay Beach Resort</option>
+              <option value="margaritaville-vacation-club-st-thomas">Margaritaville Vacation Club St. Thomas</option>
+              <option value="sapphire-beach-resort">Sapphire Beach Resort</option>
+              <option value="emerald-beach-resort">Emerald Beach Resort</option>
+              <option value="point-pleasant-resort">Point Pleasant Resort</option>
+            </optgroup>
+            <optgroup label="Other Locations">
+              <option value="hotel-resort-not-listed">St. Thomas Hotel / Resort Not Listed</option>
+              <option value="villa-private-residence">Villa / Private Residence</option>
+              <option value="st-john">St. John, VI - Special Coordination Required</option>
+              <option value="other">Other / Custom Address</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div id="flight-info" class="form-row full" style="display: none;">
+          <div class="flight-grid">
+            <div>
+              <label for="flight-number">Flight Number</label>
+              <input type="text" id="flight-number" name="flight-number" />
+            </div>
+            <div>
+              <label for="luggage-pieces">Luggage</label>
+              <input type="number" id="luggage-pieces" name="luggage-pieces" min="0" value="0" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section-label">Passenger &amp; Contact</div>
+
+        <div class="form-row">
+          <label for="full-name">Full Name</label>
+          <input type="text" id="full-name" name="full-name" required />
+        </div>
+
+        <div class="form-row">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" inputmode="tel" pattern="[0-9]{10}" placeholder="10-digit phone number" autocomplete="tel" required />
+        </div>
+
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form-row">
+          <label for="number-of-passengers">Passengers</label>
+          <input type="number" id="number-of-passengers" name="number-of-passengers" min="1" max="6" required />
+          <div id="passenger-warning"></div>
+        </div>
+
+        <div class="form-row full">
+          <div class="round-trip-row">
+            <input type="checkbox" id="round-trip" name="round-trip" />
+            <label for="round-trip">Round Trip</label>
+          </div>
+        </div>
+
+        <div id="return-trip-section" class="form-row full" style="display: none;">
+          <div class="return-trip-grid">
+            <div>
+              <label for="return-date">Return Date</label>
+              <input type="date" id="return-date" name="return-date" />
+            </div>
+            <div>
+              <label for="return-time">Return Time</label>
+              <input type="time" id="return-time" name="return-time" step="1800" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row full">
+          <label for="special-requests">Additional Instructions</label>
+          <textarea id="special-requests" name="special-requests" rows="3"></textarea>
+          <div id="st-john-notice" class="notice">St. John trips require additional coordination. After you submit your request, we will reach out to confirm arrangements.</div>
+          <div id="route-warning" class="notice">Pickup and drop-off cannot be the same location.</div>
+        </div>
+
+        <div class="form-section-label">Service Estimate</div>
+
+        <div id="price-breakdown" class="form-row full">
+          <div id="base-rate-row" class="estimate-row">
+            <span>Starting rate</span>
+            <span>$<span id="breakdown-base">180</span></span>
+          </div>
+          <div id="st-john-adjustment-row" class="estimate-row" style="display: none;">
+            <span>St. John coordination</span>
+            <span>$<span id="breakdown-stjohn">0</span></span>
+          </div>
+          <div id="passenger-adjustment-row" class="estimate-row" style="display: none;">
+            <span>Passenger adjustment</span>
+            <span>$<span id="breakdown-extra-passengers">0</span></span>
+          </div>
+          <div id="round-trip-adjustment-row" class="estimate-row" style="display: none;">
+            <span>Round trip</span>
+            <span>x<span id="breakdown-round-trip-multiplier">1</span></span>
+          </div>
+          <div id="estimate-total-row" class="estimate-row estimate-total">
+            <span>Estimated total</span>
+            <span>$<span id="total-price">180</span></span>
+          </div>
+          <div id="review-estimate-message" class="estimate-note">Event, hourly, and daily service requests are reviewed based on requested time and itinerary.</div>
+          <div class="estimate-confirmation">Final availability and service details will be confirmed after review.</div>
+          <div id="st-john-estimate-note" class="estimate-note">St. John trips require additional coordination. The St. John estimate starts at $700 before any passenger, service, or round-trip adjustment.</div>
+        </div>
+
+        <div class="form-row full">
+          <button type="submit" id="submit-button">Request Service</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-contact-grid" aria-label="Contact information">
+        <div class="footer-contact-card">
+          <span class="footer-label">Call</span>
+          <a href="tel:3406428686">340-642-8686</a>
+        </div>
+        <div class="footer-contact-card">
+          <span class="footer-label">Email</span>
+          <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a>
+        </div>
+        <div class="footer-contact-card">
+          <span class="footer-label">Serving</span>
+          <span>St. Thomas | Coordinated St. John Requests</span>
+        </div>
       </div>
 
-      <p>
-        <a href="tel:13406428686">
-          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.56 3.58.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.3 21 3 13.7 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.19 2.46.56 3.58a1 1 0 0 1-.25 1.01l-2.19 2.2Z"/>
-          </svg>
-          <span class="label">(340) 642-8686</span>
-        </a>
-      </p>
-
-      <p>
-        <a href="mailto:setlimovi@gmail.com">
-          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 3.24-7.4 5.55a1 1 0 0 1-1.2 0L4 7.24V6l8 6 8-6v1.24Z"/>
-          </svg>
-          <span class="label">setlimovi@gmail.com</span>
-        </a>
-      </p>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Superb Executive Transportation. All rights reserved.</span>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms &amp; Conditions</a>
+        </div>
+      </div>
     </div>
-  </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const BASE_RATE = 180;
+      const ST_JOHN_ADJUSTMENT = 520;
+      const INCLUDED_PASSENGERS = 4;
+      const MAX_PASSENGERS = 6;
+      const EXTRA_PASSENGER_RATE_STANDARD = 25;
+      const EXTRA_PASSENGER_RATE_ST_JOHN = 100;
+      const AIRPORT_VALUE = "cyril-e-king-airport";
+      const ST_JOHN_VALUE = "st-john";
+      const CUSTOM_LOCATION_VALUES = ["hotel-resort-not-listed", "villa-private-residence", "other"];
+      const EMAILJS_PUBLIC_KEY = "NOK9sJ5BhK_ywij8U";
+      const EMAILJS_SERVICE_ID = "service_dmvxcdi";
+      const EMAILJS_ADMIN_TEMPLATE_ID = "template_ysacch6";
+      const EMAILJS_CUSTOMER_TEMPLATE_ID = "template_o15zm0b";
+
+      if (window.emailjs) {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+      }
+
+      function getRequiredElement(id) {
+        const element = document.getElementById(id);
+        if (!element) {
+          throw new Error("Missing required element: " + id);
+        }
+        return element;
+      }
+
+      function isStJohnRoute(pickupValue, dropoffValue) {
+        return pickupValue === ST_JOHN_VALUE || dropoffValue === ST_JOHN_VALUE;
+      }
+
+      function isAirportRoute(pickupValue, dropoffValue) {
+        return pickupValue === AIRPORT_VALUE || dropoffValue === AIRPORT_VALUE;
+      }
+
+      function requiresAdditionalInstructions(pickupValue, dropoffValue) {
+        return CUSTOM_LOCATION_VALUES.includes(pickupValue) || CUSTOM_LOCATION_VALUES.includes(dropoffValue);
+      }
+
+      function calculateTotal(options) {
+        const requestedPassengerCount = Number.parseInt(options.passengerCount, 10) || 1;
+        const passengerCount = Math.min(Math.max(requestedPassengerCount, 1), MAX_PASSENGERS);
+        const stJohnTrip = Boolean(options.stJohnTrip);
+        const roundTrip = Boolean(options.roundTrip);
+        const serviceType = options.serviceType || "transfer";
+        const extraPassengerRate = stJohnTrip ? EXTRA_PASSENGER_RATE_ST_JOHN : EXTRA_PASSENGER_RATE_STANDARD;
+        const extraCharge = Math.max(passengerCount - INCLUDED_PASSENGERS, 0) * extraPassengerRate;
+        const serviceMultiplier = serviceType === "hourly-rental" ? 2 : serviceType === "event" ? 1.5 : serviceType === "daily-rental" ? 4 : 1;
+        const roundMultiplier = roundTrip ? 2 : 1;
+        const stJohnAdjustment = stJohnTrip ? ST_JOHN_ADJUSTMENT : 0;
+        const total = (BASE_RATE + stJohnAdjustment + extraCharge) * serviceMultiplier * roundMultiplier;
+
+        return {
+          baseRate: BASE_RATE,
+          stJohnAdjustment,
+          extraCharge,
+          serviceMultiplier,
+          roundMultiplier,
+          total
+        };
+      }
+
+      function runSelfTests() {
+        const standard = calculateTotal({ passengerCount: 1, stJohnTrip: false, roundTrip: false, serviceType: "transfer" });
+        console.assert(standard.total === 180, "Standard one-way transfer should total 180");
+
+        const stJohn = calculateTotal({ passengerCount: 1, stJohnTrip: true, roundTrip: false, serviceType: "transfer" });
+        console.assert(stJohn.total === 700, "St. John one-way transfer should total 700");
+
+        const sixPassenger = calculateTotal({ passengerCount: 6, stJohnTrip: false, roundTrip: false, serviceType: "transfer" });
+        console.assert(sixPassenger.extraCharge === 50, "Six-passenger standard trip should add 50");
+
+        const roundTrip = calculateTotal({ passengerCount: 1, stJohnTrip: false, roundTrip: true, serviceType: "transfer" });
+        console.assert(roundTrip.total === 360, "Round trip standard transfer should total 360");
+
+        console.assert(requiresAdditionalInstructions("other", "red-hook") === true, "Other pickup should require additional instructions");
+        console.assert(requiresAdditionalInstructions("villa-private-residence", "cyril-e-king-airport") === true, "Villa pickup should require additional instructions");
+        console.assert(requiresAdditionalInstructions("cyril-e-king-airport", "red-hook") === false, "Standard route should not require additional instructions");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const serviceType = getRequiredElement("service-type");
+        const hoursRequested = getRequiredElement("hours-requested");
+        const pickup = getRequiredElement("pickup");
+        const dropoff = getRequiredElement("dropoff");
+        const bookingDate = getRequiredElement("booking-date");
+        const returnDate = getRequiredElement("return-date");
+        const bookingTime = getRequiredElement("booking-time");
+        const form = getRequiredElement("booking-form");
+        const phone = getRequiredElement("phone");
+        const fullName = getRequiredElement("full-name");
+        const email = getRequiredElement("email");
+        const flightNumber = getRequiredElement("flight-number");
+        const luggagePieces = getRequiredElement("luggage-pieces");
+        const specialRequests = getRequiredElement("special-requests");
+        const returnTime = getRequiredElement("return-time");
+        const submitButton = getRequiredElement("submit-button");
+        const numPassengers = getRequiredElement("number-of-passengers");
+        const passengerWarning = getRequiredElement("passenger-warning");
+        const breakdownExtra = getRequiredElement("breakdown-extra-passengers");
+        const roundTripMultiplierEl = getRequiredElement("breakdown-round-trip-multiplier");
+        const totalPriceEl = getRequiredElement("total-price");
+        const roundTrip = getRequiredElement("round-trip");
+        const breakdownBase = getRequiredElement("breakdown-base");
+        const breakdownStJohn = getRequiredElement("breakdown-stjohn");
+        const flightInfo = getRequiredElement("flight-info");
+        const stJohnNotice = getRequiredElement("st-john-notice");
+        const routeWarning = getRequiredElement("route-warning");
+        const stJohnEstimateNote = getRequiredElement("st-john-estimate-note");
+        const reviewEstimateMessage = getRequiredElement("review-estimate-message");
+        const baseRateRow = getRequiredElement("base-rate-row");
+        const estimateTotalRow = getRequiredElement("estimate-total-row");
+        const stJohnAdjustmentRow = getRequiredElement("st-john-adjustment-row");
+        const passengerAdjustmentRow = getRequiredElement("passenger-adjustment-row");
+        const roundTripAdjustmentRow = getRequiredElement("round-trip-adjustment-row");
+        const returnTripSection = getRequiredElement("return-trip-section");
+
+        function setTodayMinimums() {
+          const today = new Date().toISOString().split("T")[0];
+          bookingDate.min = today;
+          returnDate.min = bookingDate.value || today;
+        }
+
+        function toggleFlightInfo() {
+          flightInfo.style.display = isAirportRoute(pickup.value, dropoff.value) ? "block" : "none";
+        }
+
+        function enforceHoursRule() {
+          const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
+
+          if (stJohnTrip) {
+            hoursRequested.value = 3;
+            hoursRequested.disabled = true;
+            return;
+          }
+
+          if (serviceType.value === "transfer") {
+            hoursRequested.value = 2;
+            hoursRequested.disabled = true;
+            return;
+          }
+
+          if (serviceType.value === "hourly-rental" || serviceType.value === "event") {
+            hoursRequested.value = 3;
+            hoursRequested.min = 3;
+            hoursRequested.max = 4;
+            hoursRequested.disabled = false;
+            return;
+          }
+
+          if (serviceType.value === "daily-rental") {
+            hoursRequested.value = 5;
+            hoursRequested.min = 5;
+            hoursRequested.max = 8;
+            hoursRequested.disabled = false;
+            return;
+          }
+
+          hoursRequested.value = "";
+          hoursRequested.disabled = false;
+          hoursRequested.min = 2;
+          hoursRequested.removeAttribute("max");
+        }
+
+        function updateNotices() {
+          const passengerCount = Number.parseInt(numPassengers.value, 10) || 1;
+          const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
+          const sameRoute = Boolean(pickup.value && dropoff.value && pickup.value === dropoff.value);
+          const customLocation = requiresAdditionalInstructions(pickup.value, dropoff.value);
+
+          if (passengerCount > MAX_PASSENGERS) {
+            passengerWarning.textContent = "This vehicle accommodates a maximum of 6 passengers.";
+            passengerWarning.classList.add("show");
+            numPassengers.setCustomValidity("This vehicle accommodates a maximum of 6 passengers.");
+          } else {
+            passengerWarning.textContent = "";
+            passengerWarning.classList.remove("show");
+            numPassengers.setCustomValidity("");
+          }
+
+          stJohnNotice.classList.toggle("show", stJohnTrip);
+          routeWarning.classList.toggle("show", sameRoute);
+          stJohnEstimateNote.style.display = stJohnTrip ? "block" : "none";
+
+          specialRequests.required = customLocation;
+          specialRequests.placeholder = customLocation ? "Enter the hotel, villa, residence, or custom address." : "";
+          specialRequests.setCustomValidity(customLocation && !specialRequests.value.trim() ? "Enter the hotel, villa, residence, or custom address." : "");
+        }
+
+        function updatePrice() {
+          const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
+          const reviewBasedService = serviceType.value && serviceType.value !== "transfer";
+          const result = calculateTotal({
+            passengerCount: numPassengers.value,
+            stJohnTrip,
+            roundTrip: roundTrip.checked,
+            serviceType: serviceType.value
+          });
+
+          if (reviewBasedService) {
+            baseRateRow.style.display = "none";
+            stJohnAdjustmentRow.style.display = "none";
+            passengerAdjustmentRow.style.display = "none";
+            roundTripAdjustmentRow.style.display = "none";
+            estimateTotalRow.style.display = "none";
+            reviewEstimateMessage.style.display = "block";
+            stJohnEstimateNote.style.display = "none";
+            return;
+          }
+
+          baseRateRow.style.display = "flex";
+          estimateTotalRow.style.display = "flex";
+          reviewEstimateMessage.style.display = "none";
+          breakdownBase.textContent = String(result.baseRate);
+          breakdownStJohn.textContent = String(result.stJohnAdjustment);
+          breakdownExtra.textContent = String(result.extraCharge);
+          roundTripMultiplierEl.textContent = String(result.roundMultiplier);
+          stJohnAdjustmentRow.style.display = result.stJohnAdjustment > 0 ? "flex" : "none";
+          passengerAdjustmentRow.style.display = result.extraCharge > 0 ? "flex" : "none";
+          roundTripAdjustmentRow.style.display = result.roundMultiplier > 1 ? "flex" : "none";
+          totalPriceEl.textContent = String(result.total);
+        }
+
+        function refreshForm() {
+          enforceHoursRule();
+          toggleFlightInfo();
+          updateNotices();
+          updatePrice();
+        }
+
+        function getFieldValue(value, fallback) {
+          const defaultValue = fallback === undefined ? "—" : fallback;
+          return value && String(value).trim() ? String(value).trim() : defaultValue;
+        }
+
+        function getSelectText(selectElement) {
+          if (!selectElement || !selectElement.value) return "";
+          return selectElement.options[selectElement.selectedIndex].text.trim();
+        }
+
+        function formatPhoneValue(value) {
+          const digits = String(value || "").replace(/[^0-9]/g, "").slice(0, 10);
+          if (digits.length === 10) {
+            return "(" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + "-" + digits.slice(6);
+          }
+          return digits || "—";
+        }
+
+        function formatDateValue(value) {
+          if (!value) return "—";
+          const parts = value.split("-");
+          if (parts.length !== 3) return value;
+          return parts[1] + "/" + parts[2] + "/" + parts[0];
+        }
+
+        function getPricingText() {
+          const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
+          const reviewBasedService = serviceType.value && serviceType.value !== "transfer";
+
+          if (reviewBasedService && stJohnTrip) {
+            return "Service estimate will be confirmed after review based on requested time, itinerary, and St. John coordination.";
+          }
+
+          if (reviewBasedService) {
+            return "Service estimate will be confirmed after review based on requested time and itinerary.";
+          }
+
+          if (stJohnTrip) {
+            return "Estimated request total: $" + totalPriceEl.textContent + ". St. John trips require additional coordination before final confirmation.";
+          }
+
+          return "Estimated request total: $" + totalPriceEl.textContent + ".";
+        }
+
+        function buildTemplateParams() {
+          const pickupText = getSelectText(pickup);
+          const dropoffText = getSelectText(dropoff);
+          const roundTripText = roundTrip.checked ? "Yes" : "No";
+
+          return {
+            name: getFieldValue(fullName.value, ""),
+            email: getFieldValue(email.value, ""),
+            phone: formatPhoneValue(phone.value),
+            date: formatDateValue(bookingDate.value),
+            time: getFieldValue(bookingTime.value, ""),
+            pickup: getFieldValue(pickupText, ""),
+            dropoff: getFieldValue(dropoffText, ""),
+            route: getFieldValue(pickupText, "") + " → " + getFieldValue(dropoffText, ""),
+            passengers: getFieldValue(numPassengers.value, ""),
+            roundtrip: roundTripText,
+            return_date: roundTrip.checked ? formatDateValue(returnDate.value) : "Not applicable.",
+            return_time: roundTrip.checked ? getFieldValue(returnTime.value, "") : "Not applicable.",
+            return_pickup: roundTrip.checked ? getFieldValue(dropoffText, "") : "Not applicable.",
+            return_dropoff: roundTrip.checked ? getFieldValue(pickupText, "") : "Not applicable.",
+            flight_number: getFieldValue(flightNumber.value, "Not provided."),
+            details: getFieldValue(specialRequests.value, "None provided."),
+            luggage_pieces: getFieldValue(luggagePieces.value, "0"),
+            service_type: getSelectText(serviceType),
+            hours_requested: getFieldValue(hoursRequested.value, ""),
+            policy_agreed: "Not applicable.",
+            manual_confirmation_required: isStJohnRoute(pickup.value, dropoff.value) ? "Yes" : "No",
+            pricing: getPricingText()
+          };
+        }
+
+        async function submitBookingRequest() {
+          if (!window.emailjs) {
+            throw new Error("EmailJS is not loaded.");
+          }
+
+          const templateParams = buildTemplateParams();
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ADMIN_TEMPLATE_ID, templateParams);
+
+          if (EMAILJS_CUSTOMER_TEMPLATE_ID) {
+            await new Promise(function (resolve) {
+              setTimeout(resolve, 1100);
+            });
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CUSTOMER_TEMPLATE_ID, templateParams);
+          }
+        }
+
+        function setSubmittingState(isSubmitting) {
+          submitButton.disabled = isSubmitting;
+          submitButton.textContent = isSubmitting ? "Sending..." : "Request Service";
+        }
+
+        serviceType.addEventListener("change", refreshForm);
+        hoursRequested.addEventListener("input", refreshForm);
+        pickup.addEventListener("change", refreshForm);
+        dropoff.addEventListener("change", refreshForm);
+        numPassengers.addEventListener("input", refreshForm);
+        specialRequests.addEventListener("input", refreshForm);
+
+        bookingDate.addEventListener("change", function () {
+          returnDate.min = bookingDate.value || bookingDate.min;
+          if (returnDate.value && bookingDate.value && returnDate.value < bookingDate.value) {
+            returnDate.value = bookingDate.value;
+          }
+          refreshForm();
+        });
+
+        phone.addEventListener("input", function () {
+          phone.value = phone.value.replace(/[^0-9]/g, "").slice(0, 10);
+        });
+
+        roundTrip.addEventListener("change", function () {
+          returnTripSection.style.display = roundTrip.checked ? "block" : "none";
+          returnDate.required = roundTrip.checked;
+          returnTime.required = roundTrip.checked;
+
+          if (!roundTrip.checked) {
+            returnDate.value = "";
+            returnTime.value = "";
+          } else {
+            returnDate.min = bookingDate.value || bookingDate.min;
+          }
+
+          refreshForm();
+        });
+
+        form.addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          const selectedDate = new Date(bookingDate.value + "T" + bookingTime.value);
+          const nowCheck = new Date();
+          const sameRoute = Boolean(pickup.value && dropoff.value && pickup.value === dropoff.value);
+
+          if (selectedDate < nowCheck) {
+            alert("Please select a future time.");
+            return;
+          }
+
+          if (roundTrip.checked) {
+            const selectedReturnDate = new Date(returnDate.value + "T" + returnTime.value);
+            if (selectedReturnDate <= selectedDate) {
+              alert("Return trip must be after the initial service time.");
+              return;
+            }
+          }
+
+          if (sameRoute) {
+            alert("Pickup and drop-off cannot be the same location.");
+            return;
+          }
+
+          if ((Number.parseInt(numPassengers.value, 10) || 0) > MAX_PASSENGERS) {
+            alert("This vehicle accommodates a maximum of 6 passengers.");
+            return;
+          }
+
+          setSubmittingState(true);
+
+          try {
+            await submitBookingRequest();
+            alert("Request received. We will contact you to confirm availability and finalize your ride.");
+            form.reset();
+            returnTripSection.style.display = "none";
+            returnDate.required = false;
+            returnTime.required = false;
+            refreshForm();
+          } catch (error) {
+            console.error("Submission error:", error);
+            alert("Something went wrong. Please try again or contact us directly at (340) 642-8686 or setlimovi@gmail.com.");
+          } finally {
+            setSubmittingState(false);
+          }
+        });
+
+        setTodayMinimums();
+        runSelfTests();
+        refreshForm();
+      });
+    })();
+  </script>
 </body>
 </html>
