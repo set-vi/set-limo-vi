@@ -90,7 +90,7 @@
     }
 
     h2 {
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       font-size: clamp(1.85rem, 3.5vw, 2.45rem);
       color: #b98a4f;
     }
@@ -461,6 +461,20 @@
     }
 
 
+    .footer-brand {
+      margin: 0 0 18px;
+      text-align: center;
+    }
+
+    .footer-brand-name {
+      margin: 0;
+      color: #b88945;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.42rem;
+      font-weight: 700;
+      letter-spacing: 0.025em;
+    }
+
     .footer-contact-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -475,8 +489,8 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      min-height: 112px;
-      padding: 22px 20px;
+      min-height: 104px;
+      padding: 20px 20px;
       text-align: center;
       background: transparent;
       border-right: 1px solid rgba(255, 255, 255, 0.08);
@@ -488,7 +502,7 @@
       justify-content: center;
       width: 26px;
       height: 26px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       color: #b88945;
     }
 
@@ -677,7 +691,7 @@
   25. About status: heading changed to "Our Standard" and copy now defines the operating standard without repeating the Service Commitment labels: scheduled rides, pickup timing, route planning, passenger comfort, and confirmation before service.
   26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
   27. Hero status: corrected. Hero begins with the business name only. No eyebrow line, no slogan, no tourist phrase, and no repeated service label above the company name. The paragraph uses "premium private transportation" once as the positioning line and does not duplicate the service menu. A compact proof strip supports the hero with verified facts instead of tenure/clientele claims.
-  28. Footer status: contact cards use restrained bronze SVG icons with contact text only. Do not use raw colorful emoji, do not duplicate icon meaning with visible labels, and use intentional icon/text spacing instead of hidden visual spacers.
+  28. Footer status: contact cards use restrained bronze SVG icons with contact text only. Footer includes one restrained brand anchor above the contact cards. Do not use raw colorful emoji, do not duplicate icon meaning with visible labels, and use intentional icon/text spacing instead of hidden visual spacers.
   -->
 
   <nav aria-label="Primary navigation">
@@ -946,6 +960,10 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
+      <div class="footer-brand">
+        <p class="footer-brand-name">Superb Executive Transportation</p>
+      </div>
+
       <div class="footer-contact-grid" aria-label="Contact information">
         <div class="footer-contact-card">
           <span class="footer-icon" aria-hidden="true">
@@ -974,7 +992,7 @@
             </svg>
           </span>
           <span class="sr-only">Service Area</span>
-          <span class="footer-contact-value">St. Thomas — Coordinated St. John Requests</span>
+          <span class="footer-contact-value">St. Thomas | St. John by Coordination</span>
         </div>
       </div>
 
