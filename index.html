@@ -132,6 +132,31 @@
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
     }
 
+    .hero-proof-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 900px;
+      margin: 30px auto 0;
+      background: rgba(16, 16, 16, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .hero-proof-item {
+      padding: 18px 20px;
+      color: #e7e7e7;
+      font-size: 0.92em;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.03em;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-proof-item:last-child {
+      border-right: 0;
+    }
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -534,6 +559,7 @@
 
     @media (max-width: 900px) {
       .card-grid,
+      .hero-proof-strip,
       .trust-strip,
       .booking-grid,
       .flight-grid,
@@ -541,11 +567,13 @@
         grid-template-columns: 1fr;
       }
 
+      .hero-proof-item,
       .trust-item {
         border-right: 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
 
+      .hero-proof-item:last-child,
       .trust-item:last-child {
         border-bottom: 0;
       }
@@ -620,14 +648,14 @@
   3. Superb Executive Transportation is a company website first, not a booking advertisement.
   4. Benchmark only against local premium/private transportation websites a St. Thomas or St. John visitor would compare before booking: Royal Limousine VI, Exclusive Limousine VI, Presidential Limousine VI, Virgin Islands Platinum Services, and functional private-transfer booking pages such as CaribbaConnect.
   5. Positioning target: premium like Exclusive Limousine VI and Presidential Limousine VI; functional like Royal Limousine VI; cleaner than taxi/shuttle pages; less cluttered than marketplace booking pages.
-  6. Superb must compete through restraint: cleaner hierarchy, fewer claims, stronger trust language, black/charcoal/soft gray/bronze discipline, premium spacing, clear route logic, and a minimal request flow.
+  6. Superb must compete through restraint: cleaner hierarchy, fewer claims, stronger trust language, black/charcoal/soft gray/bronze discipline, premium spacing, clear route logic, and a minimal request flow. Use "premium" as a controlled positioning word, not a repeated claim.
   7. Do not add features merely because competitors have them. Add only what strengthens premium private transportation, airport/ferry reliability, St. John coordination, or booking clarity.
 
   ACTIVE DESIGN RULES
   8. Booking must remain available but secondary to brand, services, trust, and vehicle proof.
   8.1. Passenger capacity is capped at 6 passengers. Present 4 passengers as the premium comfort lane and 6 passengers as the maximum capacity. Do not use second-vehicle, larger-group, or flexible capacity language.
   9. Hero must establish company identity; it must not become a flyer, booking ad, or oversized vehicle showcase.
-  10. Gallery handles vehicle proof unless a hero image is separately planned and approved.
+  10. Gallery handles image-based vehicle proof unless a hero image is separately planned and approved. A restrained text proof strip may support the hero when it uses only verified service facts.
   11. Bronze/antique champagne is the accent. Gray controls tone. Black controls premium feel.
   12. No visual change happens without first stating intent, expected effect, and risk.
   13. If a visible element is identified as weak, remove or repair it in the next controlled pass instead of repeatedly reporting it.
@@ -644,11 +672,11 @@
   20. Current order: Hero, Services, Service Commitment, Our Standard, Gallery / Vehicle Proof, Request Transportation, Footer.
   21. Gallery images are parked for now by user instruction; do not touch images yet.
   22. Current active section: full non-gallery page polish and logic recheck.
-  23. Services status: service cards carry the service lanes directly.
-  24. Service Commitment status: converted from repeated three-card grid into a lighter trust strip.
-  25. About status: heading changed to "Our Standard" and copy now defines the operating standard: private scheduled service, clean presentation, direct communication, route timing, pickup planning, passenger comfort, and confirmation before service.
+  23. Services status: service cards carry the service lanes directly. The chauffeur lane must stay restrained: use concise premium wording, not keyword-stuffed labels.
+  24. Service Commitment status: converted from repeated three-card grid into a lighter trust strip using restrained commitment language: Planned Timing, Clean Presentation, and Direct Communication.
+  25. About status: heading changed to "Our Standard" and copy now defines the operating standard without repeating the Service Commitment labels: scheduled rides, pickup timing, route planning, passenger comfort, and confirmation before service.
   26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
-  27. Hero status: corrected. Hero begins with the business name only. No eyebrow line, no slogan, no tourist phrase, and no repeated service label above the company name. The paragraph carries the service scope below the name.
+  27. Hero status: corrected. Hero begins with the business name only. No eyebrow line, no slogan, no tourist phrase, and no repeated service label above the company name. The paragraph uses "premium private transportation" once as the positioning line and does not duplicate the service menu. A compact proof strip supports the hero with verified facts instead of tenure/clientele claims.
   28. Footer status: contact cards use restrained bronze SVG icons with contact text only. Do not use raw colorful emoji, do not duplicate icon meaning with visible labels, and use intentional icon/text spacing instead of hidden visual spacers.
   -->
 
@@ -663,8 +691,14 @@
 
   <section id="home" class="hero">
     <h1>Superb Executive Transportation</h1>
-    <p>Private service in St. Thomas for airport arrivals, resort transfers, ferry connections, and coordinated St. John requests.</p>
+    <p>Premium private transportation in St. Thomas with coordinated St. John requests.</p>
     <a href="#book" class="btn">Request Service</a>
+
+    <div class="hero-proof-strip" aria-label="Service highlights">
+      <div class="hero-proof-item">Private Executive Van</div>
+      <div class="hero-proof-item">4-Passenger Comfort</div>
+      <div class="hero-proof-item">6-Passenger Max</div>
+    </div>
   </section>
 
   <section id="services">
@@ -673,15 +707,15 @@
     <div class="card-grid">
       <div class="card">
         <h3>Airport, Resort &amp; Villa Transfers</h3>
-        <p>Private airport arrivals, resort pickups, villa service, and direct point-to-point transportation.</p>
+        <p>Airport arrivals, resort pickups, villa transfers, and direct point-to-point transportation.</p>
       </div>
       <div class="card">
         <h3>Ferry &amp; St. John Coordination</h3>
-        <p>Transportation planned around ferry movement, terminal timing, and coordinated St. John service requests.</p>
+        <p>Ferry-timed pickups for Red Hook, Charlotte Amalie, and coordinated St. John requests.</p>
       </div>
       <div class="card">
-        <h3>Events, Hourly &amp; Private Service</h3>
-        <p>Private transportation for events, dinners, corporate needs, multi-stop plans, and reserved hourly service.</p>
+        <h3>Events &amp; Private Chauffeur</h3>
+        <p>Reserved transportation for events, dinners, corporate needs, multi-stop plans, and hourly service.</p>
       </div>
     </div>
   </section>
@@ -690,16 +724,16 @@
     <h2>Service Commitment</h2>
 
     <div class="trust-strip" aria-label="Service commitment">
-      <div class="trust-item">Reliable Timing</div>
-      <div class="trust-item">Private Ride</div>
-      <div class="trust-item">Clear Communication</div>
+      <div class="trust-item">Planned Timing</div>
+      <div class="trust-item">Clean Presentation</div>
+      <div class="trust-item">Direct Communication</div>
     </div>
   </section>
 
   <section id="about">
     <h2>Our Standard</h2>
     <div class="card about-card">
-      <p>Superb Executive Transportation is built around a private, scheduled ride experience with clean presentation, direct communication, and careful route timing. Each request is reviewed for the right pickup plan, passenger comfort, and service details before the ride is confirmed.</p>
+      <p>Superb Executive Transportation is built for scheduled rides, not guesswork. Each request is reviewed for pickup timing, route planning, passenger comfort, and final service details before confirmation.</p>
     </div>
   </section>
 
@@ -714,7 +748,7 @@
 
   <section id="book">
     <h2>Request Transportation</h2>
-    <p class="booking-intro">Request private transportation. We will confirm availability, timing, route details, and final service terms.</p>
+    <p class="booking-intro">Submit the request. We confirm availability, timing, route details, and final terms before service.</p>
 
     <div class="booking-form-container">
       <form id="booking-form" class="booking-grid" novalidate>
@@ -735,7 +769,7 @@
           <select id="service-type" name="service-type" required>
             <option value="" disabled selected>Select service type</option>
             <option value="transfer">Airport / Resort Transfer</option>
-            <option value="event">Event / Private Service</option>
+            <option value="event">Event / Private Chauffeur</option>
             <option value="hourly-rental">Hourly Service</option>
             <option value="daily-rental">Daily Service</option>
           </select>
@@ -900,7 +934,7 @@
           </div>
           <div id="review-estimate-message" class="estimate-note">Hourly, event, and daily service requests are reviewed based on requested time and itinerary.</div>
           <div class="estimate-confirmation">Final availability and service details will be confirmed after review.</div>
-          <div id="st-john-estimate-note" class="estimate-note">St. John trips require additional coordination. The St. John estimate starts at $700 before any capacity or round-trip adjustment.</div>
+          <div id="st-john-estimate-note" class="estimate-note">St. John estimate starts at $700 before capacity or round-trip adjustment.</div>
         </div>
 
         <div class="form-row full">
@@ -1156,17 +1190,17 @@
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
             const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John coordination requires final review." : "";
-            reviewEstimateMessage.textContent = "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + stJohnText + " Final details are confirmed after review.";
+            reviewEstimateMessage.textContent = "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + stJohnText;
             return;
           }
 
           if (serviceType.value === "daily-rental") {
             const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John coordination requires final review." : "";
-            reviewEstimateMessage.textContent = "Daily service is reviewed based on requested time, itinerary, and vehicle availability." + stJohnText;
+            reviewEstimateMessage.textContent = "Daily service is reviewed by requested time, itinerary, and vehicle availability." + stJohnText;
             return;
           }
 
-          reviewEstimateMessage.textContent = "Event, hourly, and daily service requests are reviewed based on requested time and itinerary.";
+          reviewEstimateMessage.textContent = "Event, hourly, and daily requests are reviewed by time and itinerary.";
         }
 
         function updatePrice() {
