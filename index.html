@@ -822,7 +822,7 @@
 
   ACTIVE DESIGN RULES
   8. Booking must remain available but secondary to brand, services, trust, and vehicle proof.
-  8.1. Passenger capacity is capped at 6 passengers. Present 4 passengers as the premium comfort lane and 6 passengers as the maximum capacity. Do not use second-vehicle, larger-group, or flexible capacity language.
+  8.1. Passenger capacity is capped at 6 passengers. Present 1–4 passengers as the best comfort lane and 6 passengers as the maximum capacity. Do not use second-vehicle, larger-group, or flexible capacity language.
   9. Hero must establish company identity; it must not become a flyer, booking ad, or oversized vehicle showcase.
   10. Gallery handles image-based vehicle proof unless a hero image is separately planned and approved. A restrained text proof strip may support the hero when it uses only verified service facts.
   11. Bronze/antique champagne is the accent. Gray controls tone. Black controls premium feel.
@@ -845,8 +845,8 @@
   23. Services status: service cards carry the service lanes directly. The chauffeur lane must stay restrained: use concise premium wording, not keyword-stuffed labels.
   24. Service Commitment status: converted from repeated three-card grid into a lighter trust strip using restrained commitment language: Planned Timing, Clean Presentation, and Direct Communication.
   25. About status: heading changed to "Our Standard" and copy now defines the operating standard without repeating the Service Commitment labels: scheduled rides, pickup timing, route flow, passenger comfort, and a confirmed service plan.
-  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, embedded field labels, blank hidden select placeholders, controlled select-arrow styling, dark select-menu option styling, reduced native placeholder clutter, blank 15-minute Service Time and Return Time dropdowns, full-width Service Type field with integrated Hours Requested control, Route now contains Round Trip and Extra Stop controls with conditional Return Trip and Stop Details fields, route warnings stay inside the Route section and collapse when inactive, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Ride Details for custom locations, requires Flight Number for airport pickup, shows flight/luggage fields for any airport route, shows the estimate section once Service Type is selected, uses "Transfer" as the compact booking service label, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
-  27. Hero status: corrected. Hero begins with the business name only. No eyebrow line, no slogan, no tourist phrase, and no repeated service label above the company name. The paragraph uses "premium private transportation" once as the positioning line and no longer repeats the St. John lane already handled in Services, Booking, and Footer. A compact proof strip supports the hero with verified facts instead of tenure/clientele claims.
+  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, embedded field labels, blank hidden select placeholders, controlled select-arrow styling without duplicate arrows, dark select-menu option styling, reduced native placeholder clutter, blank 15-minute Service Time and Return Time dropdowns, full-width Service Type field with integrated Hours Requested control, Route now contains Round Trip and Extra Stop controls with conditional Return Trip and Stop Details fields, route warnings stay inside the Route section and collapse when inactive, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Ride Details for custom locations, requires Flight Number for airport pickup, shows flight/luggage fields for any airport route, shows the estimate section once Service Type is selected, uses "Transfer" as the compact booking service label, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
+  27. Hero status: corrected. Hero begins with the business name only. No eyebrow line, no slogan, no tourist phrase, and no repeated service label above the company name. The paragraph uses "premium private transportation" once as the positioning line and no longer repeats the St. John lane already handled in Services, Booking, and Footer. A compact proof strip supports the hero with verified facts instead of tenure/clientele claims and carries the capacity language so the passenger input stays clean.
   28. Footer status: footer uses the white van logo as one small centered brand mark above the contact cards. Contact cards use restrained bronze SVG icons with contact text only. Do not repeat the business name above the contact cards because the hero and copyright already carry the name. Footer service-area wording stays broad to avoid repeating the full St. John coordination language already carried in Services and Booking. Privacy Policy and Terms links are removed until actual pages exist; footer-bottom content stays centered after link removal. Do not use raw colorful emoji, do not duplicate icon meaning with visible labels, and use intentional icon/text spacing instead of hidden visual spacers.
   -->
 
@@ -864,8 +864,8 @@
 
     <div class="hero-proof-strip" aria-label="Service highlights">
       <div class="hero-proof-item">Private Executive Van</div>
-      <div class="hero-proof-item">4-Passenger Comfort</div>
-      <div class="hero-proof-item">6-Passenger Max</div>
+      <div class="hero-proof-item">Best Comfort: 1–4</div>
+      <div class="hero-proof-item">Maximum: 6 Passengers</div>
     </div>
   </section>
 
@@ -934,7 +934,7 @@
           </select>
         </div>
 
-        <div class="form-row service-type-row field-card field-select">
+        <div class="form-row service-type-row field-card">
           <label for="service-type">Service Type</label>
           <div class="field-inline">
             <div class="select-wrap service-select-wrap">
@@ -1090,7 +1090,7 @@
 
         <div class="form-row field-card">
           <label for="number-of-passengers">Passengers</label>
-          <input type="number" id="number-of-passengers" name="number-of-passengers" min="1" max="6" placeholder="1-4 best comfort; 6 max" required />
+          <input type="number" id="number-of-passengers" name="number-of-passengers" min="1" max="6" required />
           <div id="passenger-warning"></div>
         </div>
 
@@ -1558,16 +1558,6 @@
           if (existingValue) {
             selectElement.value = existingValue;
           }
-        }
-
-        function getRoundedNextQuarterHour() {
-          const date = new Date();
-          const minutes = date.getMinutes();
-          const roundedMinutes = Math.ceil(minutes / 15) * 15;
-
-          date.setMinutes(roundedMinutes, 0, 0);
-
-          return String(date.getHours()).padStart(2, "0") + ":" + String(date.getMinutes()).padStart(2, "0");
         }
 
         function getPricingText() {
