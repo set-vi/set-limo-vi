@@ -757,8 +757,8 @@
   15. Red Hook / Urman Victor Fredericks Marine Terminal and Downtown Charlotte Amalie / Edward W. Blyden IV Marine Terminal must remain separate options.
   16. St. Thomas resort names may be listed because they are normal pickup/drop-off locations; St. John resort names should not be listed because St. John requires special coordination.
   17. St. John must remain a special-arrangement lane with customer-facing coordination notice.
-  18. If Pickup or Drop-off is Hotel / Resort Not Listed, Villa / Private Residence, or Other / Custom Address, the existing Additional Instructions field becomes required. No new field, no location tab, no map lane.
-  18.1. Extra Stop is separate from Additional Instructions. It appears under Route as a checkbox and reveals Stop Details only when selected.
+  18. If Pickup or Drop-off is Hotel / Resort Not Listed, Villa / Private Residence, or Other / Custom Address, the Ride Details field becomes required. No new field, no location tab, no map lane.
+  18.1. Extra Stop is separate from Ride Details. It appears under Route as a checkbox and reveals Stop Details only when selected.
 
   LOCKED WORK ORDER
   19. Finish one section before moving to the next.
@@ -768,7 +768,7 @@
   23. Services status: service cards carry the service lanes directly. The chauffeur lane must stay restrained: use concise premium wording, not keyword-stuffed labels.
   24. Service Commitment status: converted from repeated three-card grid into a lighter trust strip using restrained commitment language: Planned Timing, Clean Presentation, and Direct Communication.
   25. About status: heading changed to "Our Standard" and copy now defines the operating standard without repeating the Service Commitment labels: scheduled rides, pickup timing, route flow, passenger comfort, and a confirmed service plan.
-  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, embedded field labels, blank hidden select placeholders, controlled select-arrow styling, dark select-menu option styling, reduced native placeholder clutter, an Extra Stop route checkbox with conditional Stop Details, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
+  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, embedded field labels, blank hidden select placeholders, controlled select-arrow styling, dark select-menu option styling, reduced native placeholder clutter, an Extra Stop route checkbox with conditional Stop Details, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Ride Details for custom locations, requires Flight Number when an airport route is selected, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
   27. Hero status: corrected. Hero begins with the business name only. No eyebrow line, no slogan, no tourist phrase, and no repeated service label above the company name. The paragraph uses "premium private transportation" once as the positioning line and does not duplicate the service menu. A compact proof strip supports the hero with verified facts instead of tenure/clientele claims.
   28. Footer status: contact cards use restrained bronze SVG icons with contact text only. Do not repeat the business name above the contact cards because the hero and copyright already carry the name. Do not use raw colorful emoji, do not duplicate icon meaning with visible labels, and use intentional icon/text spacing instead of hidden visual spacers.
   -->
@@ -1008,7 +1008,7 @@
         </div>
 
         <div class="form-row full">
-          <label for="special-requests">Additional Instructions</label>
+          <label for="special-requests">Ride Details</label>
           <textarea id="special-requests" name="special-requests" rows="3"></textarea>
           <div id="st-john-notice" class="notice">St. John trips require additional coordination. After you submit your request, we will reach out to confirm arrangements.</div>
           <div id="route-warning" class="notice">Pickup and drop-off cannot be the same location.</div>
@@ -1040,6 +1040,7 @@
           <div id="review-estimate-message" class="estimate-note">Hourly, event, and daily service requests are reviewed based on requested time and itinerary.</div>
           <div class="estimate-confirmation">Final terms are confirmed before service.</div>
           <div id="st-john-estimate-note" class="estimate-note">St. John estimate starts at $700 before capacity or round-trip adjustment.</div>
+          <div id="extra-stop-estimate-note" class="estimate-note">Extra stop requested. Final rate is confirmed before service.</div>
         </div>
 
         <div class="form-row full">
@@ -1215,6 +1216,7 @@
         const stJohnNotice = getRequiredElement("st-john-notice");
         const routeWarning = getRequiredElement("route-warning");
         const stJohnEstimateNote = getRequiredElement("st-john-estimate-note");
+        const extraStopEstimateNote = getRequiredElement("extra-stop-estimate-note");
         const reviewEstimateMessage = getRequiredElement("review-estimate-message");
         const serviceEstimateLabel = getRequiredElement("service-estimate-label");
         const priceBreakdown = getRequiredElement("price-breakdown");
@@ -1232,7 +1234,14 @@
         }
 
         function toggleFlightInfo() {
-          flightInfo.style.display = isAirportRoute(pickup.value, dropoff.value) ? "block" : "none";
+          const airportRoute = isAirportRoute(pickup.value, dropoff.value);
+          flightInfo.style.display = airportRoute ? "block" : "none";
+          flightNumber.required = airportRoute;
+
+          if (!airportRoute) {
+            flightNumber.value = "";
+            luggagePieces.value = "0";
+          }
         }
 
         function enforceHoursRule() {
@@ -1287,6 +1296,7 @@
           stJohnNotice.classList.toggle("show", stJohnTrip);
           routeWarning.classList.toggle("show", sameRoute);
           stJohnEstimateNote.style.display = stJohnTrip ? "block" : "none";
+          extraStopEstimateNote.style.display = extraStop.checked ? "block" : "none";
 
           specialRequests.required = customLocation;
           specialRequests.placeholder = customLocation ? "Enter the hotel, villa, residence, or custom address." : "";
@@ -1349,6 +1359,7 @@
             estimateTotalRow.style.display = "none";
             reviewEstimateMessage.style.display = "block";
             stJohnEstimateNote.style.display = "none";
+            extraStopEstimateNote.style.display = extraStop.checked ? "block" : "none";
             return;
           }
 
@@ -1421,8 +1432,16 @@
             return "Daily service is reviewed by requested time, itinerary, and vehicle availability.";
           }
 
+          if (stJohnTrip && extraStop.checked) {
+            return "Estimated request total: $" + totalPriceEl.textContent + ". St. John coordination and extra stop require final review.";
+          }
+
           if (stJohnTrip) {
             return "Estimated request total: $" + totalPriceEl.textContent + ". St. John trips require additional coordination before final confirmation.";
+          }
+
+          if (extraStop.checked) {
+            return "Estimated request total: $" + totalPriceEl.textContent + ". Extra stop requires final rate confirmation.";
           }
 
           return "Estimated request total: $" + totalPriceEl.textContent + ".";
