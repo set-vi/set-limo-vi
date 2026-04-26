@@ -315,10 +315,7 @@
       border-radius: 8px;
     }
 
-    .form-row:has(> label + input),
-    .form-row:has(> label + select),
-    .form-row:has(> label + textarea),
-    .form-row:has(> label + .field-inline),
+    .field-card,
     .flight-grid > div,
     .return-trip-grid > div {
       position: relative;
@@ -328,10 +325,7 @@
       border-radius: 10px;
     }
 
-    .form-row:has(> label + input) label,
-    .form-row:has(> label + select) label,
-    .form-row:has(> label + textarea) label,
-    .form-row:has(> label + .field-inline) label,
+    .field-card > label,
     .flight-grid label,
     .return-trip-grid label {
       margin-bottom: 4px;
@@ -343,9 +337,9 @@
       text-transform: uppercase;
     }
 
-    .form-row:has(> label + input) input,
-    .form-row:has(> label + select) select,
-    .form-row:has(> label + textarea) textarea,
+    .field-card > input,
+    .field-card > select,
+    .field-card > textarea,
     .field-inline select,
     .flight-grid input,
     .return-trip-grid input,
@@ -356,7 +350,7 @@
       border-radius: 0;
     }
 
-    .form-row:has(> label + select) select,
+    .field-select > select,
     .field-inline select {
       min-height: 26px;
       padding-right: 26px;
@@ -393,13 +387,13 @@
       opacity: 1;
     }
 
-    .hours-select-wrap:has(select:disabled)::after {
+    .hours-select-wrap.disabled::after {
       opacity: 0.35;
     }
 
-    .form-row:has(> label + select)::after,
+    .field-select::after,
     .select-wrap::after,
-    .return-trip-grid > div:has(> select)::after {
+    .return-select-field::after {
       content: "";
       position: absolute;
       right: 14px;
@@ -437,10 +431,7 @@
       font-weight: 500;
     }
 
-    .form-row:has(> label + input):focus-within,
-    .form-row:has(> label + select):focus-within,
-    .form-row:has(> label + textarea):focus-within,
-    .form-row:has(> label + .field-inline):focus-within,
+    .field-card:focus-within,
     .flight-grid > div:focus-within,
     .return-trip-grid > div:focus-within {
       border-color: #b88945;
@@ -848,7 +839,7 @@
 
   LOCKED WORK ORDER
   19. Finish one section before moving to the next.
-  20. Current order: Hero, Services, Service Commitment, Our Standard, Gallery / Vehicle Proof, Request Transportation, Footer. Navigation is intentionally limited to Home, Services, Gallery, and Request Service so the header stays clean while the supporting sections remain on the page.
+  20. Current order: Hero, Services, Service Commitment, Our Standard, Gallery / Vehicle Proof, Request Transportation, Footer. Navigation is intentionally limited to Home, Services, Gallery, and Book so the header stays clean while the supporting sections remain on the page.
   21. Gallery is active for vehicle-proof presentation. The exterior gallery image is locked to png/van1.png, the dark cutout black-van image, with a controlled bronze/charcoal background lift for separation from the black page.
   22. Current active section: Gallery / Vehicle Proof locked exterior-image presentation using png/van1.png.
   23. Services status: service cards carry the service lanes directly. The chauffeur lane must stay restrained: use concise premium wording, not keyword-stuffed labels.
@@ -863,7 +854,7 @@
     <a href="#home">Home</a>
     <a href="#services">Services</a>
     <a href="#gallery">Gallery</a>
-    <a href="#book">Request Service</a>
+    <a href="#book">Book</a>
   </nav>
 
   <section id="home" class="hero">
@@ -931,19 +922,19 @@
       <form id="booking-form" class="booking-grid" novalidate>
         <div class="form-section-label">Trip Details</div>
 
-        <div class="form-row">
+        <div class="form-row field-card">
           <label for="booking-date">Service Date</label>
           <input type="date" id="booking-date" name="booking-date" required />
         </div>
 
-        <div class="form-row">
+        <div class="form-row field-card field-select">
           <label for="booking-time">Service Time</label>
           <select id="booking-time" name="booking-time" required>
             <option value="" disabled selected hidden></option>
           </select>
         </div>
 
-        <div class="form-row service-type-row">
+        <div class="form-row service-type-row field-card field-select">
           <label for="service-type">Service Type</label>
           <div class="field-inline">
             <div class="select-wrap service-select-wrap">
@@ -965,7 +956,7 @@
 
         <div class="form-section-label">Route</div>
 
-        <div class="form-row">
+        <div class="form-row field-card field-select">
           <label for="pickup">Pickup</label>
           <select id="pickup" name="pickup" required>
             <option value="" disabled selected hidden></option>
@@ -997,7 +988,7 @@
           </select>
         </div>
 
-        <div class="form-row">
+        <div class="form-row field-card field-select">
           <label for="dropoff">Drop-off</label>
           <select id="dropoff" name="dropoff" required>
             <option value="" disabled selected hidden></option>
@@ -1042,7 +1033,7 @@
           </div>
         </div>
 
-        <div id="extra-stop-section" class="form-row full" style="display: none;">
+        <div id="extra-stop-section" class="form-row full field-card" style="display: none;">
           <label for="stop-details">Stop Details</label>
           <textarea id="stop-details" name="stop-details" rows="2" placeholder="Stop location, timing, or quick note"></textarea>
         </div>
@@ -1053,7 +1044,7 @@
               <label for="return-date">Return Date</label>
               <input type="date" id="return-date" name="return-date" />
             </div>
-            <div>
+            <div class="return-select-field">
               <label for="return-time">Return Time</label>
               <select id="return-time" name="return-time">
                 <option value="" disabled selected hidden></option>
@@ -1082,28 +1073,28 @@
 
         <div class="form-section-label">Passenger &amp; Contact</div>
 
-        <div class="form-row">
+        <div class="form-row field-card">
           <label for="full-name">Full Name</label>
           <input type="text" id="full-name" name="full-name" required />
         </div>
 
-        <div class="form-row">
+        <div class="form-row field-card">
           <label for="phone">Phone Number</label>
           <input type="tel" id="phone" name="phone" inputmode="tel" pattern="[0-9]{10}" autocomplete="tel" required />
         </div>
 
-        <div class="form-row">
+        <div class="form-row field-card">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required />
         </div>
 
-        <div class="form-row">
+        <div class="form-row field-card">
           <label for="number-of-passengers">Passengers</label>
           <input type="number" id="number-of-passengers" name="number-of-passengers" min="1" max="6" placeholder="1-4 best comfort; 6 max" required />
           <div id="passenger-warning"></div>
         </div>
 
-        <div class="form-row full">
+        <div class="form-row full field-card">
           <label for="special-requests">Ride Details</label>
           <textarea id="special-requests" name="special-requests" rows="3"></textarea>
         </div>
@@ -1138,7 +1129,7 @@
         </div>
 
         <div class="form-row full">
-          <button type="submit" id="submit-button">Request Service</button>
+          <button type="submit" id="submit-button">Submit Request</button>
         </div>
       </form>
     </div>
@@ -1352,6 +1343,7 @@
 
           hoursRequested.value = String(selectedHours || currentValue || minHours);
           hoursRequested.disabled = Boolean(disabled);
+          hoursRequestedRow.classList.toggle("disabled", Boolean(disabled));
         }
 
         function enforceHoursRule() {
@@ -1668,7 +1660,7 @@
 
         function setSubmittingState(isSubmitting) {
           submitButton.disabled = isSubmitting;
-          submitButton.textContent = isSubmitting ? "Sending..." : "Request Service";
+          submitButton.textContent = isSubmitting ? "Sending..." : "Submit Request";
         }
 
         serviceType.addEventListener("change", refreshForm);
