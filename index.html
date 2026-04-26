@@ -605,7 +605,7 @@
 
   ACTIVE DESIGN RULES
   8. Booking must remain available but secondary to brand, services, trust, and vehicle proof.
-  8.1. Passenger capacity is capped at 6 passengers. Do not use second-vehicle, larger-group, or flexible capacity language.
+  8.1. Passenger capacity is capped at 6 passengers. Present 4 passengers as the premium comfort lane and 6 passengers as the maximum capacity. Do not use second-vehicle, larger-group, or flexible capacity language.
   9. Hero must establish company identity; it must not become a flyer, booking ad, or oversized vehicle showcase.
   10. Gallery handles vehicle proof unless a hero image is separately planned and approved.
   11. Gold/champagne is an accent. Gray controls tone. Black controls premium feel.
@@ -627,7 +627,7 @@
   23. Services status: service cards carry the service lanes directly.
   24. Service Promise status: converted from repeated three-card grid into a lighter trust strip.
   25. About status: heading changed to "Our Standard" and copy now explains the private ride experience without repeating the Service Promise or service menu.
-  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for up to 4 passengers, applies a $25 standard passenger adjustment for passengers 5 and 6, treats event/hourly/daily estimates as review-based instead of fake calculator pricing, and removes the unused service-multiplier row.
+  26. Booking status: remains a request section, not a checkout page. Booking now uses a short trust line, controlled form section labels, passenger/contact grouping, lighter service-estimate language, narrower estimate width, conditional estimate-adjustment rows, hides passenger adjustment when $0, keeps the St. John notice, requires Additional Instructions for custom locations, shows the estimate section once Service Type is selected, treats $180 as the base transfer estimate for the premium comfort lane of up to 4 passengers, applies a $25 capacity adjustment for passengers 5 and 6, positions hourly/private service at $125 per hour with a 3-hour minimum, allows hourly/event requests from 3 to 6 hours, shows the selected-hour estimate for hourly/private service while final details remain review-based, keeps daily service quote-based, and keeps St. John coordination language visible in every affected service lane.
   27. Hero status: corrected. Hero now identifies the business name first, uses "Elevate Your Journey" as the muted premium tag, and uses one short luxury service-identity line without overstacking adjectives. Detailed service categories remain in Services, not the hero.
   -->
 
@@ -824,7 +824,7 @@
 
         <div class="form-row">
           <label for="number-of-passengers">Passengers</label>
-          <input type="number" id="number-of-passengers" name="number-of-passengers" min="1" max="6" required />
+          <input type="number" id="number-of-passengers" name="number-of-passengers" min="1" max="6" placeholder="1-4 best comfort; 6 max" required />
           <div id="passenger-warning"></div>
         </div>
 
@@ -855,11 +855,11 @@
           <div id="route-warning" class="notice">Pickup and drop-off cannot be the same location.</div>
         </div>
 
-        <div id="service-estimate-label" class="form-section-label" style="display: none;">Service Estimate</div>
+        <div id="service-estimate-label" class="form-section-label" style="display: none;">Estimated Rate</div>
 
         <div id="price-breakdown" class="form-row full" style="display: none;">
           <div id="base-rate-row" class="estimate-row">
-            <span>Starting rate</span>
+            <span>Base transfer rate</span>
             <span>$<span id="breakdown-base">180</span></span>
           </div>
           <div id="st-john-adjustment-row" class="estimate-row" style="display: none;">
@@ -867,7 +867,7 @@
             <span>$<span id="breakdown-stjohn">0</span></span>
           </div>
           <div id="passenger-adjustment-row" class="estimate-row" style="display: none;">
-            <span>Passenger adjustment</span>
+            <span>Capacity adjustment</span>
             <span>$<span id="breakdown-extra-passengers">0</span></span>
           </div>
           <div id="round-trip-adjustment-row" class="estimate-row" style="display: none;">
@@ -878,9 +878,9 @@
             <span>Estimated total</span>
             <span>$<span id="total-price">180</span></span>
           </div>
-          <div id="review-estimate-message" class="estimate-note">Event, hourly, and daily service requests are reviewed based on requested time and itinerary.</div>
+          <div id="review-estimate-message" class="estimate-note">Hourly, event, and daily service requests are reviewed based on requested time and itinerary.</div>
           <div class="estimate-confirmation">Final availability and service details will be confirmed after review.</div>
-          <div id="st-john-estimate-note" class="estimate-note">St. John trips require additional coordination. The St. John estimate starts at $700 before any passenger, service, or round-trip adjustment.</div>
+          <div id="st-john-estimate-note" class="estimate-note">St. John trips require additional coordination. The St. John estimate starts at $700 before any capacity or round-trip adjustment.</div>
         </div>
 
         <div class="form-row full">
@@ -927,6 +927,8 @@
       const MAX_PASSENGERS = 6;
       const EXTRA_PASSENGER_RATE_STANDARD = 25;
       const EXTRA_PASSENGER_RATE_ST_JOHN = 100;
+      const HOURLY_RATE = 125;
+      const HOURLY_MINIMUM_HOURS = 3;
       const AIRPORT_VALUE = "cyril-e-king-airport";
       const ST_JOHN_VALUE = "st-john";
       const CUSTOM_LOCATION_VALUES = ["hotel-resort-not-listed", "villa-private-residence", "other"];
@@ -1052,23 +1054,19 @@
         function enforceHoursRule() {
           const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
 
-          if (stJohnTrip) {
-            hoursRequested.value = 3;
-            hoursRequested.disabled = true;
+          if (serviceType.value === "hourly-rental" || serviceType.value === "event") {
+            hoursRequested.value = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || 3, 3), 6);
+            hoursRequested.min = 3;
+            hoursRequested.max = 6;
+            hoursRequested.disabled = false;
             return;
           }
 
           if (serviceType.value === "transfer") {
-            hoursRequested.value = 2;
+            hoursRequested.value = stJohnTrip ? 3 : 2;
+            hoursRequested.min = stJohnTrip ? 3 : 2;
+            hoursRequested.removeAttribute("max");
             hoursRequested.disabled = true;
-            return;
-          }
-
-          if (serviceType.value === "hourly-rental" || serviceType.value === "event") {
-            hoursRequested.value = 3;
-            hoursRequested.min = 3;
-            hoursRequested.max = 4;
-            hoursRequested.disabled = false;
             return;
           }
 
@@ -1111,6 +1109,24 @@
           specialRequests.setCustomValidity(customLocation && !specialRequests.value.trim() ? "Enter the hotel, villa, residence, or custom address." : "");
         }
 
+        function updateReviewEstimateMessage() {
+          if (serviceType.value === "hourly-rental" || serviceType.value === "event") {
+            const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
+            const selectedHourEstimate = selectedHours * HOURLY_RATE;
+            const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John coordination requires final review." : "";
+            reviewEstimateMessage.textContent = "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + stJohnText + " Final details are confirmed after review.";
+            return;
+          }
+
+          if (serviceType.value === "daily-rental") {
+            const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John coordination requires final review." : "";
+            reviewEstimateMessage.textContent = "Daily service is reviewed based on requested time, itinerary, and vehicle availability." + stJohnText;
+            return;
+          }
+
+          reviewEstimateMessage.textContent = "Event, hourly, and daily service requests are reviewed based on requested time and itinerary.";
+        }
+
         function updatePrice() {
           const estimateReady = Boolean(serviceType.value);
 
@@ -1133,6 +1149,7 @@
           });
 
           if (reviewBasedService) {
+            updateReviewEstimateMessage();
             baseRateRow.style.display = "none";
             stJohnAdjustmentRow.style.display = "none";
             passengerAdjustmentRow.style.display = "none";
@@ -1192,12 +1209,24 @@
           const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
           const reviewBasedService = serviceType.value && serviceType.value !== "transfer";
 
+          if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event") && stJohnTrip) {
+            const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
+            const selectedHourEstimate = selectedHours * HOURLY_RATE;
+            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review.";
+          }
+
+          if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event")) {
+            const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
+            const selectedHourEstimate = selectedHours * HOURLY_RATE;
+            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. Final details are confirmed after review.";
+          }
+
           if (reviewBasedService && stJohnTrip) {
-            return "Service estimate will be confirmed after review based on requested time, itinerary, and St. John coordination.";
+            return "Daily service estimate will be confirmed after review based on requested time, itinerary, and St. John coordination.";
           }
 
           if (reviewBasedService) {
-            return "Service estimate will be confirmed after review based on requested time and itinerary.";
+            return "Daily service estimate will be confirmed after review based on requested time and itinerary.";
           }
 
           if (stJohnTrip) {
