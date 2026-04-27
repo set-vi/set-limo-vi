@@ -443,6 +443,36 @@
       -webkit-appearance: none;
     }
 
+    .date-field input[type="date"] {
+      position: relative;
+      padding-right: 28px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .date-field input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      opacity: 0;
+    }
+
+    .date-field::after {
+      content: "";
+      position: absolute;
+      right: 14px;
+      bottom: 17px;
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid rgba(var(--bronze-rgb), 0.9);
+      border-bottom: 2px solid rgba(var(--bronze-rgb), 0.9);
+      pointer-events: none;
+      transform: rotate(45deg);
+    }
+
     .form-row select option,
     .form-row select optgroup {
       color: var(--text);
@@ -913,7 +943,7 @@
       <form id="booking-form" class="booking-grid" novalidate>
         <div class="form-section-label">Trip Details</div>
 
-        <div class="form-row field-card">
+        <div class="form-row field-card date-field">
           <label for="booking-date">Service Date</label>
           <input type="date" id="booking-date" name="booking-date" required />
         </div>
@@ -1031,7 +1061,7 @@
 
         <div id="return-trip-section" class="form-row full" style="display: none;">
           <div class="return-trip-grid">
-            <div>
+            <div class="date-field">
               <label for="return-date">Return Date</label>
               <input type="date" id="return-date" name="return-date" />
             </div>
