@@ -52,6 +52,26 @@
       color: var(--text);
     }
 
+    html.reveal-ready .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+      will-change: opacity, transform;
+    }
+
+    html.reveal-ready .reveal.reveal-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.reveal-ready .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
     nav {
       position: sticky;
       top: 0;
@@ -865,7 +885,7 @@
     <a href="#book">Book</a>
   </nav>
 
-  <section id="home" class="hero">
+  <section id="home" class="hero reveal">
     <h1>Superb Executive Transportation</h1>
     <a href="#book" class="btn">Request Service</a>
 
@@ -876,7 +896,7 @@
     </div>
   </section>
 
-  <section id="services">
+  <section id="services" class="reveal">
     <h2>Our Services</h2>
 
     <div class="card-grid">
@@ -895,7 +915,7 @@
     </div>
   </section>
 
-  <section id="why-us">
+  <section id="why-us" class="reveal">
     <h2>Service Commitment</h2>
 
     <div class="trust-strip" aria-label="Service commitment">
@@ -905,14 +925,14 @@
     </div>
   </section>
 
-  <section id="about">
+  <section id="about" class="reveal">
     <h2>Our Standard</h2>
     <div class="card about-card">
       <p>We provide reserved private service, confirming each ride before arrival—from pickup time and route details to passenger comfort and service expectations.</p>
     </div>
   </section>
 
-  <section id="gallery">
+  <section id="gallery" class="reveal">
     <h2>Gallery</h2>
     <div class="gallery">
       <img src="png/luxury-int.png" alt="Interior of luxury van" />
@@ -921,7 +941,7 @@
     </div>
   </section>
 
-  <section id="book">
+  <section id="book" class="reveal">
     <h2>Request Transportation</h2>
 
     <div class="booking-form-container">
@@ -1240,6 +1260,46 @@
         return new Date(date.getTime() - timezoneOffset).toISOString().split("T")[0];
       }
 
+      function initializePageReveals() {
+        const revealElements = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+
+        if (!revealElements.length) {
+          return;
+        }
+
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          revealElements.forEach(function (element) {
+            element.classList.add("reveal-visible");
+          });
+          return;
+        }
+
+        document.documentElement.classList.add("reveal-ready");
+
+        if (!("IntersectionObserver" in window)) {
+          revealElements.forEach(function (element) {
+            element.classList.add("reveal-visible");
+          });
+          return;
+        }
+
+        const observer = new IntersectionObserver(function (entries, observerInstance) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("reveal-visible");
+              observerInstance.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.14,
+          rootMargin: "0px 0px -40px 0px"
+        });
+
+        revealElements.forEach(function (element) {
+          observer.observe(element);
+        });
+      }
+
       function runSelfTests() {
         const standard = calculateTotal({ passengerCount: 1, stJohnTrip: false, roundTrip: false, serviceType: "transfer" });
         console.assert(standard.total === 180, "Standard one-way transfer should total 180");
@@ -1259,6 +1319,7 @@
       }
 
       document.addEventListener("DOMContentLoaded", function () {
+        initializePageReveals();
         const serviceType = getRequiredElement("service-type");
         const hoursRequested = getRequiredElement("hours-requested");
         const hoursRequestedRow = getRequiredElement("hours-requested-row");
