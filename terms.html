@@ -1,12 +1,471 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms and Conditions</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Terms and Conditions | S.E.T. | Superb Executive Transportation</title>
+  <meta
+    name="description"
+    content="Terms and Conditions for Superb Executive Transportation website use, transportation requests, service confirmation, payments, cancellations, conduct, and related service terms."
+  />
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #000;
+      --charcoal: #090909;
+      --charcoal-soft: #181818;
+      --bronze: #b88945;
+      --bronze-light: #c49a5b;
+      --bronze-rgb: 184, 137, 69;
+      --text: #cfcfcf;
+      --text-soft: #bdbdbd;
+      --text-bright: #dedede;
+      --muted: #ababab;
+      --muted-soft: #8f8f8f;
+      --line: rgba(255, 255, 255, 0.10);
+      --line-soft: rgba(255, 255, 255, 0.08);
+      --shadow-medium: rgba(0, 0, 0, 0.28);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(var(--bronze-rgb), 0.08), transparent 26%),
+        linear-gradient(180deg, var(--black) 0%, var(--charcoal) 44%, var(--charcoal-soft) 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--bronze-light);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--bronze);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.92);
+      border-bottom: 1px solid var(--line-soft);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    }
+
+    nav a {
+      position: relative;
+      margin: 0 20px;
+      color: var(--muted);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background-color: var(--bronze);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    main {
+      width: min(960px, 92%);
+      margin: 0 auto;
+      padding: 58px 0 72px;
+    }
+
+    .hero {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--bronze);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 700;
+      letter-spacing: 0.015em;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      color: var(--bronze);
+      font-size: clamp(2.35rem, 5.4vw, 4.05rem);
+      line-height: 1.08;
+    }
+
+    .updated {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .terms-card {
+      padding: clamp(24px, 5vw, 42px);
+      background: linear-gradient(180deg, rgba(18, 18, 18, 0.82), rgba(12, 12, 12, 0.9));
+      border: 1px solid var(--line-soft);
+      border-radius: 16px;
+      box-shadow: 0 10px 24px var(--shadow-medium);
+    }
+
+    .terms-card p {
+      margin: 0 0 18px;
+      color: var(--text-soft);
+      font-size: 1rem;
+    }
+
+    h2 {
+      margin: 34px 0 12px;
+      color: var(--text-bright);
+      font-size: 1.55rem;
+    }
+
+    h2:first-of-type {
+      margin-top: 18px;
+    }
+
+    .notice-box,
+    .contact-box {
+      margin: 24px 0;
+      padding: 16px 18px;
+      background: rgba(var(--bronze-rgb), 0.08);
+      border-left: 4px solid rgba(var(--bronze-rgb), 0.88);
+      border-radius: 8px;
+    }
+
+    .notice-box p,
+    .contact-box p {
+      margin: 0;
+      color: var(--text);
+    }
+
+    .site-footer {
+      padding: 34px 20px 26px;
+      color: #bfbfbf;
+      background: linear-gradient(180deg, rgba(10, 10, 10, 0.96), #000);
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: var(--muted-soft);
+      font-size: 0.92em;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--bronze);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding: 12px;
+      }
+
+      nav a {
+        margin: 8px 10px;
+        font-size: 0.92em;
+      }
+
+      main {
+        padding-top: 42px;
+      }
+
+      .terms-card {
+        padding: 22px 18px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Terms and Conditions</h1>
-  <p>Content coming soon.</p>
+  <nav aria-label="Primary navigation">
+    <a href="index.html#home">Home</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#gallery">Gallery</a>
+    <a href="index.html#book">Book</a>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Terms and Conditions</p>
+      <h1>Terms and Conditions</h1>
+      <p class="updated"><strong>Last Updated:</strong> April 26, 2026</p>
+    </section>
+
+    <section class="terms-card">
+      <p>
+        These Terms and Conditions govern use of the Superb Executive Transportation website, transportation-request page, and related transportation-service communications. By using this website, submitting a request, contacting Superb Executive Transportation, or accepting transportation service, you agree to these Terms and Conditions.
+      </p>
+
+      <p>
+        Superb Executive Transportation provides private executive transportation services in St. Thomas, U.S. Virgin Islands, with coordinated St. John-related requests handled by review and confirmation.
+      </p>
+
+      <div class="notice-box">
+        <p>
+          A website request is not an automatic reservation. Service is confirmed only after Superb Executive Transportation reviews and accepts the request, confirms availability, and communicates final service arrangements.
+        </p>
+      </div>
+
+      <h2>1. Booking Requests</h2>
+      <p>
+        Submitting a transportation request through the website is a request for service only. A request does not automatically confirm a reservation, guarantee availability, lock pricing, or create a transportation contract.
+      </p>
+      <p>
+        Service is confirmed only after Superb Executive Transportation reviews the request and confirms availability, trip details, pricing, payment or deposit requirements, pickup information, and final arrangements.
+      </p>
+      <p>
+        Superb Executive Transportation may decline, cancel, or modify a request when service is unavailable, the requested trip cannot be safely or lawfully completed, the request contains inaccurate or incomplete information, required payment is not received, or the customer does not respond to follow-up communication.
+      </p>
+
+      <h2>2. Customer Information</h2>
+      <p>
+        Customers are responsible for providing accurate and complete transportation information, including name, phone number, email address, pickup location, drop-off location, date, time, passenger count, luggage details, flight information, ferry information, stop details, and any special trip details.
+      </p>
+      <p>
+        Superb Executive Transportation is not responsible for delays, missed pickups, missed ferries, missed flights, failed communications, or service issues caused by incorrect, incomplete, outdated, blocked, or unavailable customer information.
+      </p>
+
+      <h2>3. Service Area and Coordinated Requests</h2>
+      <p>
+        Superb Executive Transportation provides private executive transportation services in St. Thomas. St. John-related requests, ferry-related transportation, special-event transportation, multi-stop transportation, hourly service, daily service, and other coordinated requests may require additional review before confirmation.
+      </p>
+      <p>
+        St. John-related requests are not automatically confirmed through the website. Superb Executive Transportation will review the requested details and contact the customer to confirm whether the service can be coordinated.
+      </p>
+
+      <h2>4. Passenger and Vehicle Capacity</h2>
+      <p>
+        Service is based on the vehicle capacity available for the confirmed trip. Superb Executive Transportation maintains a hard six-passenger maximum for transportation service.
+      </p>
+      <p>
+        Customers must provide an accurate passenger count before service is confirmed. Superb Executive Transportation may refuse service, require modification of the trip, or cancel service if the passenger count exceeds the confirmed vehicle capacity.
+      </p>
+      <p>
+        Luggage, oversized items, equipment, and personal belongings must fit safely within the vehicle without blocking exits, creating a hazard, damaging the vehicle, or interfering with passenger safety or comfort.
+      </p>
+
+      <h2>5. Pricing, Quotes, Deposits, and Payment</h2>
+      <p>
+        Prices shown on the website, booking page, promotional material, or request form may be estimates or starting prices unless expressly confirmed by Superb Executive Transportation.
+      </p>
+      <p>
+        Final pricing may depend on service type, date, time, pickup location, drop-off location, waiting time, ferry coordination, special-event needs, extra stops, return service, after-hours service, delays, customer changes, or other trip-specific details.
+      </p>
+      <p>
+        A reservation is not confirmed until Superb Executive Transportation confirms the trip and any required deposit, payment, or payment arrangement is completed.
+      </p>
+      <p>
+        Superb Executive Transportation may require a deposit, partial payment, full payment, or payment authorization before confirming or providing service. Payment instructions may be provided separately by invoice, payment link, approved payment method, or direct communication.
+      </p>
+      <p>
+        Customers should not submit credit card numbers, bank-account information, Social Security numbers, passport numbers, or other sensitive financial or identification information through open website text fields.
+      </p>
+
+      <h2>6. Cancellations, Changes, and No-Shows</h2>
+      <p>
+        Customers must contact Superb Executive Transportation as soon as possible to request any cancellation, time change, route change, passenger-count change, pickup-location change, drop-off-location change, extra-stop change, or other trip modification.
+      </p>
+      <p>
+        Standard transfer changes or cancellations require at least 24 hours’ notice before the confirmed pickup time.
+      </p>
+      <p>
+        St. John-related service, ferry-coordinated service, event service, hourly service, daily service, and multi-stop service require at least 48 hours’ notice because those services require additional coordination.
+      </p>
+      <p>
+        Requested changes are subject to availability and may require price adjustment, additional payment, or new confirmation.
+      </p>
+      <p>
+        Deposits, booking fees, and reservation payments are non-refundable once service is confirmed, unless Superb Executive Transportation cancels the service or agrees otherwise in writing.
+      </p>
+      <p>
+        Late cancellations may be charged up to the confirmed service amount.
+      </p>
+      <p>
+        A customer may be treated as a no-show if the customer is unavailable at the confirmed pickup location, fails to respond to reasonable contact attempts, provides incorrect pickup information, exceeds the waiting period communicated by Superb Executive Transportation, or otherwise prevents the scheduled service from being completed.
+      </p>
+      <p>
+        No-shows may be charged the full confirmed service amount.
+      </p>
+      <p>
+        Flight, ferry, traffic, weather, and road delays will be reviewed case by case. Customers must notify Superb Executive Transportation as soon as possible about schedule changes.
+      </p>
+
+      <h2>7. Flight, Ferry, Traffic, and Schedule Delays</h2>
+      <p>
+        Customers are responsible for providing accurate flight, ferry, vessel, arrival, departure, and schedule information when applicable.
+      </p>
+      <p>
+        Superb Executive Transportation may monitor or consider travel information when available, but customers remain responsible for communicating changes, delays, cancellations, early arrivals, revised ferry plans, or updated pickup needs.
+      </p>
+      <p>
+        Superb Executive Transportation is not responsible for delays, missed flights, missed ferries, missed events, missed appointments, traffic conditions, road closures, weather conditions, ferry delays, airline delays, government restrictions, law-enforcement activity, mechanical issues outside reasonable control, unsafe conditions, or other events beyond reasonable control.
+      </p>
+
+      <h2>8. Customer Conduct and Safety</h2>
+      <p>
+        Customers and passengers must conduct themselves safely, respectfully, and lawfully during transportation service.
+      </p>
+      <p>
+        Superb Executive Transportation may refuse, suspend, or terminate service if a customer or passenger engages in unsafe conduct, unlawful conduct, threatening conduct, harassment, disorderly behavior, property damage, excessive intoxication, refusal to follow reasonable safety instructions, or conduct that may endanger the driver, passengers, vehicle, public, or business operations.
+      </p>
+      <p>
+        Seatbelts must be used as required by law. Customers are responsible for ensuring that minors and passengers under their supervision comply with applicable safety requirements.
+      </p>
+      <p>
+        Superb Executive Transportation does not provide child safety seats, booster seats, or child-restraint devices. Customers are responsible for providing any child safety seat, booster seat, or child-restraint device required for their passengers. Customers are responsible for installing, securing, and using any child-restraint device. Superb Executive Transportation does not install, inspect, adjust, or assume responsibility for customer-provided child-restraint devices.
+      </p>
+
+      <h2>9. Vehicle Care, Cleaning, and Damage</h2>
+      <p>
+        Customers are responsible for damage, excessive cleaning, spills, stains, odors, broken equipment, or other vehicle-related costs caused by the customer, passengers, luggage, personal items, food, drinks, or conduct during service.
+      </p>
+      <p>
+        Superb Executive Transportation may charge the customer for reasonable cleaning, repair, replacement, downtime, administrative, or related costs resulting from customer or passenger conduct.
+      </p>
+      <p>
+        Smoking, vaping, illegal substances, and unlawful activity are prohibited in the vehicle.
+      </p>
+
+      <h2>10. Personal Property</h2>
+      <p>
+        Customers are responsible for their own luggage, phones, bags, documents, valuables, and personal property.
+      </p>
+      <p>
+        Superb Executive Transportation is not responsible for lost, stolen, misplaced, damaged, or abandoned personal property except to the extent required by law.
+      </p>
+      <p>
+        Customers should contact Superb Executive Transportation promptly regarding any item believed to have been left in a vehicle. Return of lost items may require coordination and may be subject to availability, scheduling, or delivery charges.
+      </p>
+
+      <h2>11. Website Use</h2>
+      <p>
+        Customers may use this website only for lawful purposes, including reviewing services, submitting legitimate transportation requests, and contacting Superb Executive Transportation.
+      </p>
+      <p>
+        Customers may not misuse the website, submit false information, interfere with website operation, attempt unauthorized access, use the website for spam or fraudulent activity, or submit content that is unlawful, abusive, misleading, or harmful.
+      </p>
+      <p>
+        Superb Executive Transportation may update, suspend, modify, or remove website content, request forms, prices, service descriptions, or availability information at any time.
+      </p>
+
+      <h2>12. Third-Party Services</h2>
+      <p>
+        The website may use third-party services for hosting, form submission, email delivery, customer communication, payment processing, analytics, or website operation. These services may include EmailJS or other form/email submission providers.
+      </p>
+      <p>
+        Third-party platforms, processors, links, or services may have their own terms and privacy policies. Superb Executive Transportation is not responsible for third-party websites, platforms, processors, or services that are not controlled by Superb Executive Transportation.
+      </p>
+
+      <h2>13. Limitation of Liability</h2>
+      <p>
+        To the fullest extent permitted by law, Superb Executive Transportation is not liable for indirect, incidental, special, consequential, punitive, or lost-opportunity damages arising from use of the website, transportation requests, trip delays, unavailable service, customer-provided information, third-party services, traffic, weather, ferry delays, airline delays, customer no-shows, or events beyond reasonable control.
+      </p>
+      <p>
+        Nothing in these Terms and Conditions is intended to waive rights, remedies, or obligations that cannot be limited under applicable law.
+      </p>
+
+      <h2>14. Indemnification</h2>
+      <p>
+        To the fullest extent permitted by law, customers agree to be responsible for claims, losses, damages, costs, expenses, penalties, or liabilities arising from inaccurate booking information, customer or passenger misconduct, vehicle damage, unlawful activity, misuse of the website, violation of these Terms and Conditions, or failure to comply with applicable laws or safety requirements.
+      </p>
+
+      <h2>15. Governing Law</h2>
+      <p>
+        These Terms and Conditions are governed by the laws applicable in the U.S. Virgin Islands, without regard to conflict-of-law principles.
+      </p>
+
+      <h2>16. Changes to These Terms</h2>
+      <p>
+        Superb Executive Transportation may update these Terms and Conditions from time to time. The updated version will be posted on this page with a revised “Last Updated” date.
+      </p>
+      <p>
+        Continued use of the website, submission of a transportation request, or acceptance of service after updates are posted means you accept the updated Terms and Conditions.
+      </p>
+
+      <h2>17. Contact</h2>
+      <div class="contact-box">
+        <p>
+          For questions about these Terms and Conditions, contact:<br />
+          <strong>Superb Executive Transportation</strong><br />
+          <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a><br />
+          <a href="tel:3406428686">340-642-8686</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <span>&copy; 2026 Superb Executive Transportation (S.E.T.). All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#book">Book</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
