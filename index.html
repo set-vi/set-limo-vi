@@ -208,8 +208,10 @@
 
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
+      max-width: 940px;
+      margin: 0 auto;
     }
 
     .card {
@@ -428,9 +430,21 @@
     }
 
     .hours-select-wrap {
-      min-width: 86px;
+      min-width: 132px;
       padding-left: 14px;
       border-left: 1px solid var(--line);
+    }
+
+    .hours-select-wrap::before {
+      content: "Reserved Time";
+      display: block;
+      margin-bottom: 4px;
+      color: var(--bronze);
+      font-size: 0.68em;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      line-height: 1.1;
+      text-transform: uppercase;
     }
 
     .hours-select-wrap select:disabled {
@@ -909,7 +923,7 @@
 
   <section id="home" class="hero reveal">
     <h1>Superb Executive Transportation</h1>
-    <a href="#book" class="btn">Request Service</a>
+    <a href="#book" class="btn">Reserve Now</a>
 
     <div class="hero-proof-strip" aria-label="Service highlights">
       <div class="hero-proof-item">Private Executive Van</div>
@@ -919,7 +933,7 @@
   </section>
 
   <section id="services" class="reveal">
-    <h2>Our Services</h2>
+    <h2>Services</h2>
 
     <div class="card-grid">
       <div class="card">
@@ -928,17 +942,21 @@
       </div>
       <div class="card">
         <h3>Coordination</h3>
-        <p>Ferry-aligned pickups, terminal transfers, and St. John requests handled through direct confirmation.</p>
+        <p>Ferry-aligned pickups, terminal transfers, Red Hook timing, and St. John requests handled through direct confirmation.</p>
       </div>
       <div class="card">
-        <h3>Private Chauffeur</h3>
-        <p>Reserved service for events, dinners, corporate needs, hourly bookings, daily service, and multi-stop plans.</p>
+        <h3>Chauffeur</h3>
+        <p>Reserved private vehicle and driver service for dinners, business movement, hourly service, daily service, VIP needs, and controlled multi-stop plans.</p>
+      </div>
+      <div class="card">
+        <h3>Events</h3>
+        <p>Private transportation for weddings, celebrations, corporate events, and planned special occasions.</p>
       </div>
     </div>
   </section>
 
   <section id="why-us" class="reveal">
-    <h2>Service Commitment</h2>
+    <h2>Commitment</h2>
 
     <div class="trust-strip" aria-label="Service commitment">
       <div class="trust-item">Planned Timing</div>
@@ -964,7 +982,7 @@
   </section>
 
   <section id="book" class="reveal">
-    <h2>Request Transportation</h2>
+    <h2>Reservation</h2>
 
     <div class="booking-form-container">
       <form id="booking-form" class="booking-grid" novalidate>
@@ -989,13 +1007,14 @@
               <select id="service-type" name="service-type" required>
                 <option value="" disabled selected hidden></option>
                 <option value="transfer">Transfer</option>
-                <option value="event">Event / Private Chauffeur</option>
+                <option value="private-chauffeur">Chauffeur</option>
+                <option value="event">Event Service</option>
                 <option value="hourly-rental">Hourly Service</option>
                 <option value="daily-rental">Daily Service</option>
               </select>
             </div>
             <div id="hours-requested-row" class="select-wrap hours-select-wrap" style="display: none;">
-              <select id="hours-requested" name="hours-requested" required aria-label="Hours Requested">
+              <select id="hours-requested" name="hours-requested" required aria-label="Reserved Time">
                 <option value="" disabled selected hidden></option>
               </select>
             </div>
@@ -1170,14 +1189,14 @@
             <span>Estimated total</span>
             <span>$<span id="total-price">180</span></span>
           </div>
-          <div id="review-estimate-message" class="estimate-note">Hourly, event, and daily service requests are reviewed based on requested time and itinerary.</div>
+          <div id="review-estimate-message" class="estimate-note">Chauffeur, event, hourly, and daily service requests are reviewed based on requested time and itinerary.</div>
           <div class="estimate-confirmation">Final terms are confirmed before service.</div>
           <div id="st-john-estimate-note" class="estimate-note">St. John estimate starts at $700 before capacity or round-trip adjustment.</div>
           <div id="extra-stop-estimate-note" class="estimate-note">Extra stop requested. Extra stops may affect the final rate.</div>
         </div>
 
         <div class="form-row full">
-          <button type="submit" id="submit-button">Submit Request</button>
+          <button type="submit" id="submit-button">Submit</button>
         </div>
       </form>
     </div>
@@ -1262,7 +1281,7 @@
         const serviceType = options.serviceType || "transfer";
         const extraPassengerRate = stJohnTrip ? EXTRA_PASSENGER_RATE_ST_JOHN : EXTRA_PASSENGER_RATE_STANDARD;
         const extraCharge = Math.max(passengerCount - INCLUDED_PASSENGERS, 0) * extraPassengerRate;
-        const serviceMultiplier = serviceType === "hourly-rental" ? 2 : serviceType === "event" ? 1.5 : serviceType === "daily-rental" ? 4 : 1;
+        const serviceMultiplier = serviceType === "hourly-rental" || serviceType === "private-chauffeur" ? 2 : serviceType === "event" ? 1.5 : serviceType === "daily-rental" ? 4 : 1;
         const roundMultiplier = roundTrip ? 2 : 1;
         const stJohnAdjustment = stJohnTrip ? ST_JOHN_ADJUSTMENT : 0;
         const total = (BASE_RATE + stJohnAdjustment + extraCharge) * serviceMultiplier * roundMultiplier;
@@ -1434,7 +1453,7 @@
           hoursRequestedRow.style.display = "block";
           hoursRequested.required = true;
 
-          if (serviceType.value === "hourly-rental" || serviceType.value === "event") {
+          if (serviceType.value === "hourly-rental" || serviceType.value === "event" || serviceType.value === "private-chauffeur") {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || 3, 3), 6);
             setHoursOptions(3, 6, selectedHours, false);
             return;
@@ -1488,12 +1507,13 @@
         }
 
         function updateReviewEstimateMessage() {
-          if (serviceType.value === "hourly-rental" || serviceType.value === "event") {
+          if (serviceType.value === "hourly-rental" || serviceType.value === "event" || serviceType.value === "private-chauffeur") {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
             const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John coordination requires final review." : "";
             const extraStopText = extraStop.checked ? " Extra stops may affect the final rate." : "";
-            reviewEstimateMessage.textContent = "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + stJohnText + extraStopText;
+            const serviceLabel = serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service";
+            reviewEstimateMessage.textContent = serviceLabel + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + stJohnText + extraStopText;
             return;
           }
 
@@ -1504,7 +1524,7 @@
             return;
           }
 
-          reviewEstimateMessage.textContent = "Event, hourly, and daily requests are reviewed by time and itinerary.";
+          reviewEstimateMessage.textContent = "Chauffeur, event, hourly, and daily requests are reviewed by time and itinerary.";
         }
 
         function updatePrice() {
@@ -1642,16 +1662,16 @@
           const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
           const reviewBasedService = serviceType.value && serviceType.value !== "transfer";
 
-          if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event") && stJohnTrip) {
+          if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event" || serviceType.value === "private-chauffeur") && stJohnTrip) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return addPaymentTerms("Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
+            return addPaymentTerms((serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service") + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
           }
 
-          if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event")) {
+          if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event" || serviceType.value === "private-chauffeur")) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return addPaymentTerms("Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
+            return addPaymentTerms((serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service") + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
           }
 
           if (reviewBasedService && stJohnTrip) {
@@ -1751,7 +1771,7 @@
 
         function setSubmittingState(isSubmitting) {
           submitButton.disabled = isSubmitting;
-          submitButton.textContent = isSubmitting ? "Sending..." : "Submit Request";
+          submitButton.textContent = isSubmitting ? "Sending..." : "Submit";
         }
 
         serviceType.addEventListener("change", refreshForm);
