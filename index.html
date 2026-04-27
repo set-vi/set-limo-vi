@@ -658,13 +658,16 @@
       font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
-      background: linear-gradient(145deg, var(--bronze-light), var(--bronze-dark));
+      background: linear-gradient(145deg, #b98b47, #8a642f);
       border: none;
       border-radius: 8px;
-      box-shadow: 0 8px 18px var(--shadow-strong);
+      box-shadow: 0 6px 14px var(--shadow-medium);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
     }
 
     #submit-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px var(--shadow-strong);
       filter: brightness(1.04);
     }
 
@@ -1179,6 +1182,7 @@
       const EMAILJS_SERVICE_ID = "service_dmvxcdi";
       const EMAILJS_ADMIN_TEMPLATE_ID = "template_ysacch6";
       const EMAILJS_CUSTOMER_TEMPLATE_ID = "template_o15zm0b";
+      const PAYMENT_TERMS = "Payment is required to confirm service. Deposits, booking fees, and reservation payments are non-refundable once service is confirmed, unless Superb Executive Transportation cancels the service or agrees otherwise in writing.";
 
       if (window.emailjs) {
         emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -1543,6 +1547,10 @@
           }
         }
 
+        function addPaymentTerms(text) {
+          return text + " " + PAYMENT_TERMS;
+        }
+
         function getPricingText() {
           const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
           const reviewBasedService = serviceType.value && serviceType.value !== "transfer";
@@ -1550,36 +1558,36 @@
           if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event") && stJohnTrip) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
+            return addPaymentTerms("Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
           }
 
           if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event")) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return "Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
+            return addPaymentTerms("Hourly/private service starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
           }
 
           if (reviewBasedService && stJohnTrip) {
-            return "Daily service is reviewed by requested time, itinerary, vehicle availability, and St. John coordination." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
+            return addPaymentTerms("Daily service is reviewed by requested time, itinerary, vehicle availability, and St. John coordination." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
           }
 
           if (reviewBasedService) {
-            return "Daily service is reviewed by requested time, itinerary, and vehicle availability." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
+            return addPaymentTerms("Daily service is reviewed by requested time, itinerary, and vehicle availability." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
           }
 
           if (stJohnTrip && extraStop.checked) {
-            return "Estimated request total: $" + totalPriceEl.textContent + ". St. John coordination and extra stop require final review.";
+            return addPaymentTerms("Estimated request total: $" + totalPriceEl.textContent + ". St. John coordination and extra stop require final review.");
           }
 
           if (stJohnTrip) {
-            return "Estimated request total: $" + totalPriceEl.textContent + ". St. John trips require additional coordination before final confirmation.";
+            return addPaymentTerms("Estimated request total: $" + totalPriceEl.textContent + ". St. John trips require additional coordination before final confirmation.");
           }
 
           if (extraStop.checked) {
-            return "Estimated request total: $" + totalPriceEl.textContent + ". Extra stops may affect the final rate.";
+            return addPaymentTerms("Estimated request total: $" + totalPriceEl.textContent + ". Extra stops may affect the final rate.");
           }
 
-          return "Estimated request total: $" + totalPriceEl.textContent + ".";
+          return addPaymentTerms("Estimated request total: $" + totalPriceEl.textContent + ".");
         }
 
         function buildTemplateParams() {
@@ -1610,6 +1618,7 @@
             service_type: getSelectText(serviceType),
             hours_requested: hoursRequested.value ? hoursRequested.value + (hoursRequested.value === "1" ? " hour" : " hours") : "",
             policy_agreed: "Not applicable.",
+            payment_terms: PAYMENT_TERMS,
             manual_confirmation_required: isStJohnRoute(pickup.value, dropoff.value) ? "Yes" : "No",
             to_email: getFieldValue(email.value, ""),
             customer_email: getFieldValue(email.value, ""),
