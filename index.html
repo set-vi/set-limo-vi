@@ -856,14 +856,23 @@
 
     @media (max-width: 768px) {
       nav {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: flex-start;
-        padding: 12px;
+        gap: 18px;
+        padding: 11px 14px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      nav::-webkit-scrollbar {
+        display: none;
       }
 
       nav a {
-        margin: 8px 10px;
-        font-size: 0.92em;
+        flex: 0 0 auto;
+        margin: 0;
+        font-size: 0.9em;
+        white-space: nowrap;
       }
 
       section {
@@ -876,6 +885,28 @@
 
       .hero p {
         font-size: 1.03em;
+      }
+
+      .hero-proof-strip {
+        margin-top: 22px;
+      }
+
+      .hero-proof-item {
+        padding: 11px 14px;
+        font-size: 0.82em;
+      }
+
+      .field-inline {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .hours-select-wrap {
+        min-width: 0;
+        padding-top: 10px;
+        padding-left: 0;
+        border-top: 1px solid var(--line);
+        border-left: 0;
       }
 
       .booking-form-container {
