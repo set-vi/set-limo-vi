@@ -135,6 +135,29 @@
       line-height: 1.08;
     }
 
+    .hero-title {
+      margin-bottom: 12px;
+      line-height: 1.02;
+    }
+
+    .hero-brand {
+      display: block;
+      font-size: clamp(2.75rem, 6.2vw, 4.55rem);
+      letter-spacing: 0.055em;
+      text-transform: uppercase;
+    }
+
+    .hero-descriptor {
+      display: block;
+      margin-top: 7px;
+      color: var(--text-bright);
+      font-family: "Poppins", Arial, sans-serif;
+      font-size: clamp(1rem, 2vw, 1.38rem);
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
     h2 {
       margin-bottom: 12px;
       font-size: clamp(1.85rem, 3.5vw, 2.45rem);
@@ -153,15 +176,6 @@
       text-align: center;
     }
 
-    .hero-logo {
-      display: block;
-      width: min(280px, 70vw);
-      aspect-ratio: 1 / 1;
-      margin: 0 auto 18px;
-      object-fit: cover;
-      object-position: center 43%;
-      border: 0;
-    }
 
     .hero p {
       margin-top: 12px;
@@ -963,8 +977,10 @@
   </nav>
 
   <section id="home" class="hero reveal">
-    <img class="hero-logo" src="png/SET-primary-no-side-lines-exact-edit.jpg" alt="S.E.T. Superb Executive Transportation logo" />
-    <h1>Superb Executive Transportation</h1>
+    <h1 class="hero-title">
+      <span class="hero-brand">Superb</span>
+      <span class="hero-descriptor">Executive Transportation</span>
+    </h1>
     <a href="#book" class="btn">Reserve Now</a>
 
     <div class="hero-proof-strip" aria-label="Service highlights">
