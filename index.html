@@ -231,6 +231,64 @@
       border-right: 0;
     }
 
+    .service-rail {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+      max-width: 980px;
+      margin: 34px auto 0;
+      padding-top: 34px;
+    }
+
+    .service-rail::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 8%;
+      right: 8%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(var(--bronze-rgb), 0.35), rgba(var(--bronze-rgb), 0.65), rgba(var(--bronze-rgb), 0.35), transparent);
+    }
+
+    .service-item {
+      position: relative;
+      padding: 18px 18px 0;
+      text-align: center;
+    }
+
+    .service-item::before {
+      content: "";
+      position: absolute;
+      top: -29px;
+      left: 50%;
+      width: 9px;
+      height: 9px;
+      background: var(--bronze-light);
+      border-radius: 999px;
+      box-shadow: 0 0 0 5px rgba(var(--bronze-rgb), 0.10);
+      transform: translateX(-50%);
+    }
+
+    .service-item h3 {
+      margin: 0 0 10px;
+      color: var(--text-bright);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: clamp(1.05rem, 2vw, 1.38rem);
+      font-weight: 600;
+      letter-spacing: 0.035em;
+      line-height: 1.18;
+      text-transform: uppercase;
+    }
+
+    .service-item p {
+      max-width: 300px;
+      margin: 0 auto;
+      color: var(--text-soft);
+      font-size: 0.95em;
+      line-height: 1.65;
+    }
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -858,6 +916,7 @@
 
     @media (max-width: 900px) {
       .card-grid,
+      .service-rail,
       .hero-proof-strip,
       .trust-strip,
       .booking-grid,
@@ -865,6 +924,26 @@
       .flight-grid,
       .return-trip-grid {
         grid-template-columns: 1fr;
+      }
+
+      .service-rail {
+        gap: 22px;
+        padding-top: 0;
+      }
+
+      .service-rail::before {
+        display: none;
+      }
+
+      .service-item {
+        padding: 22px 18px;
+        background: rgba(16, 16, 16, 0.54);
+        border: 1px solid var(--line-soft);
+        border-radius: 12px;
+      }
+
+      .service-item::before {
+        display: none;
       }
 
       .hero-proof-item,
@@ -994,22 +1073,18 @@
   <section id="services" class="reveal">
     <h2>Services</h2>
 
-    <div class="card-grid">
-      <div class="card">
-        <h3>Transfers</h3>
-        <p>Airport arrivals, resort pickups, villa transfers, and direct point-to-point transportation.</p>
+    <div class="service-rail" aria-label="Service categories">
+      <div class="service-item">
+        <h3>Private<br />Transfers</h3>
+        <p>Airport, resort, villa, cruise port, ferry terminal, and coordinated St. John service.</p>
       </div>
-      <div class="card">
-        <h3>Coordination</h3>
-        <p>Ferry-aligned pickups, terminal transfers, Red Hook timing, and St. John requests handled through direct confirmation.</p>
+      <div class="service-item">
+        <h3>Business &amp;<br />Corporate</h3>
+        <p>Executive meetings, VIP guests, business dinners, and scheduled company travel.</p>
       </div>
-      <div class="card">
-        <h3>Chauffeur</h3>
-        <p>Reserved private vehicle and driver service for dinners, business movement, hourly service, daily service, VIP needs, and controlled multi-stop plans.</p>
-      </div>
-      <div class="card">
-        <h3>Events</h3>
-        <p>Private transportation for weddings, celebrations, corporate events, and planned special occasions.</p>
+      <div class="service-item">
+        <h3>Special<br />Occasions</h3>
+        <p>Weddings, celebrations, dinner plans, and private events with reserved service.</p>
       </div>
     </div>
   </section>
