@@ -1443,12 +1443,11 @@
         }
 
         function toggleFlightInfo() {
-          const airportRoute = isAirportRoute(pickup.value, dropoff.value);
           const airportPickup = pickup.value === AIRPORT_VALUE;
-          flightInfo.style.display = airportRoute ? "block" : "none";
+          flightInfo.style.display = airportPickup ? "block" : "none";
           flightNumber.required = airportPickup;
 
-          if (!airportRoute) {
+          if (!airportPickup) {
             flightNumber.value = "";
             luggagePieces.value = "0";
           }
