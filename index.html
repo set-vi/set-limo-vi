@@ -1165,7 +1165,7 @@
         </div>
 
         <div id="route-notices-row" class="form-row full route-notices-row">
-          <div id="st-john-notice" class="notice">St. John trips require additional coordination. After you submit your request, we will reach out to confirm arrangements.</div>
+          <div id="st-john-notice" class="notice">St. John trips require additional coordination. After you submit your request, we will call if extra coordination is needed.</div>
           <div id="route-warning" class="notice">Pickup and drop-off cannot be the same location.</div>
         </div>
 
@@ -1684,10 +1684,6 @@
           }
         }
 
-        function addPaymentTerms(text) {
-          return text + " " + PAYMENT_TERMS;
-        }
-
         function getPricingText() {
           const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
           const reviewBasedService = serviceType.value && serviceType.value !== "transfer";
@@ -1695,36 +1691,36 @@
           if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event" || serviceType.value === "private-chauffeur") && stJohnTrip) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return addPaymentTerms((serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service") + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
+            return (serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service") + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review. We will call if extra coordination is needed." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
           }
 
           if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event" || serviceType.value === "private-chauffeur")) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return addPaymentTerms((serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service") + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
+            return (serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service") + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + (extraStop.checked ? " Extra stops may affect the final rate. We will call if extra coordination is needed." : "");
           }
 
           if (reviewBasedService && stJohnTrip) {
-            return addPaymentTerms("Daily service is reviewed by requested time, itinerary, vehicle availability, and St. John coordination." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
+            return "Daily service is reviewed by requested time, itinerary, vehicle availability, and St. John coordination. We will call if extra coordination is needed." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
           }
 
           if (reviewBasedService) {
-            return addPaymentTerms("Daily service is reviewed by requested time, itinerary, and vehicle availability." + (extraStop.checked ? " Extra stops may affect the final rate." : ""));
+            return "Daily service is reviewed by requested time, itinerary, and vehicle availability." + (extraStop.checked ? " Extra stops may affect the final rate. We will call if extra coordination is needed." : "");
           }
 
           if (stJohnTrip && extraStop.checked) {
-            return addPaymentTerms("Estimated request total: $" + totalPriceEl.textContent + ". St. John coordination and extra stop require final review.");
+            return "Estimated request total: $" + totalPriceEl.textContent + ". St. John coordination and extra stop require final review. We will call if extra coordination is needed.";
           }
 
           if (stJohnTrip) {
-            return addPaymentTerms("Estimated request total: $" + totalPriceEl.textContent + ". St. John trips require additional coordination before final confirmation.");
+            return "Estimated request total: $" + totalPriceEl.textContent + ". St. John trips require additional coordination before final confirmation. We will call if extra coordination is needed.";
           }
 
           if (extraStop.checked) {
-            return addPaymentTerms("Estimated request total: $" + totalPriceEl.textContent + ". Extra stops may affect the final rate.");
+            return "Estimated request total: $" + totalPriceEl.textContent + ". Extra stops may affect the final rate. We will call if extra coordination is needed.";
           }
 
-          return addPaymentTerms("Estimated request total: $" + totalPriceEl.textContent + ".");
+          return "Estimated request total: $" + totalPriceEl.textContent + ".";
         }
 
         function buildTemplateParams() {
@@ -1756,6 +1752,8 @@
             hours_requested: hoursRequested.value ? hoursRequested.value + (hoursRequested.value === "1" ? " hour" : " hours") : "",
             policy_agreed: "Not applicable.",
             payment_terms: PAYMENT_TERMS,
+            request_notice: "Request received. Please check your email for confirmation details.",
+            coordination_notice: isStJohnRoute(pickup.value, dropoff.value) || extraStop.checked || requiresAdditionalInstructions(pickup.value, dropoff.value) ? "We will call if extra coordination is needed." : "Regular requests are handled by email unless direct coordination is needed.",
             manual_confirmation_required: isStJohnRoute(pickup.value, dropoff.value) ? "Yes" : "No",
             to_email: getFieldValue(email.value, ""),
             customer_email: getFieldValue(email.value, ""),
@@ -1884,7 +1882,7 @@
               console.warn("Customer confirmation email was not sent. Admin request was submitted successfully.");
             }
 
-            alert("Request received. We will contact you to finalize your ride.");
+            alert("Request received. Please check your email for confirmation details.");
             form.reset();
             returnTripSection.style.display = "none";
             extraStopSection.style.display = "none";
