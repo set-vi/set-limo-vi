@@ -178,10 +178,12 @@
     }
 
 
-    .hero p {
-      margin-top: 12px;
+    .hero-line {
+      max-width: 680px;
+      margin: 14px auto 0;
       color: var(--text-soft);
-      font-size: 1.12em;
+      font-size: 1.08em;
+      line-height: 1.55;
       letter-spacing: 0.02em;
     }
 
@@ -319,34 +321,21 @@
       line-height: 1.7;
     }
 
-    .trust-strip {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      max-width: 940px;
+    .service-standard-panel {
+      max-width: 900px;
       margin: 0 auto;
-      background: rgba(16, 16, 16, 0.72);
+      padding: 30px 34px;
+      background: rgba(16, 16, 16, 0.64);
       border: 1px solid var(--line);
       border-radius: 14px;
-      overflow: hidden;
     }
 
-    .trust-item {
-      padding: 22px 24px;
-      color: var(--text-bright);
+    .service-standard-panel p {
+      margin: 0;
+      color: var(--text-soft);
       font-size: 1.02em;
-      font-weight: 700;
+      line-height: 1.75;
       text-align: center;
-      border-right: 1px solid var(--line-soft);
-    }
-
-    .trust-item:last-child {
-      border-right: 0;
-    }
-
-    .about-card {
-      max-width: 860px;
-      margin: 0 auto;
-      text-align: left;
     }
 
     .gallery {
@@ -918,7 +907,6 @@
       .card-grid,
       .service-rail,
       .hero-proof-strip,
-      .trust-strip,
       .booking-grid,
       .route-options-grid,
       .flight-grid,
@@ -946,15 +934,17 @@
         display: none;
       }
 
-      .hero-proof-item,
-      .trust-item {
+      .hero-proof-item {
         border-right: 0;
         border-bottom: 1px solid var(--line-soft);
       }
 
-      .hero-proof-item:last-child,
-      .trust-item:last-child {
+      .hero-proof-item:last-child {
         border-bottom: 0;
+      }
+
+      .service-standard-panel {
+        padding: 24px 20px;
       }
     }
 
@@ -1061,10 +1051,11 @@
       <span class="hero-brand">Superb</span>
       <span class="hero-descriptor">Executive Transportation</span>
     </h1>
+    <p class="hero-line">Luxury executive transportation across St. Thomas with coordinated St. John service.</p>
     <a href="#book" class="btn">Reserve</a>
 
     <div class="hero-proof-strip" aria-label="Service highlights">
-      <div class="hero-proof-item">Private Executive Van</div>
+      <div class="hero-proof-item">Luxury Executive Van</div>
       <div class="hero-proof-item">Ideal Comfort: 1–4 Guests</div>
       <div class="hero-proof-item">Maximum Capacity: 6 Guests</div>
     </div>
@@ -1090,22 +1081,9 @@
   </section>
 
   <section id="why-us" class="reveal">
-    <h2>Commitment</h2>
-
-    <div class="trust-strip" aria-label="Service commitment">
-      <div class="trust-item">Readiness</div>
-      <div class="trust-item">Timing</div>
-      <div class="trust-item">Communication</div>
-    </div>
-  </section>
-
-  <section id="about" class="reveal">
-    <h2>Standards</h2>
-
-    <div class="trust-strip" aria-label="Service standards">
-      <div class="trust-item">Safety</div>
-      <div class="trust-item">Service</div>
-      <div class="trust-item">Presentation</div>
+    <h2>Service Standard</h2>
+    <div class="service-standard-panel">
+      <p>Professional, discreet transportation with clean presentation, safe operation, dependable timing, and direct communication from request to arrival.</p>
     </div>
   </section>
 
@@ -1271,7 +1249,7 @@
         </div>
 
         <div id="route-notices-row" class="form-row full route-notices-row">
-          <div id="st-john-notice" class="notice">St. John trips require additional coordination. After you submit your request, we will call if extra coordination is needed.</div>
+          <div id="st-john-notice" class="notice">St. John trips require additional coordination. After you submit your request, we will reach out to confirm arrangements.</div>
           <div id="route-warning" class="notice">Pickup and drop-off cannot be the same location.</div>
         </div>
 
@@ -1284,7 +1262,7 @@
 
         <div class="form-row field-card">
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" inputmode="tel" pattern="[0-9]{10}" autocomplete="tel" required />
+          <input type="tel" id="phone" name="phone" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" autocomplete="tel" required />
         </div>
 
         <div class="form-row field-card">
@@ -1496,7 +1474,12 @@
         console.assert(requiresAdditionalInstructions("cyril-e-king-airport", "red-hook") === false, "Standard route should not require additional instructions");
       }
 
-      document.addEventListener("DOMContentLoaded", function () {
+      function initializeBookingForm() {
+        if (!document.getElementById("booking-form") || !document.getElementById("booking-date")) {
+          window.setTimeout(initializeBookingForm, 25);
+          return;
+        }
+
         initializePageReveals();
         const serviceType = getRequiredElement("service-type");
         const hoursRequested = getRequiredElement("hours-requested");
@@ -1646,7 +1629,7 @@
           if (serviceType.value === "hourly-rental" || serviceType.value === "event" || serviceType.value === "private-chauffeur") {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John coordination requires final review." : "";
+            const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John trips require additional coordination. We will reach out to confirm arrangements." : "";
             const extraStopText = extraStop.checked ? " Extra stops may affect the final rate." : "";
             const serviceLabel = serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service";
             reviewEstimateMessage.textContent = serviceLabel + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + stJohnText + extraStopText;
@@ -1654,7 +1637,7 @@
           }
 
           if (serviceType.value === "daily-rental") {
-            const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John coordination requires final review." : "";
+            const stJohnText = isStJohnRoute(pickup.value, dropoff.value) ? " St. John trips require additional coordination. We will reach out to confirm arrangements." : "";
             const extraStopText = extraStop.checked ? " Extra stops may affect the final rate." : "";
             reviewEstimateMessage.textContent = "Daily service is reviewed by requested time, itinerary, and vehicle availability." + stJohnText + extraStopText;
             return;
@@ -1728,7 +1711,15 @@
         }
 
         function formatPhoneValue(value) {
-          const digits = String(value || "").replace(/[^0-9]/g, "").slice(0, 10);
+          let digits = String(value || "").replace(/[^0-9]/g, "");
+
+          if (digits.length === 11 && digits.startsWith("1")) {
+            digits = digits.slice(1);
+          }
+
+          if (digits.length > 10) {
+            digits = digits.slice(-10);
+          }
 
           if (digits.length === 10) {
             return "(" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + "-" + digits.slice(6);
@@ -1793,46 +1784,68 @@
         function getPricingText() {
           const stJohnTrip = isStJohnRoute(pickup.value, dropoff.value);
           const reviewBasedService = serviceType.value && serviceType.value !== "transfer";
-
-          if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event" || serviceType.value === "private-chauffeur") && stJohnTrip) {
-            const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
-            const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return (serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service") + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr. St. John coordination requires final review. We will call if extra coordination is needed." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
-          }
+          const hasExtraStop = extraStop.checked;
+          const parts = [];
 
           if (reviewBasedService && (serviceType.value === "hourly-rental" || serviceType.value === "event" || serviceType.value === "private-chauffeur")) {
             const selectedHours = Math.min(Math.max(Number.parseInt(hoursRequested.value, 10) || HOURLY_MINIMUM_HOURS, HOURLY_MINIMUM_HOURS), 6);
             const selectedHourEstimate = selectedHours * HOURLY_RATE;
-            return (serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service") + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum. Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr." + (extraStop.checked ? " Extra stops may affect the final rate. We will call if extra coordination is needed." : "");
-          }
+            const serviceLabel = serviceType.value === "private-chauffeur" ? "Chauffeur" : serviceType.value === "event" ? "Event service" : "Hourly service";
 
-          if (reviewBasedService && stJohnTrip) {
-            return "Daily service is reviewed by requested time, itinerary, vehicle availability, and St. John coordination. We will call if extra coordination is needed." + (extraStop.checked ? " Extra stops may affect the final rate." : "");
+            parts.push(serviceLabel + " starts at $" + (HOURLY_RATE * HOURLY_MINIMUM_HOURS) + " minimum.");
+            parts.push("Selected estimate: $" + selectedHourEstimate + " for " + selectedHours + " hours at $" + HOURLY_RATE + "/hr.");
+
+            if (stJohnTrip) {
+              parts.push("St. John trips require additional coordination. We will reach out to confirm arrangements.");
+            }
+
+            if (hasExtraStop) {
+              parts.push("Extra stops may affect the final rate. We will reach out if additional coordination is needed.");
+            }
+
+            return parts.join(" ");
           }
 
           if (reviewBasedService) {
-            return "Daily service is reviewed by requested time, itinerary, and vehicle availability." + (extraStop.checked ? " Extra stops may affect the final rate. We will call if extra coordination is needed." : "");
+            parts.push("Daily service is reviewed by requested time, itinerary, and vehicle availability.");
+
+            if (stJohnTrip) {
+              parts.push("St. John trips require additional coordination. We will reach out to confirm arrangements.");
+            }
+
+            if (hasExtraStop) {
+              parts.push("Extra stops may affect the final rate. We will reach out if additional coordination is needed.");
+            }
+
+            return parts.join(" ");
           }
 
-          if (stJohnTrip && extraStop.checked) {
-            return "Estimated request total: $" + totalPriceEl.textContent + ". St. John coordination and extra stop require final review. We will call if extra coordination is needed.";
-          }
+          parts.push("Estimated request total: $" + totalPriceEl.textContent + ".");
 
           if (stJohnTrip) {
-            return "Estimated request total: $" + totalPriceEl.textContent + ". St. John trips require additional coordination before final confirmation. We will call if extra coordination is needed.";
+            parts.push("St. John trips require additional coordination. We will reach out to confirm arrangements.");
           }
 
-          if (extraStop.checked) {
-            return "Estimated request total: $" + totalPriceEl.textContent + ". Extra stops may affect the final rate. We will call if extra coordination is needed.";
+          if (hasExtraStop) {
+            parts.push("Extra stops may affect the final rate. We will reach out if additional coordination is needed.");
           }
 
-          return "Estimated request total: $" + totalPriceEl.textContent + ".";
+          return parts.join(" ");
         }
 
         function buildTemplateParams() {
           const pickupText = getSelectText(pickup);
           const dropoffText = getSelectText(dropoff);
           const roundTripText = roundTrip.checked ? "Yes" : "No";
+          let coordinationNotice = "Regular requests are handled by email unless direct coordination is needed.";
+
+          if (isStJohnRoute(pickup.value, dropoff.value)) {
+            coordinationNotice = "St. John trips require additional coordination. We will reach out to confirm arrangements.";
+          } else if (extraStop.checked) {
+            coordinationNotice = "Extra stops may affect the final rate. We will reach out if additional coordination is needed.";
+          } else if (requiresAdditionalInstructions(pickup.value, dropoff.value)) {
+            coordinationNotice = "We will reach out to confirm the hotel, villa, residence, or custom address.";
+          }
 
           return {
             name: getFieldValue(fullName.value, ""),
@@ -1859,7 +1872,7 @@
             policy_agreed: "Not applicable.",
             payment_terms: PAYMENT_TERMS,
             request_notice: "Request received. Please check your email for confirmation details.",
-            coordination_notice: isStJohnRoute(pickup.value, dropoff.value) || extraStop.checked || requiresAdditionalInstructions(pickup.value, dropoff.value) ? "We will call if extra coordination is needed." : "Regular requests are handled by email unless direct coordination is needed.",
+            coordination_notice: coordinationNotice,
             manual_confirmation_required: isStJohnRoute(pickup.value, dropoff.value) ? "Yes" : "No",
             to_email: getFieldValue(email.value, ""),
             customer_email: getFieldValue(email.value, ""),
@@ -1927,6 +1940,7 @@
 
         phone.addEventListener("input", function () {
           phone.value = phone.value.replace(/[^0-9]/g, "").slice(0, 10);
+          phone.setCustomValidity(phone.value.length === 10 ? "" : "Enter a 10-digit phone number.");
         });
 
         roundTrip.addEventListener("change", function () {
@@ -2009,7 +2023,13 @@
         populateTimeSelect(returnTime);
         runSelfTests();
         refreshForm();
-      });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializeBookingForm, { once: true });
+      } else {
+        initializeBookingForm();
+      }
     })();
   </script>
 </body>
