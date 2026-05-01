@@ -172,20 +172,19 @@
       text-align: center;
     }
 
+    .standard-copy {
+      max-width: 760px;
+      margin: 0 auto 34px;
+      color: var(--muted);
+      line-height: 1.75;
+      text-align: left;
+    }
+
     .hero {
       padding: 60px 20px 50px;
       text-align: center;
     }
 
-
-    .hero-line {
-      max-width: 680px;
-      margin: 14px auto 0;
-      color: var(--text-soft);
-      font-size: 1.08em;
-      line-height: 1.55;
-      letter-spacing: 0.02em;
-    }
 
     .btn {
       display: inline-block;
@@ -321,23 +320,6 @@
       line-height: 1.7;
     }
 
-    .service-standard-panel {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 30px 34px;
-      background: rgba(16, 16, 16, 0.64);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-    }
-
-    .service-standard-panel p {
-      margin: 0;
-      color: var(--text-soft);
-      font-size: 1.02em;
-      line-height: 1.75;
-      text-align: center;
-    }
-
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -366,14 +348,6 @@
     .gallery img:hover {
       transform: translateY(-3px);
       box-shadow: 0 16px 34px rgba(0, 0, 0, 0.34);
-    }
-
-    .booking-intro {
-      max-width: 720px;
-      margin: -4px auto 28px;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.6;
     }
 
     .booking-form-container {
@@ -943,9 +917,6 @@
         border-bottom: 0;
       }
 
-      .service-standard-panel {
-        padding: 24px 20px;
-      }
     }
 
     @media (max-width: 768px) {
@@ -977,9 +948,6 @@
         padding: 46px 16px 40px;
       }
 
-      .hero p {
-        font-size: 1.03em;
-      }
 
       .hero-proof-strip {
         margin-top: 22px;
@@ -1051,7 +1019,6 @@
       <span class="hero-brand">Superb</span>
       <span class="hero-descriptor">Executive Transportation</span>
     </h1>
-    <p class="hero-line">Luxury executive transportation across St. Thomas with coordinated St. John service.</p>
     <a href="#book" class="btn">Reserve</a>
 
     <div class="hero-proof-strip" aria-label="Service highlights">
@@ -1067,7 +1034,7 @@
     <div class="service-rail" aria-label="Service categories">
       <div class="service-item">
         <h3>Private<br />Transfers</h3>
-        <p>Airport, resort, villa, cruise port, ferry terminal, and coordinated St. John service.</p>
+        <p>Airport, cruise port, resort, villa, ferry terminal, and coordinated St. John transfers.</p>
       </div>
       <div class="service-item">
         <h3>Business &amp;<br />Corporate</h3>
@@ -1082,9 +1049,7 @@
 
   <section id="why-us" class="reveal">
     <h2>Service Standard</h2>
-    <div class="service-standard-panel">
-      <p>Professional, discreet transportation with clean presentation, safe operation, dependable timing, and direct communication from request to arrival.</p>
-    </div>
+    <p class="standard-copy">Professional, discreet transportation with clean presentation, safe operation, dependable timing, and direct communication from request to arrival.</p>
   </section>
 
   <section id="gallery" class="reveal">
@@ -1871,7 +1836,7 @@
             hours_requested: hoursRequested.value ? hoursRequested.value + (hoursRequested.value === "1" ? " hour" : " hours") : "",
             policy_agreed: "Not applicable.",
             payment_terms: PAYMENT_TERMS,
-            request_notice: "Request received. Please check your email for confirmation details.",
+            request_notice: "Request received. Final service details, availability, and payment terms are confirmed before service. Please check your email for confirmation details.",
             coordination_notice: coordinationNotice,
             manual_confirmation_required: isStJohnRoute(pickup.value, dropoff.value) ? "Yes" : "No",
             to_email: getFieldValue(email.value, ""),
@@ -2002,7 +1967,7 @@
               console.warn("Customer confirmation email was not sent. Admin request was submitted successfully.");
             }
 
-            alert("Request received. Please check your email for confirmation details.");
+            alert("Request received. Final service details, availability, and payment terms are confirmed before service. Please check your email for confirmation details.");
             form.reset();
             returnTripSection.style.display = "none";
             extraStopSection.style.display = "none";
