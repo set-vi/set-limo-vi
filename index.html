@@ -199,22 +199,25 @@
 
     .btn {
       display: inline-block;
-      margin-top: 24px;
-      padding: 10px 26px;
+      margin-top: 18px;
+      padding: 7px 20px;
       color: var(--bronze-light);
+      font-size: 0.82em;
       font-weight: 700;
+      letter-spacing: 0.12em;
       text-decoration: none;
+      text-transform: uppercase;
       background: transparent;
-      border: 1px solid rgba(var(--bronze-rgb), 0.65);
-      border-radius: 8px;
+      border: 1px solid rgba(var(--bronze-rgb), 0.42);
+      border-radius: 999px;
       box-shadow: none;
       transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
     }
 
     .btn:hover {
-      color: #000;
-      background: linear-gradient(145deg, #b98b47, #8a642f);
-      border-color: transparent;
+      color: var(--bronze-light);
+      background: rgba(var(--bronze-rgb), 0.08);
+      border-color: rgba(var(--bronze-rgb), 0.72);
       transform: translateY(-1px);
     }
 
@@ -781,23 +784,25 @@
       width: auto;
       min-width: 210px;
       margin: 0 auto;
-      padding: 9px 24px;
+      padding: 8px 24px;
       color: var(--bronze-light);
       font-family: inherit;
-      font-size: 1rem;
+      font-size: 0.84em;
       font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       cursor: pointer;
       background: transparent;
-      border: 1px solid rgba(var(--bronze-rgb), 0.65);
-      border-radius: 8px;
+      border: 1px solid rgba(var(--bronze-rgb), 0.55);
+      border-radius: 999px;
       box-shadow: none;
       transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
     }
 
     #submit-button:hover {
-      color: #000;
-      background: linear-gradient(145deg, #b98b47, #8a642f);
-      border-color: transparent;
+      color: var(--bronze-light);
+      background: rgba(var(--bronze-rgb), 0.08);
+      border-color: rgba(var(--bronze-rgb), 0.78);
       transform: translateY(-1px);
     }
 
@@ -1304,7 +1309,7 @@
         </div>
 
         <div class="form-row full">
-          <button type="submit" id="submit-button">Request Reservation</button>
+          <button type="submit" id="submit-button">Submit Request</button>
         </div>
       </form>
     </div>
@@ -1911,7 +1916,7 @@
 
         function setSubmittingState(isSubmitting) {
           submitButton.disabled = isSubmitting;
-          submitButton.textContent = isSubmitting ? "Sending..." : "Request Reservation";
+          submitButton.textContent = isSubmitting ? "Sending..." : "Submit Request";
         }
 
         serviceType.addEventListener("change", refreshForm);
