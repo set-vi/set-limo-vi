@@ -180,6 +180,17 @@
       text-align: left;
     }
 
+    .brand-line {
+      max-width: 760px;
+      margin: -12px auto 0;
+      color: var(--bronze-light);
+      font-family: "Cinzel", Georgia, serif;
+      font-size: 1.05em;
+      font-weight: 600;
+      letter-spacing: 0.045em;
+      text-align: center;
+    }
+
     .hero {
       padding: 60px 20px 50px;
       text-align: center;
@@ -249,12 +260,12 @@
       left: 8%;
       right: 8%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(var(--bronze-rgb), 0.35), rgba(var(--bronze-rgb), 0.65), rgba(var(--bronze-rgb), 0.35), transparent);
+      background: linear-gradient(90deg, transparent, rgba(var(--bronze-rgb), 0.26), rgba(var(--bronze-rgb), 0.48), rgba(var(--bronze-rgb), 0.26), transparent);
     }
 
     .service-item {
       position: relative;
-      padding: 18px 18px 0;
+      padding: 30px 18px 0;
       text-align: center;
     }
 
@@ -269,6 +280,19 @@
       border-radius: 999px;
       box-shadow: 0 0 0 5px rgba(var(--bronze-rgb), 0.10);
       transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .service-item::after {
+      content: "";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      width: 1px;
+      height: 34px;
+      background: linear-gradient(180deg, rgba(var(--bronze-rgb), 0.65), rgba(var(--bronze-rgb), 0));
+      transform: translateX(-50%);
+      z-index: 1;
     }
 
     .service-item h3 {
@@ -1010,6 +1034,7 @@
   <nav aria-label="Primary navigation">
     <a href="#home">Home</a>
     <a href="#services">Services</a>
+    <a href="#about">About</a>
     <a href="#gallery">Gallery</a>
     <a href="#book">Reserve</a>
   </nav>
@@ -1019,12 +1044,12 @@
       <span class="hero-brand">Superb</span>
       <span class="hero-descriptor">Executive Transportation</span>
     </h1>
-    <a href="#book" class="btn">Reserve</a>
+    <a href="#book" class="btn">Reserve Your Ride</a>
 
     <div class="hero-proof-strip" aria-label="Service highlights">
-      <div class="hero-proof-item">Luxury Executive Van</div>
-      <div class="hero-proof-item">Ideal Comfort: 1–4</div>
-      <div class="hero-proof-item">Maximum Capacity: 6</div>
+      <div class="hero-proof-item">Luxury</div>
+      <div class="hero-proof-item">Comfort</div>
+      <div class="hero-proof-item">Discreet</div>
     </div>
   </section>
 
@@ -1034,11 +1059,11 @@
     <div class="service-rail" aria-label="Service categories">
       <div class="service-item">
         <h3>Private<br />Transfers</h3>
-        <p>Airport, cruise port, resort, villa, ferry terminal, and coordinated St. John transfers.</p>
+        <p>Airport, cruise port, resort, villa, ferry terminal, and St. John coordination.</p>
       </div>
       <div class="service-item">
         <h3>Special<br />Occasions</h3>
-        <p>Weddings, celebrations, dinner plans, and private events with reserved service.</p>
+        <p>Weddings, dinners, celebrations, and private events with reserved service.</p>
       </div>
       <div class="service-item">
         <h3>Business &amp;<br />Corporate</h3>
@@ -1047,9 +1072,11 @@
     </div>
   </section>
 
-  <section id="why-us" class="reveal">
-    <h2>Service Standard</h2>
-    <p class="standard-copy">Professional, discreet transportation with clean presentation, safe operation, dependable timing, and direct communication from request to arrival.</p>
+
+  <section id="about" class="reveal">
+    <h2>About</h2>
+    <p class="standard-copy">Superb Executive Transportation provides reserved private service in the Virgin Islands, including St. Thomas service and coordinated St. John requests. Built for travelers, residents, businesses, and private groups, we deliver clean presentation, reliable timing, direct communication, and a smooth ride from pickup to arrival.</p>
+    <p class="brand-line">More than a ride. It’s a statement.</p>
   </section>
 
   <section id="gallery" class="reveal">
@@ -1272,7 +1299,6 @@
             <span>$<span id="total-price">180</span></span>
           </div>
           <div id="review-estimate-message" class="estimate-note">Chauffeur, event, hourly, and daily service requests are reviewed based on requested time and itinerary.</div>
-          <div class="estimate-confirmation">Final terms are confirmed before service.</div>
           <div id="st-john-estimate-note" class="estimate-note">St. John estimate starts at $700 before capacity or round-trip adjustment.</div>
           <div id="extra-stop-estimate-note" class="estimate-note">Extra stop requested. Extra stops may affect the final rate.</div>
         </div>
@@ -1838,7 +1864,7 @@
             hours_requested: hoursRequested.value ? hoursRequested.value + (hoursRequested.value === "1" ? " hour" : " hours") : "",
             policy_agreed: "Not applicable.",
             payment_terms: PAYMENT_TERMS,
-            request_notice: "Request received. Final service details, availability, and payment terms are confirmed before service. Please check your email for confirmation details.",
+            request_notice: "Request received. Please check your email for confirmation details.",
             coordination_notice: coordinationNotice,
             manual_confirmation_required: isStJohnRoute(pickup.value, dropoff.value) ? "Yes" : "No",
             to_email: getFieldValue(email.value, ""),
@@ -1969,7 +1995,7 @@
               console.warn("Customer confirmation email was not sent. Admin request was submitted successfully.");
             }
 
-            alert("Request received. Final service details, availability, and payment terms are confirmed before service. Please check your email for confirmation details.");
+            alert("Request received. Please check your email for confirmation details.");
             form.reset();
             returnTripSection.style.display = "none";
             extraStopSection.style.display = "none";
