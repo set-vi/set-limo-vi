@@ -136,25 +136,34 @@
     }
 
     .hero-title {
-      margin-bottom: 12px;
-      line-height: 1.02;
+      margin: 0;
+      text-align: center;
+      line-height: 1;
     }
 
     .hero-brand {
       display: block;
-      font-size: clamp(2.75rem, 6.2vw, 4.55rem);
-      letter-spacing: 0.035em;
+      font-size: clamp(2.65rem, 6.8vw, 4.45rem);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      line-height: 0.95;
       text-transform: uppercase;
+      background: linear-gradient(180deg, #f6d38a 0%, #e2b96e 22%, #b88945 48%, #7f5b2a 72%, #f2cf84 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.08), 0 4px 14px rgba(0, 0, 0, 0.35);
     }
 
     .hero-descriptor {
       display: block;
-      margin-top: 7px;
+      margin-top: 10px;
       color: var(--bronze-light);
-      font-family: "Cinzel", Georgia, serif;
-      font-size: clamp(0.82rem, 2.35vw, 1.32rem);
+      font-family: "Montserrat", Arial, sans-serif;
+      font-size: clamp(0.66rem, 1.55vw, 0.92rem);
       font-weight: 500;
-      letter-spacing: 0.075em;
+      letter-spacing: 0.34em;
       text-transform: uppercase;
       white-space: nowrap;
     }
@@ -194,6 +203,30 @@
     .hero {
       padding: 60px 20px 50px;
       text-align: center;
+    }
+
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: min(460px, 78%);
+      margin: 12px auto 0;
+    }
+
+    .hero-divider span {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(var(--bronze-rgb), 0), rgba(var(--bronze-rgb), 0.65), rgba(var(--bronze-rgb), 0));
+    }
+
+    .hero-divider i {
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: var(--bronze);
+      box-shadow: 0 0 0 1px rgba(var(--bronze-rgb), 0.18);
+      transform: rotate(45deg);
     }
 
 
@@ -1049,6 +1082,11 @@
       <span class="hero-brand">Superb</span>
       <span class="hero-descriptor">Executive Transportation</span>
     </h1>
+    <div class="hero-divider" aria-hidden="true">
+      <span></span>
+      <i></i>
+      <span></span>
+    </div>
     <a href="#book" class="btn">Reserve Your Ride</a>
 
     <div class="hero-proof-strip" aria-label="Service highlights">
@@ -1360,7 +1398,7 @@
       const EMAILJS_SERVICE_ID = "service_dmvxcdi";
       const EMAILJS_ADMIN_TEMPLATE_ID = "template_ysacch6";
       const EMAILJS_CUSTOMER_TEMPLATE_ID = "template_o15zm0b";
-      const PAYMENT_TERMS = "Payment is required to confirm service. Deposits, booking fees, and reservation payments are non-refundable once service is confirmed, unless Superb Executive Transportation cancels the service or agrees otherwise in writing.";
+      const PAYMENT_TERMS = "Payment is required to confirm service. Deposits, booking fees, and reservation payments are non-refundable once service is confirmed, unless Superb Executive Transportation cancels the service or agrees otherwise in writing. Customer cancellations, no-shows, and customer-requested date, time, route, or service changes do not create a refund or credit unless Superb Executive Transportation agrees otherwise in writing. Changes are subject to availability and may affect the final rate. Flight delays and travel delays are handled based on driver and vehicle availability. A delayed customer may be rescheduled to the next available opening when possible, but delayed arrivals do not override other confirmed reservations already in progress or scheduled. Additional wait time, delayed pickup, route changes, or rescheduling may affect the final rate. Service Rules: no smoking or vaping is permitted in the vehicle. No pets are permitted. Illegal substances, firearms, and weapons are not permitted in the vehicle. Riders under 18 must be accompanied by a parent, legal guardian, or responsible adult. The customer is responsible for actual cleaning, repair, replacement, delay, or other costs caused by damage, spills, stains, odors, excessive mess, or misconduct by any member of the riding party. Superb Executive Transportation may refuse or discontinue service for rule violations, unsafe conduct, disorderly behavior, visible intoxication, abusive conduct, or any condition that prevents a rider from safely entering, riding in, or exiting the vehicle. If service is refused or discontinued due to a Service Rules violation, payments remain non-refundable to the extent permitted by law.";
 
       if (window.emailjs) {
         emailjs.init(EMAILJS_PUBLIC_KEY);
