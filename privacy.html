@@ -3,418 +3,313 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Privacy Policy | S.E.T. | Superb Executive Transportation</title>
-  <meta
-    name="description"
-    content="Privacy Policy for Superb Executive Transportation. Learn how transportation request information is collected, used, and protected."
-  />
-
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
+  <title>Privacy Policy | Superb Executive Transportation</title>
+  <meta name="description" content="Privacy Policy for Superb Executive Transportation, including booking form information, customer communication, EmailJS/email handling, data use, retention, and customer privacy protections." />
   <style>
+    :root {
+      --bg: #0b0907;
+      --panel: #15100c;
+      --text: #f7f1e8;
+      --muted: #c8b9a5;
+      --bronze: #b88746;
+      --bronze-soft: #d3a763;
+      --border: rgba(184, 135, 70, 0.35);
+    }
+
     * {
       box-sizing: border-box;
     }
 
-    :root {
-      --black: #000;
-      --black-soft: #050505;
-      --charcoal: #090909;
-      --charcoal-soft: #181818;
-      --panel: #101010;
-      --bronze: #b88945;
-      --bronze-light: #c49a5b;
-      --bronze-dark: #7f5b2a;
-      --bronze-rgb: 184, 137, 69;
-      --text: #cfcfcf;
-      --text-soft: #bdbdbd;
-      --text-bright: #dedede;
-      --muted: #ababab;
-      --muted-soft: #8f8f8f;
-      --line: rgba(255, 255, 255, 0.10);
-      --line-soft: rgba(255, 255, 255, 0.08);
-      --shadow-medium: rgba(0, 0, 0, 0.28);
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
-      font-family: "Poppins", Arial, sans-serif;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(var(--bronze-rgb), 0.08), transparent 26%),
-        linear-gradient(180deg, var(--black) 0%, var(--charcoal) 44%, var(--charcoal-soft) 100%);
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
       color: var(--text);
       line-height: 1.65;
     }
 
-    a {
-      color: var(--bronze-light);
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: var(--bronze);
-    }
-
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      gap: 4px;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.92);
-      border-bottom: 1px solid var(--line-soft);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
-    }
-
-    nav a {
-      position: relative;
-      margin: 0 20px;
-      color: var(--muted);
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.25s ease;
-    }
-
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0;
-      height: 2px;
-      background-color: var(--bronze);
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    main {
-      width: min(950px, 92%);
+    .page {
+      width: min(980px, 92%);
       margin: 0 auto;
-      padding: 58px 0 72px;
+      padding: 48px 0 64px;
     }
 
-    .hero {
+    .top-link {
+      display: inline-block;
       margin-bottom: 28px;
-      text-align: center;
+      color: var(--bronze-soft);
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+
+    .top-link:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 28px;
+      margin-bottom: 32px;
     }
 
     .eyebrow {
-      margin: 0 0 10px;
-      color: var(--bronze);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+      color: var(--bronze-soft);
       text-transform: uppercase;
-    }
-
-    h1,
-    h2 {
-      font-family: "Playfair Display", Georgia, serif;
-      font-weight: 700;
-      letter-spacing: 0.015em;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      margin-bottom: 10px;
     }
 
     h1 {
-      margin: 0 0 12px;
-      color: var(--bronze);
-      font-size: clamp(2.35rem, 5.4vw, 4.05rem);
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 5vw, 3.4rem);
       line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .intro {
+      max-width: 760px;
+      color: var(--muted);
+      margin: 0;
+      font-size: 1.05rem;
     }
 
     .updated {
-      margin: 0;
+      margin-top: 18px;
       color: var(--muted);
-      font-size: 0.98rem;
+      font-size: 0.95rem;
     }
 
-    .policy-card {
-      padding: clamp(24px, 5vw, 42px);
-      background: linear-gradient(180deg, rgba(18, 18, 18, 0.82), rgba(12, 12, 12, 0.9));
-      border: 1px solid var(--line-soft);
-      border-radius: 16px;
-      box-shadow: 0 10px 24px var(--shadow-medium);
-    }
-
-    .policy-card p {
-      margin: 0 0 18px;
-      color: var(--text-soft);
-      font-size: 1rem;
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin: 18px 0;
     }
 
     h2 {
-      margin: 34px 0 12px;
-      color: var(--text-bright);
-      font-size: 1.55rem;
+      margin: 0 0 12px;
+      color: var(--bronze-soft);
+      font-size: 1.25rem;
+      line-height: 1.25;
     }
 
-    h2:first-of-type {
-      margin-top: 18px;
+    p {
+      margin: 0 0 12px;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
     }
 
     ul {
-      margin: 0 0 20px 20px;
-      padding: 0;
-      color: var(--text-soft);
+      margin: 10px 0 0;
+      padding-left: 22px;
     }
 
     li {
-      margin-bottom: 7px;
+      margin-bottom: 8px;
     }
 
-    .notice-box,
+    strong {
+      color: #ffffff;
+    }
+
     .contact-box {
-      margin: 24px 0;
-      padding: 16px 18px;
-      background: rgba(var(--bronze-rgb), 0.08);
-      border-left: 4px solid rgba(var(--bronze-rgb), 0.88);
-      border-radius: 8px;
+      background: #0f0b08;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      color: var(--muted);
     }
 
-    .notice-box p,
-    .contact-box p {
-      margin: 0;
-      color: var(--text);
+    a {
+      color: var(--bronze-soft);
     }
 
-    .site-footer {
-      padding: 34px 20px 26px;
-      color: #bfbfbf;
-      background: linear-gradient(180deg, rgba(10, 10, 10, 0.96), #000);
-      border-top: 1px solid var(--line);
-    }
-
-    .footer-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-    }
-
-    .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      color: var(--muted-soft);
-      font-size: 0.92em;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: var(--text);
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .footer-links a:hover {
-      color: var(--bronze);
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        padding: 12px;
-      }
-
-      nav a {
-        margin: 8px 10px;
-        font-size: 0.92em;
-      }
-
-      main {
-        padding-top: 42px;
-      }
-
-      .policy-card {
-        padding: 22px 18px;
-      }
+    footer {
+      margin-top: 34px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.92rem;
     }
   </style>
 </head>
-
 <body>
-  <nav aria-label="Primary navigation">
-    <a href="index.html#home">Home</a>
-    <a href="index.html#services">Services</a>
-    <a href="index.html#gallery">Gallery</a>
-    <a href="index.html#book">Book</a>
-    <a href="terms.html">Terms</a>
-  </nav>
+  <main class="page">
+    <a class="top-link" href="index.html">← Back to Home</a>
 
-  <main>
-    <section class="hero">
-      <p class="eyebrow">Privacy Policy</p>
+    <header>
+      <div class="eyebrow">Superb Executive Transportation</div>
       <h1>Privacy Policy</h1>
-      <p class="updated"><strong>Last Updated:</strong> April 26, 2026</p>
+      <p class="intro">
+        This Privacy Policy explains how Superb Executive Transportation collects, uses, stores, and protects information submitted through the website, booking form, email, phone, text message, and other customer communications.
+      </p>
+      <p class="updated">Last updated: May 2, 2026</p>
+    </header>
+
+    <section>
+      <h2>1. Information We Collect</h2>
+      <p>
+        Superb Executive Transportation may collect information that customers provide when requesting, confirming, or using transportation services.
+      </p>
+      <p>This may include:</p>
+      <ul>
+        <li>name</li>
+        <li>phone number</li>
+        <li>email address</li>
+        <li>pickup and drop-off locations</li>
+        <li>service date and time</li>
+        <li>passenger count</li>
+        <li>flight, ferry, hotel, villa, or travel information</li>
+        <li>luggage, accessibility, or special assistance details</li>
+        <li>payment-related confirmation information</li>
+        <li>messages, requests, notes, or other information submitted by the customer</li>
+      </ul>
     </section>
 
-    <section class="policy-card">
+    <section>
+      <h2>2. How We Collect Information</h2>
       <p>
-        Superb Executive Transportation respects customer privacy. This Privacy Policy explains how Superb Executive Transportation collects, uses, stores, and shares information submitted through this website, including transportation requests, EmailJS or other form/email submission services, email links, phone links, and related service communications.
+        Information may be collected when a customer submits a booking form, sends an email, makes a phone call, sends a text message, confirms a reservation, pays a deposit, requests a quote, asks a question, or communicates with Superb Executive Transportation before, during, or after service.
       </p>
+    </section>
 
-      <div class="notice-box">
-        <p>
-          Submitting a request through this website does not create an account and does not automatically confirm a reservation. Service is confirmed only after Superb Executive Transportation reviews and accepts the request.
-        </p>
-      </div>
-
-      <h2>1. Information We Collect</h2>
-
+    <section>
+      <h2>3. How We Use Information</h2>
       <p>
-        Superb Executive Transportation may collect information you submit when requesting transportation service, contacting the business, or communicating about a trip, including:
+        Superb Executive Transportation uses customer information only for transportation-related business purposes.
       </p>
-
+      <p>This includes:</p>
       <ul>
-        <li>Name</li>
-        <li>Email address</li>
-        <li>Phone number</li>
-        <li>Pickup and drop-off locations</li>
-        <li>Travel date and time</li>
-        <li>Passenger count</li>
-        <li>Service type</li>
-        <li>Round-trip, extra-stop, or return-service details</li>
-        <li>Flight, ferry, airline, vessel, arrival, departure, or travel-coordination details</li>
-        <li>Hotel, villa, private residence, event, or custom-location details</li>
-        <li>Special instructions or other information you choose to provide</li>
+        <li>responding to booking requests</li>
+        <li>confirming reservations</li>
+        <li>coordinating pickup and drop-off details</li>
+        <li>communicating about delays, schedule changes, payment, or service issues</li>
+        <li>providing transportation services</li>
+        <li>handling customer questions, disputes, cancellations, no-shows, damages, or lost property</li>
+        <li>maintaining business records</li>
+        <li>complying with legal, insurance, safety, tax, or operational requirements</li>
       </ul>
+    </section>
 
+    <section>
+      <h2>4. Booking Form and Email Handling</h2>
       <p>
-        The website or related service providers may also collect limited technical information, such as device type, browser type, IP address, general usage information, form-submission data, and basic website-performance information.
+        Information submitted through the website booking form may be transmitted by email or through an email service provider used to deliver booking requests and customer communications.
       </p>
-
-      <h2>2. How We Use Information</h2>
-
       <p>
-        Superb Executive Transportation uses collected information to receive and review transportation requests, respond to customer inquiries, confirm trip details, determine service availability, coordinate pickup and drop-off details, communicate by phone, text message, or email, provide quotes or payment instructions, maintain business records, improve the website, and protect the business, customers, website, and booking process from misuse.
+        Superb Executive Transportation uses this information to receive the customer’s request, respond to the customer, coordinate service, and maintain reservation records. Customers should not submit sensitive personal information through the booking form unless it is necessary for the transportation request.
       </p>
+    </section>
 
-      <h2>3. Booking Requests Are Not Automatic Confirmations</h2>
-
+    <section>
+      <h2>5. Payments</h2>
       <p>
-        A transportation request submitted through the website is a request for service only. Service is not confirmed until Superb Executive Transportation reviews the request and confirms availability, pricing, deposit requirements, pickup details, and final service arrangements.
+        Superb Executive Transportation may collect or receive payment-related information needed to confirm deposits, balances, refunds, billing issues, or payment disputes. Payment processing may be handled by third-party payment providers depending on the payment method used.
       </p>
-
       <p>
-        St. John-related requests, ferry-related transfers, special-event service, multi-stop service, hourly service, daily service, and other coordinated transportation requests may require additional review before confirmation.
+        Customers should follow the payment instructions provided at booking or confirmation and should not send unnecessary sensitive financial information by email, text message, or website form.
       </p>
+    </section>
 
-      <h2>4. Communications</h2>
-
-      <p>
-        By submitting a request or inquiry, you authorize Superb Executive Transportation to contact you using the phone number, email address, or other contact information you provide. Communications may include booking follow-up, trip coordination, pricing, deposit instructions, payment instructions, service updates, calls, text messages, or emails related to your requested transportation service.
-      </p>
-
-      <p>
-        Message and data rates may apply. Customers may request that Superb Executive Transportation stop sending nonessential communications, but service-related communications may still be necessary to review, coordinate, confirm, update, or complete a requested transportation service.
-      </p>
-
-      <h2>5. Payment Information</h2>
-
-      <p>
-        The website request form is not intended to collect full payment-card numbers, bank-account numbers, Social Security numbers, passport numbers, or other highly sensitive financial or identification information.
-      </p>
-
-      <p>
-        Customers should not place credit card numbers, bank information, government identification numbers, medical information, or other sensitive personal information in open text fields.
-      </p>
-
-      <p>
-        Payment, deposit, and balance arrangements may be handled separately through approved payment methods, invoices, payment links, or third-party payment processors. Any third-party payment processor may have its own privacy policy and terms.
-      </p>
-
-      <h2>6. Sharing of Information</h2>
-
+    <section>
+      <h2>6. Information Sharing</h2>
       <p>
         Superb Executive Transportation does not sell customer personal information.
       </p>
-
       <p>
-        Superb Executive Transportation may share information only when reasonably necessary to provide or coordinate requested transportation service, use hosting/form/email/communication/payment/accounting technology providers, process payments or records, comply with legal, regulatory, tax, insurance, or business-record obligations, protect business operations, or respond to lawful requests from courts, law enforcement, government agencies, insurers, or legal representatives.
+        Customer information may be shared only when necessary to operate the business, provide service, process communications, handle payment-related issues, comply with legal obligations, respond to safety concerns, protect rights or property, or work with service providers that support the website, email, payment, booking, or business operations.
       </p>
+    </section>
 
-      <h2>7. Third-Party Services</h2>
-
+    <section>
+      <h2>7. Customer Photos, Names, and Trip Details</h2>
       <p>
-        This website may use third-party services for hosting, form submission, email delivery, website operation, analytics, payment processing, or customer communication. These services may include EmailJS or other form/email submission providers used to transmit transportation requests and related customer communications.
+        Superb Executive Transportation will not use a customer’s name, photo, image, trip details, booking information, or private travel details for marketing or promotional purposes without permission.
       </p>
+    </section>
 
-      <p>
-        Superb Executive Transportation is not responsible for the privacy practices of third-party websites, platforms, processors, or services that Superb Executive Transportation does not control.
-      </p>
-
+    <section>
       <h2>8. Data Retention</h2>
-
       <p>
-        Superb Executive Transportation may retain transportation requests, contact information, communications, payment-related records, and service records for as long as reasonably necessary for business operations, customer service, accounting, tax, insurance, legal, dispute-resolution, and recordkeeping purposes.
+        Superb Executive Transportation keeps customer information only as long as reasonably needed for booking records, customer communication, accounting, tax, legal, insurance, safety, dispute-resolution, and business purposes.
       </p>
+      <p>
+        Information may be deleted or archived when it is no longer needed, unless retention is required for lawful business, tax, insurance, safety, or legal reasons.
+      </p>
+    </section>
 
+    <section>
       <h2>9. Security</h2>
-
       <p>
-        Superb Executive Transportation takes reasonable steps to protect information submitted through the website and related communication channels. However, no website, email system, form service, payment processor, or internet transmission method is completely secure.
+        Superb Executive Transportation takes reasonable steps to protect customer information from unauthorized access, misuse, loss, or disclosure. However, no website, email system, text message, electronic transmission, or storage method can be guaranteed to be completely secure.
       </p>
-
-      <h2>10. Children’s Privacy</h2>
-
       <p>
-        This website is intended for adults requesting transportation services. Superb Executive Transportation does not knowingly collect personal information from children through the website.
+        Customers should avoid sending unnecessary sensitive information through unsecured communication methods.
       </p>
+    </section>
 
-      <h2>11. Customer Requests</h2>
-
+    <section>
+      <h2>10. Third-Party Services</h2>
       <p>
-        Customers may contact Superb Executive Transportation to request correction, update, or deletion of contact information submitted through the website. Requests may be limited by business, legal, accounting, tax, insurance, dispute-resolution, and recordkeeping obligations.
+        The website and booking process may rely on third-party services for email delivery, website hosting, payment processing, analytics, maps, links, or other business functions. These services may process information according to their own privacy practices and terms.
       </p>
-
-      <h2>12. Changes to This Privacy Policy</h2>
-
       <p>
-        Superb Executive Transportation may update this Privacy Policy from time to time. The updated version will be posted on this page with a revised “Last Updated” date.
+        Superb Executive Transportation is not responsible for the privacy practices of third-party websites, platforms, payment providers, or services that are not controlled by Superb Executive Transportation.
       </p>
+    </section>
 
-      <h2>13. Contact</h2>
+    <section>
+      <h2>11. Website Links</h2>
+      <p>
+        The website may contain links to third-party websites or services. A link does not mean Superb Executive Transportation controls, endorses, or is responsible for that third-party website, service, privacy policy, or content.
+      </p>
+    </section>
 
+    <section>
+      <h2>12. Children and Minors</h2>
+      <p>
+        Superb Executive Transportation does not knowingly collect personal information directly from minors for marketing purposes. Transportation involving minors must be arranged by a responsible adult, and minors are not permitted to ride unless accompanied by a responsible adult as stated in the Terms and Conditions.
+      </p>
+    </section>
+
+    <section>
+      <h2>13. Customer Choices and Requests</h2>
+      <p>
+        Customers may contact Superb Executive Transportation to request correction, update, or deletion of personal information, subject to business, legal, tax, insurance, safety, accounting, dispute-resolution, and recordkeeping needs.
+      </p>
+      <p>
+        Superb Executive Transportation may need to retain certain information when necessary to document reservations, payments, cancellations, no-shows, damages, disputes, safety issues, or legal compliance.
+      </p>
+    </section>
+
+    <section>
+      <h2>14. Changes to This Privacy Policy</h2>
+      <p>
+        Superb Executive Transportation may update this Privacy Policy at any time. The updated version will be posted on this page with a revised “Last updated” date.
+      </p>
+    </section>
+
+    <section>
+      <h2>15. Contact</h2>
       <div class="contact-box">
         <p>
-          For privacy questions or requests, contact:<br />
-          <strong>Superb Executive Transportation</strong><br />
-          <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a><br />
-          <a href="tel:3406428686">340-642-8686</a>
+          Questions about this Privacy Policy may be directed to Superb Executive Transportation.
+        </p>
+        <p>
+          Email: <a href="mailto:setlimovi@gmail.com">setlimovi@gmail.com</a><br />
+          Phone: <a href="tel:+13406428686">(340) 642-8686</a>
         </p>
       </div>
     </section>
-  </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-bottom">
-        <span>&copy; 2026 Superb Executive Transportation (S.E.T.). All rights reserved.</span>
-      </div>
-      <div class="footer-links">
-        <a href="index.html#home">Home</a>
-        <a href="index.html#book">Book</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms &amp; Conditions</a>
-      </div>
-    </div>
-  </footer>
+    <footer>
+      <p>© 2026 Superb Executive Transportation. All rights reserved.</p>
+    </footer>
+  </main>
 </body>
 </html>
