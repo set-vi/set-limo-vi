@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Superb Executive Transportation | Book Online</title>
+  <meta name="description" content="Superb Executive Transportation — airport transfers, resort and villa transfers, business and corporate transportation in St. Thomas, U.S. Virgin Islands." />
+
+  <meta property="og:title" content="Superb Executive Transportation" />
+  <meta property="og:description" content="Click or scan to book private executive transportation." />
+  <meta property="og:image" content="assets/superb-flyer.png" />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --bg: #050505;
+      --gold: #b08a45;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 18px;
+    }
+
+    .flyer-shell {
+      width: min(100%, 720px);
+      margin: 0 auto;
+    }
+
+    .flyer {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+      background: #000;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65);
+    }
+
+    .flyer img {
+      display: block;
+      width: 100%;
+      height: auto;
+      user-select: none;
+    }
+
+    .hotspot {
+      position: absolute;
+      display: block;
+      border-radius: 8px;
+      text-indent: -9999px;
+      overflow: hidden;
+      outline: none;
+    }
+
+    .hotspot:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+      background: rgba(176, 138, 69, 0.14);
+    }
+
+    .qr {
+      left: 36.328125%;
+      top: 77.473958%;
+      width: 28.906250%;
+      height: 18.880208%;
+    }
+
+    .phone {
+      left: 3.417969%;
+      top: 95.703125%;
+      width: 27.343750%;
+      height: 4.296875%;
+    }
+
+    .email {
+      left: 31.738281%;
+      top: 95.703125%;
+      width: 32.714844%;
+      height: 4.296875%;
+    }
+
+    .site {
+      left: 65.429688%;
+      top: 95.703125%;
+      width: 34.570312%;
+      height: 4.296875%;
+    }
+
+    .fallback-links {
+      max-width: 720px;
+      margin: 14px auto 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      line-height: 1.35;
+      font-size: 16px;
+    }
+
+    .fallback-links a {
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid rgba(176, 138, 69, 0.45);
+      padding: 12px 14px;
+      border-radius: 10px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .fallback-links a:hover,
+    .fallback-links a:focus {
+      border-color: var(--gold);
+    }
+
+    @media (min-width: 700px) {
+      .fallback-links {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="flyer-shell" aria-label="Superb Executive Transportation digital flyer">
+    <section class="flyer">
+      <img src="assets/superb-flyer.png" alt="Superb Executive Transportation flyer. Click or scan to book." />
+
+      <a class="hotspot qr" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Book online"></a>
+      <a class="hotspot phone" href="tel:+13406428686" aria-label="Call Superb Executive Transportation at 340-642-8686"></a>
+      <a class="hotspot email" href="mailto:setlimovi@gmail.com" aria-label="Email Superb Executive Transportation"></a>
+      <a class="hotspot site" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Open Superb Executive Transportation booking website"></a>
+    </section>
+
+    <nav class="fallback-links" aria-label="Contact links">
+      <a href="tel:+13406428686">Call 340-642-8686</a>
+      <a href="mailto:setlimovi@gmail.com">Email setlimovi@gmail.com</a>
+      <a href="https://set-vi.github.io/set-limo-vi/booking.html">Book Online</a>
+    </nav>
+  </main>
+</body>
+</html>
