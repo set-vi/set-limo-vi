@@ -24,6 +24,20 @@ async function expectNoHorizontalOverflow(page) {
   expect(hasNoOverflow).toBe(true);
 }
 
+test.beforeEach(async ({ page }) => {
+  await page.route('https://fonts.googleapis.com/**', async (route) => {
+    await route.fulfill({ status: 200, contentType: 'text/css', body: '' });
+  });
+
+  await page.route('https://cdn.jsdelivr.net/**', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/javascript',
+      body: 'window.emailjs={init:function(){},send:function(){return Promise.resolve({status:200});}};',
+    });
+  });
+});
+
 test('rebuilt homepage renders the primary conversion path', async ({ page }) => {
   const runtimeFailures = captureRuntimeFailures(page);
 
@@ -98,14 +112,6 @@ test('booking page exposes route states and estimates correctly', async ({ page 
 
 test('valid reservation request reaches the rebuilt success state', async ({ page }) => {
   const runtimeFailures = captureRuntimeFailures(page);
-
-  await page.route('https://cdn.jsdelivr.net/**', async (route) => {
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/javascript',
-      body: 'window.emailjs={init:function(){},send:function(){return Promise.resolve({status:200});}};',
-    });
-  });
 
   await page.goto('booking.html');
 
