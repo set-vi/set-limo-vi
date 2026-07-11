@@ -147,7 +147,8 @@ test('rebuilt legal pages preserve their primary content and navigation', async 
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy Policy' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '1. Information We Collect' })).toBeVisible();
   await expect(page.getByText('Superb Executive Transportation does not sell customer personal information.')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Terms', exact: true })).toHaveAttribute('href', 'terms.html');
+  const legalNavigation = page.getByRole('navigation', { name: 'Legal navigation' });
+  await expect(legalNavigation.getByRole('link', { name: 'Terms & Conditions', exact: true })).toHaveAttribute('href', 'terms.html');
   await expectNoHorizontalOverflow(page);
 
   await page.goto('terms.html');
