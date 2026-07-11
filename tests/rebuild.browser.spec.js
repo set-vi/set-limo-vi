@@ -89,8 +89,8 @@ test('booking page exposes route states and estimates correctly', async ({ page 
 
   await expect(page.getByRole('heading', { level: 1, name: 'Plan the ride.' })).toBeVisible();
   await page.getByLabel('Service type').selectOption('transfer');
-  await page.getByLabel('Pickup').selectOption('cyril-e-king-airport');
-  await page.getByLabel('Drop-off').selectOption('red-hook');
+  await page.locator('#pickup').selectOption('cyril-e-king-airport');
+  await page.locator('#dropoff').selectOption('red-hook');
   await page.getByLabel('Passengers').fill('1');
 
   await expect(page.getByLabel('Arrival flight number')).toBeVisible();
@@ -98,7 +98,7 @@ test('booking page exposes route states and estimates correctly', async ({ page 
   await expect(page.locator('#estimate-rows')).toContainText('Estimated total');
   await expect(page.locator('#estimate-rows')).toContainText('$180');
 
-  await page.getByLabel('Drop-off').selectOption('st-john');
+  await page.locator('#dropoff').selectOption('st-john');
   await expect(page.locator('#route-message')).toContainText('St. John trips require additional coordination');
   await expect(page.locator('#estimate-rows')).toContainText('$700');
 
@@ -119,8 +119,8 @@ test('valid reservation request reaches the rebuilt success state', async ({ pag
   await page.getByLabel('Service date').fill(futureDate);
   await page.getByLabel('Service time').selectOption('12:00');
   await page.getByLabel('Service type').selectOption('transfer');
-  await page.getByLabel('Pickup').selectOption('cyril-e-king-airport');
-  await page.getByLabel('Drop-off').selectOption('red-hook');
+  await page.locator('#pickup').selectOption('cyril-e-king-airport');
+  await page.locator('#dropoff').selectOption('red-hook');
   await page.getByLabel('Arrival flight number').fill('AA123');
   await page.getByLabel('Full name').fill('Test Passenger');
   await page.getByLabel('Phone number').fill('3405551212');
@@ -147,7 +147,7 @@ test('rebuilt legal pages preserve their primary content and navigation', async 
   await expect(page.getByRole('heading', { level: 1, name: 'Privacy Policy' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '1. Information We Collect' })).toBeVisible();
   await expect(page.getByText('Superb Executive Transportation does not sell customer personal information.')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Terms' })).toHaveAttribute('href', 'terms.html');
+  await expect(page.getByRole('link', { name: 'Terms', exact: true })).toHaveAttribute('href', 'terms.html');
   await expectNoHorizontalOverflow(page);
 
   await page.goto('terms.html');
