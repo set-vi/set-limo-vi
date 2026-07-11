@@ -1,9 +1,9 @@
 name: Site Health
 
 on:
-  push:
+  pull_request:
     branches:
-      - website-rebuild
+      - main
 
 permissions:
   contents: read
