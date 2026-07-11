@@ -47,7 +47,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Verify non-empty UTF-8 file
+      - name: Verify file and local references
         shell: bash
         env:
           HTML_FILE: ${{ matrix.file }}
@@ -55,11 +55,52 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           import os
+          from html.parser import HTMLParser
           from pathlib import Path
+          from urllib.parse import unquote, urlsplit
 
-          path = Path(os.environ['HTML_FILE'])
-          if path.stat().st_size == 0:
-              raise SystemExit(f'{path} is empty.')
-          path.read_text(encoding='utf-8', errors='strict')
-          print(f'{path} is non-empty valid UTF-8.')
+          source = Path(os.environ['HTML_FILE'])
+          if source.stat().st_size == 0:
+              raise SystemExit(f'{source} is empty.')
+          text = source.read_text(encoding='utf-8', errors='strict')
+
+          root = Path('.').resolve()
+          checked_extensions = {
+              '.html', '.htm', '.css', '.js', '.mjs', '.png', '.jpg', '.jpeg',
+              '.webp', '.gif', '.svg', '.ico', '.pdf'
+          }
+          missing = []
+
+          class ReferenceParser(HTMLParser):
+              def handle_starttag(self, tag, attrs):
+                  values = dict(attrs)
+                  candidates = []
+                  if 'src' in values:
+                      candidates.append(values['src'])
+                  if 'href' in values:
+                      candidates.append(values['href'])
+
+                  for raw in candidates:
+                      if not raw or raw.startswith(('#', 'mailto:', 'tel:', 'javascript:', 'data:')):
+                          continue
+                      parsed = urlsplit(raw)
+                      if parsed.scheme or parsed.netloc:
+                          continue
+                      path_text = unquote(parsed.path)
+                      if path_text in ('', '/') or '{' in path_text or '}' in path_text:
+                          continue
+                      candidate = Path(path_text)
+                      if candidate.suffix.lower() not in checked_extensions:
+                          continue
+                      target = (root / path_text.lstrip('/')) if path_text.startswith('/') else (source.parent / path_text)
+                      if not target.resolve().is_file():
+                          missing.append(raw)
+
+          parser = ReferenceParser(convert_charrefs=True)
+          parser.feed(text)
+
+          if missing:
+              raise SystemExit(f'Missing local references in {source}:\n' + '\n'.join(sorted(set(missing))))
+
+          print(f'{source} is non-empty valid UTF-8 with valid local references.')
           PY
