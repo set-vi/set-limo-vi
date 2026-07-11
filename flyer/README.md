@@ -1,27 +1,26 @@
 # Superb Executive Transportation Web Flyer
 
-This folder contains a GitHub Pages-ready web flyer.
+This folder contains the controlled GitHub Pages flyer.
 
 ## Files
 
-- `index.html` — clickable digital flyer page
-- `assets/superb-flyer.png` — approved flyer image
+- `index.html` — the single live clickable flyer page
+- `assets/superb-flyer.png` — the approved flyer image
+- `/flyer.html` — legacy address that redirects to this controlled flyer
 
-## Clickable areas
+## Click behavior
 
-- QR code opens the booking page
-- Phone number opens the dialer
-- Email opens the email app
-- Website opens the booking page
+- Clicking anywhere on the flyer opens the reservation-request website.
+- Clicking the QR-code area opens the reservation-request website.
+- Clicking the phone number opens the device dialer.
+- Clicking the email address opens the device email app.
+- Clicking the website area opens the reservation-request website.
+- Visible fallback buttons remain available below the flyer.
 
-## Booking URL
+## Reservation URL
 
 https://set-vi.github.io/set-limo-vi/booking.html
 
-## GitHub Pages placement
-
-Copy `index.html` and the `assets` folder into the repo folder or into a `/flyer/` folder.
-
-Recommended URL if placed in `/flyer/`:
+## Controlled flyer URL
 
 https://set-vi.github.io/set-limo-vi/flyer/
