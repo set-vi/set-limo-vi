@@ -25,6 +25,7 @@ REQUIRED_FILES = [
     ROOT / "package.json",
     ROOT / "playwright.config.cjs",
     ROOT / "tests" / "rebuild.browser.spec.js",
+    ROOT / "tests" / "rebuild.visual.spec.js",
     ROOT / "docs" / "website-rebuild-control.md",
     ROOT / "docs" / "rebuild-layout.md",
     ROOT / "rebuild" / "assets" / "css" / "site.css",
@@ -85,6 +86,7 @@ TEXT_FILE_MARKERS = {
         "desktop-chromium",
         "mobile-chromium",
         "python -m http.server 4173",
+        "http://127.0.0.1:4173/rebuild/",
     ],
     "tests/rebuild.browser.spec.js": [
         "rebuilt homepage renders the primary conversion path",
@@ -92,10 +94,19 @@ TEXT_FILE_MARKERS = {
         "valid reservation request reaches the rebuilt success state",
         "rebuilt legal pages preserve their primary content and navigation",
     ],
+    "tests/rebuild.visual.spec.js": [
+        "capture rebuilt homepage",
+        "capture configured booking page",
+        "capture rebuilt privacy policy",
+        "capture rebuilt terms page",
+        "visual-artifacts",
+    ],
     ".github/workflows/site-health.yml": [
         "python tools/site_health.py",
         "npx playwright install --with-deps chromium",
         "npm run test:browser",
+        "rebuild-visual-proof",
+        "visual-artifacts",
     ],
 }
 
@@ -268,7 +279,7 @@ def main() -> int:
     print("=== SITE HEALTH CHECK ===")
     print("Verdict: Works")
     print(
-        "Checked protected pages, rebuilt reservation and legal flows, test controls, required files, "
+        "Checked protected pages, rebuilt reservation and legal flows, browser and visual controls, "
         "metadata, landmarks, duplicate IDs, local links, anchors, stylesheets, scripts, and images."
     )
     return 0
