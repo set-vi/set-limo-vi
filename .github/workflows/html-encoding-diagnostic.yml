@@ -1,4 +1,4 @@
-name: HTML Encoding Diagnostic
+name: HTML File Diagnostic
 
 on:
   pull_request:
@@ -35,8 +35,8 @@ jobs:
           print('\n'.join(files))
           PY
 
-  encoding:
-    name: UTF-8 — ${{ matrix.file }}
+  file_check:
+    name: HTML file — ${{ matrix.file }}
     needs: discover
     runs-on: ubuntu-latest
     strategy:
@@ -47,7 +47,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Verify UTF-8
+      - name: Verify non-empty UTF-8 file
         shell: bash
         env:
           HTML_FILE: ${{ matrix.file }}
@@ -58,6 +58,8 @@ jobs:
           from pathlib import Path
 
           path = Path(os.environ['HTML_FILE'])
+          if path.stat().st_size == 0:
+              raise SystemExit(f'{path} is empty.')
           path.read_text(encoding='utf-8', errors='strict')
-          print(f'{path} is valid UTF-8.')
+          print(f'{path} is non-empty valid UTF-8.')
           PY
