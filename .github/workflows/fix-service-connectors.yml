@@ -1,0 +1,64 @@
+name: Fix service connectors
+
+on:
+  push:
+    branches:
+      - amend/customer-facing-wording
+    paths:
+      - .github/workflows/fix-service-connectors.yml
+      - .github/fix-service-connectors.trigger
+
+permissions:
+  contents: write
+
+jobs:
+  fix-connectors:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out amendment branch
+        uses: actions/checkout@v4
+        with:
+          ref: amend/customer-facing-wording
+          fetch-depth: 0
+
+      - name: Apply exact connector fix
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path("index.html")
+          text = path.read_text(encoding="utf-8")
+          old = """      left: 50%;
+                width: 1px;
+                height: 34px;
+          """
+          new = """      left: 50%;
+                display: block;
+                width: 2px;
+                height: 34px;
+          """
+
+          if text.count(old) != 1:
+              raise SystemExit(f"Expected one connector block, found {text.count(old)}")
+
+          text = text.replace(old, new, 1)
+          path.write_text(text, encoding="utf-8", newline="\n")
+
+          updated = path.read_text(encoding="utf-8")
+          if updated.count('class="service-item"') != 3:
+              raise SystemExit("Expected exactly three service items")
+          if "display: block;\n      width: 2px;\n      height: 34px;" not in updated:
+              raise SystemExit("Connector fix was not applied")
+
+      - name: Remove temporary patch files
+        run: |
+          rm -f .github/fix-service-connectors.trigger
+          rm -f .github/workflows/fix-service-connectors.yml
+
+      - name: Commit connector correction
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html .github
+          git commit -m "Fix all three service connector lines"
+          git push origin HEAD:amend/customer-facing-wording
