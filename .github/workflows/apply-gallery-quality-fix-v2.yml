@@ -1,0 +1,79 @@
+name: Apply gallery image quality fix
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  replace-gallery-image:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fix/gallery-image-quality-v2'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out fix branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Rebuild and verify corrected image
+        shell: python
+        run: |
+          from pathlib import Path
+          import base64
+          import hashlib
+          import shutil
+
+          parts_dir = Path('.github/gallery-quality-fix')
+          extra_dir = Path('.github/gallery-quality-fix-v2')
+          output_path = Path('png/luxury-int2.webp')
+          expected_size = 39256
+          expected_sha256 = '127eb5994cb64e6b97446cd00bbcf127adfe5521d876de591d82d39dd2dff238'
+
+          def verify(data):
+              if len(data) != expected_size:
+                  raise SystemExit(f'Unexpected image size: {len(data)} bytes')
+              digest = hashlib.sha256(data).hexdigest()
+              if digest != expected_sha256:
+                  raise SystemExit(f'Checksum mismatch: {digest}')
+              if data[:4] != b'RIFF' or data[8:12] != b'WEBP':
+                  raise SystemExit('Corrected asset is not a valid WebP container')
+
+          if parts_dir.exists():
+              part_paths = [parts_dir / f'part{number:02d}' for number in range(4)]
+              missing = [str(path) for path in part_paths if not path.exists()]
+              if missing:
+                  raise SystemExit('Missing image parts: ' + ', '.join(missing))
+              encoded = ''.join(path.read_text(encoding='utf-8').strip() for path in part_paths)
+              image_bytes = base64.b64decode(encoded, validate=True)
+              verify(image_bytes)
+              output_path.write_bytes(image_bytes)
+              shutil.rmtree(parts_dir)
+              if extra_dir.exists():
+                  shutil.rmtree(extra_dir)
+          else:
+              if not output_path.exists():
+                  raise SystemExit('Corrected image and staging parts are both missing')
+              verify(output_path.read_bytes())
+              if extra_dir.exists():
+                  shutil.rmtree(extra_dir)
+
+      - name: Commit verified corrected image
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A png/luxury-int2.webp .github/gallery-quality-fix .github/gallery-quality-fix-v2
+          if git diff --cached --quiet; then
+            echo "Corrected image is already applied."
+            exit 0
+          fi
+          git commit -m "Restore gallery image quality"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
