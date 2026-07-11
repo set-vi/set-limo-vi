@@ -2,5 +2,6 @@ node_modules/
 playwright-report/
 test-results/
 visual-artifacts/
+dist/
 .DS_Store
 Thumbs.db
