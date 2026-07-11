@@ -3,7 +3,8 @@
   "version": "2.0.0-rebuild",
   "private": true,
   "scripts": {
-    "health:site": "python tools/site_health.py && python tools/staging_contract.py",
+    "health:site": "python tools/site_health.py",
+    "health:all": "python tools/site_health.py && python tools/staging_contract.py",
     "build:staging": "python tools/build_staging.py",
     "test:browser": "playwright test"
   },
