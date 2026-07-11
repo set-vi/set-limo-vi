@@ -55,6 +55,12 @@ jobs:
                   code_lines.append(line[10:] if line.startswith('          ') else line)
 
               code = '\n'.join(code_lines).rstrip() + '\n'
+              old_button_target = 'booking = replace_once(booking, \'submitButton.textContent = "Submit";\', \'submitButton.textContent = "Submit Reservation Request";\', "booking button reset text")'
+              new_button_target = 'booking = replace_once(booking, \'submitButton.textContent = isSubmitting ? "Sending..." : "Submit";\', \'submitButton.textContent = isSubmitting ? "Sending..." : "Submit Reservation Request";\', "booking button reset text")'
+              if code.count(old_button_target) != 1:
+                  raise SystemExit('Prepared booking button target was not found exactly once')
+              code = code.replace(old_button_target, new_button_target, 1)
+
               if 'homepage hero button' not in code or 'terms animal section' not in code:
                   raise SystemExit('Prepared wording patch failed integrity check')
 
