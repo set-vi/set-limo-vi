@@ -4,9 +4,18 @@
   const menuButton = document.querySelector("[data-menu-button]");
   const navigation = document.querySelector("[data-site-nav]");
 
+  document.querySelectorAll('a[href="../privacy.html"]').forEach(function (link) {
+    link.setAttribute("href", "privacy.html");
+  });
+
+  document.querySelectorAll('a[href="../terms.html"]').forEach(function (link) {
+    link.setAttribute("href", "terms.html");
+  });
+
   function closeMenu() {
     if (!menuButton || !navigation) return;
     menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Open navigation");
     navigation.classList.remove("is-open");
   }
 
@@ -14,6 +23,7 @@
     menuButton.addEventListener("click", function () {
       const willOpen = menuButton.getAttribute("aria-expanded") !== "true";
       menuButton.setAttribute("aria-expanded", String(willOpen));
+      menuButton.setAttribute("aria-label", willOpen ? "Close navigation" : "Open navigation");
       navigation.classList.toggle("is-open", willOpen);
     });
 
@@ -22,7 +32,7 @@
     });
 
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && navigation.classList.contains("is-open")) {
         closeMenu();
         menuButton.focus();
       }
