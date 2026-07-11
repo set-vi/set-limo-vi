@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050505" />
   <title>Superb Executive Transportation | Request a Reservation</title>
   <meta name="description" content="Superb Executive Transportation — private airport, resort, villa, business, and corporate transportation in St. Thomas, U.S. Virgin Islands." />
 
@@ -24,20 +25,26 @@
       box-sizing: border-box;
     }
 
+    html {
+      background: var(--bg);
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top center, rgba(255, 255, 255, 0.045), transparent 34%),
+        var(--bg);
       color: var(--white);
       font-family: Arial, Helvetica, sans-serif;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 18px;
+      padding: clamp(8px, 2vw, 20px);
     }
 
     .flyer-shell {
-      width: min(100%, 720px);
+      width: min(100%, 800px);
       margin: 0 auto;
     }
 
@@ -46,7 +53,8 @@
       width: 100%;
       line-height: 0;
       background: #000;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65);
+      overflow: hidden;
+      box-shadow: 0 20px 58px rgba(0, 0, 0, 0.68);
     }
 
     .flyer img {
@@ -54,6 +62,8 @@
       width: 100%;
       height: auto;
       user-select: none;
+      -webkit-user-drag: none;
+      cursor: pointer;
     }
 
     .hotspot {
@@ -64,11 +74,14 @@
       overflow: hidden;
       outline: none;
       z-index: 2;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: rgba(176, 138, 69, 0.18);
     }
 
     .hotspot:focus-visible {
       outline: 3px solid var(--gold);
-      outline-offset: 3px;
+      outline-offset: -3px;
       background: rgba(176, 138, 69, 0.14);
     }
 
@@ -105,16 +118,40 @@
       width: 34.570312%;
       height: 4.296875%;
     }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 0;
+      }
+
+      .flyer {
+        box-shadow: none;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <main class="flyer-shell" aria-label="Superb Executive Transportation digital flyer">
+  <main class="flyer-shell" aria-label="Superb Executive Transportation digital flyer" aria-describedby="flyer-instructions">
+    <p id="flyer-instructions" class="sr-only">Click anywhere on the flyer or the QR-code area to open the reservation website. The printed phone number and email address are also clickable.</p>
+
     <section class="flyer">
-      <img src="assets/superb-flyer.png" alt="Superb Executive Transportation flyer. Click anywhere or scan the QR code to request a reservation." />
+      <img src="assets/superb-flyer.png" alt="Superb Executive Transportation luxury transportation flyer" draggable="false" decoding="async" fetchpriority="high" />
 
       <a class="hotspot full-flyer-link" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Open the Superb Executive Transportation reservation request website"></a>
-      <a class="hotspot qr" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Open the reservation request website from the QR code area"></a>
+      <a class="hotspot qr" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Open the reservation request website from the QR-code area"></a>
       <a class="hotspot phone" href="tel:+13406428686" aria-label="Call Superb Executive Transportation at 340-642-8686"></a>
       <a class="hotspot email" href="mailto:setlimovi@gmail.com" aria-label="Email Superb Executive Transportation"></a>
       <a class="hotspot site" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Open the Superb Executive Transportation reservation request website"></a>
