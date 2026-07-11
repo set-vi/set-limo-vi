@@ -18,6 +18,11 @@ REQUIRED_PAGES = [
     ROOT / "rebuild" / "thank-you.html",
 ]
 REQUIRED_FILES = [
+    ROOT / ".gitignore",
+    ROOT / ".github" / "workflows" / "site-health.yml",
+    ROOT / "package.json",
+    ROOT / "playwright.config.cjs",
+    ROOT / "tests" / "rebuild.browser.spec.js",
     ROOT / "docs" / "website-rebuild-control.md",
     ROOT / "docs" / "rebuild-layout.md",
     ROOT / "rebuild" / "assets" / "css" / "site.css",
@@ -51,6 +56,28 @@ PAGE_MARKERS = {
         'data-confirmation-note',
         'src="assets/js/thank-you.js"',
         '<h1>Thank you.</h1>',
+    ],
+}
+TEXT_FILE_MARKERS = {
+    "package.json": [
+        '"health:site": "python tools/site_health.py"',
+        '"test:browser": "playwright test"',
+        '"@playwright/test": "1.61.1"',
+    ],
+    "playwright.config.cjs": [
+        "desktop-chromium",
+        "mobile-chromium",
+        "python -m http.server 4173",
+    ],
+    "tests/rebuild.browser.spec.js": [
+        "rebuilt homepage renders the primary conversion path",
+        "booking page exposes route states and estimates correctly",
+        "valid reservation request reaches the rebuilt success state",
+    ],
+    ".github/workflows/site-health.yml": [
+        "python tools/site_health.py",
+        "npx playwright install --with-deps chromium",
+        "npm run test:browser",
     ],
 }
 
@@ -189,12 +216,27 @@ def check_page(path: Path) -> list[str]:
     return errors
 
 
+def check_text_markers() -> list[str]:
+    errors: list[str] = []
+    for relative_path, markers in TEXT_FILE_MARKERS.items():
+        path = ROOT / relative_path
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8")
+        for marker in markers:
+            if marker not in text:
+                errors.append(f"{relative_path}: missing required marker {marker!r}")
+    return errors
+
+
 def main() -> int:
     errors: list[str] = []
 
     for required_file in REQUIRED_FILES:
         if not required_file.exists():
             errors.append(f"Missing required file: {required_file.relative_to(ROOT)}")
+
+    errors.extend(check_text_markers())
 
     for page in REQUIRED_PAGES:
         errors.extend(check_page(page))
@@ -209,8 +251,8 @@ def main() -> int:
     print("=== SITE HEALTH CHECK ===")
     print("Verdict: Works")
     print(
-        "Checked protected pages, rebuilt reservation flow, required files, metadata, "
-        "semantic landmarks, duplicate IDs, local links, anchors, stylesheets, scripts, and images."
+        "Checked protected pages, rebuilt reservation flow, test controls, required files, "
+        "metadata, landmarks, duplicate IDs, local links, anchors, stylesheets, scripts, and images."
     )
     return 0
 
