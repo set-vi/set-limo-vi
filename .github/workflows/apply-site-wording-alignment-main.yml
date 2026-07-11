@@ -28,40 +28,56 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-
-          workflow_path = Path('.github/workflows/apply-site-wording-alignment.yml')
-          lines = workflow_path.read_text(encoding='utf-8').splitlines()
-          step_marker = '      - name: Apply exact wording amendments'
+          import traceback
 
           try:
-              step_index = lines.index(step_marker)
-          except ValueError as exc:
-              raise SystemExit('Prepared wording step was not found') from exc
+              workflow_path = Path('.github/workflows/apply-site-wording-alignment.yml')
+              lines = workflow_path.read_text(encoding='utf-8').splitlines()
+              step_marker = '      - name: Apply exact wording amendments'
 
-          run_index = None
-          for index in range(step_index + 1, len(lines)):
-              if lines[index].strip() == 'run: |':
-                  run_index = index
-                  break
-          if run_index is None:
-              raise SystemExit('Prepared wording Python block was not found')
+              try:
+                  step_index = lines.index(step_marker)
+              except ValueError as exc:
+                  raise SystemExit('Prepared wording step was not found') from exc
 
-          code_lines = []
-          for line in lines[run_index + 1:]:
-              if line.startswith('      - name:'):
-                  break
-              code_lines.append(line[10:] if line.startswith('          ') else line)
+              run_index = None
+              for index in range(step_index + 1, len(lines)):
+                  if lines[index].strip() == 'run: |':
+                      run_index = index
+                      break
+              if run_index is None:
+                  raise SystemExit('Prepared wording Python block was not found')
 
-          code = '\n'.join(code_lines).rstrip() + '\n'
-          if 'homepage hero button' not in code or 'terms animal section' not in code:
-              raise SystemExit('Prepared wording patch failed integrity check')
+              code_lines = []
+              for line in lines[run_index + 1:]:
+                  if line.startswith('      - name:'):
+                      break
+                  code_lines.append(line[10:] if line.startswith('          ') else line)
 
-          exec(compile(code, 'prepared-site-wording-patch.py', 'exec'), {'__name__': '__main__'})
+              code = '\n'.join(code_lines).rstrip() + '\n'
+              if 'homepage hero button' not in code or 'terms animal section' not in code:
+                  raise SystemExit('Prepared wording patch failed integrity check')
+
+              exec(compile(code, 'prepared-site-wording-patch.py', 'exec'), {'__name__': '__main__'})
+          except BaseException:
+              Path('.github/wording-patch-error.txt').write_text(traceback.format_exc(), encoding='utf-8')
+              raise
+
+      - name: Record failed check safely
+        if: failure()
+        run: |
+          git restore index.html booking.html terms.html thank-you.html flyer/index.html
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/wording-patch-error.txt
+          git commit -m "Record wording patch verification error"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
 
       - name: Remove branch patch helpers
         run: |
           rm -f .github/apply-site-wording-alignment.trigger
           rm -f .github/workflows/apply-site-wording-alignment.yml
+          rm -f .github/wording-patch-error.txt
 
       - name: Commit verified wording changes
         run: |
