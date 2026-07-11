@@ -14,23 +14,45 @@ REQUIRED_PAGES = [
     ROOT / "terms.html",
     ROOT / "thank-you.html",
     ROOT / "rebuild" / "index.html",
+    ROOT / "rebuild" / "booking.html",
+    ROOT / "rebuild" / "thank-you.html",
 ]
 REQUIRED_FILES = [
     ROOT / "docs" / "website-rebuild-control.md",
     ROOT / "docs" / "rebuild-layout.md",
     ROOT / "rebuild" / "assets" / "css" / "site.css",
+    ROOT / "rebuild" / "assets" / "css" / "booking.css",
     ROOT / "rebuild" / "assets" / "js" / "site.js",
+    ROOT / "rebuild" / "assets" / "js" / "booking.js",
+    ROOT / "rebuild" / "assets" / "js" / "thank-you.js",
 ]
-REBUILD_REQUIRED_MARKERS = [
-    'class="skip-link"',
-    'id="main-content"',
-    'data-menu-button',
-    'data-site-nav',
-    'href="../booking.html"',
-    'href="assets/css/site.css"',
-    'src="assets/js/site.js"',
-    '<h1>Arrive with confidence.</h1>',
-]
+PAGE_MARKERS = {
+    "rebuild/index.html": [
+        'class="skip-link"',
+        'id="main-content"',
+        'data-menu-button',
+        'data-site-nav',
+        'href="booking.html"',
+        'href="assets/css/site.css"',
+        'src="assets/js/site.js"',
+        '<h1>Arrive with confidence.</h1>',
+    ],
+    "rebuild/booking.html": [
+        'id="booking-form"',
+        'id="form-status"',
+        'id="estimate-panel"',
+        'id="request-confirmation"',
+        'href="assets/css/booking.css"',
+        'src="assets/js/booking.js"',
+        '<h1>Plan the ride.</h1>',
+    ],
+    "rebuild/thank-you.html": [
+        'data-booking-summary',
+        'data-confirmation-note',
+        'src="assets/js/thank-you.js"',
+        '<h1>Thank you.</h1>',
+    ],
+}
 
 
 class PageParser(HTMLParser):
@@ -108,24 +130,24 @@ def check_page(path: Path) -> list[str]:
     parser = PageParser()
     parser.feed(text)
 
-    label = str(path.relative_to(ROOT))
+    relative_path = str(path.relative_to(ROOT)).replace("\\", "/")
     if not parser.has_lang:
-        errors.append(f"{label}: missing html lang attribute")
+        errors.append(f"{relative_path}: missing html lang attribute")
     if not parser.has_viewport:
-        errors.append(f"{label}: missing viewport meta tag")
+        errors.append(f"{relative_path}: missing viewport meta tag")
     if not parser.has_title:
-        errors.append(f"{label}: missing title element")
+        errors.append(f"{relative_path}: missing title element")
 
     id_counts: dict[str, int] = {}
     for value in parser.ids:
         id_counts[value] = id_counts.get(value, 0) + 1
     for value, count in sorted(id_counts.items()):
         if count > 1:
-            errors.append(f"{label}: duplicate id '{value}'")
+            errors.append(f"{relative_path}: duplicate id '{value}'")
 
     for src, alt in parser.images:
         if not alt or not alt.strip():
-            errors.append(f"{label}: image '{src}' is missing alt text")
+            errors.append(f"{relative_path}: image '{src}' is missing alt text")
         errors.extend(check_local_asset(path, src, "image asset"))
 
     for href in parser.stylesheets:
@@ -140,27 +162,29 @@ def check_page(path: Path) -> list[str]:
         target_path, _, fragment = href.partition("#")
         destination = path if not target_path else local_target(path, target_path)
         if not destination.exists():
-            errors.append(f"{label}: broken local link '{href}'")
+            errors.append(f"{relative_path}: broken local link '{href}'")
             continue
         if fragment and destination.suffix.lower() == ".html":
             destination_text = destination.read_text(encoding="utf-8")
             if not re.search(rf'id=["\']{re.escape(fragment)}["\']', destination_text):
-                errors.append(f"{label}: missing anchor target '{href}'")
+                errors.append(f"{relative_path}: missing anchor target '{href}'")
 
-    if path == ROOT / "rebuild" / "index.html":
+    if relative_path.startswith("rebuild/"):
         if not parser.has_header:
-            errors.append(f"{label}: missing semantic header")
+            errors.append(f"{relative_path}: missing semantic header")
         if not parser.has_main:
-            errors.append(f"{label}: missing semantic main")
+            errors.append(f"{relative_path}: missing semantic main")
         if not parser.has_footer:
-            errors.append(f"{label}: missing semantic footer")
+            errors.append(f"{relative_path}: missing semantic footer")
         if not parser.has_h1:
-            errors.append(f"{label}: missing page-level h1")
-        if not parser.has_nav:
-            errors.append(f"{label}: missing navigation landmark")
-        for marker in REBUILD_REQUIRED_MARKERS:
-            if marker not in text:
-                errors.append(f"{label}: missing required layout marker {marker!r}")
+            errors.append(f"{relative_path}: missing page-level h1")
+
+    if relative_path in {"rebuild/index.html", "rebuild/booking.html"} and not parser.has_nav:
+        errors.append(f"{relative_path}: missing navigation landmark")
+
+    for marker in PAGE_MARKERS.get(relative_path, []):
+        if marker not in text:
+            errors.append(f"{relative_path}: missing required marker {marker!r}")
 
     return errors
 
@@ -185,8 +209,8 @@ def main() -> int:
     print("=== SITE HEALTH CHECK ===")
     print("Verdict: Works")
     print(
-        "Checked protected pages, rebuild files, metadata, semantic landmarks, "
-        "duplicate IDs, local links, anchors, stylesheets, scripts, and image assets."
+        "Checked protected pages, rebuilt reservation flow, required files, metadata, "
+        "semantic landmarks, duplicate IDs, local links, anchors, stylesheets, scripts, and images."
     )
     return 0
 
