@@ -24,23 +24,28 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Verify protected website structure
+      - name: Verify required entry page
         shell: bash
         run: |
           set -euo pipefail
           test -s index.html
 
-          if grep -RInE '^(<<<<<<<|=======|>>>>>>>)' --exclude-dir=.git .; then
+      - name: Reject merge-conflict debris
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -n -E '^(<<<<<<<|=======|>>>>>>>)' -- '*.html' '*.css' '*.js'; then
             echo "Merge-conflict markers were found."
             exit 1
           fi
 
+      - name: Verify HTML files and encoding
+        shell: bash
+        run: |
+          set -euo pipefail
           python - <<'PY'
-          from html.parser import HTMLParser
           from pathlib import Path
-          from urllib.parse import unquote, urlsplit
 
-          root = Path('.').resolve()
           html_files = sorted(Path('.').rglob('*.html'))
           if not html_files:
               raise SystemExit('No HTML files found.')
@@ -49,6 +54,30 @@ jobs:
           if empty:
               raise SystemExit('Empty HTML files: ' + ', '.join(empty))
 
+          invalid = []
+          for html_file in html_files:
+              try:
+                  html_file.read_text(encoding='utf-8', errors='strict')
+              except UnicodeDecodeError as error:
+                  invalid.append(f'{html_file}: {error}')
+
+          if invalid:
+              raise SystemExit('Invalid UTF-8 HTML files:\n' + '\n'.join(invalid))
+
+          print(f'Verified {len(html_files)} non-empty UTF-8 HTML file(s).')
+          PY
+
+      - name: Verify local page and asset references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import unquote, urlsplit
+
+          root = Path('.').resolve()
+          html_files = sorted(Path('.').rglob('*.html'))
           checked_extensions = {
               '.html', '.htm', '.css', '.js', '.mjs', '.png', '.jpg', '.jpeg',
               '.webp', '.gif', '.svg', '.ico', '.pdf'
@@ -91,5 +120,5 @@ jobs:
           if missing:
               raise SystemExit('Missing local references:\n' + '\n'.join(sorted(set(missing))))
 
-          print(f'Verified {len(html_files)} HTML file(s); local references are present.')
+          print(f'Local references verified across {len(html_files)} HTML file(s).')
           PY
