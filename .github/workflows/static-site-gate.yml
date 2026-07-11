@@ -1,0 +1,124 @@
+name: Static Site Gate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-site-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify website files
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify required entry page
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s index.html
+
+      - name: Reject merge-conflict debris
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -n -E '^(<<<<<<<|=======|>>>>>>>)' -- '*.html' '*.css' '*.js'; then
+            echo "Merge-conflict markers were found."
+            exit 1
+          fi
+
+      - name: Verify HTML files and encoding
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          html_files = sorted(Path('.').rglob('*.html'))
+          if not html_files:
+              raise SystemExit('No HTML files found.')
+
+          empty = [str(path) for path in html_files if path.stat().st_size == 0]
+          if empty:
+              raise SystemExit('Empty HTML files: ' + ', '.join(empty))
+
+          invalid = []
+          for html_file in html_files:
+              try:
+                  html_file.read_text(encoding='utf-8', errors='strict')
+              except UnicodeDecodeError as error:
+                  invalid.append(f'{html_file}: {error}')
+
+          if invalid:
+              raise SystemExit('Invalid UTF-8 HTML files:\n' + '\n'.join(invalid))
+
+          print(f'Verified {len(html_files)} non-empty UTF-8 HTML file(s).')
+          PY
+
+      - name: Verify local page and asset references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import unquote, urlsplit
+
+          root = Path('.').resolve()
+          html_files = sorted(Path('.').rglob('*.html'))
+          checked_extensions = {
+              '.html', '.htm', '.css', '.js', '.mjs', '.png', '.jpg', '.jpeg',
+              '.webp', '.gif', '.svg', '.ico', '.pdf'
+          }
+          missing = []
+
+          class ReferenceParser(HTMLParser):
+              def __init__(self, source):
+                  super().__init__(convert_charrefs=True)
+                  self.source = source
+
+              def handle_starttag(self, tag, attrs):
+                  values = dict(attrs)
+                  candidates = []
+                  if 'src' in values:
+                      candidates.append(values['src'])
+                  if 'href' in values:
+                      candidates.append(values['href'])
+
+                  for raw in candidates:
+                      if not raw or raw.startswith(('#', 'mailto:', 'tel:', 'javascript:', 'data:')):
+                          continue
+                      parsed = urlsplit(raw)
+                      if parsed.scheme or parsed.netloc:
+                          continue
+                      path_text = unquote(parsed.path)
+                      if path_text in ('', '/') or '{' in path_text or '}' in path_text:
+                          continue
+                      candidate = Path(path_text)
+                      if candidate.suffix.lower() not in checked_extensions:
+                          continue
+                      target = (root / path_text.lstrip('/')) if path_text.startswith('/') else (self.source.parent / path_text)
+                      if not target.resolve().is_file():
+                          missing.append(f'{self.source}: {raw}')
+
+          for html_file in html_files:
+              parser = ReferenceParser(html_file)
+              parser.feed(html_file.read_text(encoding='utf-8', errors='strict'))
+
+          if missing:
+              raise SystemExit('Missing local references:\n' + '\n'.join(sorted(set(missing))))
+
+          print(f'Local references verified across {len(html_files)} HTML file(s).')
+          PY
