@@ -16,6 +16,8 @@ REQUIRED_PAGES = [
     ROOT / "rebuild" / "index.html",
     ROOT / "rebuild" / "booking.html",
     ROOT / "rebuild" / "thank-you.html",
+    ROOT / "rebuild" / "privacy.html",
+    ROOT / "rebuild" / "terms.html",
 ]
 REQUIRED_FILES = [
     ROOT / ".gitignore",
@@ -27,6 +29,7 @@ REQUIRED_FILES = [
     ROOT / "docs" / "rebuild-layout.md",
     ROOT / "rebuild" / "assets" / "css" / "site.css",
     ROOT / "rebuild" / "assets" / "css" / "booking.css",
+    ROOT / "rebuild" / "assets" / "css" / "legal.css",
     ROOT / "rebuild" / "assets" / "js" / "site.js",
     ROOT / "rebuild" / "assets" / "js" / "booking.js",
     ROOT / "rebuild" / "assets" / "js" / "thank-you.js",
@@ -57,6 +60,20 @@ PAGE_MARKERS = {
         'src="assets/js/thank-you.js"',
         '<h1>Thank you.</h1>',
     ],
+    "rebuild/privacy.html": [
+        'href="assets/css/legal.css"',
+        '<h1>Privacy Policy</h1>',
+        'id="information-collected"',
+        'id="contact-policy"',
+        'Last updated: May 2, 2026',
+    ],
+    "rebuild/terms.html": [
+        'href="assets/css/legal.css"',
+        '<h1>Terms and Conditions</h1>',
+        'id="booking"',
+        'id="contact-terms"',
+        'Last updated: May 2, 2026',
+    ],
 }
 TEXT_FILE_MARKERS = {
     "package.json": [
@@ -73,6 +90,7 @@ TEXT_FILE_MARKERS = {
         "rebuilt homepage renders the primary conversion path",
         "booking page exposes route states and estimates correctly",
         "valid reservation request reaches the rebuilt success state",
+        "rebuilt legal pages preserve their primary content and navigation",
     ],
     ".github/workflows/site-health.yml": [
         "python tools/site_health.py",
@@ -205,9 +223,8 @@ def check_page(path: Path) -> list[str]:
             errors.append(f"{relative_path}: missing semantic footer")
         if not parser.has_h1:
             errors.append(f"{relative_path}: missing page-level h1")
-
-    if relative_path in {"rebuild/index.html", "rebuild/booking.html"} and not parser.has_nav:
-        errors.append(f"{relative_path}: missing navigation landmark")
+        if not parser.has_nav:
+            errors.append(f"{relative_path}: missing navigation landmark")
 
     for marker in PAGE_MARKERS.get(relative_path, []):
         if marker not in text:
@@ -251,7 +268,7 @@ def main() -> int:
     print("=== SITE HEALTH CHECK ===")
     print("Verdict: Works")
     print(
-        "Checked protected pages, rebuilt reservation flow, test controls, required files, "
+        "Checked protected pages, rebuilt reservation and legal flows, test controls, required files, "
         "metadata, landmarks, duplicate IDs, local links, anchors, stylesheets, scripts, and images."
     )
     return 0
