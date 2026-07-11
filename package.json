@@ -1,0 +1,12 @@
+{
+  "name": "superb-executive-transportation-site",
+  "version": "2.0.0-rebuild",
+  "private": true,
+  "scripts": {
+    "health:site": "python tools/site_health.py",
+    "test:browser": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
+  }
+}
