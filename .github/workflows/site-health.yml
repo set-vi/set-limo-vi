@@ -23,6 +23,9 @@ jobs:
       - name: Run static-site health gate
         run: python tools/site_health.py
 
+      - name: Build deployment-shaped staging package
+        run: npm run build:staging
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -36,6 +39,17 @@ jobs:
 
       - name: Run desktop and mobile browser tests
         run: npm run test:browser
+
+      - name: Upload staging package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: superb-rebuild-staging
+          path: |
+            dist/superb-rebuild-staging.zip
+            dist/staging/staging-manifest.json
+          if-no-files-found: error
+          retention-days: 7
 
       - name: Upload browser test report
         if: always()
