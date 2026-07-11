@@ -64,7 +64,7 @@ test('mobile navigation opens, closes, and preserves the page', async ({ page },
   await page.goto('index.html');
 
   const menuButton = page.getByRole('button', { name: 'Open navigation' });
-  const navigation = page.getByRole('navigation', { name: 'Primary navigation' });
+  const navigation = page.locator('#primary-navigation');
 
   await expect(menuButton).toBeVisible();
   await expect(navigation).not.toHaveClass(/is-open/);
