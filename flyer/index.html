@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Superb Executive Transportation | Book Online</title>
-  <meta name="description" content="Superb Executive Transportation — airport transfers, resort and villa transfers, business and corporate transportation in St. Thomas, U.S. Virgin Islands." />
+  <title>Superb Executive Transportation | Request a Reservation</title>
+  <meta name="description" content="Superb Executive Transportation — private airport, resort, villa, business, and corporate transportation in St. Thomas, U.S. Virgin Islands." />
 
+  <link rel="canonical" href="https://set-vi.github.io/set-limo-vi/flyer/" />
   <meta property="og:title" content="Superb Executive Transportation" />
-  <meta property="og:description" content="Click or scan to book private executive transportation." />
-  <meta property="og:image" content="assets/superb-flyer.png" />
+  <meta property="og:description" content="Click or scan to request private executive transportation." />
+  <meta property="og:image" content="https://set-vi.github.io/set-limo-vi/flyer/assets/superb-flyer.png" />
+  <meta property="og:url" content="https://set-vi.github.io/set-limo-vi/flyer/" />
   <meta property="og:type" content="website" />
 
   <style>
@@ -61,12 +63,19 @@
       text-indent: -9999px;
       overflow: hidden;
       outline: none;
+      z-index: 2;
     }
 
     .hotspot:focus-visible {
       outline: 3px solid var(--gold);
       outline-offset: 3px;
       background: rgba(176, 138, 69, 0.14);
+    }
+
+    .full-flyer-link {
+      inset: 0;
+      z-index: 1;
+      border-radius: 0;
     }
 
     .qr {
@@ -133,12 +142,13 @@
 <body>
   <main class="flyer-shell" aria-label="Superb Executive Transportation digital flyer">
     <section class="flyer">
-      <img src="assets/superb-flyer.png" alt="Superb Executive Transportation flyer. Click or scan to book." />
+      <img src="assets/superb-flyer.png" alt="Superb Executive Transportation flyer. Click anywhere or scan the QR code to request a reservation." />
 
-      <a class="hotspot qr" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Request a reservation online"></a>
+      <a class="hotspot full-flyer-link" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Open the Superb Executive Transportation reservation request website"></a>
+      <a class="hotspot qr" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Open the reservation request website from the QR code area"></a>
       <a class="hotspot phone" href="tel:+13406428686" aria-label="Call Superb Executive Transportation at 340-642-8686"></a>
       <a class="hotspot email" href="mailto:setlimovi@gmail.com" aria-label="Email Superb Executive Transportation"></a>
-      <a class="hotspot site" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Open Superb Executive Transportation reservation request page"></a>
+      <a class="hotspot site" href="https://set-vi.github.io/set-limo-vi/booking.html" aria-label="Open the Superb Executive Transportation reservation request website"></a>
     </section>
 
     <nav class="fallback-links" aria-label="Contact links">
