@@ -15,7 +15,6 @@ This folder contains the controlled GitHub Pages flyer.
 - Clicking the phone number opens the device dialer.
 - Clicking the email address opens the device email app.
 - Clicking the website area opens the reservation-request website.
-- Visible fallback buttons remain available below the flyer.
 
 ## Reservation URL
 
