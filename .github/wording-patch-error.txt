@@ -1,5 +1,5 @@
 Traceback (most recent call last):
-  File "/home/runner/work/_temp/a62d22dd-39e1-402d-9a36-bb2d93b47d8d.py", line 38, in <module>
+  File "/home/runner/work/_temp/b49a2f5a-25b7-4d2a-ab75-e6b510d7da0f.py", line 51, in <module>
     exec(compile(code, 'prepared-site-wording-patch.py', 'exec'), {'__name__': '__main__'})
   File "prepared-site-wording-patch.py", line 107, in <module>
 SystemExit: booking PAYMENT_TERMS alignment failed
