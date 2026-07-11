@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "health:site": "python tools/site_health.py",
+    "build:staging": "python tools/build_staging.py",
     "test:browser": "playwright test"
   },
   "devDependencies": {
