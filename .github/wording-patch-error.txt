@@ -1,6 +1,5 @@
 Traceback (most recent call last):
-  File "/home/runner/work/_temp/d9cf9639-64c8-482e-9cbb-69c9f6f3cd7b.py", line 32, in <module>
+  File "/home/runner/work/_temp/a62d22dd-39e1-402d-9a36-bb2d93b47d8d.py", line 38, in <module>
     exec(compile(code, 'prepared-site-wording-patch.py', 'exec'), {'__name__': '__main__'})
-  File "prepared-site-wording-patch.py", line 104, in <module>
-  File "prepared-site-wording-patch.py", line 16, in replace_once
-SystemExit: booking button reset text: expected one match, found 0
+  File "prepared-site-wording-patch.py", line 107, in <module>
+SystemExit: booking PAYMENT_TERMS alignment failed
