@@ -16,6 +16,15 @@ async function expectNoHorizontalOverflow(page) {
   expect(hasNoOverflow).toBe(true);
 }
 
+async function stabilizeRevealContent(page) {
+  await page.addStyleTag({
+    content: '[data-reveal]{opacity:1!important;transform:none!important;transition:none!important;}',
+  });
+  await page.locator('[data-reveal]').evaluateAll((elements) => {
+    elements.forEach((element) => element.classList.add('is-visible'));
+  });
+}
+
 test.beforeEach(async ({ page }) => {
   await page.route('https://fonts.googleapis.com/**', async (route) => {
     await route.fulfill({ status: 200, contentType: 'text/css', body: '' });
@@ -33,9 +42,7 @@ test.beforeEach(async ({ page }) => {
 test('capture rebuilt homepage', async ({ page }, testInfo) => {
   await page.goto('index.html');
   await expect(page.getByRole('heading', { level: 1, name: 'Arrive with confidence.' })).toBeVisible();
-  await page.locator('[data-reveal]').evaluateAll((elements) => {
-    elements.forEach((element) => element.classList.add('is-visible'));
-  });
+  await stabilizeRevealContent(page);
   await expectNoHorizontalOverflow(page);
   await page.screenshot({ path: visualPath(testInfo, 'homepage.png'), fullPage: true });
 });
