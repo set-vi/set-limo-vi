@@ -13,18 +13,42 @@ REQUIRED_PAGES = [
     ROOT / "privacy.html",
     ROOT / "terms.html",
     ROOT / "thank-you.html",
+    ROOT / "rebuild" / "index.html",
+]
+REQUIRED_FILES = [
+    ROOT / "docs" / "website-rebuild-control.md",
+    ROOT / "docs" / "rebuild-layout.md",
+    ROOT / "rebuild" / "assets" / "css" / "site.css",
+    ROOT / "rebuild" / "assets" / "js" / "site.js",
+]
+REBUILD_REQUIRED_MARKERS = [
+    'class="skip-link"',
+    'id="main-content"',
+    'data-menu-button',
+    'data-site-nav',
+    'href="../booking.html"',
+    'href="assets/css/site.css"',
+    'src="assets/js/site.js"',
+    '<h1>Arrive with confidence.</h1>',
 ]
 
 
 class PageParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
-        self.ids: set[str] = set()
+        self.ids: list[str] = []
         self.links: list[str] = []
         self.images: list[tuple[str, str | None]] = []
+        self.stylesheets: list[str] = []
+        self.scripts: list[str] = []
         self.has_title = False
         self.has_viewport = False
         self.has_lang = False
+        self.has_header = False
+        self.has_main = False
+        self.has_footer = False
+        self.has_h1 = False
+        self.has_nav = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = dict(attrs)
@@ -34,10 +58,24 @@ class PageParser(HTMLParser):
             self.has_viewport = True
         if tag == "title":
             self.has_title = True
+        if tag == "header":
+            self.has_header = True
+        if tag == "main":
+            self.has_main = True
+        if tag == "footer":
+            self.has_footer = True
+        if tag == "h1":
+            self.has_h1 = True
+        if tag == "nav":
+            self.has_nav = True
         if data.get("id"):
-            self.ids.add(data["id"] or "")
+            self.ids.append(data["id"] or "")
         if tag == "a" and data.get("href"):
             self.links.append(data["href"] or "")
+        if tag == "link" and data.get("rel") == "stylesheet" and data.get("href"):
+            self.stylesheets.append(data["href"] or "")
+        if tag == "script" and data.get("src"):
+            self.scripts.append(data["src"] or "")
         if tag == "img" and data.get("src"):
             self.images.append((data["src"] or "", data.get("alt")))
 
@@ -45,6 +83,20 @@ class PageParser(HTMLParser):
 def is_external(target: str) -> bool:
     parsed = urlparse(target)
     return parsed.scheme in {"http", "https", "mailto", "tel"} or target.startswith("//")
+
+
+def local_target(page: Path, target: str) -> Path:
+    clean_target = target.split("?", 1)[0].split("#", 1)[0]
+    return (page.parent / clean_target).resolve()
+
+
+def check_local_asset(page: Path, target: str, asset_type: str) -> list[str]:
+    if not target or is_external(target):
+        return []
+    asset = local_target(page, target)
+    if asset.exists():
+        return []
+    return [f"{page.relative_to(ROOT)}: missing {asset_type} '{target}'"]
 
 
 def check_page(path: Path) -> list[str]:
@@ -64,36 +116,62 @@ def check_page(path: Path) -> list[str]:
     if not parser.has_title:
         errors.append(f"{label}: missing title element")
 
-    duplicate_ids = [value for value in parser.ids if len(re.findall(rf'id=[\"\']{re.escape(value)}[\"\']', text)) > 1]
-    for value in sorted(duplicate_ids):
-        errors.append(f"{label}: duplicate id '{value}'")
+    id_counts: dict[str, int] = {}
+    for value in parser.ids:
+        id_counts[value] = id_counts.get(value, 0) + 1
+    for value, count in sorted(id_counts.items()):
+        if count > 1:
+            errors.append(f"{label}: duplicate id '{value}'")
 
     for src, alt in parser.images:
-        if not alt:
+        if not alt or not alt.strip():
             errors.append(f"{label}: image '{src}' is missing alt text")
-        if not is_external(src):
-            asset = (path.parent / src.split("?", 1)[0].split("#", 1)[0]).resolve()
-            if not asset.exists():
-                errors.append(f"{label}: missing image asset '{src}'")
+        errors.extend(check_local_asset(path, src, "image asset"))
+
+    for href in parser.stylesheets:
+        errors.extend(check_local_asset(path, href, "stylesheet"))
+
+    for src in parser.scripts:
+        errors.extend(check_local_asset(path, src, "script"))
 
     for href in parser.links:
         if not href or href.startswith("javascript:") or is_external(href):
             continue
         target_path, _, fragment = href.partition("#")
-        destination = path if not target_path else (path.parent / target_path).resolve()
+        destination = path if not target_path else local_target(path, target_path)
         if not destination.exists():
             errors.append(f"{label}: broken local link '{href}'")
             continue
         if fragment and destination.suffix.lower() == ".html":
             destination_text = destination.read_text(encoding="utf-8")
-            if not re.search(rf'id=[\"\']{re.escape(fragment)}[\"\']', destination_text):
+            if not re.search(rf'id=["\']{re.escape(fragment)}["\']', destination_text):
                 errors.append(f"{label}: missing anchor target '{href}'")
+
+    if path == ROOT / "rebuild" / "index.html":
+        if not parser.has_header:
+            errors.append(f"{label}: missing semantic header")
+        if not parser.has_main:
+            errors.append(f"{label}: missing semantic main")
+        if not parser.has_footer:
+            errors.append(f"{label}: missing semantic footer")
+        if not parser.has_h1:
+            errors.append(f"{label}: missing page-level h1")
+        if not parser.has_nav:
+            errors.append(f"{label}: missing navigation landmark")
+        for marker in REBUILD_REQUIRED_MARKERS:
+            if marker not in text:
+                errors.append(f"{label}: missing required layout marker {marker!r}")
 
     return errors
 
 
 def main() -> int:
     errors: list[str] = []
+
+    for required_file in REQUIRED_FILES:
+        if not required_file.exists():
+            errors.append(f"Missing required file: {required_file.relative_to(ROOT)}")
+
     for page in REQUIRED_PAGES:
         errors.extend(check_page(page))
 
@@ -106,7 +184,10 @@ def main() -> int:
 
     print("=== SITE HEALTH CHECK ===")
     print("Verdict: Works")
-    print("Checked required pages, metadata, duplicate IDs, local links, anchors, and image assets.")
+    print(
+        "Checked protected pages, rebuild files, metadata, semantic landmarks, "
+        "duplicate IDs, local links, anchors, stylesheets, scripts, and image assets."
+    )
     return 0
 
 
