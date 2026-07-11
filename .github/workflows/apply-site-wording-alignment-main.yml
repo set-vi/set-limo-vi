@@ -55,11 +55,24 @@ jobs:
                   code_lines.append(line[10:] if line.startswith('          ') else line)
 
               code = '\n'.join(code_lines).rstrip() + '\n'
+
               old_button_target = 'booking = replace_once(booking, \'submitButton.textContent = "Submit";\', \'submitButton.textContent = "Submit Reservation Request";\', "booking button reset text")'
               new_button_target = 'booking = replace_once(booking, \'submitButton.textContent = isSubmitting ? "Sending..." : "Submit";\', \'submitButton.textContent = isSubmitting ? "Sending..." : "Submit Reservation Request";\', "booking button reset text")'
               if code.count(old_button_target) != 1:
                   raise SystemExit('Prepared booking button target was not found exactly once')
               code = code.replace(old_button_target, new_button_target, 1)
+
+              old_payment_call = 'booking = re.sub(r\'^[ \\t]*const PAYMENT_TERMS = ".*";$\', aligned_payment_line, booking, count=1, flags=re.MULTILINE)'
+              new_payment_call = 'booking, payment_terms_replacements = re.subn(r\'^[ \\t]*const PAYMENT_TERMS = ".*";$\', aligned_payment_line, booking, count=1, flags=re.MULTILINE)'
+              if code.count(old_payment_call) != 1:
+                  raise SystemExit('Prepared payment terms substitution was not found exactly once')
+              code = code.replace(old_payment_call, new_payment_call, 1)
+
+              old_payment_check = 'if booking.count(aligned_payment_line) != 1:'
+              new_payment_check = 'if payment_terms_replacements != 1:'
+              if code.count(old_payment_check) != 1:
+                  raise SystemExit('Prepared payment terms verification was not found exactly once')
+              code = code.replace(old_payment_check, new_payment_check, 1)
 
               if 'homepage hero button' not in code or 'terms animal section' not in code:
                   raise SystemExit('Prepared wording patch failed integrity check')
