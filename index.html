@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>S.E.T. | Superb Executive Transportation</title>
+  <meta name="description" content="Private executive transportation in St. Thomas, U.S. Virgin Islands, including airport, cruise port, resort, villa, business, event, and coordinated St. John service." />
+  <link rel="canonical" href="https://set-vi.github.io/set-limo-vi/" />
+  <meta property="og:title" content="Superb Executive Transportation" />
+  <meta property="og:description" content="Private executive transportation in St. Thomas, U.S. Virgin Islands, with coordinated St. John service." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://set-vi.github.io/set-limo-vi/" />
+  <meta property="og:image" content="https://set-vi.github.io/set-limo-vi/png/van1.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
@@ -1118,7 +1126,7 @@
 
   <section id="about" class="reveal">
     <h2>About</h2>
-    <p class="standard-copy">Superb Executive Transportation provides reserved private service in the Virgin Islands, including St. Thomas service and coordinated St. John requests. Built for travelers, residents, businesses, and private groups, we deliver clean presentation, reliable timing, direct communication, and a smooth ride from pickup to arrival.</p>
+    <p class="standard-copy">Superb Executive Transportation provides private, reservation-based transportation throughout St. Thomas, with coordinated service available for St. John. We serve travelers, residents, businesses, and private groups with clean presentation, dependable timing, direct communication, and a smooth ride from pickup to arrival.</p>
     <p class="brand-line">More than a ride. It’s a statement.</p>
   </section>
 
@@ -1132,7 +1140,7 @@
   </section>
 
   <section id="book" class="reveal">
-    <h2>Reservation</h2>
+    <h2>Request a Reservation</h2>
 
     <div class="booking-form-container">
       <form id="booking-form" class="booking-grid" novalidate>
@@ -1342,13 +1350,15 @@
             <span>$<span id="total-price">180</span></span>
           </div>
           <div id="review-estimate-message" class="estimate-note">Chauffeur, event, hourly, and daily service requests are reviewed based on requested time and itinerary.</div>
+          <div class="estimate-confirmation">Final terms are confirmed before service.</div>
           <div id="st-john-estimate-note" class="estimate-note">St. John estimate starts at $700 before capacity or round-trip adjustment.</div>
           <div id="extra-stop-estimate-note" class="estimate-note">Extra stop requested. Extra stops may affect the final rate.</div>
         </div>
 
         <div class="form-row full">
-          <button type="submit" id="submit-button">Submit Request</button>
+          <button type="submit" id="submit-button">Submit Reservation Request</button>
         </div>
+        <div class="form-row full estimate-confirmation">Submitting this form sends a request only. Service is confirmed after written acceptance and required payment.</div>
       </form>
     </div>
   </section>
@@ -1357,7 +1367,7 @@
     <div class="footer-inner">
 
       <div class="footer-contact-grid" aria-label="Contact information">
-        <a class="footer-contact-item" href="tel:3406428686">
+        <a class="footer-contact-item" href="tel:+13406428686">
           <span class="footer-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.32 1.77.59 2.61a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.47-1.16a2 2 0 0 1 2.11-.45c.84.27 1.71.47 2.61.59A2 2 0 0 1 22 16.92z" /></svg>
           </span>
@@ -1954,7 +1964,7 @@
 
         function setSubmittingState(isSubmitting) {
           submitButton.disabled = isSubmitting;
-          submitButton.textContent = isSubmitting ? "Sending..." : "Submit Request";
+          submitButton.textContent = isSubmitting ? "Sending..." : "Submit Reservation Request";
         }
 
         serviceType.addEventListener("change", refreshForm);
