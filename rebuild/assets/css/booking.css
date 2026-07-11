@@ -1,0 +1,286 @@
+.booking-hero {
+  padding-block: clamp(3.5rem, 7vw, 6rem) 2.25rem;
+}
+
+.booking-hero .section-heading {
+  margin-bottom: 0;
+}
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22rem;
+  align-items: start;
+  gap: 1.5rem;
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.booking-form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.form-section {
+  margin: 0;
+  padding: clamp(1.4rem, 3vw, 2rem);
+  background: linear-gradient(180deg, rgba(27, 27, 29, 0.88), rgba(14, 14, 15, 0.94));
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.form-section legend {
+  padding: 0 0.65rem;
+  color: var(--bronze-light);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-field {
+  min-width: 0;
+}
+
+.form-field.full {
+  grid-column: 1 / -1;
+}
+
+.form-field[hidden],
+.form-message[hidden],
+.estimate-panel[hidden] {
+  display: none;
+}
+
+.form-field label,
+.checkbox-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  min-height: 3.15rem;
+  padding: 0.75rem 0.85rem;
+  color: var(--text);
+  background: #101011;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: var(--radius-sm);
+}
+
+.form-field textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: var(--muted);
+}
+
+.form-field select option,
+.form-field select optgroup {
+  color: var(--text);
+  background: #101011;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: var(--bronze-light);
+  box-shadow: 0 0 0 3px rgba(224, 184, 117, 0.13);
+  outline: none;
+}
+
+.form-help {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.checkbox-card {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 3.15rem;
+  padding: 0.75rem 0.85rem;
+  background: #101011;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: var(--radius-sm);
+}
+
+.checkbox-card input {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+  accent-color: var(--bronze-light);
+}
+
+.checkbox-card .checkbox-label {
+  margin: 0;
+}
+
+.form-message {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  color: var(--text-soft);
+  background: rgba(189, 141, 76, 0.08);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+}
+
+.form-message.error {
+  color: #f7c6c6;
+  background: rgba(159, 55, 55, 0.14);
+  border-color: rgba(232, 117, 117, 0.45);
+}
+
+.form-message.success {
+  color: var(--success);
+  background: rgba(95, 145, 83, 0.13);
+  border-color: rgba(184, 210, 176, 0.4);
+}
+
+.estimate-panel {
+  padding: 1.15rem;
+  background: rgba(189, 141, 76, 0.07);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+}
+
+.estimate-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.45rem;
+  color: var(--text-soft);
+}
+
+.estimate-row.total {
+  margin-top: 0.45rem;
+  padding-top: 0.9rem;
+  color: var(--text);
+  font-size: 1.08rem;
+  font-weight: 800;
+  border-top: 1px solid var(--line-strong);
+}
+
+.estimate-note {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-actions .button {
+  min-width: 13rem;
+  border: 0;
+  cursor: pointer;
+}
+
+.form-actions .button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+  transform: none;
+}
+
+.booking-sidebar {
+  position: sticky;
+  top: 7rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.sidebar-panel {
+  padding: 1.35rem;
+  background: rgba(20, 20, 21, 0.86);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.sidebar-panel h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.sidebar-panel p,
+.sidebar-panel li {
+  color: var(--text-soft);
+  font-size: 0.88rem;
+}
+
+.sidebar-panel ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.sidebar-panel li + li {
+  margin-top: 0.45rem;
+}
+
+.contact-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.contact-list a {
+  color: var(--bronze-light);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.honeypot {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 960px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-sidebar {
+    position: static;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-grid,
+  .option-grid,
+  .booking-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .form-actions .button {
+    width: 100%;
+  }
+}
