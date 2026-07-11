@@ -24,7 +24,7 @@ REQUIRED_MARKERS = {
     "tests/staging.browser.spec.js": [
         "deployment-shaped staging package serves the full rebuilt site",
         "/dist/staging/index.html",
-        "/dist/staging/booking.html",
+        "dist\\/staging\\/booking\\.html",
         "Privacy Policy",
         "Terms and Conditions",
     ],
