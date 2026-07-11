@@ -48,6 +48,10 @@ test('rebuilt homepage renders the primary conversion path', async ({ page }) =>
   await expect(page.getByRole('heading', { level: 2, name: 'Transportation built around the reservation.' })).toBeVisible();
   await expect(page.locator('img')).toHaveCount(4);
 
+  const legalNavigation = page.getByRole('navigation', { name: 'Legal navigation' });
+  await expect(legalNavigation.getByRole('link', { name: 'Privacy Policy', exact: true })).toHaveAttribute('href', 'privacy.html');
+  await expect(legalNavigation.getByRole('link', { name: 'Terms & Conditions', exact: true })).toHaveAttribute('href', 'terms.html');
+
   const brokenImages = await page.locator('img').evaluateAll((images) =>
     images.filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.getAttribute('src'))
   );
@@ -63,19 +67,22 @@ test('mobile navigation opens, closes, and preserves the page', async ({ page },
 
   await page.goto('index.html');
 
-  const menuButton = page.getByRole('button', { name: 'Open navigation' });
+  const menuButton = page.locator('[data-menu-button]');
   const navigation = page.locator('#primary-navigation');
 
   await expect(menuButton).toBeVisible();
+  await expect(menuButton).toHaveAttribute('aria-label', 'Open navigation');
   await expect(navigation).not.toHaveClass(/is-open/);
 
   await menuButton.click();
   await expect(menuButton).toHaveAttribute('aria-expanded', 'true');
+  await expect(menuButton).toHaveAttribute('aria-label', 'Close navigation');
   await expect(navigation).toHaveClass(/is-open/);
   await expect(page.getByRole('link', { name: 'Services' })).toBeVisible();
 
   await page.keyboard.press('Escape');
   await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
+  await expect(menuButton).toHaveAttribute('aria-label', 'Open navigation');
   await expect(navigation).not.toHaveClass(/is-open/);
 
   await expectNoHorizontalOverflow(page);
@@ -105,6 +112,10 @@ test('booking page exposes route states and estimates correctly', async ({ page 
   await page.getByLabel('Service type').selectOption('hourly-rental');
   await expect(page.getByLabel('Reserved time')).toBeVisible();
   await expect(page.locator('#estimate-rows')).toContainText('$375');
+
+  const legalNavigation = page.getByRole('navigation', { name: 'Legal navigation' });
+  await expect(legalNavigation.getByRole('link', { name: 'Privacy Policy', exact: true })).toHaveAttribute('href', 'privacy.html');
+  await expect(legalNavigation.getByRole('link', { name: 'Terms & Conditions', exact: true })).toHaveAttribute('href', 'terms.html');
 
   await expectNoHorizontalOverflow(page);
   expect(runtimeFailures).toEqual([]);
