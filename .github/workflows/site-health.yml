@@ -23,13 +23,16 @@ jobs:
       - name: Run static-site health gate
         run: python tools/site_health.py
 
-      - name: Build deployment-shaped staging package
-        run: npm run build:staging
+      - name: Run staging control gate
+        run: python tools/staging_contract.py
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: "24"
+
+      - name: Build deployment-shaped staging package
+        run: npm run build:staging
 
       - name: Install browser-test dependency
         run: npm install --no-audit --no-fund
