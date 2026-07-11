@@ -9,7 +9,7 @@ Rebuild the public Superb Executive Transportation website as a clear, responsiv
 - `main` remains the live rollback point.
 - All rebuild work remains on `website-rebuild`.
 - Rebuilt pages live under `rebuild/` until release.
-- No existing root page is replaced during layout and behavior development.
+- No existing root page is replaced during layout, behavior, or test development.
 
 ## Website classification
 
@@ -19,97 +19,164 @@ Rebuild the public Superb Executive Transportation website as a clear, responsiv
 - Secondary actions: review services, inspect vehicle presentation, call, or email.
 - Conversion outcome: a complete reservation request reaches the business with enough information for confirmation.
 
-## Page map
+## Current page map
 
-### Rebuild lane
+### `rebuild/index.html`
 
-1. `rebuild/index.html`
-   - Brand introduction
-   - Service promise
-   - Primary reservation action
-   - Service categories
-   - Operating standard and trust information
-   - Vehicle presentation
-   - Contact and final reservation action
+- Brand introduction and service area.
+- Main value statement.
+- Primary reservation and call actions.
+- Immediate service proof.
+- Service categories.
+- Operating standard and trust information.
+- Vehicle presentation using existing assets.
+- Reservation process.
+- Final reservation action.
+- Contact and legal navigation.
 
-2. Existing `../booking.html` during the marketing-shell lane
-   - Temporary canonical booking destination
-   - Remains untouched until the booking rebuild lane begins
+### `rebuild/booking.html`
 
-### Planned later pages
+- Trip date, time, and service selection.
+- Conditional reserved-hours selection.
+- Pickup and drop-off location groups.
+- Custom-location details.
+- Round-trip and extra-stop controls.
+- Conditional return-trip, airport, luggage, and stop fields.
+- Passenger and contact details.
+- Transfer and hourly estimates.
+- Request acknowledgement.
+- Inline validation, submission, error, and recovery states.
 
-- `rebuild/booking.html` — one canonical reservation workflow
-- `rebuild/thank-you.html` — durable success state
-- `rebuild/privacy.html` — privacy disclosure
-- `rebuild/terms.html` — service and payment terms
+### `rebuild/thank-you.html`
+
+- Clear request-received status.
+- Confirmation limitation statement.
+- Session-based request summary.
+- Customer-email delivery note when needed.
+- Return-home and new-request actions.
+
+### Legal integration
+
+- Current rebuilt pages link to protected root `privacy.html` and `terms.html`.
+- Rebuilt legal pages remain pending until the current legal content is inspected and mapped into the shared shell.
 
 ## Global shell
 
-- Skip link
-- Sticky identity header
-- Desktop navigation
-- Deliberate mobile menu
-- Main content landmarks
-- Persistent reservation action
-- Contact and legal footer
+- Skip link.
+- Sticky identity header.
+- Desktop navigation.
+- Keyboard-operable mobile menu.
+- Semantic main content landmarks.
+- Persistent reservation or direct-contact action.
+- Contact and legal footer.
 
 ## Homepage hierarchy
 
-1. Identity and service area
-2. Main value statement
-3. Primary reservation action
-4. Immediate trust proof
-5. Service categories
-6. Why the service is different
-7. Vehicle presentation
-8. Reservation process
-9. Final call to action
-10. Contact and legal links
+1. Identity and service area.
+2. Main value statement.
+3. Primary reservation action.
+4. Immediate trust proof.
+5. Service categories.
+6. Why the service is different.
+7. Vehicle presentation.
+8. Reservation process.
+9. Final call to action.
+10. Contact and legal links.
+
+## Booking hierarchy
+
+1. Request status and confirmation limitation.
+2. Trip details.
+3. Route and conditional route information.
+4. Passenger and contact details.
+5. Estimate or manual-review message.
+6. Required request acknowledgement.
+7. Submission and recovery actions.
+8. Supporting reservation information and direct contact.
 
 ## Responsive strategy
 
-- Desktop: two-column hero, three-column service and standard sections, balanced content width.
-- Tablet: reduced columns and spacing while preserving reading order.
-- Mobile: single-column sequence, menu button, full-width primary actions, no horizontal navigation scrolling.
+- Desktop: two-column homepage hero, three-column service and process regions, booking form with supporting sidebar.
+- Tablet: reduced columns and spacing while preserving reading order; booking sidebar moves below the form.
+- Mobile: single-column sequence, deliberate menu button, full-width primary actions, stacked form controls, no horizontal navigation or page overflow.
 
 ## Accessibility controls
 
-- Semantic landmarks
-- One page-level heading
-- Visible focus states
-- Keyboard-operable mobile menu
-- Reduced-motion support
-- Descriptive image alternatives
-- No color-only status communication
-- Minimum practical touch target size
+- Semantic landmarks.
+- One page-level heading per page.
+- Visible focus states.
+- Keyboard-operable mobile menu with Escape closing behavior.
+- Reduced-motion support.
+- Descriptive image alternatives.
+- Persistent form labels.
+- Inline status region with live announcements.
+- No color-only status communication.
+- Practical touch targets.
 
-## First lane
+## Component ownership
 
-**Marketing shell and homepage structure**
+### Shared components
 
-### Allowed files
+Owned by `rebuild/assets/css/site.css` and `rebuild/assets/js/site.js`:
 
-- `docs/rebuild-layout.md`
-- `rebuild/index.html`
-- `rebuild/assets/css/site.css`
-- `rebuild/assets/js/site.js`
-- health-contract files needed to verify this lane
+- Brand and header.
+- Desktop and mobile navigation.
+- Buttons and focus treatment.
+- Page containers and hierarchy.
+- Shared panels.
+- Footer.
+- Responsive behavior.
+- Reduced-motion-safe reveals.
 
-### Excluded files
+### Booking components
 
-- Root `index.html`
-- Root `booking.html`
-- Existing EmailJS configuration
-- Existing pricing and booking behavior
-- Existing deployed assets
+Owned by `rebuild/assets/css/booking.css` and `rebuild/assets/js/booking.js`:
 
-### Proof gate
+- Field groups and conditional fields.
+- Route notices.
+- Estimate panel.
+- Form status and recovery.
+- Pricing and route logic.
+- Validation and submission behavior.
 
-The lane closes when:
+### Success components
 
-- The isolated homepage has valid semantic structure.
-- Desktop and mobile navigation are defined.
-- All local links and referenced files resolve.
-- The reservation action reaches the current protected booking page.
-- The static-site health gate passes.
-- `main` remains unchanged.
+Owned by `rebuild/thank-you.html` and `rebuild/assets/js/thank-you.js`:
+
+- Request summary.
+- Confirmation note.
+- Session cleanup.
+
+## Current proof gates
+
+### Static gate
+
+Must prove:
+
+- Required rebuilt pages and test-control files exist.
+- Metadata and semantic landmarks exist.
+- IDs are unique.
+- Local links, anchors, stylesheets, scripts, and images resolve.
+- Images have alternative text.
+- Required conversion, booking, success, and test markers remain present.
+
+### Browser gate
+
+Must prove in desktop and mobile Chromium:
+
+- Homepage renders the primary conversion path.
+- Existing images load.
+- No horizontal overflow exists.
+- Mobile navigation opens and closes correctly.
+- Booking conditional route states work.
+- Pricing produces the controlled $180, $700, and $375 proof cases.
+- A valid mocked submission reaches the rebuilt success page and displays the request summary.
+- No runtime or console errors occur.
+
+## Current verdict
+
+Works partially. The page map, shared shell, homepage, canonical booking page, success state, responsive rules, and automated test definitions are built. Direct execution, rendered visual inspection, legal integration, staging, and live delivery proof remain open.
+
+## Exact next action
+
+Run the static and browser gates against the branch, inspect desktop and mobile renderings, correct every proven issue, then integrate the legal pages into the rebuilt shell.
