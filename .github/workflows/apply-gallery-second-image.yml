@@ -1,0 +1,82 @@
+name: Apply second gallery image replacement
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  replace-gallery-image:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'replace/gallery-second-image'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out replacement branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Build and verify replacement asset
+        shell: python
+        run: |
+          from pathlib import Path
+          import base64
+          import shutil
+
+          parts_dir = Path('.github/gallery-image-parts')
+          output_path = Path('png/luxury-int2.webp')
+          old_path = Path('png/luxury-int2.png')
+          index_path = Path('index.html')
+          old_reference = 'src="png/luxury-int2.png"'
+          new_reference = 'src="png/luxury-int2.webp"'
+
+          if not parts_dir.exists():
+              index = index_path.read_text(encoding='utf-8')
+              if not output_path.exists() or new_reference not in index or old_reference in index:
+                  raise SystemExit('Replacement helpers are absent but the final gallery state is incomplete.')
+              print('Gallery replacement is already applied and verified.')
+              raise SystemExit(0)
+
+          part_paths = [parts_dir / f'part{number}' for number in range(9)]
+          missing = [str(path) for path in part_paths if not path.exists()]
+          if missing:
+              raise SystemExit('Missing staged image parts: ' + ', '.join(missing))
+
+          encoded = ''.join(path.read_text(encoding='utf-8').strip() for path in part_paths)
+          image_bytes = base64.b64decode(encoded, validate=True)
+
+          if len(image_bytes) != 27498:
+              raise SystemExit(f'Unexpected replacement image size: {len(image_bytes)} bytes')
+          if image_bytes[:4] != b'RIFF' or image_bytes[8:12] != b'WEBP':
+              raise SystemExit('Replacement image is not a valid WebP container.')
+
+          output_path.write_bytes(image_bytes)
+
+          index = index_path.read_text(encoding='utf-8')
+          if index.count(old_reference) != 1:
+              raise SystemExit(f'Expected one second-gallery reference, found {index.count(old_reference)}')
+          index_path.write_text(index.replace(old_reference, new_reference, 1), encoding='utf-8')
+
+          if old_path.exists():
+              old_path.unlink()
+          shutil.rmtree(parts_dir)
+
+      - name: Commit verified gallery replacement
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A index.html png .github/gallery-image-parts
+          if git diff --cached --quiet; then
+            echo "No additional gallery changes to commit."
+            exit 0
+          fi
+          git commit -m "Replace second gallery image"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
