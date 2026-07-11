@@ -139,3 +139,23 @@ test('valid reservation request reaches the rebuilt success state', async ({ pag
   await expectNoHorizontalOverflow(page);
   expect(runtimeFailures).toEqual([]);
 });
+
+test('rebuilt legal pages preserve their primary content and navigation', async ({ page }) => {
+  const runtimeFailures = captureRuntimeFailures(page);
+
+  await page.goto('privacy.html');
+  await expect(page.getByRole('heading', { level: 1, name: 'Privacy Policy' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '1. Information We Collect' })).toBeVisible();
+  await expect(page.getByText('Superb Executive Transportation does not sell customer personal information.')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Terms' })).toHaveAttribute('href', 'terms.html');
+  await expectNoHorizontalOverflow(page);
+
+  await page.goto('terms.html');
+  await expect(page.getByRole('heading', { level: 1, name: 'Terms and Conditions' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '1. Booking Requests and Reservations' })).toBeVisible();
+  await expect(page.getByText(/Submitting a booking request does not automatically confirm service/)).toBeVisible();
+  await expect(page.getByRole('heading', { name: '26. Contact' })).toBeVisible();
+  await expectNoHorizontalOverflow(page);
+
+  expect(runtimeFailures).toEqual([]);
+});
