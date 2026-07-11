@@ -1,0 +1,198 @@
+name: Apply live site wording alignment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/apply-site-wording-alignment-main.yml
+      - .github/apply-site-wording-alignment-main.trigger
+
+permissions:
+  contents: write
+
+jobs:
+  apply-wording:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply exact wording amendments
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          def read_text(path):
+              return Path(path).read_bytes().decode("utf-8")
+
+          def write_text(path, text):
+              Path(path).write_bytes(text.encode("utf-8"))
+
+          def nl_for(text):
+              return "\r\n" if "\r\n" in text else "\n"
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"{label}: expected one match, found {count}")
+              return text.replace(old, new, 1)
+
+          short_notice = (
+              "Child safety seats and booster seats are not provided. Customers must supply and properly install any "
+              "required child restraint. Pets and non-service animals are not accepted; qualifying service animals are "
+              "accommodated as required by law."
+          )
+
+          service_terms = (
+              "Pets, emotional-support animals, comfort animals, therapy animals, and other non-service animals are not "
+              "accepted for transportation. Qualifying service animals are accommodated as required by applicable law. "
+              "When it is not obvious that a dog is a service animal, Superb Executive Transportation may ask only whether "
+              "the dog is required because of a disability and what work or task the dog has been trained to perform. "
+              "Service-animal certification or registration, disclosure of the passenger's disability, and demonstration "
+              "of the trained task are not required. The handler is responsible for maintaining control and for the "
+              "animal's care and supervision. A service animal may be excluded if it is not housebroken, is out of control "
+              "and the handler does not regain control, or presents an actual safety threat. No service-animal surcharge "
+              "applies. Actual damage may be charged under the same damage policy applied to other customers."
+          )
+
+          child_terms = (
+              "Superb Executive Transportation does not provide, install, inspect, or secure child safety seats, booster "
+              "seats, or other child restraints. The customer is solely responsible for supplying, properly installing, "
+              "and properly using any legally required child restraint for each child passenger."
+          )
+
+          index_path = Path("index.html")
+          index = read_text(index_path)
+          nl = nl_for(index)
+          index = replace_once(index, '<a href="#book" class="btn">Reserve Your Ride</a>', '<a href="#book" class="btn">Request a Reservation</a>', "homepage hero button")
+          index = replace_once(index, '<label for="luggage-pieces">Luggage</label>', '<label for="luggage-pieces">Number of Bags</label>', "homepage luggage label")
+          index = replace_once(index, '<label for="special-requests">Ride Details</label>', '<label for="special-requests">Additional Trip Details</label>', "homepage trip details label")
+          index = replace_once(index, 'Final terms are confirmed before service.', 'The final rate and service terms are confirmed in writing before service.', "homepage estimate confirmation")
+          old_index_passenger = nl.join([
+              '        <div class="form-row field-card">',
+              '          <label for="number-of-passengers">Passengers</label>',
+              '          <input type="number" id="number-of-passengers" name="number-of-passengers" min="1" max="6" required />',
+              '          <div id="passenger-warning"></div>',
+              '        </div>',
+          ])
+          new_index_passenger = old_index_passenger + nl + nl + '        <div class="form-row full estimate-confirmation">' + short_notice + '</div>'
+          index = replace_once(index, old_index_passenger, new_index_passenger, "homepage passenger notice")
+          index = replace_once(index, 'No pets are permitted.', service_terms, "homepage email service-animal terms")
+          minor_sentence = 'Riders under 18 must be accompanied by a parent, legal guardian, or responsible adult.'
+          index = replace_once(index, minor_sentence, minor_sentence + ' ' + child_terms, "homepage email child-seat terms")
+          write_text(index_path, index)
+
+          payment_match = re.search(r'^[ \t]*const PAYMENT_TERMS = ".*";$', index, flags=re.MULTILINE)
+          if not payment_match:
+              raise SystemExit("Updated homepage PAYMENT_TERMS line not found")
+          aligned_payment_line = payment_match.group(0)
+
+          booking_path = Path("booking.html")
+          booking = read_text(booking_path)
+          nl = nl_for(booking)
+          booking = replace_once(booking, '<title>Book | Superb Executive Transportation</title>', '<title>Request a Reservation | Superb Executive Transportation</title>', "booking title")
+          booking = replace_once(booking, '<h2>Reservation</h2>', '<h2>Request a Reservation</h2>', "booking heading")
+          booking = replace_once(booking, '<label for="luggage-pieces">Luggage</label>', '<label for="luggage-pieces">Number of Bags</label>', "booking luggage label")
+          booking = replace_once(booking, '<label for="special-requests">Ride Details</label>', '<label for="special-requests">Additional Trip Details</label>', "booking trip details label")
+          booking = replace_once(booking, 'Final terms are confirmed before service.', 'The final rate and service terms are confirmed in writing before service.', "booking estimate confirmation")
+          old_booking_passenger = nl.join([
+              '          <div class="form-row field-card">',
+              '            <label for="number-of-passengers">Passengers</label>',
+              '            <input type="number" id="number-of-passengers" name="number-of-passengers" min="1" max="6" required />',
+              '            <div id="passenger-warning"></div>',
+              '          </div>',
+          ])
+          new_booking_passenger = old_booking_passenger + nl + nl + '          <div class="form-row full estimate-confirmation">' + short_notice + '</div>'
+          booking = replace_once(booking, old_booking_passenger, new_booking_passenger, "booking passenger notice")
+          old_booking_button = nl.join([
+              '          <div class="form-row full">',
+              '            <button type="submit" id="submit-button">Submit</button>',
+              '          </div>',
+          ])
+          new_booking_button = nl.join([
+              '          <div class="form-row full">',
+              '            <button type="submit" id="submit-button">Submit Reservation Request</button>',
+              '          </div>',
+              '          <div class="form-row full estimate-confirmation">Submitting this form sends a request only. Service is confirmed after written acceptance and required payment.</div>',
+          ])
+          booking = replace_once(booking, old_booking_button, new_booking_button, "booking request button and notice")
+          booking = replace_once(booking, 'submitButton.textContent = "Submit";', 'submitButton.textContent = "Submit Reservation Request";', "booking button reset text")
+          booking = re.sub(r'^[ \t]*const PAYMENT_TERMS = ".*";$', aligned_payment_line, booking, count=1, flags=re.MULTILINE)
+          if booking.count(aligned_payment_line) != 1:
+              raise SystemExit("booking PAYMENT_TERMS alignment failed")
+          write_text(booking_path, booking)
+
+          terms_path = Path("terms.html")
+          terms = read_text(terms_path)
+          nl = nl_for(terms)
+          old_animal_section = nl.join([
+              '    <section>',
+              '      <h2>10. No Pets or Animals</h2>',
+              '      <p>',
+              '        Pets and animals are not permitted in Superb Executive Transportation vehicles. Customers must disclose any animal-related transportation need before booking so Superb Executive Transportation can determine whether service can be provided or whether another transportation arrangement is required.',
+              '      </p>',
+              '    </section>',
+          ])
+          new_animal_section = nl.join([
+              '    <section>',
+              '      <h2>10. No Pets or Non-Service Animals</h2>',
+              '      <p>',
+              '        Pets, emotional-support animals, comfort animals, therapy animals, and other non-service animals are not accepted for transportation.',
+              '      </p>',
+              '      <p>',
+              '        Qualifying service animals are accommodated as required by applicable law. When it is not obvious that a dog is a service animal, Superb Executive Transportation may ask only whether the dog is required because of a disability and what work or task the dog has been trained to perform.',
+              '      </p>',
+              '      <p>',
+              '        Superb Executive Transportation does not require service-animal certification or registration, disclosure of the passenger’s disability, or demonstration of the trained task. The handler is responsible for maintaining control and for the animal’s care and supervision. A service animal may be excluded if it is not housebroken, is out of control and the handler does not regain control, or presents an actual safety threat. No service-animal surcharge applies. Actual damage may be charged under the same damage policy applied to other customers.',
+              '      </p>',
+              '    </section>',
+          ])
+          terms = replace_once(terms, old_animal_section, new_animal_section, "terms animal section")
+          terms = replace_once(terms, 'Illegal substances, unlawful firearms, weapons, hazardous materials, and prohibited items are not permitted in the vehicle.', 'Firearms, weapons, illegal substances, hazardous materials, and other prohibited items are not permitted in the vehicle.', "terms weapons wording")
+          write_text(terms_path, terms)
+
+          thanks_path = Path("thank-you.html")
+          thanks = read_text(thanks_path)
+          thanks = replace_once(thanks, '<p>Need immediate assistance?</p>', '<p>Need help with your request?</p>', "thank-you contact wording")
+          thanks = replace_once(thanks, 'Submission of a request does not confirm service until availability, final terms, and payment arrangements are confirmed.', 'Your request is not confirmed until availability, final rate, service terms, and payment requirements are confirmed in writing.', "thank-you confirmation wording")
+          write_text(thanks_path, thanks)
+
+          flyer_path = Path("flyer/index.html")
+          flyer = read_text(flyer_path)
+          flyer = replace_once(flyer, 'aria-label="Book online"', 'aria-label="Request a reservation online"', "flyer QR label")
+          flyer = replace_once(flyer, 'aria-label="Open Superb Executive Transportation booking website"', 'aria-label="Open Superb Executive Transportation reservation request page"', "flyer site label")
+          flyer = replace_once(flyer, '>Book Online</a>', '>Request a Reservation Online</a>', "flyer fallback wording")
+          write_text(flyer_path, flyer)
+
+          checks = {
+              "homepage request button": read_text(index_path).count('>Request a Reservation</a>'),
+              "homepage child and animal notice": read_text(index_path).count(short_notice),
+              "booking request heading": read_text(booking_path).count('<h2>Request a Reservation</h2>'),
+              "booking request button": read_text(booking_path).count('>Submit Reservation Request</button>'),
+              "booking child and animal notice": read_text(booking_path).count(short_notice),
+              "terms strict animal heading": read_text(terms_path).count('10. No Pets or Non-Service Animals'),
+              "terms two-question structure": read_text(terms_path).count('what work or task the dog has been trained to perform'),
+              "thank-you final wording": read_text(thanks_path).count('Your request is not confirmed until availability, final rate, service terms, and payment requirements are confirmed in writing.'),
+              "flyer request wording": read_text(flyer_path).count('>Request a Reservation Online</a>'),
+          }
+          for label, count in checks.items():
+              if count != 1:
+                  raise SystemExit(f"{label}: expected once, found {count}")
+
+      - name: Remove temporary patch files
+        run: |
+          rm -f .github/apply-site-wording-alignment-main.trigger
+          rm -f .github/workflows/apply-site-wording-alignment-main.yml
+
+      - name: Commit wording alignment
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html booking.html terms.html thank-you.html flyer/index.html .github
+          git commit -m "Align customer-facing site wording"
+          git push origin HEAD:main
