@@ -24,7 +24,18 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
+      - name: Check patch state
+        id: patch-state
+        run: |
+          if [ -f .github/workflows/apply-site-wording-alignment.yml ]; then
+            echo "needed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "needed=false" >> "$GITHUB_OUTPUT"
+            echo "Wording patch helpers are already removed."
+          fi
+
       - name: Run exact prepared patch
+        if: steps.patch-state.outputs.needed == 'true'
         shell: python
         run: |
           from pathlib import Path
@@ -83,7 +94,7 @@ jobs:
               raise
 
       - name: Record failed check safely
-        if: failure()
+        if: failure() && steps.patch-state.outputs.needed == 'true'
         run: |
           git restore index.html booking.html terms.html thank-you.html flyer/index.html
           git config user.name "github-actions[bot]"
@@ -93,15 +104,21 @@ jobs:
           git push origin HEAD:${{ github.event.pull_request.head.ref }}
 
       - name: Remove branch patch helpers
+        if: success()
         run: |
           rm -f .github/apply-site-wording-alignment.trigger
           rm -f .github/workflows/apply-site-wording-alignment.yml
           rm -f .github/wording-patch-error.txt
 
       - name: Commit verified wording changes
+        if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html booking.html terms.html thank-you.html flyer/index.html .github
+          if git diff --cached --quiet; then
+            echo "No additional wording changes to commit."
+            exit 0
+          fi
           git commit -m "Align customer-facing site wording"
           git push origin HEAD:${{ github.event.pull_request.head.ref }}
